@@ -37,7 +37,7 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="475" y="196" name="user">
+</datatypes><table x="103" y="26" name="user">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -50,6 +50,24 @@
 <row name="password_hash" null="1" autoincrement="0">
 <datatype>VARCHAR(128)</datatype>
 <default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="363" y="28" name="token">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="access_token" null="1" autoincrement="0">
+<datatype>VARCHAR(155)</datatype>
+<default>NULL</default></row>
+<row name="refresh_token" null="1" autoincrement="0">
+<datatype>VARCHAR(155)</datatype>
+<default>NULL</default></row>
+<row name="user_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="user" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

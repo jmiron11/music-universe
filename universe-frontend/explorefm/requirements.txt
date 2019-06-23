@@ -4,3 +4,4 @@ flask-sqlalchemy
 flask-login
 mysqlclient
 flask-wtf
+spotipy

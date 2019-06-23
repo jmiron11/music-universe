@@ -2,7 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, Token
+from app.spotify import get_authorize_url, get_access_token
 from werkzeug.urls import url_parse
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -59,3 +60,28 @@ def register():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html', user=user)
+
+@app.route('/spotifyconnect')
+@login_required
+def spotifyconnect():
+    return redirect(get_authorize_url())
+
+@app.route('/authcallback')
+@login_required
+def authcallback():
+    code = request.args.get('code')
+    if not code:
+        return ('error')
+    token = get_access_token(code)
+    if token:
+        user_token_data = Token.query.filter_by(user_id=current_user.id).first()
+        if user_token_data == None: 
+            token = Token(access_token=token['access_token'], refresh_token=token['refresh_token'], user_id=current_user.id)
+            db.session.add(token)
+            db.session.commit()
+        else:
+            user_token_data.access_token = token['access_token']
+            user_token_data.refresh_token = token['refresh_token']
+            db.session.commit()
+
+    return redirect(url_for('user', username=current_user.username))

@@ -21,4 +21,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
      
+class Token(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    access_token = db.Column(db.String(155), unique=True)
+    refresh_token = db.Column(db.String(155), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
 
+    def __repr__(self):
+        return '<Token {0}, Refresh {1}, User {2}>'.format(self.access_token, self.refresh_token, self.user_id)
