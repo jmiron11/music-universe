@@ -1,0 +1,33 @@
+body {
+  max-width: 100%;
+  width: 100%;
+  height:100%;
+  overflow-x: hidden;
+  background: #eef0eb;
+}
+
+html{
+  height:100%;
+}
+
+.page-landing {
+  height: 100vh;
+  width: 100%;
+  min-height:100vh;
+}
+
+.page {
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.logo {
+  font-size:45px;
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #331e36;
+}

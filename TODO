@@ -1,6 +1,11 @@
 Most immediate tasks:
 
-1. Definition of DB schema for users
+2. Profile page
+3. Link and authenticate with Spotify
+4. That's it.
+
+----
+
 2. Authentication of users.
 3. Integration with Spotify - attach spotify to user, keep track of oauth tokens.
 4. Spotify listen tracker.

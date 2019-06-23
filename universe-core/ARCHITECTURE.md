@@ -19,5 +19,6 @@ The universe represents all the data we have about music. The architecture can b
    * User management: registration, authentication
    * https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https
    * https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins
+   * https://fontawesome.com/v4.7.0/icon/spotify
 
 4. Web API: This provides programmatic access to the music catalog through a RESTful API.

@@ -1,0 +1,6 @@
+Flask==1.0.3
+python-dotenv
+flask-sqlalchemy
+flask-login
+mysqlclient
+flask-wtf
