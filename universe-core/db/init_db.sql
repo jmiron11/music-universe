@@ -36,10 +36,70 @@ CREATE TABLE `token` (
 );
 
 -- ---
+-- Table 'track'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `track`;
+		
+CREATE TABLE `track` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  `artist_id` INTEGER NULL DEFAULT NULL,
+  `album_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'artist'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `artist`;
+		
+CREATE TABLE `artist` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'album'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `album`;
+		
+CREATE TABLE `album` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  `artist_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'listen'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `listen`;
+		
+CREATE TABLE `listen` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `time` DATETIME NULL DEFAULT NULL,
+  `track_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
 ALTER TABLE `token` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `track` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `track` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
+ALTER TABLE `album` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 
 -- ---
 -- Table Properties
@@ -47,6 +107,10 @@ ALTER TABLE `token` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 
 -- ALTER TABLE `user` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `token` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `track` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `artist` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `album` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `listen` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -56,3 +120,11 @@ ALTER TABLE `token` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 -- ('','','','');
 -- INSERT INTO `token` (`id`,`access_token`,`refresh_token`,`user_id`) VALUES
 -- ('','','','');
+-- INSERT INTO `track` (`id`,`name`,`artist_id`,`album_id`) VALUES
+-- ('','','','');
+-- INSERT INTO `artist` (`id`,`name`) VALUES
+-- ('','');
+-- INSERT INTO `album` (`id`,`name`,`artist_id`) VALUES
+-- ('','','');
+-- INSERT INTO `listen` (`id`,`time`,`track_id`) VALUES
+-- ('','','');
