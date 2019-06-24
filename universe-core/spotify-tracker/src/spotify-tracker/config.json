@@ -1,0 +1,4 @@
+{
+	"TOKEN_DB_TYPE": "mysql",
+    "TOKEN_DB_DSN": "root:Cool1whip@/universe"
+}
