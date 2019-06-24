@@ -34,7 +34,7 @@ def login():
 @app.route('/index')
 @login_required
 def index():
-    return redirect(url_for('user', username=current_user.username)) # TODO(justinmiron): Route elsewhere
+    return render_template("index.html")
 
 @app.route('/logout')
 def logout():
