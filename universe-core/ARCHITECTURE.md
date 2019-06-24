@@ -26,3 +26,7 @@ The universe represents all the data we have about music. The architecture can b
 Inspo:
 https://letterboxd.com/
 https://last.fm
+
+
+
+https://musicbrainz.org/
