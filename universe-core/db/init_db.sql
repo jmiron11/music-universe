@@ -92,6 +92,21 @@ CREATE TABLE `listen` (
 );
 
 -- ---
+-- Table 'user_listen'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `user_listen`;
+		
+CREATE TABLE `user_listen` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `track_id` INTEGER NULL DEFAULT NULL,
+  `progress` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -100,6 +115,8 @@ ALTER TABLE `track` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 ALTER TABLE `track` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 ALTER TABLE `album` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 ALTER TABLE `listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
+ALTER TABLE `user_listen` ADD FOREIGN KEY (id) REFERENCES `user` (`id`);
+ALTER TABLE `user_listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 
 -- ---
 -- Table Properties
@@ -111,6 +128,7 @@ ALTER TABLE `listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 -- ALTER TABLE `artist` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `album` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `listen` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `user_listen` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -128,3 +146,5 @@ ALTER TABLE `listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 -- ('','','');
 -- INSERT INTO `listen` (`id`,`time`,`track_id`) VALUES
 -- ('','','');
+-- INSERT INTO `user_listen` (`id`,`user_id`,`track_id`,`progress`) VALUES
+-- ('','','','');
