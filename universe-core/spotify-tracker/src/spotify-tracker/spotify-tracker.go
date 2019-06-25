@@ -67,7 +67,7 @@ func UpdateAndGetTrackIds(listen_db *sql.DB, currently_playing *CurrentlyPlaying
 	// Update DB (if neccessary) and retrieve track id.
 	album_id = GetAlbumIdOrNeg1(listen_db, artist_id, currently_playing.album)
 	if album_id == -1 {
-		album_id = WriteAlbumGetId(listen_db, artist_id, currently_playing.artist)
+		album_id = WriteAlbumGetId(listen_db, artist_id, currently_playing.album)
 	}
 
 	track_id = GetTrackIdOrNeg1(listen_db, artist_id, album_id, currently_playing.track)

@@ -2,5 +2,5 @@
 	"TOKEN_DB_TYPE": "mysql",
     "TOKEN_DB_DSN": "root:Cool1whip@/universe",
 
-    "TRACK_INTERVAL_SECONDS": 2
+    "TRACK_INTERVAL_SECONDS": 30
 }
