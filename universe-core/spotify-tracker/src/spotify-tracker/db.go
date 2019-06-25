@@ -5,23 +5,26 @@ import (
 )
 import _ "github.com/go-sql-driver/mysql"
 
-var tokens_table = "token"
-
-func GetTokensDbOrKill(token_db_type, token_db_dsn string) *sql.DB {
+func GetDbOrKill(token_db_type, token_db_dsn string) *sql.DB {
 	// Open a connection to the db.
 	db, err := sql.Open(token_db_type, token_db_dsn)
 	if err != nil {
 		panic(err.Error())
 	}
-
 	// Check that we can communicate with the db.
 	err = db.Ping()
 	if err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+		panic(err.Error())
 	}
 	return db
 }
 
+func CloseDb(db *sql.DB) {
+	db.Close()
+}
+
+// Retrieves all tokens from the `tokens` table in the specified db.
+// Tokens are returned as a slice of models.Token objects.
 func GetAllTokens(db *sql.DB) []Token {
 	results, err := db.Query("SELECT * FROM token")
 	if err != nil {
@@ -41,6 +44,6 @@ func GetAllTokens(db *sql.DB) []Token {
 	return tkns
 }
 
-func CloseTokensDb(db *sql.DB) {
-	db.Close()
+func WriteNewListen(db *sql.DB, listen *Listen) {
+
 }
