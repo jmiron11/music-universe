@@ -45,7 +45,7 @@ html{
 
 .footer-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content:space-evenly;
   -webkit-flex-direction: row;
   flex-direction: row;
