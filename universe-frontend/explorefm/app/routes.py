@@ -76,7 +76,7 @@ def authcallback():
     if token:
         user_token_data = Token.query.filter_by(user_id=current_user.id).first()
         if user_token_data == None: 
-            token = Token(access_token=token['access_token'], refresh_token=token['refresh_token'], user_id=current_user.id)
+            token = Token(access_token=token['access_token'], refresh_token=token['refresh_token'], token_type=token['token_type'], user_id=current_user.id)
             db.session.add(token)
             db.session.commit()
         else:

@@ -25,6 +25,7 @@ class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     access_token = db.Column(db.String(155), unique=True)
     refresh_token = db.Column(db.String(155), unique=True)
+    token_type = db.Column(db.String(20))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
 
     def __repr__(self):
