@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app import app, db
+from app import app, db, basic_auth
 from app.forms import LoginForm, RegistrationForm
 from app.models import User, Token
 from app.spotify import get_authorize_url, get_access_token
@@ -32,7 +32,7 @@ def login():
 
 @app.route('/')
 @app.route('/index')
-@login_required
+@basic_auth.required
 def index():
     return render_template("index.html")
 
@@ -42,6 +42,7 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/register', methods=['GET', 'POST'])
+@basic_auth.required
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))

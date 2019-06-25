@@ -12,3 +12,7 @@ class Config(object):
     SPOTIFY_ID = os.environ.get('SPOTIFY_ID')
     SPOTIFY_SECRET = os.environ.get('SPOTIFY_SECRET')
     SPOTIFY_REDIRECT = "http://localhost:5000/authcallback"
+
+    # 
+    BASIC_AUTH_USERNAME = os.environ.get('UNIVERSE_AUTH_USER')
+    BASIC_AUTH_PASSWORD = os.environ.get('UNIVERSE_AUTH_PASS')

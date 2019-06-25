@@ -5,3 +5,4 @@ flask-login
 mysqlclient
 flask-wtf
 spotipy
+Flask-BasicAuth
