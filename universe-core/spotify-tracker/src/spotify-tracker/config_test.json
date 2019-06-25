@@ -1,4 +1,6 @@
 {
 	"TOKEN_DB_TYPE": "mysql",
-    "TOKEN_DB_DSN": "user:password@/fakedb"
+    "TOKEN_DB_DSN": "user:password@/fakedb",
+
+    "TRACK_INTERVAL_SECONDS": 10
 }

@@ -7,8 +7,9 @@ import (
 )
 
 type Configuration struct {
-	TOKEN_DB_TYPE string
-	TOKEN_DB_DSN  string
+	TOKEN_DB_TYPE          string
+	TOKEN_DB_DSN           string
+	TRACK_INTERVAL_SECONDS int
 }
 
 func ReadConfig(filename string) Configuration {
