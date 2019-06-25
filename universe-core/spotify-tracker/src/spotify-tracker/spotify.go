@@ -9,10 +9,12 @@ import (
 const redirectURI = "http://localhost:5000/authcallback"
 
 type CurrentlyPlaying struct {
-	is_playing bool   `json:"is_playing"`
-	track      string `json:"track"`
-	artist     string `json:"artist"`
-	album      string `json:"album"`
+	is_playing  bool   `json:"is_playing"`
+	track       string `json:"track"`
+	artist      string `json:"artist"`
+	album       string `json:"album"`
+	duration_ms int    `json:"duration_ms"`
+	progress_ms int    `json:"progress_ms"`
 }
 
 func GetUserCurrentlyPlayingTrack(client *spotify.Client) CurrentlyPlaying {
@@ -20,10 +22,11 @@ func GetUserCurrentlyPlayingTrack(client *spotify.Client) CurrentlyPlaying {
 
 	if err != nil {
 		fmt.Printf("Error retrieving currently played song: %s\n", err)
-		return CurrentlyPlaying{false, "", "", ""}
+		return CurrentlyPlaying{false, "", "", "", 0, 0}
 	} else {
 		return CurrentlyPlaying{true, currently_playing.Item.Name,
-			currently_playing.Item.Artists[0].Name, currently_playing.Item.Album.Name}
+			currently_playing.Item.Artists[0].Name, currently_playing.Item.Album.Name,
+			currently_playing.Item.Duration, currently_playing.Progress}
 	}
 }
 
