@@ -17,6 +17,26 @@ type CurrentlyPlaying struct {
 	progress_ms int    `json:"progress_ms"`
 }
 
+func GetTruncated(s string, max_size int) string {
+	if len(s) > max_size {
+		return s[:max_size-3] + "..."
+	} else {
+		return s
+	}
+}
+
+func CreateCurrentlyPlaying(cp *spotify.CurrentlyPlaying) CurrentlyPlaying {
+	var new_cp CurrentlyPlaying
+	new_cp.is_playing = true
+	new_cp.track = GetTruncated(cp.Item.Name, 100)
+	new_cp.artist = GetTruncated(cp.Item.Artists[0].Name, 100)
+	new_cp.album = GetTruncated(cp.Item.Album.Name, 100)
+	new_cp.progress_ms = cp.Progress
+	new_cp.duration_ms = cp.Item.Duration
+
+	return new_cp
+}
+
 func GetUserCurrentlyPlayingTrack(client *spotify.Client) CurrentlyPlaying {
 	currently_playing, err := client.PlayerCurrentlyPlaying()
 
@@ -24,9 +44,8 @@ func GetUserCurrentlyPlayingTrack(client *spotify.Client) CurrentlyPlaying {
 		fmt.Printf("Error retrieving currently played song: %s\n", err)
 		return CurrentlyPlaying{false, "", "", "", 0, 0}
 	} else {
-		return CurrentlyPlaying{true, currently_playing.Item.Name,
-			currently_playing.Item.Artists[0].Name, currently_playing.Item.Album.Name,
-			currently_playing.Item.Duration, currently_playing.Progress}
+
+		return CreateCurrentlyPlaying(currently_playing)
 	}
 }
 

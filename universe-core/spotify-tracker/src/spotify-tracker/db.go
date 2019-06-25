@@ -134,5 +134,8 @@ func WriteTrackGetId(db *sql.DB, artist_id int, album_id int, name string) int {
 }
 
 func WriteNewListen(db *sql.DB, listen *Listen) {
-
+	_, err := db.Query("INSERT INTO listen (time, track_id, user_id) VALUES (?, ?, ?)", listen.listen_time, listen.track_id, listen.user_id)
+	if err != nil {
+		panic(err.Error())
+	}
 }
