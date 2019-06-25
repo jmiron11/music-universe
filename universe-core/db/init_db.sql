@@ -11,7 +11,7 @@
 -- ---
 
 DROP TABLE IF EXISTS `user`;
-		
+    
 CREATE TABLE `user` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `username` VARCHAR(64) NULL DEFAULT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE `user` (
 -- ---
 
 DROP TABLE IF EXISTS `token`;
-		
+    
 CREATE TABLE `token` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `access_token` VARCHAR(155) NULL DEFAULT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `token` (
 -- ---
 
 DROP TABLE IF EXISTS `track`;
-		
+    
 CREATE TABLE `track` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `name` VARCHAR(100) NULL DEFAULT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `track` (
 -- ---
 
 DROP TABLE IF EXISTS `artist`;
-		
+    
 CREATE TABLE `artist` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `name` VARCHAR(100) NULL DEFAULT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE `artist` (
 -- ---
 
 DROP TABLE IF EXISTS `album`;
-		
+    
 CREATE TABLE `album` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `name` VARCHAR(100) NULL DEFAULT NULL,
@@ -84,11 +84,12 @@ CREATE TABLE `album` (
 -- ---
 
 DROP TABLE IF EXISTS `listen`;
-		
+    
 CREATE TABLE `listen` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `time` DATETIME NULL DEFAULT NULL,
   `track_id` INTEGER NULL DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -98,7 +99,7 @@ CREATE TABLE `listen` (
 -- ---
 
 DROP TABLE IF EXISTS `user_listen`;
-		
+    
 CREATE TABLE `user_listen` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `user_id` INTEGER NULL DEFAULT NULL,
@@ -116,6 +117,7 @@ ALTER TABLE `track` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 ALTER TABLE `track` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 ALTER TABLE `album` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 ALTER TABLE `listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
+ALTER TABLE `listen` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `user_listen` ADD FOREIGN KEY (id) REFERENCES `user` (`id`);
 ALTER TABLE `user_listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 
@@ -145,7 +147,7 @@ ALTER TABLE `user_listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 -- ('','');
 -- INSERT INTO `album` (`id`,`name`,`artist_id`) VALUES
 -- ('','','');
--- INSERT INTO `listen` (`id`,`time`,`track_id`) VALUES
--- ('','','');
+-- INSERT INTO `listen` (`id`,`time`,`track_id`,`user_id`) VALUES
+-- ('','','','');
 -- INSERT INTO `user_listen` (`id`,`user_id`,`track_id`,`progress`) VALUES
 -- ('','','','');
