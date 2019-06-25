@@ -30,6 +30,7 @@ DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `access_token` VARCHAR(155) NULL DEFAULT NULL,
+  `token_type` VARCHAR(20) NULL DEFAULT NULL,
   `refresh_token` VARCHAR(155) NULL DEFAULT NULL,
   `user_id` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -136,8 +137,8 @@ ALTER TABLE `user_listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 
 -- INSERT INTO `user` (`id`,`username`,`email`,`password_hash`) VALUES
 -- ('','','','');
--- INSERT INTO `token` (`id`,`access_token`,`refresh_token`,`user_id`) VALUES
--- ('','','','');
+-- INSERT INTO `token` (`id`,`access_token`,`token_type`,`refresh_token`,`user_id`) VALUES
+-- ('','','','','');
 -- INSERT INTO `track` (`id`,`name`,`artist_id`,`album_id`) VALUES
 -- ('','','','');
 -- INSERT INTO `artist` (`id`,`name`) VALUES
