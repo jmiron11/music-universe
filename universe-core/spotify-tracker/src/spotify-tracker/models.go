@@ -28,3 +28,21 @@ type Listen struct {
 	listen_time time.Time `json:"time"`
 	track_id    int       `json:"track_id"`
 }
+
+type Track struct {
+	id        int    `json:"id"`
+	name      string `json:"name`
+	artist_id int    `json:"artist_id"`
+	album_id  int    `json"album_id"`
+}
+
+type Artist struct {
+	id   int    `json:"id"`
+	name string `json:"name"`
+}
+
+type Album struct {
+	id        int    `json:"id"`
+	name      string `json:"name"`
+	artist_id int    `json:"artist_id"`
+}
