@@ -27,6 +27,7 @@ type Listen struct {
 	id          int       `json:"id"`
 	listen_time time.Time `json:"time"`
 	track_id    int       `json:"track_id"`
+	user_id     int       `json:user_id"`
 }
 
 type Track struct {
