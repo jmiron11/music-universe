@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"sync"
 	"time"
 
@@ -44,6 +45,9 @@ func CheckUserCurrentListen(client *spotify.Client, listen_db *sql.DB, user_id i
 	// TODO(justinmiron): Use the time returned by spotify instead of time.Now()
 	// Processing time and network delays can impact the timestamp.
 	listen := Listen{-1, time.Now(), track_id, user_id}
+	log.Printf("Writing listen entry for <%s: %d, %s: %d, %s: %d>",
+		currently_playing.track, track_id, currently_playing.artist, artist_id,
+		currently_playing.album, album_id)
 	WriteNewListen(listen_db, &listen)
 }
 

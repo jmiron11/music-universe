@@ -5,6 +5,7 @@ import (
 )
 import _ "github.com/go-sql-driver/mysql"
 
+// TODO(justinmiron): Error handling instead of panic
 func GetDbOrKill(token_db_type, token_db_dsn string) *sql.DB {
 	// Open a connection to the db.
 	db, err := sql.Open(token_db_type, token_db_dsn)
@@ -66,7 +67,13 @@ func GetArtistIdOrNeg1(db *sql.DB, name string) int {
 }
 
 func WriteArtistGetId(db *sql.DB, name string) int {
-	return -1
+	_, err := db.Query("INSERT INTO artist (name) VALUES (?)", name)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return GetArtistIdOrNeg1(db, name)
+
 }
 
 func GetAlbumIdOrNeg1(db *sql.DB, artist_id int, name string) int {
@@ -90,7 +97,12 @@ func GetAlbumIdOrNeg1(db *sql.DB, artist_id int, name string) int {
 }
 
 func WriteAlbumGetId(db *sql.DB, artist_id int, name string) int {
-	return -1
+	_, err := db.Query("INSERT INTO album (name, artist_id) VALUES (?, ?)", name, artist_id)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return GetAlbumIdOrNeg1(db, artist_id, name)
 }
 
 func GetTrackIdOrNeg1(db *sql.DB, artist_id int, album_id int, name string) int {
@@ -113,7 +125,12 @@ func GetTrackIdOrNeg1(db *sql.DB, artist_id int, album_id int, name string) int 
 }
 
 func WriteTrackGetId(db *sql.DB, artist_id int, album_id int, name string) int {
-	return -1
+	_, err := db.Query("INSERT INTO track (name, artist_id, album_id) VALUES (?, ?, ?)", name, artist_id, album_id)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return GetTrackIdOrNeg1(db, artist_id, album_id, name)
 }
 
 func WriteNewListen(db *sql.DB, listen *Listen) {
