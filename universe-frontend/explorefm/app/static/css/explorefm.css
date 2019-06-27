@@ -217,9 +217,8 @@ a { color: inherit; }
 .bio {
   margin: 0 10% 0 10%;
   padding: 0 0 0 0;
-  border-style: solid;
-  border-width: 2px;
-  background: #d2d2d2;
+  border: 1px solid #b9bbbe;
+  background: #d0d2d4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -234,14 +233,37 @@ a { color: inherit; }
 
 .profile-section-header {
   padding-top: 10px;
-  border-bottom: 3px solid;
-  width: 100%;
+  padding-bottom: 5px;
+  padding-left: 7px;
 }
 
 .profile-section-header h6 {
   font-family: 'Roboto', sans-serif;
   font-size: 23px;
   margin-bottom: 0;
+}
+
+.profile-section-header-timespan {
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.profile-section-header-timespan h6 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 23px;
+  margin-bottom: 0;
+}
+
+.timespan-form {
+  color: #8b8e94;
+  font-size: 18px;
+  border: 0;
 }
 
 .highlighted-music {
@@ -255,29 +277,26 @@ a { color: inherit; }
 }
 
 .music-highlight {
-  min-width: 200px;
-  max-width: 200px;
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
   -webkit-flex-direction: column;
   flex-direction: column;
   background: #dbdbdb;
-  padding: 5px 5px 0 5px;
-  border: 2px solid #5f3535;
+  /*padding: 5px 5px 0 5px;*/
+  /*border: 1px solid #b9bbbe;*/
   margin: 5px;
   /*max-width: 185px;*/
 }
 
 .highlight-img {
-  min-height: 170px;
-  min-width: 170px;
-  max-height: 170px;
-  max-width: 170px;
+  min-height: 200px;
+  min-width: 200px;
+  max-height: 200px;
+  max-width: 200px;
   background: #ffffff;
-  border-color: #000000;
-  border-width: 2px;
-  border: solid;
+  border: 1px solid #b9bbbe;
+  /*border-width: 2px;*/
   margin: auto;
 }
 
@@ -288,6 +307,9 @@ a { color: inherit; }
   justify-content: space-evenly;
   -webkit-flex-direction: row;
   flex-direction: row;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #b9bbbe;
 }
 
 .highlight-icon {
@@ -336,6 +358,7 @@ a { color: inherit; }
   -webkit-flex-direction: row;
   flex-direction: row;
   width: 100%;
+  border-bottom: 1px solid #b9bbbe;
 }
 
 .listen-entry-shaded {
@@ -344,8 +367,9 @@ a { color: inherit; }
   justify-content: space-evenly;
   -webkit-flex-direction: row;
   flex-direction: row;
-  background: #b1b1b1;
+  background: #d0d2d4;
   width: 100%;
+  border-bottom: 1px solid #b9bbbe;
 }
 
 .listen-entry-art {

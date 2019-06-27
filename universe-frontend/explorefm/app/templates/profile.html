@@ -50,6 +50,7 @@
                             <div class="bio">
                                 <h6>{{ current_user.get_bio() }}</h6>
                             </div>
+
                             <div class="profile-section-header">
                                 <h6>Highlighted Music</h6>
                             </div>
@@ -87,7 +88,8 @@
                                 </div> 
                                 {% endfor %}
                             </div>
-                        </div>
+                            <div id="top-tracks"></div> <!-- Top Tracks react component -->
+                        </div> <!-- Profile left end -->
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                         <div class="listens">
@@ -112,6 +114,11 @@
             </div>
         </div>
     </div>
+
+    <script type="text/babel" src="/static/js/profile.js"></script>
+
+
+
 {% endblock %}
 
 
