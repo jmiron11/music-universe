@@ -46,44 +46,65 @@
                 </div>
                 <div class="profile-data"> <!-- Profile data -->
                     <div class="col-md-6 col-sm-6 col-xs-12 ">
-                        <div class="bio">
-                            <h6>{{ current_user.get_bio() }}</h6>
+                        <div class="profile-left">
+                            <div class="bio">
+                                <h6>{{ current_user.get_bio() }}</h6>
+                            </div>
+                            <div class="profile-section-header">
+                                <h6>Highlighted Music</h6>
+                            </div>
+                            <div class="highlighted-music">
+                                {% for highlight in current_user.get_highlights() %}
+                                <div class="music-highlight">
+                                    {% if 'track' in highlight %}
+                                    <div class="highlight-img"></div>
+                                    <div class="highlight-desc">
+                                        <div class="highlight-icon"></div>
+                                        <div class="highlight-txt">
+                                            <h6 style="font-size: 15px">{{ highlight['track'] }}</h6>
+                                            <h6 style="font-size: 11px">{{ highlight['album'] }}</h6>
+                                            <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
+                                        </div>
+                                    </div>
+                                    {% elif 'album' in highlight %}
+                                    <div class="highlight-img"></div>
+                                    <div class="highlight-desc">
+                                        <div class="highlight-icon"></div>
+                                        <div class="highlight-txt">
+                                            <h6 style="font-size: 15px">{{ highlight['album'] }}</h6>
+                                            <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
+                                        </div>
+                                    </div>
+                                    {% elif 'artist' in highlight %}
+                                    <div class="highlight-img"></div>
+                                    <div class="highlight-desc">
+                                        <div class="highlight-icon"></div>
+                                        <div class="highlight-txt">
+                                            <h6 style="font-size: 15px">{{ highlight['artist'] }}</h6>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div> 
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="profile-section-header">
-                            <h6>Highlighted Music</h6>
-                        </div>
-                        <div class="highlighted-music">
-                            {% for highlight in current_user.get_highlights() %}
-                            <div class="music-highlight">
-                                {% if 'track' in highlight %}
-                                <div class="highlight-img"></div>
-                                <div class="highlight-desc">
-                                    <div class="highlight-icon"></div>
-                                    <div class="highlight-txt">
-                                        <h6 style="font-size: 15px">{{ highlight['track'] }}</h6>
-                                        <h6 style="font-size: 11px">{{ highlight['album'] }}</h6>
-                                        <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
-                                    </div>
-                                </div>
-                                {% elif 'album' in highlight %}
-                                <div class="highlight-img"></div>
-                                <div class="highlight-desc">
-                                    <div class="highlight-icon"></div>
-                                    <div class="highlight-txt">
-                                        <h6 style="font-size: 15px">{{ highlight['album'] }}</h6>
-                                        <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
-                                    </div>
-                                </div>
-                                {% elif 'artist' in highlight %}
-                                <div class="highlight-img"></div>
-                                <div class="highlight-desc">
-                                    <div class="highlight-icon"></div>
-                                    <div class="highlight-txt">
-                                        <h6 style="font-size: 15px">{{ highlight['artist'] }}</h6>
-                                    </div>
-                                </div>
-                                {% endif %}
-                            </div> 
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                        <div class="listens">
+                            <div class="profile-section-header">
+                                <h6>Listens</h6>
+                            </div>
+                            <div style="padding-bottom: 10px"></div>
+                            {% for l in current_user.get_recent_listens(10) %}
+                            {% if (loop.index + 1) % 2 == 0 %}
+                            <div class="listen-entry">
+                            {% else %}
+                            <div class="listen-entry-shaded">
+                            {% endif %}
+                                <div class="listen-entry-art"></div>
+                                <div class="listen-entry-track"><h6>{{ l['artist'] }} - {{ l['track'] }}</h6></div>
+                                <div class="listen-entry-time"><h6>{{ l['time'] }}</h6></div>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>

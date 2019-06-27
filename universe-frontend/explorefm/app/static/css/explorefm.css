@@ -315,3 +315,72 @@ a { color: inherit; }
   font-family: 'Roboto', sans-serif;
   margin: 0;
 }
+
+.profile-left {
+  /*margin: 0 5% 0 0;*/
+}
+
+.listens {
+  margin: 0 0 0 5%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.listen-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+}
+
+.listen-entry-shaded {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  background: #b1b1b1;
+  width: 100%;
+}
+
+.listen-entry-art {
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 30px;
+  max-height: 30px;
+  background: #ffffff;
+  border: 1px solid black;
+  margin: 2px 0 2px 10px;
+}
+
+.listen-entry-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  margin-right: auto;
+  margin-left: 10px;
+  margin-bottom: 0;
+  padding-top: 4px;
+}
+
+.listen-entry-track h6 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+.listen-entry-time {
+  margin-left: auto;  
+  margin-right: 5px;
+}
+
+.listen-entry-time h6 {
+  font-family: 'Roboto', sans-serif;
+  color: #5c5c5c;
+}
