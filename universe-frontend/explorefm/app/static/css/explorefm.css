@@ -10,6 +10,12 @@ html{
   height:100%;
 }
 
+a { color: inherit; } 
+
+.navbar-default {
+    background-color: #eef0eb;
+}
+
 .page-landing {
   height: 100vh;
   width: 100%;
@@ -33,10 +39,30 @@ html{
 }
 
 .logo-navbar {
-  font-size:35px;
+  font-size: 35px;
   font-family: 'Alegreya Sans SC', sans-serif;
   color: #331e36;
 }
+
+.navbar-link {
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: #331e36;
+}
+
+.navbar-icons {
+  font-size:18px;
+  color: #331e36;
+}
+
+.border-left{
+    width: 5px; /* Line width */
+    background-color: #000000; /* Line color */
+    height: 100%; /* Override in-line if you want specific height. */
+   /* display: inline-block;  Causes the line to float to left of content. 
+      You can instead use position:absolute or display:inline-block
+      if this fits better with your design */
+  }
 
 .footer {
   padding: 30px 0;
@@ -76,4 +102,216 @@ html{
     text-decoration: none !important;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
+}
+
+/***** Profile Page *****/
+.album-row {
+    width: 100vw;
+    height: 160px;
+    background: #29252b;
+    opacity: 0.9;
+}
+
+.album-image {
+  min-height: 170px;
+  max-height: 170px;
+  min-width: 170px;
+  max-width: 170px;
+  background: #ffffff;
+  border-color: #000000;
+  border-width: 2px;
+  border: solid;
+  /*position: absolute;*/
+}
+
+.profile-stats-row {
+  width: 100%;
+  height: 100px;
+}
+
+.album-row-username {
+  margin: 0 0 -15px 0;
+}
+
+.album-row-username h1 {
+  font-size: 55px;
+  color: #ffffff;
+  text-shadow: 1px 1px #000000;
+  font-family: 'Alegreya Sans SC', sans-serif;
+  padding-left: 14px;
+}
+
+.profile-stat-number {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
+}
+
+.profile-stat-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+.profile-stat {
+  padding: 5px 20px 5px 20px;
+}
+
+.profile-mini-link{
+  padding: 5px 20px 5px 20px;
+  text-decoration: underline;
+  color: #000000;
+}
+
+.flex-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  height:320px;
+}
+
+.profile-stats {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.album-art {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  height: 320px;
+}
+
+.profile-info {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  position: absolute;
+  width: 100vw;
+  top: 70px;
+  /*top: 28%;*/
+}
+
+.profile-right {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.profile-data {
+  padding: 0 5% 0 5%;
+}
+
+.bio {
+  margin: 0 10% 0 10%;
+  padding: 0 0 0 0;
+  border-style: solid;
+  border-width: 2px;
+  background: #d2d2d2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.bio h6 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+.profile-section-header {
+  padding-top: 10px;
+  border-bottom: 3px solid;
+  width: 100%;
+}
+
+.profile-section-header h6 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 23px;
+  margin-bottom: 0;
+}
+
+.highlighted-music {
+  min-height: 100px; 
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.music-highlight {
+  min-width: 200px;
+  max-width: 200px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  background: #dbdbdb;
+  padding: 5px 5px 0 5px;
+  border: 2px solid #5f3535;
+  margin: 5px;
+  /*max-width: 185px;*/
+}
+
+.highlight-img {
+  min-height: 170px;
+  min-width: 170px;
+  max-height: 170px;
+  max-width: 170px;
+  background: #ffffff;
+  border-color: #000000;
+  border-width: 2px;
+  border: solid;
+  margin: auto;
+}
+
+.highlight-desc {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.highlight-icon {
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 1px;
+  min-width: 50px;
+  max-width: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  margin: 5px 5px 5px 5px;
+}
+
+.highlight-txt {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+  padding:10px;
+}
+
+.highlight-txt h6 {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
 }

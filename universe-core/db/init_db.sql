@@ -109,6 +109,36 @@ CREATE TABLE `user_listen` (
 );
 
 -- ---
+-- Table 'profile_highlight'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `profile_highlight`;
+    
+CREATE TABLE `profile_highlight` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `artist_id` INTEGER NULL DEFAULT NULL,
+  `album_id` INTEGER NULL DEFAULT NULL,
+  `track_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'profile_bio'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `profile_bio`;
+    
+CREATE TABLE `profile_bio` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `bio` VARCHAR(500) NULL DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -120,6 +150,11 @@ ALTER TABLE `listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 ALTER TABLE `listen` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `user_listen` ADD FOREIGN KEY (id) REFERENCES `user` (`id`);
 ALTER TABLE `user_listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
+ALTER TABLE `profile_highlight` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `profile_highlight` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `profile_highlight` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
+ALTER TABLE `profile_highlight` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
+ALTER TABLE `profile_bio` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 
 -- ---
 -- Table Properties
@@ -132,6 +167,8 @@ ALTER TABLE `user_listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 -- ALTER TABLE `album` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `listen` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `user_listen` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `profile_highlight` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `profile_bio` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -151,3 +188,7 @@ ALTER TABLE `user_listen` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 -- ('','','','');
 -- INSERT INTO `user_listen` (`id`,`user_id`,`track_id`,`progress`) VALUES
 -- ('','','','');
+-- INSERT INTO `profile_highlight` (`id`,`user_id`,`artist_id`,`album_id`,`track_id`) VALUES
+-- ('','','','','');
+-- INSERT INTO `profile_bio` (`id`,`bio`,`user_id`) VALUES
+-- ('','','');

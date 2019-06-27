@@ -49,7 +49,6 @@ func IsNewListen(currently_playing *CurrentlyPlaying, last_written *LastWritten)
 func ClearWrittenOnProgressDecrease(currently_playing *CurrentlyPlaying, last_written *LastWritten) {
 	if IsSameTrack(currently_playing, &last_written.last_recorded_play) && currently_playing.progress_ms < last_written.last_recorded_play.progress_ms {
 		last_written.written = false
-		fmt.Printf("Clearing the last written")
 	}
 }
 

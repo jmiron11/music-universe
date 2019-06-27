@@ -11,6 +11,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    bio = db.relationship('ProfileBio', backref='user', lazy=True)
+    token = db.relationship('Token', backref='user', lazy=True)
+    highlights = db.relationship('ProfileHighlight', lazy=True)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -20,6 +23,67 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_bio(self):
+        return self.bio[0].get_bio()
+
+    def get_highlights(self):
+        formatted_highlight = []
+        for h in self.highlights:
+            highlight = {}
+            if h.track_id:
+                highlight['track'] = h.track.name
+            if h.album_id:
+                highlight['album'] = h.album.name
+            if h.artist_id:
+                highlight['artist'] = h.artist.name
+            formatted_highlight.append(highlight)
+
+        return formatted_highlight
+
+class ProfileBio(db.Model):
+    __tablename__ = 'profile_bio'
+
+    id = db.Column(db.Integer, primary_key=True)
+    bio = db.Column(db.String(500))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def get_bio(self):
+        return self.bio
+
+class ProfileHighlight(db.Model):
+    __tablename__ = 'profile_highlight'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'))
+    track_id = db.Column(db.Integer, db.ForeignKey('track.id'))
+
+    track = db.relationship('Track', lazy=True)
+    artist = db.relationship('Artist', lazy=True)
+    album = db.relationship('Album', lazy=True)
+
+class Track(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'))
+
+class Album(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
+
+class Artist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+
+class Listen(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.DateTime)
+    track_id = db.Column(db.Integer, db.ForeignKey('track.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
      
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)

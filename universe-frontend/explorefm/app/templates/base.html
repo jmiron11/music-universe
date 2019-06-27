@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Explore.fm</title>
+    <title>Name.fm</title>
 
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/explorefm.css" rel="stylesheet">
@@ -21,16 +21,21 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand logo-navbar" href="{{ url_for('index') }}">Explore.fm</a>
+          <a class="navbar-brand logo-navbar" href="{{ url_for('index') }}"><p class="logo-navbar">Name.fm</p></a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-           <li><a href="{{ url_for('index') }}">Home</a></li>
-
             {% if current_user.is_anonymous %}
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li style="padding-top: 9px;font-size:24px;color: #868686">|</li>
             <li><a href="{{ url_for('login') }}">Login</a></li>
             {% else %}
-            <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>    
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('user', username=current_user.username) }}" class="navbar-link">{{ current_user.username }}</a></li>
+            <li style="padding-top: 9px;font-size:24px;color: #868686">|</li>
+            <li><a href="{{ url_for('index') }}" class="navbar-link">Home</a></li>
+            <li style="padding-top: 9px;font-size:24px;color: #868686">|</li>
+            <li><a href="{{ url_for('settings') }}" class="navbar-icons"><i class="fa fa-lg fa-cog navbar-icons" aria-hidden="true"></i></a></li>  
+            <li style="padding-top: 9px;font-size:24px;color: #868686">|</li>
+            <li><a href="{{ url_for('logout') }}" class="navbar-icons"><i class="fa fa-lg fa-sign-out navbar-icons" aria-hidden="true"></i></a></li>
             {% endif %}
         </ul>
       </div>
