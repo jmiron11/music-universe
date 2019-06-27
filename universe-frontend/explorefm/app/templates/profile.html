@@ -19,19 +19,19 @@
                             </div>
                             <div class="profile-stats">
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">53,533</div>
+                                    <div class="profile-stat-number">{{ current_user.get_total_listens() }}</div>
                                     <div class="profile-stat-name">Listens</div>
                                 </div>
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">30,210</div>
+                                    <div class="profile-stat-number">{{ current_user.get_unique_tracks() }}</div>
                                     <div class="profile-stat-name">Tracks</div>
                                 </div>
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">5,063</div>
+                                    <div class="profile-stat-number">{{ current_user.get_unique_albums() }}</div>
                                     <div class="profile-stat-name">Albums</div>
                                 </div>
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">5,820</div>
+                                    <div class="profile-stat-number">{{ current_user.get_unique_artists() }}</div>
                                     <div class="profile-stat-name">Artists</div>
                                 </div>
                                 <div class="profile-mini-link">

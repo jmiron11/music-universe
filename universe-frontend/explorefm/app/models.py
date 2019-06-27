@@ -1,6 +1,8 @@
 from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import func, and_
+from sqlalchemy.orm import joinedload
 
 @login.user_loader
 def load_user(id):
@@ -14,6 +16,7 @@ class User(UserMixin, db.Model):
     bio = db.relationship('ProfileBio', backref='user', lazy=True)
     token = db.relationship('Token', backref='user', lazy=True)
     highlights = db.relationship('ProfileHighlight', lazy=True)
+    listen = db.relationship('Listen', lazy=True)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -40,6 +43,25 @@ class User(UserMixin, db.Model):
             formatted_highlight.append(highlight)
 
         return formatted_highlight
+
+    def get_total_listens(self):
+        return db.session.query(
+            User.listen
+        ).count()
+
+    def get_unique_tracks(self):
+        return db.session.query(
+            User.listen
+        ).group_by(Listen.track_id).count()
+
+    def get_unique_albums(self):
+        return db.session.query(User.listen, Track).filter(Listen.track_id == Track.id).group_by(Track.album_id).count()
+
+
+    def get_unique_artists(self):
+        return db.session.query(User.listen, Track).filter(Listen.track_id == Track.id).group_by(Track.artist_id).count()
+
+
 
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
@@ -84,6 +106,8 @@ class Listen(db.Model):
     time = db.Column(db.DateTime)
     track_id = db.Column(db.Integer, db.ForeignKey('track.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    track = db.relationship('Track', lazy=True)
      
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
