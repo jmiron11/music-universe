@@ -17,6 +17,7 @@
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- TODO: Replace with our own compilation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 </head>
 
 <!-- Navigation -->
@@ -55,7 +56,10 @@
     {% endwith %}
     {% block content %}{% endblock %}
     
-    <script src="/static/js/bootstrap.js"></script>
+    <script
+      src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
+      crossorigin
+    />
     <script src="https://use.fontawesome.com/7d6346c2db.js"></script>
 </body>
 

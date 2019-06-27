@@ -408,3 +408,11 @@ a { color: inherit; }
   font-family: 'Roboto', sans-serif;
   color: #5c5c5c;
 }
+
+.top-track {
+  display: flex;
+  align-items: space-between;
+  justify-content: space-between;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}

@@ -112,3 +112,7 @@ def authcallback():
             db.session.commit()
 
     return redirect(url_for('user', username=current_user.username))
+
+@app.route('/user/<username>/tracks')
+def user_tracks(t_start, t_end, aggregate=True):
+    return {}
