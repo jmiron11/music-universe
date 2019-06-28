@@ -410,6 +410,7 @@ a { color: inherit; }
 }
 
 .top-track {
+  padding-top:10px;
   display: flex;
   align-items: space-between;
   justify-content: space-between;

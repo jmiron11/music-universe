@@ -29,7 +29,10 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def get_bio(self):
-        return self.bio[0].get_bio()
+        if not self.bio:
+            return "I like music."
+        else:
+            return self.bio[0].get_bio()
 
     def get_highlights(self):
         formatted_highlight = []
