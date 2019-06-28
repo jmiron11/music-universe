@@ -134,7 +134,7 @@ function (_React$Component) {
     _this.updateTimespan = function (event) {
       _this.state.timespan = event.target.value;
 
-      _this.getNewTimespanData();
+      _this.getNewTimespanData(event.target.value);
     };
 
     _this.state = {
@@ -157,7 +157,7 @@ function (_React$Component) {
     }
   }, {
     key: "getNewTimespanData",
-    value: function getNewTimespanData() {
+    value: function getNewTimespanData(value) {
       // Get the timeoffsets to be used in the track requests
       var t_start;
       var t_end = this.getSecondsSinceEpoch();
@@ -171,11 +171,10 @@ function (_React$Component) {
       } else if (this.state.timepan == "year") {
         t_start = this.getTimeOffsetByT(t_end, 365 * 24 * 60 * 60);
       } else if (this.state.timespan == "all") {
-        t_start = 0;
+        t_start = this.getTimeOffsetByT(t_end, 10 * 365 * 24 * 60 * 60);
       }
 
       newTop = [];
-      var value = this.state.timespan;
       var self = this;
       var request = '/user/' + current_user + '/tracks?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
       axios.get(request).then(function (response) {

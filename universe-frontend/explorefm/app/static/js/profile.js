@@ -24,7 +24,7 @@ class TopTracks extends React.Component {
     return t - offset
   }
 
-  getNewTimespanData() {
+  getNewTimespanData(value) {
 
     // Get the timeoffsets to be used in the track requests
     var t_start;
@@ -38,11 +38,10 @@ class TopTracks extends React.Component {
     } else if (this.state.timepan == "year") {
       t_start = this.getTimeOffsetByT(t_end, 365*24*60*60)
     } else if (this.state.timespan == "all") {
-      t_start = 0
+      t_start = this.getTimeOffsetByT(t_end, 10*365*24*60*60)
     }
 
     newTop = []
-    var value = this.state.timespan
     var self = this
     var request = '/user/' + current_user + '/tracks?t_start=' + t_start.toString() + '&t_end=' + t_end.toString()
     axios.get(request).then(function(response) {
@@ -75,7 +74,7 @@ class TopTracks extends React.Component {
 
   updateTimespan = (event) => {
     this.state.timespan = event.target.value
-    this.getNewTimespanData()
+    this.getNewTimespanData(event.target.value)
     
   }
 
