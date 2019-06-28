@@ -148,6 +148,7 @@ function (_React$Component) {
     key: "getSecondsSinceEpoch",
     value: function getSecondsSinceEpoch() {
       var d = new Date();
+      console.log(d);
       return Math.round(d.getTime() / 1000);
     }
   }, {

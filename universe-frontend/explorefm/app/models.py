@@ -83,8 +83,8 @@ class User(UserMixin, db.Model):
             Listen, func.count(Track.id).label('count')
         ).filter(and_(
             Listen.user_id == self.id,
-            Listen.time > datetime.fromtimestamp(start_t),
-            Listen.time < datetime.fromtimestamp(end_t),
+            Listen.time > datetime.utcfromtimestamp(start_t),
+            Listen.time < datetime.utcfromtimestamp(end_t),
             Listen.track_id == Track.id)
         ).group_by(
             Track.id
@@ -93,10 +93,8 @@ class User(UserMixin, db.Model):
             Listen.track_id
         ).limit(limit).all()
 
-
         tracks = []
         for a in d:
-            print(datetime.fromtimestamp(start_t), a.Listen.time, datetime.fromtimestamp(end_t))
             tracks.append({
                 'artist': a.Listen.track.artist.name,
                 'track': a.Listen.track.name,

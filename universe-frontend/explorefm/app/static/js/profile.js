@@ -17,7 +17,8 @@ class TopTracks extends React.Component {
 
   getSecondsSinceEpoch() {
     var d = new Date();
-    return Math.round(d.getTime() / 1000)
+    console.log(d)
+    return Math.floor(d.getTime() / 1000)
   }
 
   getTimeOffsetByT(t, offset) {
