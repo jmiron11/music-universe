@@ -168,7 +168,7 @@ function (_React$Component) {
         t_start = this.getTimeOffsetByT(t_end, 7 * 24 * 60 * 60);
       } else if (this.state.timespan == "month") {
         t_start = this.getTimeOffsetByT(t_end, 30 * 24 * 60 * 60);
-      } else if (this.state.timepan == "year") {
+      } else if (this.state.timespan == "year") {
         t_start = this.getTimeOffsetByT(t_end, 365 * 24 * 60 * 60);
       } else if (this.state.timespan == "all") {
         t_start = this.getTimeOffsetByT(t_end, 10 * 365 * 24 * 60 * 60);
