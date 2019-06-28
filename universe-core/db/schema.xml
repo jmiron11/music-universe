@@ -91,7 +91,7 @@
 <default>NULL</default><relation table="album" row="id" />
 </row>
 <row name="spotify_id" null="1" autoincrement="0">
-<datatype>VARCHAR(20)</datatype>
+<datatype>VARCHAR(30)</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
@@ -105,7 +105,7 @@
 <datatype>VARCHAR(100)</datatype>
 <default>NULL</default></row>
 <row name="spotify_id" null="1" autoincrement="0">
-<datatype>VARCHAR(20)</datatype>
+<datatype>VARCHAR(30)</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
@@ -123,7 +123,7 @@
 <default>NULL</default><relation table="artist" row="id" />
 </row>
 <row name="spotify_id" null="1" autoincrement="0">
-<datatype>VARCHAR(20)</datatype>
+<datatype>VARCHAR(30)</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>

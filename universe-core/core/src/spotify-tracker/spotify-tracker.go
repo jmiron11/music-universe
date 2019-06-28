@@ -19,28 +19,28 @@ import (
 // On an interval: Check that all tokens in the tokens table map to a goroutine.
 // If not, spawn a goroutine.
 type LastWritten struct {
-	last_recorded_play universe.CurrentlyPlaying
+	last_recorded_play *spotify.CurrentlyPlaying
 	written            bool
 }
 
-func IsSameTrack(cp1 *universe.CurrentlyPlaying, cp2 *universe.CurrentlyPlaying) bool {
-	return cp1.Artist == cp2.Artist && cp1.Album == cp2.Album && cp1.Track == cp2.Track
+func IsSameTrack(cp1 *spotify.CurrentlyPlaying, cp2 *spotify.CurrentlyPlaying) bool {
+	return universe.GetArtist(cp1) == universe.GetArtist(cp2) && universe.GetAlbum(cp1) == universe.GetAlbum(cp2) && universe.GetTrack(cp1) == universe.GetTrack(cp2)
 }
 
 // Return true if track is past 50% or 2 minutes.
-func SufficientProgress(currently_playing *universe.CurrentlyPlaying) bool {
-	return float32(currently_playing.Progress_ms)/float32(currently_playing.Duration_ms) > 0.5 || currently_playing.Progress_ms > 120000
+func SufficientProgress(cp *spotify.CurrentlyPlaying) bool {
+	return float32(universe.GetProgress(cp))/float32(universe.GetCurrentTrackDuration(cp)) > 0.5 || universe.GetProgress(cp) > 120000
 }
 
 // The following conditions must be met for it to be a new listen
 // 1. The track is past 2min or 50% of the song.
 // 2. The track is not the same as the last song written OR the track is the same but we cleared the written variable.
 // We clear the written variable if the track is the same
-func IsNewListen(currently_playing *universe.CurrentlyPlaying, last_written *LastWritten) bool {
+func IsNewListen(currently_playing *spotify.CurrentlyPlaying, last_written *LastWritten) bool {
 	// True condition: If we are past 2min or 50% of the song
 
 	if SufficientProgress(currently_playing) {
-		if !IsSameTrack(currently_playing, &last_written.last_recorded_play) {
+		if !IsSameTrack(currently_playing, last_written.last_recorded_play) {
 			return true
 		} else if last_written.written == false {
 			return true
@@ -49,57 +49,71 @@ func IsNewListen(currently_playing *universe.CurrentlyPlaying, last_written *Las
 	return false
 }
 
-func ClearWrittenOnProgressDecrease(currently_playing *universe.CurrentlyPlaying, last_written *LastWritten) {
-	if IsSameTrack(currently_playing, &last_written.last_recorded_play) && currently_playing.Progress_ms < last_written.last_recorded_play.Progress_ms {
+func ClearWrittenOnProgressDecrease(currently_playing *spotify.CurrentlyPlaying, last_written *LastWritten) {
+	if IsSameTrack(currently_playing, last_written.last_recorded_play) && universe.GetProgress(currently_playing) < universe.GetProgress(last_written.last_recorded_play) {
 		last_written.written = false
 	}
 }
 
-func UpdateAndGetTrackIds(listen_db *sql.DB, currently_playing *universe.CurrentlyPlaying) (int, int, int) {
+func UpdateDbWriteListen(listen_db *sql.DB, currently_playing *spotify.CurrentlyPlaying, user_id int) {
 	// Updating the music catalog is done in the following order:
 	// 1. Check for the artist, add if neccessary.
 	// 2. Check for the album, add album object with artist id if neccessary.
 	// 3. Check for the track, add track object with album/artist id if neccessary.
-	var artist_id, album_id, track_id int
-	artist_id = universe.GetArtistIdOrNeg1(listen_db, currently_playing.Artist)
-	if artist_id == -1 {
-		artist_id = universe.WriteArtistGetId(listen_db, currently_playing.Artist)
+	track, artist, album := universe.ModelsFromCurrentlyPlaying(currently_playing)
+	exists := universe.GetArtistFromDb(listen_db, &artist)
+	if !exists {
+		universe.WriteArtist(listen_db, &artist)
 	}
 
-	// Update DB (if neccessary) and retrieve track id.
-	album_id = universe.GetAlbumIdOrNeg1(listen_db, artist_id, currently_playing.Album)
-	if album_id == -1 {
-		album_id = universe.WriteAlbumGetId(listen_db, artist_id, currently_playing.Album)
+	album.Artist_id = artist.Id
+	track.Artist_id = artist.Id
+
+	exists = universe.GetAlbumFromDb(listen_db, &album)
+	if !exists {
+		universe.WriteAlbum(listen_db, &album)
 	}
 
-	track_id = universe.GetTrackIdOrNeg1(listen_db, artist_id, album_id, currently_playing.Track)
-	if track_id == -1 {
-		track_id = universe.WriteTrackGetId(listen_db, artist_id, album_id, currently_playing.Track)
+	track.Album_id = album.Id
+
+	exists = universe.GetTrackFromDb(listen_db, &track)
+	if !exists {
+		universe.WriteTrack(listen_db, &track)
 	}
 
-	return track_id, album_id, artist_id
+	// TODO(justinmiron): Use the time returned by spotify instead of time.Now()
+	// Processing time and network delays can impact the timestamp.
+	listen := universe.Listen{-1, time.Now(), track.Id, user_id}
+
+	log.Printf("Writing listen entry for <%s: %d, %s: %d, %s: %d>",
+		track.Name, track.Id, artist.Name, artist.Id,
+		album.Name, album.Id)
+	universe.WriteNewListen(listen_db, &listen)
 }
 
-func CheckUserCurrentListen(client *spotify.Client, listen_db *sql.DB, user_id int, last_written *LastWritten) {
+func CheckUserCurrentListen(client *spotify.Client, listen_db *sql.DB, user_id int, last_written *LastWritten, first bool) {
 	currently_playing := universe.GetUserCurrentlyPlayingTrack(client)
+	if currently_playing == nil {
+		fmt.Printf("Failed to retrieve currently playing track of user: %d", user_id)
+		return
+	}
 
-	ClearWrittenOnProgressDecrease(&currently_playing, last_written)
-
-	if IsNewListen(&currently_playing, last_written) {
-		track_id, album_id, artist_id := UpdateAndGetTrackIds(listen_db, &currently_playing)
-
-		// TODO(justinmiron): Use the time returned by spotify instead of time.Now()
-		// Processing time and network delays can impact the timestamp.
-		listen := universe.Listen{-1, time.Now(), track_id, user_id}
-		log.Printf("Writing listen entry for <%s: %d, %s: %d, %s: %d>",
-			currently_playing.Track, track_id, currently_playing.Artist, artist_id,
-			currently_playing.Album, album_id)
-		universe.WriteNewListen(listen_db, &listen)
-
-		// Mark that we have written a new entry.
+	if first {
+		UpdateDbWriteListen(listen_db, currently_playing, user_id)
 		last_written.last_recorded_play = currently_playing
 		last_written.written = true
+	} else {
+		ClearWrittenOnProgressDecrease(currently_playing, last_written)
+
+		if IsNewListen(currently_playing, last_written) {
+			UpdateDbWriteListen(listen_db, currently_playing, user_id)
+
+			// Mark that we have written a new entry.
+			last_written.last_recorded_play = currently_playing
+			last_written.written = true
+		}
 	}
+
 }
 
 func TrackUser(wg *sync.WaitGroup, token universe.Token, listen_db *sql.DB, interval_s int) {
@@ -112,14 +126,19 @@ func TrackUser(wg *sync.WaitGroup, token universe.Token, listen_db *sql.DB, inte
 		// State maintained over each call to determine if the same track is seen in subsequent calls.
 		var last_written LastWritten
 		last_written.written = false
+		first := true
 		for {
 			select {
 			case <-ticker.C:
-				CheckUserCurrentListen(&client, listen_db, token.User_id, &last_written)
+				CheckUserCurrentListen(&client, listen_db, token.User_id, &last_written, first)
 			case <-quit:
 				ticker.Stop()
 				fmt.Println("Ticker stopped")
 				return
+			}
+
+			if first {
+				first = false
 			}
 		}
 	}()
