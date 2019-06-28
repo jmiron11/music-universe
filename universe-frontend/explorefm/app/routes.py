@@ -1,10 +1,11 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db, basic_auth
 from app.forms import LoginForm, RegistrationForm
 from app.models import User, Token
 from app.spotify import get_authorize_url, get_access_token
 from werkzeug.urls import url_parse
+import time
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -113,6 +114,13 @@ def authcallback():
 
     return redirect(url_for('user', username=current_user.username))
 
-@app.route('/user/<username>/tracks')
-def user_tracks(t_start, t_end, aggregate=True):
-    return {}
+@app.route('/user/<username>/tracks', methods=['GET', 'POST'])
+def user_tracks(username):
+    t_start = int(request.args.get('t_start', default=time.time()))
+    t_end = int(request.args.get('t_end', default=time.time() - 24*60*60))
+
+    return jsonify(current_user.get_tracks(t_start, t_end, aggregate=True))
+
+@app.route('/whoami')
+def who_am_i():
+    return current_user.username

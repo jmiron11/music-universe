@@ -14,14 +14,13 @@
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:500&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet"> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- TODO: Replace with our own compilation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="/static/js/react.development.js"></script>
+    <script src="/static/js/react-dom.development.js"></script>
 </head>
 
 <!-- Navigation -->
 <body>
+    <script type="text/javascript">var current_user = "{{ current_user.username }}";</script> <!-- Initial data passed to react app -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -56,11 +55,9 @@
     {% endwith %}
     {% block content %}{% endblock %}
     
-    <script
-      src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
-      crossorigin
-    />
+    <script src="/static/js/react-bootstrap.min.js"/>
     <script src="https://use.fontawesome.com/7d6346c2db.js"></script>
+    <script src="/static/dist/js/bundle.js"></script>
 </body>
 
 <!-- Footer -->

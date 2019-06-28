@@ -1,7 +1,7 @@
 from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, and_
 from sqlalchemy.orm import joinedload
 from datetime import datetime
 
@@ -51,7 +51,7 @@ class User(UserMixin, db.Model):
         formatted_listens = []
         for l in recent_listens:
             formatted_listens.append({
-                'time': l.time.strftime("%w %b %-I:%-M %p"), # TODO(justinmiron): Timezone conversion from UTC
+                'time': l.time.strftime("%w %b %-I:%M %p"), # TODO(justinmiron): Timezone conversion from UTC
                 'track': l.track.name,
                 'artist': l.track.artist.name
             })
@@ -71,11 +71,36 @@ class User(UserMixin, db.Model):
     def get_unique_albums(self):
         return db.session.query(User.listen, Track).filter(Listen.track_id == Track.id).group_by(Track.album_id).count()
 
-
     def get_unique_artists(self):
         return db.session.query(User.listen, Track).filter(Listen.track_id == Track.id).group_by(Track.artist_id).count()
 
+    # start_t and end_t are seconds since epoch
+    def get_tracks(self, start_t, end_t, limit=5, aggregate=True):
+        d = db.session.query(
+            Listen, func.count(Track.id).label('count')
+        ).filter(and_(
+            Listen.user_id == self.id,
+            Listen.time > datetime.fromtimestamp(start_t),
+            Listen.time < datetime.fromtimestamp(end_t),
+            Listen.track_id == Track.id)
+        ).group_by(
+            Track.id
+        ).order_by(
+            desc('count'),
+            Listen.track_id
+        ).limit(limit).all()
 
+
+        tracks = []
+        for a in d:
+            print(datetime.fromtimestamp(start_t), a.Listen.time, datetime.fromtimestamp(end_t))
+            tracks.append({
+                'artist': a.Listen.track.artist.name,
+                'track': a.Listen.track.name,
+                'count': a.count
+            })
+
+        return tracks
 
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
