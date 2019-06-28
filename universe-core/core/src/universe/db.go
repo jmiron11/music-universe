@@ -1,4 +1,4 @@
-package main
+package universe
 
 import (
 	"database/sql"
@@ -37,7 +37,7 @@ func GetAllTokens(db *sql.DB) []Token {
 	i := 0
 	for results.Next() {
 		tkns = append(tkns, Token{})
-		err = results.Scan(&tkns[i].id, &tkns[i].access_token, &tkns[i].token_type, &tkns[i].refresh_token, &tkns[i].user_id)
+		err = results.Scan(&tkns[i].Id, &tkns[i].Access_token, &tkns[i].Token_type, &tkns[i].Refresh_token, &tkns[i].User_id)
 		if err != nil {
 			panic(err.Error()) // proper error handling instead of panic in your app
 		}
@@ -134,7 +134,7 @@ func WriteTrackGetId(db *sql.DB, artist_id int, album_id int, name string) int {
 }
 
 func WriteNewListen(db *sql.DB, listen *Listen) {
-	_, err := db.Query("INSERT INTO listen (time, track_id, user_id) VALUES (?, ?, ?)", listen.listen_time, listen.track_id, listen.user_id)
+	_, err := db.Query("INSERT INTO listen (time, track_id, user_id) VALUES (?, ?, ?)", listen.Listen_time, listen.Track_id, listen.User_id)
 	if err != nil {
 		panic(err.Error())
 	}

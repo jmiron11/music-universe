@@ -1,4 +1,4 @@
-package main
+package universe
 
 import (
 	"fmt"
@@ -9,12 +9,12 @@ import (
 const redirectURI = "http://localhost:5000/authcallback"
 
 type CurrentlyPlaying struct {
-	is_playing  bool   `json:"is_playing"`
-	track       string `json:"track"`
-	artist      string `json:"artist"`
-	album       string `json:"album"`
-	duration_ms int    `json:"duration_ms"`
-	progress_ms int    `json:"progress_ms"`
+	Is_playing  bool   `json:"is_playing"`
+	Track       string `json:"track"`
+	Artist      string `json:"artist"`
+	Album       string `json:"album"`
+	Duration_ms int    `json:"duration_ms"`
+	Progress_ms int    `json:"progress_ms"`
 }
 
 func GetTruncated(s string, max_size int) string {
@@ -27,12 +27,12 @@ func GetTruncated(s string, max_size int) string {
 
 func CreateCurrentlyPlaying(cp *spotify.CurrentlyPlaying) CurrentlyPlaying {
 	var new_cp CurrentlyPlaying
-	new_cp.is_playing = true
-	new_cp.track = GetTruncated(cp.Item.Name, 100)
-	new_cp.artist = GetTruncated(cp.Item.Artists[0].Name, 100)
-	new_cp.album = GetTruncated(cp.Item.Album.Name, 100)
-	new_cp.progress_ms = cp.Progress
-	new_cp.duration_ms = cp.Item.Duration
+	new_cp.Is_playing = true
+	new_cp.Track = GetTruncated(cp.Item.Name, 100)
+	new_cp.Artist = GetTruncated(cp.Item.Artists[0].Name, 100)
+	new_cp.Album = GetTruncated(cp.Item.Album.Name, 100)
+	new_cp.Progress_ms = cp.Progress
+	new_cp.Duration_ms = cp.Item.Duration
 
 	return new_cp
 }
