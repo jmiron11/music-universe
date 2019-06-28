@@ -130,6 +130,7 @@ class Track(db.Model):
     name = db.Column(db.String(100))
     artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
     album_id = db.Column(db.Integer, db.ForeignKey('album.id'))
+    spotify_id = db.Column(db.String(20))
 
     artist = db.relationship('Artist', lazy=True)
     album = db.relationship('Album', lazy=True)
@@ -138,10 +139,12 @@ class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
+    spotify_id = db.Column(db.String(20))
 
 class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
+    spotify_id = db.Column(db.String(20))
 
 class Listen(db.Model):
     id = db.Column(db.Integer, primary_key=True)

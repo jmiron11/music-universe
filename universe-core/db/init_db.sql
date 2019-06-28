@@ -48,6 +48,7 @@ CREATE TABLE `track` (
   `name` VARCHAR(100) NULL DEFAULT NULL,
   `artist_id` INTEGER NULL DEFAULT NULL,
   `album_id` INTEGER NULL DEFAULT NULL,
+  `spotify_id` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -61,6 +62,7 @@ DROP TABLE IF EXISTS `artist`;
 CREATE TABLE `artist` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `name` VARCHAR(100) NULL DEFAULT NULL,
+  `spotify_id` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -75,6 +77,7 @@ CREATE TABLE `album` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `name` VARCHAR(100) NULL DEFAULT NULL,
   `artist_id` INTEGER NULL DEFAULT NULL,
+  `spotify_id` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -195,12 +198,12 @@ ALTER TABLE `album_art` ADD FOREIGN KEY (id) REFERENCES `album` (`id`);
 -- ('','','','');
 -- INSERT INTO `token` (`id`,`access_token`,`token_type`,`refresh_token`,`user_id`) VALUES
 -- ('','','','','');
--- INSERT INTO `track` (`id`,`name`,`artist_id`,`album_id`) VALUES
--- ('','','','');
--- INSERT INTO `artist` (`id`,`name`) VALUES
--- ('','');
--- INSERT INTO `album` (`id`,`name`,`artist_id`) VALUES
+-- INSERT INTO `track` (`id`,`name`,`artist_id`,`album_id`,`spotify_id`) VALUES
+-- ('','','','','');
+-- INSERT INTO `artist` (`id`,`name`,`spotify_id`) VALUES
 -- ('','','');
+-- INSERT INTO `album` (`id`,`name`,`artist_id`,`spotify_id`) VALUES
+-- ('','','','');
 -- INSERT INTO `listen` (`id`,`time`,`track_id`,`user_id`) VALUES
 -- ('','','','');
 -- INSERT INTO `user_listen` (`id`,`user_id`,`track_id`,`progress`) VALUES

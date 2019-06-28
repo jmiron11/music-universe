@@ -31,19 +31,28 @@ type Listen struct {
 }
 
 type Track struct {
-	Id        int    `json:"id"`
-	Name      string `json:"name`
-	Artist_id int    `json:"artist_id"`
-	Album_id  int    `json"album_id"`
+	Id         int    `json:"id"`
+	Name       string `json:"name`
+	Artist_id  int    `json:"artist_id"`
+	Album_id   int    `json"album_id"`
+	Spotify_id string `json:"spotify_id"`
 }
 
 type Artist struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	Spotify_id string `json:"spotify_id"`
 }
 
 type Album struct {
-	Id        int    `json:"id"`
-	Name      string `json:"name"`
-	Artist_id int    `json:"artist_id"`
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	Artist_id  int    `json:"artist_id"`
+	Spotify_id string `json:"spotify_id"`
+}
+
+type AlbumArt struct {
+	Id     int    `json:"id"`
+	Small  []byte `json:"small"`
+	Medium []byte `json:"medium"`
 }
