@@ -44,7 +44,7 @@ class TopTracks extends React.Component {
 
     newTop = []
     var self = this
-    var request = '/user/' + current_user + '/tracks?t_start=' + t_start.toString() + '&t_end=' + t_end.toString()
+    var request = '/user/' + user + '/tracks?t_start=' + t_start.toString() + '&t_end=' + t_end.toString()
     axios.get(request).then(function(response) {
       l = response['data']
       for (let i = 0; i < l.length; ++i) {
@@ -101,6 +101,106 @@ class TopTracks extends React.Component {
     		{ this.state.top }
     	</div>
     );
+  }
+}
+
+class Bio extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+                    inEditMode: false,
+                    bio: "..."
+                 };
+  }
+
+
+
+  componentDidMount(){
+    var self = this
+    var request = '/user/' + user + '/bio/'
+    axios.get(request).then(function(response) {
+      self.state.bio = response['data']
+      self.setState(self.state)
+    })
+  }
+
+  renderNoBio(isCurrentUser) {
+    if (isCurrentUser) {
+      return (
+          <div className="bio">
+              <h6>{ "Add a bio to tell people about you and the music you love." }</h6>
+          <button className="bio-edit" onClick={ this.activeEditMode }>Add Bio</button>
+          </div>
+        )
+    } else {
+      return ("")
+    }
+  }
+
+  activeEditMode = (event) => {
+    this.state.inEditMode = true
+    this.setState(this.state)
+  }
+
+  disableEditModeClearBio = (event) => {
+    this.state.inEditMode = false
+    document.getElementById("bio-edit-form").value = ""
+    this.setState(this.state)
+  }
+
+  disableEditModeSaveBio = (event) => {
+    var new_bio = document.getElementById("bio-edit-form").value
+    this.state.inEditMode = false
+    this.state.bio = new_bio
+
+    this.setState(this.state)
+
+    var self = this
+    var request = '/update/bio/?bio=' + new_bio
+    axios.get(request)
+  }
+
+  renderBio(isCurrentUser) {
+    if (isCurrentUser) {
+      return (
+        <div className="bio">
+          <h6>{ this.state.bio }</h6>
+          <button className="bio-edit" onClick={ this.activeEditMode }>Edit Bio</button>
+        </div>
+      )
+    } else {
+      return (
+        <div className="bio">
+          <h6>{ this.state.bio }</h6>
+        </div>
+      )
+    }
+  }
+
+  renderEditMode() {
+    return (
+      <div class="bio-edit-area">
+      <textarea id="bio-edit-form" className="bio-edit-form" type="text" max-length="500">{this.state.bio}
+      </textarea>
+      <div class="bio-button-row">
+        <button className="bio-button" onClick={ this.disableEditModeClearBio }>Cancel</button>
+        <button className="bio-button" onClick={ this.disableEditModeSaveBio }>Save</button>
+      </div>
+      </div>
+    )
+  }
+
+  render() {
+    var isCurrentUser = (user == current_user)
+    if (this.state.inEditMode) {
+      return this.renderEditMode()
+    } else {
+      if (this.state.bio == "")
+        return this.renderNoBio(isCurrentUser)
+      else {
+        return this.renderBio(isCurrentUser)
+      }
+    }
   }
 }
 
@@ -572,3 +672,9 @@ domContainer = document.getElementById("timezone-form")
 if (domContainer != null) {
   ReactDOM.render(e(TimezoneForm), domContainer);
 }
+
+domContainer = document.getElementById("bio")
+if (domContainer != null) {
+  ReactDOM.render(e(Bio), domContainer);
+}
+

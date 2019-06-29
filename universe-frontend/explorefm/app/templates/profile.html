@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <script type="text/javascript">
+        var user = "{{ user.username }}";
+    </script> <!-- Initial data passed to react app -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 col-xs-12 col-sm-12">
@@ -10,28 +13,27 @@
                     <div class="profile-info">
                         <div class="profile-left">
                             <div class="album-image"></div>
-
                         </div>
                         <div class="profile-right">
                             <div style="padding: 15px 0 0 0"></div>
                             <div class="album-row-username">
-                            <h1>{{ current_user.username }}</h1>
+                            <h1>{{ user.username }}</h1>
                             </div>
                             <div class="profile-stats">
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ current_user.get_total_listens() }}</div>
+                                    <div class="profile-stat-number">{{ user.get_total_listens() }}</div>
                                     <div class="profile-stat-name">Listens</div>
                                 </div>
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ current_user.get_unique_tracks() }}</div>
+                                    <div class="profile-stat-number">{{ user.get_unique_tracks() }}</div>
                                     <div class="profile-stat-name">Tracks</div>
                                 </div>
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ current_user.get_unique_albums() }}</div>
+                                    <div class="profile-stat-number">{{ user.get_unique_albums() }}</div>
                                     <div class="profile-stat-name">Albums</div>
                                 </div>
                                 <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ current_user.get_unique_artists() }}</div>
+                                    <div class="profile-stat-number">{{ user.get_unique_artists() }}</div>
                                     <div class="profile-stat-name">Artists</div>
                                 </div>
                                 <div class="profile-mini-link">
@@ -47,48 +49,46 @@
                 <div class="profile-data"> <!-- Profile data -->
                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                         <div class="profile-left">
-                            <div class="bio">
-                                <h6>{{ current_user.get_bio() }}</h6>
+                            <div id="bio"></div>
+                            {% set highlights = user.get_highlights() %}
+                            {% if highlights|length > 0 %}
+                            <div class="profile-section-header">
+                            <h6>Highlighted Music</h6>
                             </div>
-                                {% set highlights = current_user.get_highlights() %}
-                                {% if highlights|length > 0 %}
-                                <div class="profile-section-header">
-                                <h6>Highlighted Music</h6>
-                                </div>
-                                <div class="highlighted-music">
-                                    {% for highlight in highlights %}
-                                    <div class="music-highlight">
-                                        {% if 'track' in highlight %}
-                                        <div class="highlight-img"></div>
-                                        <div class="highlight-desc">
-                                            <div class="highlight-icon"></div>
-                                            <div class="highlight-txt">
-                                                <h6 style="font-size: 15px">{{ highlight['track'] }}</h6>
-                                                <h6 style="font-size: 11px">{{ highlight['album'] }}</h6>
-                                                <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
-                                            </div>
+                            <div class="highlighted-music">
+                                {% for highlight in highlights %}
+                                <div class="music-highlight">
+                                    {% if 'track' in highlight %}
+                                    <div class="highlight-img"></div>
+                                    <div class="highlight-desc">
+                                        <div class="highlight-icon"></div>
+                                        <div class="highlight-txt">
+                                            <h6 style="font-size: 15px">{{ highlight['track'] }}</h6>
+                                            <h6 style="font-size: 11px">{{ highlight['album'] }}</h6>
+                                            <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
                                         </div>
-                                        {% elif 'album' in highlight %}
-                                        <div class="highlight-img"></div>
-                                        <div class="highlight-desc">
-                                            <div class="highlight-icon"></div>
-                                            <div class="highlight-txt">
-                                                <h6 style="font-size: 15px">{{ highlight['album'] }}</h6>
-                                                <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
-                                            </div>
+                                    </div>
+                                    {% elif 'album' in highlight %}
+                                    <div class="highlight-img"></div>
+                                    <div class="highlight-desc">
+                                        <div class="highlight-icon"></div>
+                                        <div class="highlight-txt">
+                                            <h6 style="font-size: 15px">{{ highlight['album'] }}</h6>
+                                            <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
                                         </div>
-                                        {% elif 'artist' in highlight %}
-                                        <div class="highlight-img"></div>
-                                        <div class="highlight-desc">
-                                            <div class="highlight-icon"></div>
-                                            <div class="highlight-txt">
-                                                <h6 style="font-size: 15px">{{ highlight['artist'] }}</h6>
-                                            </div>
+                                    </div>
+                                    {% elif 'artist' in highlight %}
+                                    <div class="highlight-img"></div>
+                                    <div class="highlight-desc">
+                                        <div class="highlight-icon"></div>
+                                        <div class="highlight-txt">
+                                            <h6 style="font-size: 15px">{{ highlight['artist'] }}</h6>
                                         </div>
-                                        {% endif %}
-                                    </div> 
-                                    {% endfor %}
-                                {% endif %}
+                                    </div>
+                                    {% endif %}
+                                </div> 
+                                {% endfor %}
+                            {% endif %}
                             </div>
                             <div id="top-tracks"></div> <!-- Top Tracks react component -->
                         </div> <!-- Profile left end -->
@@ -99,7 +99,7 @@
                                 <h6>Listens</h6>
                             </div>
                             <div style="padding-bottom: 10px"></div>
-                            {% for l in current_user.get_recent_listens(10) %}
+                            {% for l in user.get_recent_listens(10) %}
                             {% if (loop.index + 1) % 2 == 0 %}
                             <div class="listen-entry">
                             {% else %}

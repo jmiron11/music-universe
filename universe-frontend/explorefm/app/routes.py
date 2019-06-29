@@ -58,7 +58,6 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/user/<username>')
-@login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('profile.html', user=user)
@@ -125,8 +124,9 @@ def authcallback():
 def user_tracks(username):
     t_start = int(request.args.get('t_start', default=time.time()))
     t_end = int(request.args.get('t_end', default=time.time() - 24*60*60))
+    user = User.query.filter_by(username=username).first_or_404()
 
-    return jsonify(current_user.get_tracks(t_start, t_end, aggregate=True))
+    return jsonify(user.get_tracks(t_start, t_end, aggregate=True))
 
 @app.route('/whoami')
 def who_am_i():
@@ -142,7 +142,19 @@ def spotify_connected():
 def updatetimezone(timezone):
     timezone = timezone.replace("-", "/")
     current_user.set_timezone(timezone)
-    return ""
+    return "" # TODO(justinmiron): Return and handle status code.
+
+@app.route('/user/<username>/bio/', methods=['GET', 'POST'])
+def bio(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return user.get_bio()
+
+@app.route('/update/bio/')
+@login_required
+def update_bio():
+    new_bio = str(request.args.get('bio', default=""))
+    current_user.set_bio(new_bio)
+    return "" # TODO(justinmiron): Return and handle status code.
 
 # @app.route('/timezone')
 # @login_required

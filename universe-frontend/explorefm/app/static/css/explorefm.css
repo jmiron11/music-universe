@@ -217,23 +217,6 @@ a { color: inherit; }
   padding: 0 5% 0 5%;
 }
 
-.bio {
-  margin: 0 10% 0 10%;
-  padding: 0 0 0 0;
-  border: 1px solid #b9bbbe;
-  background: #d0d2d4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-}
-
-.bio h6 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 15px;
-}
-
 .profile-section-header {
   padding-top: 10px;
   padding-bottom: 5px;
@@ -498,4 +481,56 @@ a { color: inherit; }
 .timezone-form {
   line-height: 40px;
   border: 0;
+}
+
+/**** Bio ****/
+
+
+.bio {
+  margin: 0 10% 0 10%;
+  padding: 0 0 0 0;
+  border: 1px solid #b9bbbe;
+  background: #d0d2d4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.bio h6 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+
+.bio-edit {
+  color: blue;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
+.bio-edit-form {
+  min-height: 160px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.bio-button-row {
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.bio-edit-area {
+  margin: 0 10% 0 10%;
+  padding: 5px;
+  background: #d0d2d4;
 }

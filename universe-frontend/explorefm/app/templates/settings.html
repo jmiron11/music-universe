@@ -9,23 +9,26 @@
 	</div>
 	<div class="settings-data">
 		<h1 class="settings-header">Listen Tracking</h1>
-		<div class="settings-fields">
-			<!-- Connect to spotify -->
-			{% if current_user.is_spotified() %}
-			<a style="display:block" href="{{ url_for('spotifydisconnect') }}">
-			<div class="spotify-connect-button">
-				<h2>Disconnect from Spotify</h2>
-				<i class="fa fa-spotify fa-3x spotify-icon" aria-hidden="true"></i>
+		<div class="settings-row">
+			<h2>Spotify</h2>
+			<div class="settings-fields">
+				<!-- Connect to spotify -->
+				{% if current_user.is_spotified() %}
+				<a style="display:block" href="{{ url_for('spotifydisconnect') }}">
+				<div class="spotify-connect-button">
+					<h2>Disconnect from Spotify</h2>
+					<i class="fa fa-spotify fa-3x spotify-icon" aria-hidden="true"></i>
+				</div>
+				</a>
+				{% else %}
+				<a style="display:block" href="{{ url_for('spotifyconnect') }}">
+				<div class="spotify-connect-button">
+					<h2>Connect to Spotify</h2>
+					<i class="fa fa-spotify fa-3x spotify-icon" aria-hidden="true"></i>
+				</div>
+				</a>
+				{% endif %}
 			</div>
-			</a>
-			{% else %}
-			<a style="display:block" href="{{ url_for('spotifyconnect') }}">
-			<div class="spotify-connect-button">
-				<h2>Connect to Spotify</h2>
-				<i class="fa fa-spotify fa-3x spotify-icon" aria-hidden="true"></i>
-			</div>
-			</a>
-			{% endif %}
 		</div>
 
 		<h1 class="settings-header">Time</h1>

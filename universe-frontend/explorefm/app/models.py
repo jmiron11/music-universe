@@ -32,9 +32,20 @@ class User(UserMixin, db.Model):
 
     def get_bio(self):
         if not self.bio:
-            return "I like music."
+            return ""
         else:
             return self.bio[0].get_bio()
+
+    def set_bio(self, bio):
+        if len(self.bio) > 0:
+            print('Setting the bio to: %s' % bio)
+            self.bio[0].bio = bio
+            db.session.commit()
+        else:
+            u_bio = ProfileBio(bio=bio, user_id=self.id)
+            db.session.add(u_bio)
+            db.session.commit()
+
 
     def get_highlights(self):
         formatted_highlight = []

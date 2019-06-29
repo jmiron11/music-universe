@@ -177,7 +177,7 @@ function (_React$Component) {
 
       newTop = [];
       var self = this;
-      var request = '/user/' + current_user + '/tracks?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
+      var request = '/user/' + user + '/tracks?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
       axios.get(request).then(function (response) {
         l = response['data'];
 
@@ -246,20 +246,143 @@ function (_React$Component) {
   return TopTracks;
 }(React.Component);
 
-var TimezoneForm =
+var Bio =
 /*#__PURE__*/
 function (_React$Component2) {
-  _inherits(TimezoneForm, _React$Component2);
+  _inherits(Bio, _React$Component2);
+
+  function Bio(props) {
+    var _this2;
+
+    _classCallCheck(this, Bio);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
+
+    _this2.activeEditMode = function (event) {
+      _this2.state.inEditMode = true;
+
+      _this2.setState(_this2.state);
+    };
+
+    _this2.disableEditModeClearBio = function (event) {
+      _this2.state.inEditMode = false;
+      document.getElementById("bio-edit-form").value = "";
+
+      _this2.setState(_this2.state);
+    };
+
+    _this2.disableEditModeSaveBio = function (event) {
+      var new_bio = document.getElementById("bio-edit-form").value;
+      _this2.state.inEditMode = false;
+      _this2.state.bio = new_bio;
+
+      _this2.setState(_this2.state);
+
+      var self = _assertThisInitialized(_this2);
+
+      var request = '/update/bio/?bio=' + new_bio;
+      axios.get(request);
+    };
+
+    _this2.state = {
+      inEditMode: false,
+      bio: "..."
+    };
+    return _this2;
+  }
+
+  _createClass(Bio, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var self = this;
+      var request = '/user/' + user + '/bio/';
+      axios.get(request).then(function (response) {
+        self.state.bio = response['data'];
+        self.setState(self.state);
+      });
+    }
+  }, {
+    key: "renderNoBio",
+    value: function renderNoBio(isCurrentUser) {
+      if (isCurrentUser) {
+        return React.createElement("div", {
+          className: "bio"
+        }, React.createElement("h6", null, "Add a bio to tell people about you and the music you love."), React.createElement("button", {
+          className: "bio-edit",
+          onClick: this.activeEditMode
+        }, "Add Bio"));
+      } else {
+        return "";
+      }
+    }
+  }, {
+    key: "renderBio",
+    value: function renderBio(isCurrentUser) {
+      if (isCurrentUser) {
+        return React.createElement("div", {
+          className: "bio"
+        }, React.createElement("h6", null, this.state.bio), React.createElement("button", {
+          className: "bio-edit",
+          onClick: this.activeEditMode
+        }, "Edit Bio"));
+      } else {
+        return React.createElement("div", {
+          className: "bio"
+        }, React.createElement("h6", null, this.state.bio));
+      }
+    }
+  }, {
+    key: "renderEditMode",
+    value: function renderEditMode() {
+      return React.createElement("div", {
+        "class": "bio-edit-area"
+      }, React.createElement("textarea", {
+        id: "bio-edit-form",
+        className: "bio-edit-form",
+        type: "text",
+        "max-length": "500"
+      }, this.state.bio), React.createElement("div", {
+        "class": "bio-button-row"
+      }, React.createElement("button", {
+        className: "bio-button",
+        onClick: this.disableEditModeClearBio
+      }, "Cancel"), React.createElement("button", {
+        className: "bio-button",
+        onClick: this.disableEditModeSaveBio
+      }, "Save")));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var isCurrentUser = user == current_user;
+
+      if (this.state.inEditMode) {
+        return this.renderEditMode();
+      } else {
+        if (this.state.bio == "") return this.renderNoBio(isCurrentUser);else {
+          return this.renderBio(isCurrentUser);
+        }
+      }
+    }
+  }]);
+
+  return Bio;
+}(React.Component);
+
+var TimezoneForm =
+/*#__PURE__*/
+function (_React$Component3) {
+  _inherits(TimezoneForm, _React$Component3);
 
   function TimezoneForm(props) {
-    var _this2;
+    var _this3;
 
     _classCallCheck(this, TimezoneForm);
 
-    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
 
-    _this2.updateTimezone = function (event) {
-      _this2.setState({
+    _this3.updateTimezone = function (event) {
+      _this3.setState({
         timezone: event.target.value
       });
 
@@ -267,10 +390,10 @@ function (_React$Component2) {
       axios.post(request);
     };
 
-    _this2.state = {
+    _this3.state = {
       timezone: "America/Chicago"
     };
-    return _this2;
+    return _this3;
   }
 
   _createClass(TimezoneForm, [{
@@ -1157,6 +1280,12 @@ domContainer = document.getElementById("timezone-form");
 
 if (domContainer != null) {
   ReactDOM.render(e(TimezoneForm), domContainer);
+}
+
+domContainer = document.getElementById("bio");
+
+if (domContainer != null) {
+  ReactDOM.render(e(Bio), domContainer);
 }
 
 /***/ }),
