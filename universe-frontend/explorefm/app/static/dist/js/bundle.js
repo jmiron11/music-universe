@@ -276,7 +276,9 @@ function (_React$Component2) {
   _createClass(TimezoneForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.state.timezone = initial_timezone;
+      this.setState({
+        timezone: initial_timezone
+      });
     }
   }, {
     key: "render",

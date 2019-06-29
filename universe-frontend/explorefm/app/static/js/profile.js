@@ -113,7 +113,10 @@ class TimezoneForm extends React.Component {
   }
 
   componentDidMount(){
-    this.state.timezone=initial_timezone
+    this.setState({ 
+      timezone: initial_timezone
+    })
+
   }
 
   updateTimezone = (event) => {
