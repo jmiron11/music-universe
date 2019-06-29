@@ -157,6 +157,20 @@ CREATE TABLE `album_art` (
 );
 
 -- ---
+-- Table 'settings'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `settings`;
+    
+CREATE TABLE `settings` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `timezone` VARCHAR(50) NULL DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -174,6 +188,7 @@ ALTER TABLE `profile_highlight` ADD FOREIGN KEY (album_id) REFERENCES `album` (`
 ALTER TABLE `profile_highlight` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 ALTER TABLE `profile_bio` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `album_art` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
+ALTER TABLE `settings` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 
 -- ---
 -- Table Properties
@@ -189,6 +204,7 @@ ALTER TABLE `album_art` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 -- ALTER TABLE `profile_highlight` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `profile_bio` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `album_art` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `settings` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -214,3 +230,5 @@ ALTER TABLE `album_art` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 -- ('','','');
 -- INSERT INTO `album_art` (`id`,`path_medium`,`path_small`,`album_id`) VALUES
 -- ('','','','');
+-- INSERT INTO `settings` (`id`,`timezone`,`user_id`) VALUES
+-- ('','','');

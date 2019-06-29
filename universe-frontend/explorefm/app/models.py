@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     token = db.relationship('Token', backref='user', lazy=True)
     highlights = db.relationship('ProfileHighlight', lazy=True)
     listen = db.relationship('Listen', lazy=True, order_by="desc(Listen.time)")
+    settings = db.relationship('Settings', lazy=True)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -105,6 +106,38 @@ class User(UserMixin, db.Model):
 
         return tracks
 
+    def is_spotified(self):
+        if len(self.token) > 0 and self.token[0].refresh_token is not None:
+            return True
+        else:
+            return False
+
+    def unspotify(self):
+        if len(self.token) > 0 and self.token[0].refresh_token is not None:
+            self.token[0].refresh_token = None
+            self.token[0].access_token = None
+            db.session.commit()
+
+    def get_timezone(self):
+        if len(self.settings) > 0:
+            return self.settings[0].timezone
+        else:
+            u_settings = Settings(timezone='UTC', user_id=self.id)
+            db.session.add(u_settings)
+            db.session.commit()
+            return 'UTC'
+
+    def set_timezone(self, new_timezone):
+        if len(self.settings) > 0:
+            print('Setting timezone')
+            self.settings[0].timezone = new_timezone
+            db.session.commit()
+        else:
+            u_settings = Settings(timezone='UTC', user_id=self.id)
+            db.session.add(u_settings)
+            db.session.commit()
+            return 'UTC'
+
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
 
@@ -175,3 +208,9 @@ class AlbumArt(db.Model):
     path_small = db.Column(db.String(300), unique=True)
     path_medium = db.Column(db.String(300), unique=True)
     album_id = db.Column(db.Integer, db.ForeignKey(Album.id), unique=True)
+
+
+class Settings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timezone = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)

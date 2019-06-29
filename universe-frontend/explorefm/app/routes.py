@@ -94,6 +94,13 @@ def team():
 def spotifyconnect():
     return redirect(get_authorize_url())
 
+@app.route('/spotifydisconnect')
+@login_required
+def spotifydisconnect():
+    current_user.unspotify()
+    return redirect(url_for('settings'))
+
+
 @app.route('/authcallback')
 @login_required
 def authcallback():
@@ -112,7 +119,7 @@ def authcallback():
             user_token_data.refresh_token = token['refresh_token']
             db.session.commit()
 
-    return redirect(url_for('user', username=current_user.username))
+    return redirect(url_for('settings'))
 
 @app.route('/user/<username>/tracks', methods=['GET', 'POST'])
 def user_tracks(username):
@@ -124,3 +131,20 @@ def user_tracks(username):
 @app.route('/whoami')
 def who_am_i():
     return current_user.username
+
+@app.route('/spotifyconnceted')
+@login_required
+def spotify_connected(): 
+    return current_user.is_spotified()
+
+@app.route('/updatetimezone/<timezone>/', methods=['GET', 'POST'])
+@login_required
+def updatetimezone(timezone):
+    timezone = timezone.replace("-", "/")
+    current_user.set_timezone(timezone)
+    return ""
+
+# @app.route('/timezone')
+# @login_required
+# def timezone():
+#     return current_user.get_timezone()

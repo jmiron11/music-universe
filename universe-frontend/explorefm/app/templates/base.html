@@ -22,7 +22,7 @@
 <body>
     <script type="text/javascript">
         var current_user = "{{ current_user.username }}";
-        var img_endpoint = "{{ config.ALBUM_ART_SERVING }}"
+        var img_endpoint = "{{ config.ALBUM_ART_SERVING }}";
     </script> <!-- Initial data passed to react app -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -47,6 +47,8 @@
       </div>
     </nav>
 
+    <div class="content">
+
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul>
@@ -57,6 +59,8 @@
     {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
+
+    </div>
     
     <script src="/static/js/react-bootstrap.min.js"/>
     <script src="https://use.fontawesome.com/7d6346c2db.js"></script>

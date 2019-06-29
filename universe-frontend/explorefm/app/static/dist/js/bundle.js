@@ -246,8 +246,916 @@ function (_React$Component) {
   return TopTracks;
 }(React.Component);
 
+var TimezoneForm =
+/*#__PURE__*/
+function (_React$Component2) {
+  _inherits(TimezoneForm, _React$Component2);
+
+  function TimezoneForm(props) {
+    var _this2;
+
+    _classCallCheck(this, TimezoneForm);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
+
+    _this2.updateTimezone = function (event) {
+      _this2.setState({
+        timezone: event.target.value
+      });
+
+      var request = '/updatetimezone/' + event.target.value.replace(/\//g, "-") + "/";
+      axios.post(request);
+    };
+
+    _this2.state = {
+      timezone: "America/Chicago"
+    };
+    return _this2;
+  }
+
+  _createClass(TimezoneForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.state.timezone = initial_timezone;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement("div", {
+        className: "timezone-form"
+      }, React.createElement("select", {
+        id: "tz-form",
+        onChange: this.updateTimezone,
+        value: this.state.timezone
+      }, React.createElement("option", {
+        value: "Pacific/Midway"
+      }, "(GMT-11) Pacific/Midway"), React.createElement("option", {
+        value: "Pacific/Niue"
+      }, "(GMT-11) Pacific/Niue"), React.createElement("option", {
+        value: "Pacific/Pago_Pago"
+      }, "(GMT-11) Pacific/Pago_Pago"), React.createElement("option", {
+        value: "Pacific/Honolulu"
+      }, "(GMT-10) Pacific/Honolulu"), React.createElement("option", {
+        value: "Pacific/Rarotonga"
+      }, "(GMT-10) Pacific/Rarotonga"), React.createElement("option", {
+        value: "Pacific/Tahiti"
+      }, "(GMT-10) Pacific/Tahiti"), React.createElement("option", {
+        value: "Pacific/Marquesas"
+      }, "(GMT-09) Pacific/Marquesas"), React.createElement("option", {
+        value: "America/Adak"
+      }, "(GMT-09) America/Adak"), React.createElement("option", {
+        value: "Pacific/Gambier"
+      }, "(GMT-09) Pacific/Gambier"), React.createElement("option", {
+        value: "America/Anchorage"
+      }, "(GMT-08) America/Anchorage"), React.createElement("option", {
+        value: "America/Juneau"
+      }, "(GMT-08) America/Juneau"), React.createElement("option", {
+        value: "America/Metlakatla"
+      }, "(GMT-08) America/Metlakatla"), React.createElement("option", {
+        value: "America/Nome"
+      }, "(GMT-08) America/Nome"), React.createElement("option", {
+        value: "America/Sitka"
+      }, "(GMT-08) America/Sitka"), React.createElement("option", {
+        value: "America/Yakutat"
+      }, "(GMT-08) America/Yakutat"), React.createElement("option", {
+        value: "Pacific/Pitcairn"
+      }, "(GMT-08) Pacific/Pitcairn"), React.createElement("option", {
+        value: "America/Creston"
+      }, "(GMT-07) America/Creston"), React.createElement("option", {
+        value: "America/Dawson"
+      }, "(GMT-07) America/Dawson"), React.createElement("option", {
+        value: "America/Dawson_Creek"
+      }, "(GMT-07) America/Dawson_Creek"), React.createElement("option", {
+        value: "America/Fort_Nelson"
+      }, "(GMT-07) America/Fort_Nelson"), React.createElement("option", {
+        value: "America/Hermosillo"
+      }, "(GMT-07) America/Hermosillo"), React.createElement("option", {
+        value: "America/Los_Angeles"
+      }, "(GMT-07) America/Los_Angeles"), React.createElement("option", {
+        value: "America/Phoenix"
+      }, "(GMT-07) America/Phoenix"), React.createElement("option", {
+        value: "America/Tijuana"
+      }, "(GMT-07) America/Tijuana"), React.createElement("option", {
+        value: "America/Vancouver"
+      }, "(GMT-07) America/Vancouver"), React.createElement("option", {
+        value: "America/Whitehorse"
+      }, "(GMT-07) America/Whitehorse"), React.createElement("option", {
+        value: "America/Belize"
+      }, "(GMT-06) America/Belize"), React.createElement("option", {
+        value: "America/Boise"
+      }, "(GMT-06) America/Boise"), React.createElement("option", {
+        value: "America/Cambridge_Bay"
+      }, "(GMT-06) America/Cambridge_Bay"), React.createElement("option", {
+        value: "America/Chihuahua"
+      }, "(GMT-06) America/Chihuahua"), React.createElement("option", {
+        value: "America/Costa_Rica"
+      }, "(GMT-06) America/Costa_Rica"), React.createElement("option", {
+        value: "America/Denver"
+      }, "(GMT-06) America/Denver"), React.createElement("option", {
+        value: "America/Edmonton"
+      }, "(GMT-06) America/Edmonton"), React.createElement("option", {
+        value: "America/El_Salvador"
+      }, "(GMT-06) America/El_Salvador"), React.createElement("option", {
+        value: "America/Guatemala"
+      }, "(GMT-06) America/Guatemala"), React.createElement("option", {
+        value: "America/Inuvik"
+      }, "(GMT-06) America/Inuvik"), React.createElement("option", {
+        value: "America/Managua"
+      }, "(GMT-06) America/Managua"), React.createElement("option", {
+        value: "America/Mazatlan"
+      }, "(GMT-06) America/Mazatlan"), React.createElement("option", {
+        value: "America/Ojinaga"
+      }, "(GMT-06) America/Ojinaga"), React.createElement("option", {
+        value: "America/Regina"
+      }, "(GMT-06) America/Regina"), React.createElement("option", {
+        value: "America/Swift_Current"
+      }, "(GMT-06) America/Swift_Current"), React.createElement("option", {
+        value: "America/Tegucigalpa"
+      }, "(GMT-06) America/Tegucigalpa"), React.createElement("option", {
+        value: "America/Yellowknife"
+      }, "(GMT-06) America/Yellowknife"), React.createElement("option", {
+        value: "Pacific/Easter"
+      }, "(GMT-06) Pacific/Easter"), React.createElement("option", {
+        value: "Pacific/Galapagos"
+      }, "(GMT-06) Pacific/Galapagos"), React.createElement("option", {
+        value: "America/Atikokan"
+      }, "(GMT-05) America/Atikokan"), React.createElement("option", {
+        value: "America/Bahia_Banderas"
+      }, "(GMT-05) America/Bahia_Banderas"), React.createElement("option", {
+        value: "America/Bogota"
+      }, "(GMT-05) America/Bogota"), React.createElement("option", {
+        value: "America/Cancun"
+      }, "(GMT-05) America/Cancun"), React.createElement("option", {
+        value: "America/Cayman"
+      }, "(GMT-05) America/Cayman"), React.createElement("option", {
+        value: "America/Chicago"
+      }, "(GMT-05) America/Chicago"), React.createElement("option", {
+        value: "America/Eirunepe"
+      }, "(GMT-05) America/Eirunepe"), React.createElement("option", {
+        value: "America/Guayaquil"
+      }, "(GMT-05) America/Guayaquil"), React.createElement("option", {
+        value: "America/Indiana/Knox"
+      }, "(GMT-05) America/Indiana/Knox"), React.createElement("option", {
+        value: "America/Indiana/Tell_City"
+      }, "(GMT-05) America/Indiana/Tell_City"), React.createElement("option", {
+        value: "America/Jamaica"
+      }, "(GMT-05) America/Jamaica"), React.createElement("option", {
+        value: "America/Lima"
+      }, "(GMT-05) America/Lima"), React.createElement("option", {
+        value: "America/Matamoros"
+      }, "(GMT-05) America/Matamoros"), React.createElement("option", {
+        value: "America/Menominee"
+      }, "(GMT-05) America/Menominee"), React.createElement("option", {
+        value: "America/Merida"
+      }, "(GMT-05) America/Merida"), React.createElement("option", {
+        value: "America/Mexico_City"
+      }, "(GMT-05) America/Mexico_City"), React.createElement("option", {
+        value: "America/Monterrey"
+      }, "(GMT-05) America/Monterrey"), React.createElement("option", {
+        value: "America/North_Dakota/Beulah"
+      }, "(GMT-05) America/North_Dakota/Beulah"), React.createElement("option", {
+        value: "America/North_Dakota/Center"
+      }, "(GMT-05) America/North_Dakota/Center"), React.createElement("option", {
+        value: "America/North_Dakota/New_Salem"
+      }, "(GMT-05) America/North_Dakota/New_Salem"), React.createElement("option", {
+        value: "America/Panama"
+      }, "(GMT-05) America/Panama"), React.createElement("option", {
+        value: "America/Rainy_River"
+      }, "(GMT-05) America/Rainy_River"), React.createElement("option", {
+        value: "America/Rankin_Inlet"
+      }, "(GMT-05) America/Rankin_Inlet"), React.createElement("option", {
+        value: "America/Resolute"
+      }, "(GMT-05) America/Resolute"), React.createElement("option", {
+        value: "America/Rio_Branco"
+      }, "(GMT-05) America/Rio_Branco"), React.createElement("option", {
+        value: "America/Winnipeg"
+      }, "(GMT-05) America/Winnipeg"), React.createElement("option", {
+        value: "America/Anguilla"
+      }, "(GMT-04) America/Anguilla"), React.createElement("option", {
+        value: "America/Antigua"
+      }, "(GMT-04) America/Antigua"), React.createElement("option", {
+        value: "America/Aruba"
+      }, "(GMT-04) America/Aruba"), React.createElement("option", {
+        value: "America/Asuncion"
+      }, "(GMT-04) America/Asuncion"), React.createElement("option", {
+        value: "America/Barbados"
+      }, "(GMT-04) America/Barbados"), React.createElement("option", {
+        value: "America/Blanc-Sablon"
+      }, "(GMT-04) America/Blanc-Sablon"), React.createElement("option", {
+        value: "America/Boa_Vista"
+      }, "(GMT-04) America/Boa_Vista"), React.createElement("option", {
+        value: "America/Campo_Grande"
+      }, "(GMT-04) America/Campo_Grande"), React.createElement("option", {
+        value: "America/Caracas"
+      }, "(GMT-04) America/Caracas"), React.createElement("option", {
+        value: "America/Cuiaba"
+      }, "(GMT-04) America/Cuiaba"), React.createElement("option", {
+        value: "America/Curacao"
+      }, "(GMT-04) America/Curacao"), React.createElement("option", {
+        value: "America/Detroit"
+      }, "(GMT-04) America/Detroit"), React.createElement("option", {
+        value: "America/Dominica"
+      }, "(GMT-04) America/Dominica"), React.createElement("option", {
+        value: "America/Grand_Turk"
+      }, "(GMT-04) America/Grand_Turk"), React.createElement("option", {
+        value: "America/Grenada"
+      }, "(GMT-04) America/Grenada"), React.createElement("option", {
+        value: "America/Guadeloupe"
+      }, "(GMT-04) America/Guadeloupe"), React.createElement("option", {
+        value: "America/Guyana"
+      }, "(GMT-04) America/Guyana"), React.createElement("option", {
+        value: "America/Havana"
+      }, "(GMT-04) America/Havana"), React.createElement("option", {
+        value: "America/Indiana/Indianapolis"
+      }, "(GMT-04) America/Indiana/Indianapolis"), React.createElement("option", {
+        value: "America/Indiana/Marengo"
+      }, "(GMT-04) America/Indiana/Marengo"), React.createElement("option", {
+        value: "America/Indiana/Petersburg"
+      }, "(GMT-04) America/Indiana/Petersburg"), React.createElement("option", {
+        value: "America/Indiana/Vevay"
+      }, "(GMT-04) America/Indiana/Vevay"), React.createElement("option", {
+        value: "America/Indiana/Vincennes"
+      }, "(GMT-04) America/Indiana/Vincennes"), React.createElement("option", {
+        value: "America/Indiana/Winamac"
+      }, "(GMT-04) America/Indiana/Winamac"), React.createElement("option", {
+        value: "America/Iqaluit"
+      }, "(GMT-04) America/Iqaluit"), React.createElement("option", {
+        value: "America/Kentucky/Louisville"
+      }, "(GMT-04) America/Kentucky/Louisville"), React.createElement("option", {
+        value: "America/Kentucky/Monticello"
+      }, "(GMT-04) America/Kentucky/Monticello"), React.createElement("option", {
+        value: "America/Kralendijk"
+      }, "(GMT-04) America/Kralendijk"), React.createElement("option", {
+        value: "America/La_Paz"
+      }, "(GMT-04) America/La_Paz"), React.createElement("option", {
+        value: "America/Lower_Princes"
+      }, "(GMT-04) America/Lower_Princes"), React.createElement("option", {
+        value: "America/Manaus"
+      }, "(GMT-04) America/Manaus"), React.createElement("option", {
+        value: "America/Marigot"
+      }, "(GMT-04) America/Marigot"), React.createElement("option", {
+        value: "America/Martinique"
+      }, "(GMT-04) America/Martinique"), React.createElement("option", {
+        value: "America/Montserrat"
+      }, "(GMT-04) America/Montserrat"), React.createElement("option", {
+        value: "America/Nassau"
+      }, "(GMT-04) America/Nassau"), React.createElement("option", {
+        value: "America/New_York"
+      }, "(GMT-04) America/New_York"), React.createElement("option", {
+        value: "America/Nipigon"
+      }, "(GMT-04) America/Nipigon"), React.createElement("option", {
+        value: "America/Pangnirtung"
+      }, "(GMT-04) America/Pangnirtung"), React.createElement("option", {
+        value: "America/Port-au-Prince"
+      }, "(GMT-04) America/Port-au-Prince"), React.createElement("option", {
+        value: "America/Port_of_Spain"
+      }, "(GMT-04) America/Port_of_Spain"), React.createElement("option", {
+        value: "America/Porto_Velho"
+      }, "(GMT-04) America/Porto_Velho"), React.createElement("option", {
+        value: "America/Puerto_Rico"
+      }, "(GMT-04) America/Puerto_Rico"), React.createElement("option", {
+        value: "America/Santiago"
+      }, "(GMT-04) America/Santiago"), React.createElement("option", {
+        value: "America/Santo_Domingo"
+      }, "(GMT-04) America/Santo_Domingo"), React.createElement("option", {
+        value: "America/St_Barthelemy"
+      }, "(GMT-04) America/St_Barthelemy"), React.createElement("option", {
+        value: "America/St_Kitts"
+      }, "(GMT-04) America/St_Kitts"), React.createElement("option", {
+        value: "America/St_Lucia"
+      }, "(GMT-04) America/St_Lucia"), React.createElement("option", {
+        value: "America/St_Thomas"
+      }, "(GMT-04) America/St_Thomas"), React.createElement("option", {
+        value: "America/St_Vincent"
+      }, "(GMT-04) America/St_Vincent"), React.createElement("option", {
+        value: "America/Thunder_Bay"
+      }, "(GMT-04) America/Thunder_Bay"), React.createElement("option", {
+        value: "America/Toronto"
+      }, "(GMT-04) America/Toronto"), React.createElement("option", {
+        value: "America/Tortola"
+      }, "(GMT-04) America/Tortola"), React.createElement("option", {
+        value: "America/Araguaina"
+      }, "(GMT-03) America/Araguaina"), React.createElement("option", {
+        value: "America/Argentina/Buenos_Aires"
+      }, "(GMT-03) America/Argentina/Buenos_Aires"), React.createElement("option", {
+        value: "America/Argentina/Catamarca"
+      }, "(GMT-03) America/Argentina/Catamarca"), React.createElement("option", {
+        value: "America/Argentina/Cordoba"
+      }, "(GMT-03) America/Argentina/Cordoba"), React.createElement("option", {
+        value: "America/Argentina/Jujuy"
+      }, "(GMT-03) America/Argentina/Jujuy"), React.createElement("option", {
+        value: "America/Argentina/La_Rioja"
+      }, "(GMT-03) America/Argentina/La_Rioja"), React.createElement("option", {
+        value: "America/Argentina/Mendoza"
+      }, "(GMT-03) America/Argentina/Mendoza"), React.createElement("option", {
+        value: "America/Argentina/Rio_Gallegos"
+      }, "(GMT-03) America/Argentina/Rio_Gallegos"), React.createElement("option", {
+        value: "America/Argentina/Salta"
+      }, "(GMT-03) America/Argentina/Salta"), React.createElement("option", {
+        value: "America/Argentina/San_Juan"
+      }, "(GMT-03) America/Argentina/San_Juan"), React.createElement("option", {
+        value: "America/Argentina/San_Luis"
+      }, "(GMT-03) America/Argentina/San_Luis"), React.createElement("option", {
+        value: "America/Argentina/Tucuman"
+      }, "(GMT-03) America/Argentina/Tucuman"), React.createElement("option", {
+        value: "America/Argentina/Ushuaia"
+      }, "(GMT-03) America/Argentina/Ushuaia"), React.createElement("option", {
+        value: "America/Bahia"
+      }, "(GMT-03) America/Bahia"), React.createElement("option", {
+        value: "America/Belem"
+      }, "(GMT-03) America/Belem"), React.createElement("option", {
+        value: "America/Cayenne"
+      }, "(GMT-03) America/Cayenne"), React.createElement("option", {
+        value: "America/Fortaleza"
+      }, "(GMT-03) America/Fortaleza"), React.createElement("option", {
+        value: "America/Glace_Bay"
+      }, "(GMT-03) America/Glace_Bay"), React.createElement("option", {
+        value: "America/Goose_Bay"
+      }, "(GMT-03) America/Goose_Bay"), React.createElement("option", {
+        value: "America/Halifax"
+      }, "(GMT-03) America/Halifax"), React.createElement("option", {
+        value: "America/Maceio"
+      }, "(GMT-03) America/Maceio"), React.createElement("option", {
+        value: "America/Moncton"
+      }, "(GMT-03) America/Moncton"), React.createElement("option", {
+        value: "America/Montevideo"
+      }, "(GMT-03) America/Montevideo"), React.createElement("option", {
+        value: "America/Paramaribo"
+      }, "(GMT-03) America/Paramaribo"), React.createElement("option", {
+        value: "America/Punta_Arenas"
+      }, "(GMT-03) America/Punta_Arenas"), React.createElement("option", {
+        value: "America/Recife"
+      }, "(GMT-03) America/Recife"), React.createElement("option", {
+        value: "America/Santarem"
+      }, "(GMT-03) America/Santarem"), React.createElement("option", {
+        value: "America/Sao_Paulo"
+      }, "(GMT-03) America/Sao_Paulo"), React.createElement("option", {
+        value: "America/Thule"
+      }, "(GMT-03) America/Thule"), React.createElement("option", {
+        value: "Antarctica/Palmer"
+      }, "(GMT-03) Antarctica/Palmer"), React.createElement("option", {
+        value: "Antarctica/Rothera"
+      }, "(GMT-03) Antarctica/Rothera"), React.createElement("option", {
+        value: "Atlantic/Bermuda"
+      }, "(GMT-03) Atlantic/Bermuda"), React.createElement("option", {
+        value: "Atlantic/Stanley"
+      }, "(GMT-03) Atlantic/Stanley"), React.createElement("option", {
+        value: "America/St_Johns"
+      }, "(GMT-02) America/St_Johns"), React.createElement("option", {
+        value: "America/Godthab"
+      }, "(GMT-02) America/Godthab"), React.createElement("option", {
+        value: "America/Miquelon"
+      }, "(GMT-02) America/Miquelon"), React.createElement("option", {
+        value: "America/Noronha"
+      }, "(GMT-02) America/Noronha"), React.createElement("option", {
+        value: "Atlantic/South_Georgia"
+      }, "(GMT-02) Atlantic/South_Georgia"), React.createElement("option", {
+        value: "Atlantic/Cape_Verde"
+      }, "(GMT-01) Atlantic/Cape_Verde"), React.createElement("option", {
+        value: "Africa/Abidjan"
+      }, "(GMT+00) Africa/Abidjan"), React.createElement("option", {
+        value: "Africa/Accra"
+      }, "(GMT+00) Africa/Accra"), React.createElement("option", {
+        value: "Africa/Bamako"
+      }, "(GMT+00) Africa/Bamako"), React.createElement("option", {
+        value: "Africa/Banjul"
+      }, "(GMT+00) Africa/Banjul"), React.createElement("option", {
+        value: "Africa/Bissau"
+      }, "(GMT+00) Africa/Bissau"), React.createElement("option", {
+        value: "Africa/Conakry"
+      }, "(GMT+00) Africa/Conakry"), React.createElement("option", {
+        value: "Africa/Dakar"
+      }, "(GMT+00) Africa/Dakar"), React.createElement("option", {
+        value: "Africa/Freetown"
+      }, "(GMT+00) Africa/Freetown"), React.createElement("option", {
+        value: "Africa/Lome"
+      }, "(GMT+00) Africa/Lome"), React.createElement("option", {
+        value: "Africa/Monrovia"
+      }, "(GMT+00) Africa/Monrovia"), React.createElement("option", {
+        value: "Africa/Nouakchott"
+      }, "(GMT+00) Africa/Nouakchott"), React.createElement("option", {
+        value: "Africa/Ouagadougou"
+      }, "(GMT+00) Africa/Ouagadougou"), React.createElement("option", {
+        value: "Africa/Sao_Tome"
+      }, "(GMT+00) Africa/Sao_Tome"), React.createElement("option", {
+        value: "America/Danmarkshavn"
+      }, "(GMT+00) America/Danmarkshavn"), React.createElement("option", {
+        value: "America/Scoresbysund"
+      }, "(GMT+00) America/Scoresbysund"), React.createElement("option", {
+        value: "Atlantic/Azores"
+      }, "(GMT+00) Atlantic/Azores"), React.createElement("option", {
+        value: "Atlantic/Reykjavik"
+      }, "(GMT+00) Atlantic/Reykjavik"), React.createElement("option", {
+        value: "Atlantic/St_Helena"
+      }, "(GMT+00) Atlantic/St_Helena"), React.createElement("option", {
+        value: "UTC"
+      }, "(GMT+00) UTC"), React.createElement("option", {
+        value: "Africa/Algiers"
+      }, "(GMT+01) Africa/Algiers"), React.createElement("option", {
+        value: "Africa/Bangui"
+      }, "(GMT+01) Africa/Bangui"), React.createElement("option", {
+        value: "Africa/Brazzaville"
+      }, "(GMT+01) Africa/Brazzaville"), React.createElement("option", {
+        value: "Africa/Casablanca"
+      }, "(GMT+01) Africa/Casablanca"), React.createElement("option", {
+        value: "Africa/Douala"
+      }, "(GMT+01) Africa/Douala"), React.createElement("option", {
+        value: "Africa/El_Aaiun"
+      }, "(GMT+01) Africa/El_Aaiun"), React.createElement("option", {
+        value: "Africa/Kinshasa"
+      }, "(GMT+01) Africa/Kinshasa"), React.createElement("option", {
+        value: "Africa/Lagos"
+      }, "(GMT+01) Africa/Lagos"), React.createElement("option", {
+        value: "Africa/Libreville"
+      }, "(GMT+01) Africa/Libreville"), React.createElement("option", {
+        value: "Africa/Luanda"
+      }, "(GMT+01) Africa/Luanda"), React.createElement("option", {
+        value: "Africa/Malabo"
+      }, "(GMT+01) Africa/Malabo"), React.createElement("option", {
+        value: "Africa/Ndjamena"
+      }, "(GMT+01) Africa/Ndjamena"), React.createElement("option", {
+        value: "Africa/Niamey"
+      }, "(GMT+01) Africa/Niamey"), React.createElement("option", {
+        value: "Africa/Porto-Novo"
+      }, "(GMT+01) Africa/Porto-Novo"), React.createElement("option", {
+        value: "Africa/Tunis"
+      }, "(GMT+01) Africa/Tunis"), React.createElement("option", {
+        value: "Africa/Windhoek"
+      }, "(GMT+01) Africa/Windhoek"), React.createElement("option", {
+        value: "Atlantic/Canary"
+      }, "(GMT+01) Atlantic/Canary"), React.createElement("option", {
+        value: "Atlantic/Faroe"
+      }, "(GMT+01) Atlantic/Faroe"), React.createElement("option", {
+        value: "Atlantic/Madeira"
+      }, "(GMT+01) Atlantic/Madeira"), React.createElement("option", {
+        value: "Europe/Dublin"
+      }, "(GMT+01) Europe/Dublin"), React.createElement("option", {
+        value: "Europe/Guernsey"
+      }, "(GMT+01) Europe/Guernsey"), React.createElement("option", {
+        value: "Europe/Isle_of_Man"
+      }, "(GMT+01) Europe/Isle_of_Man"), React.createElement("option", {
+        value: "Europe/Jersey"
+      }, "(GMT+01) Europe/Jersey"), React.createElement("option", {
+        value: "Europe/Lisbon"
+      }, "(GMT+01) Europe/Lisbon"), React.createElement("option", {
+        value: "Europe/London"
+      }, "(GMT+01) Europe/London"), React.createElement("option", {
+        value: "Africa/Blantyre"
+      }, "(GMT+02) Africa/Blantyre"), React.createElement("option", {
+        value: "Africa/Bujumbura"
+      }, "(GMT+02) Africa/Bujumbura"), React.createElement("option", {
+        value: "Africa/Cairo"
+      }, "(GMT+02) Africa/Cairo"), React.createElement("option", {
+        value: "Africa/Ceuta"
+      }, "(GMT+02) Africa/Ceuta"), React.createElement("option", {
+        value: "Africa/Gaborone"
+      }, "(GMT+02) Africa/Gaborone"), React.createElement("option", {
+        value: "Africa/Harare"
+      }, "(GMT+02) Africa/Harare"), React.createElement("option", {
+        value: "Africa/Johannesburg"
+      }, "(GMT+02) Africa/Johannesburg"), React.createElement("option", {
+        value: "Africa/Kigali"
+      }, "(GMT+02) Africa/Kigali"), React.createElement("option", {
+        value: "Africa/Lubumbashi"
+      }, "(GMT+02) Africa/Lubumbashi"), React.createElement("option", {
+        value: "Africa/Lusaka"
+      }, "(GMT+02) Africa/Lusaka"), React.createElement("option", {
+        value: "Africa/Maputo"
+      }, "(GMT+02) Africa/Maputo"), React.createElement("option", {
+        value: "Africa/Maseru"
+      }, "(GMT+02) Africa/Maseru"), React.createElement("option", {
+        value: "Africa/Mbabane"
+      }, "(GMT+02) Africa/Mbabane"), React.createElement("option", {
+        value: "Africa/Tripoli"
+      }, "(GMT+02) Africa/Tripoli"), React.createElement("option", {
+        value: "Antarctica/Troll"
+      }, "(GMT+02) Antarctica/Troll"), React.createElement("option", {
+        value: "Arctic/Longyearbyen"
+      }, "(GMT+02) Arctic/Longyearbyen"), React.createElement("option", {
+        value: "Europe/Amsterdam"
+      }, "(GMT+02) Europe/Amsterdam"), React.createElement("option", {
+        value: "Europe/Andorra"
+      }, "(GMT+02) Europe/Andorra"), React.createElement("option", {
+        value: "Europe/Belgrade"
+      }, "(GMT+02) Europe/Belgrade"), React.createElement("option", {
+        value: "Europe/Berlin"
+      }, "(GMT+02) Europe/Berlin"), React.createElement("option", {
+        value: "Europe/Bratislava"
+      }, "(GMT+02) Europe/Bratislava"), React.createElement("option", {
+        value: "Europe/Brussels"
+      }, "(GMT+02) Europe/Brussels"), React.createElement("option", {
+        value: "Europe/Budapest"
+      }, "(GMT+02) Europe/Budapest"), React.createElement("option", {
+        value: "Europe/Busingen"
+      }, "(GMT+02) Europe/Busingen"), React.createElement("option", {
+        value: "Europe/Copenhagen"
+      }, "(GMT+02) Europe/Copenhagen"), React.createElement("option", {
+        value: "Europe/Gibraltar"
+      }, "(GMT+02) Europe/Gibraltar"), React.createElement("option", {
+        value: "Europe/Kaliningrad"
+      }, "(GMT+02) Europe/Kaliningrad"), React.createElement("option", {
+        value: "Europe/Ljubljana"
+      }, "(GMT+02) Europe/Ljubljana"), React.createElement("option", {
+        value: "Europe/Luxembourg"
+      }, "(GMT+02) Europe/Luxembourg"), React.createElement("option", {
+        value: "Europe/Madrid"
+      }, "(GMT+02) Europe/Madrid"), React.createElement("option", {
+        value: "Europe/Malta"
+      }, "(GMT+02) Europe/Malta"), React.createElement("option", {
+        value: "Europe/Monaco"
+      }, "(GMT+02) Europe/Monaco"), React.createElement("option", {
+        value: "Europe/Oslo"
+      }, "(GMT+02) Europe/Oslo"), React.createElement("option", {
+        value: "Europe/Paris"
+      }, "(GMT+02) Europe/Paris"), React.createElement("option", {
+        value: "Europe/Podgorica"
+      }, "(GMT+02) Europe/Podgorica"), React.createElement("option", {
+        value: "Europe/Prague"
+      }, "(GMT+02) Europe/Prague"), React.createElement("option", {
+        value: "Europe/Rome"
+      }, "(GMT+02) Europe/Rome"), React.createElement("option", {
+        value: "Europe/San_Marino"
+      }, "(GMT+02) Europe/San_Marino"), React.createElement("option", {
+        value: "Europe/Sarajevo"
+      }, "(GMT+02) Europe/Sarajevo"), React.createElement("option", {
+        value: "Europe/Skopje"
+      }, "(GMT+02) Europe/Skopje"), React.createElement("option", {
+        value: "Europe/Stockholm"
+      }, "(GMT+02) Europe/Stockholm"), React.createElement("option", {
+        value: "Europe/Tirane"
+      }, "(GMT+02) Europe/Tirane"), React.createElement("option", {
+        value: "Europe/Vaduz"
+      }, "(GMT+02) Europe/Vaduz"), React.createElement("option", {
+        value: "Europe/Vatican"
+      }, "(GMT+02) Europe/Vatican"), React.createElement("option", {
+        value: "Europe/Vienna"
+      }, "(GMT+02) Europe/Vienna"), React.createElement("option", {
+        value: "Europe/Warsaw"
+      }, "(GMT+02) Europe/Warsaw"), React.createElement("option", {
+        value: "Europe/Zagreb"
+      }, "(GMT+02) Europe/Zagreb"), React.createElement("option", {
+        value: "Europe/Zurich"
+      }, "(GMT+02) Europe/Zurich"), React.createElement("option", {
+        value: "Africa/Addis_Ababa"
+      }, "(GMT+03) Africa/Addis_Ababa"), React.createElement("option", {
+        value: "Africa/Asmara"
+      }, "(GMT+03) Africa/Asmara"), React.createElement("option", {
+        value: "Africa/Dar_es_Salaam"
+      }, "(GMT+03) Africa/Dar_es_Salaam"), React.createElement("option", {
+        value: "Africa/Djibouti"
+      }, "(GMT+03) Africa/Djibouti"), React.createElement("option", {
+        value: "Africa/Juba"
+      }, "(GMT+03) Africa/Juba"), React.createElement("option", {
+        value: "Africa/Kampala"
+      }, "(GMT+03) Africa/Kampala"), React.createElement("option", {
+        value: "Africa/Khartoum"
+      }, "(GMT+03) Africa/Khartoum"), React.createElement("option", {
+        value: "Africa/Mogadishu"
+      }, "(GMT+03) Africa/Mogadishu"), React.createElement("option", {
+        value: "Africa/Nairobi"
+      }, "(GMT+03) Africa/Nairobi"), React.createElement("option", {
+        value: "Antarctica/Syowa"
+      }, "(GMT+03) Antarctica/Syowa"), React.createElement("option", {
+        value: "Asia/Aden"
+      }, "(GMT+03) Asia/Aden"), React.createElement("option", {
+        value: "Asia/Amman"
+      }, "(GMT+03) Asia/Amman"), React.createElement("option", {
+        value: "Asia/Baghdad"
+      }, "(GMT+03) Asia/Baghdad"), React.createElement("option", {
+        value: "Asia/Bahrain"
+      }, "(GMT+03) Asia/Bahrain"), React.createElement("option", {
+        value: "Asia/Beirut"
+      }, "(GMT+03) Asia/Beirut"), React.createElement("option", {
+        value: "Asia/Damascus"
+      }, "(GMT+03) Asia/Damascus"), React.createElement("option", {
+        value: "Asia/Famagusta"
+      }, "(GMT+03) Asia/Famagusta"), React.createElement("option", {
+        value: "Asia/Gaza"
+      }, "(GMT+03) Asia/Gaza"), React.createElement("option", {
+        value: "Asia/Hebron"
+      }, "(GMT+03) Asia/Hebron"), React.createElement("option", {
+        value: "Asia/Jerusalem"
+      }, "(GMT+03) Asia/Jerusalem"), React.createElement("option", {
+        value: "Asia/Kuwait"
+      }, "(GMT+03) Asia/Kuwait"), React.createElement("option", {
+        value: "Asia/Nicosia"
+      }, "(GMT+03) Asia/Nicosia"), React.createElement("option", {
+        value: "Asia/Qatar"
+      }, "(GMT+03) Asia/Qatar"), React.createElement("option", {
+        value: "Asia/Riyadh"
+      }, "(GMT+03) Asia/Riyadh"), React.createElement("option", {
+        value: "Europe/Athens"
+      }, "(GMT+03) Europe/Athens"), React.createElement("option", {
+        value: "Europe/Bucharest"
+      }, "(GMT+03) Europe/Bucharest"), React.createElement("option", {
+        value: "Europe/Chisinau"
+      }, "(GMT+03) Europe/Chisinau"), React.createElement("option", {
+        value: "Europe/Helsinki"
+      }, "(GMT+03) Europe/Helsinki"), React.createElement("option", {
+        value: "Europe/Istanbul"
+      }, "(GMT+03) Europe/Istanbul"), React.createElement("option", {
+        value: "Europe/Kiev"
+      }, "(GMT+03) Europe/Kiev"), React.createElement("option", {
+        value: "Europe/Kirov"
+      }, "(GMT+03) Europe/Kirov"), React.createElement("option", {
+        value: "Europe/Mariehamn"
+      }, "(GMT+03) Europe/Mariehamn"), React.createElement("option", {
+        value: "Europe/Minsk"
+      }, "(GMT+03) Europe/Minsk"), React.createElement("option", {
+        value: "Europe/Moscow"
+      }, "(GMT+03) Europe/Moscow"), React.createElement("option", {
+        value: "Europe/Riga"
+      }, "(GMT+03) Europe/Riga"), React.createElement("option", {
+        value: "Europe/Simferopol"
+      }, "(GMT+03) Europe/Simferopol"), React.createElement("option", {
+        value: "Europe/Sofia"
+      }, "(GMT+03) Europe/Sofia"), React.createElement("option", {
+        value: "Europe/Tallinn"
+      }, "(GMT+03) Europe/Tallinn"), React.createElement("option", {
+        value: "Europe/Uzhgorod"
+      }, "(GMT+03) Europe/Uzhgorod"), React.createElement("option", {
+        value: "Europe/Vilnius"
+      }, "(GMT+03) Europe/Vilnius"), React.createElement("option", {
+        value: "Europe/Volgograd"
+      }, "(GMT+03) Europe/Volgograd"), React.createElement("option", {
+        value: "Europe/Zaporozhye"
+      }, "(GMT+03) Europe/Zaporozhye"), React.createElement("option", {
+        value: "Indian/Antananarivo"
+      }, "(GMT+03) Indian/Antananarivo"), React.createElement("option", {
+        value: "Indian/Comoro"
+      }, "(GMT+03) Indian/Comoro"), React.createElement("option", {
+        value: "Indian/Mayotte"
+      }, "(GMT+03) Indian/Mayotte"), React.createElement("option", {
+        value: "Asia/Baku"
+      }, "(GMT+04) Asia/Baku"), React.createElement("option", {
+        value: "Asia/Dubai"
+      }, "(GMT+04) Asia/Dubai"), React.createElement("option", {
+        value: "Asia/Muscat"
+      }, "(GMT+04) Asia/Muscat"), React.createElement("option", {
+        value: "Asia/Tbilisi"
+      }, "(GMT+04) Asia/Tbilisi"), React.createElement("option", {
+        value: "Asia/Yerevan"
+      }, "(GMT+04) Asia/Yerevan"), React.createElement("option", {
+        value: "Europe/Astrakhan"
+      }, "(GMT+04) Europe/Astrakhan"), React.createElement("option", {
+        value: "Europe/Samara"
+      }, "(GMT+04) Europe/Samara"), React.createElement("option", {
+        value: "Europe/Saratov"
+      }, "(GMT+04) Europe/Saratov"), React.createElement("option", {
+        value: "Europe/Ulyanovsk"
+      }, "(GMT+04) Europe/Ulyanovsk"), React.createElement("option", {
+        value: "Indian/Mahe"
+      }, "(GMT+04) Indian/Mahe"), React.createElement("option", {
+        value: "Indian/Mauritius"
+      }, "(GMT+04) Indian/Mauritius"), React.createElement("option", {
+        value: "Indian/Reunion"
+      }, "(GMT+04) Indian/Reunion"), React.createElement("option", {
+        value: "Asia/Kabul"
+      }, "(GMT+04) Asia/Kabul"), React.createElement("option", {
+        value: "Asia/Tehran"
+      }, "(GMT+04) Asia/Tehran"), React.createElement("option", {
+        value: "Antarctica/Mawson"
+      }, "(GMT+05) Antarctica/Mawson"), React.createElement("option", {
+        value: "Asia/Aqtau"
+      }, "(GMT+05) Asia/Aqtau"), React.createElement("option", {
+        value: "Asia/Aqtobe"
+      }, "(GMT+05) Asia/Aqtobe"), React.createElement("option", {
+        value: "Asia/Ashgabat"
+      }, "(GMT+05) Asia/Ashgabat"), React.createElement("option", {
+        value: "Asia/Atyrau"
+      }, "(GMT+05) Asia/Atyrau"), React.createElement("option", {
+        value: "Asia/Dushanbe"
+      }, "(GMT+05) Asia/Dushanbe"), React.createElement("option", {
+        value: "Asia/Karachi"
+      }, "(GMT+05) Asia/Karachi"), React.createElement("option", {
+        value: "Asia/Oral"
+      }, "(GMT+05) Asia/Oral"), React.createElement("option", {
+        value: "Asia/Samarkand"
+      }, "(GMT+05) Asia/Samarkand"), React.createElement("option", {
+        value: "Asia/Tashkent"
+      }, "(GMT+05) Asia/Tashkent"), React.createElement("option", {
+        value: "Asia/Yekaterinburg"
+      }, "(GMT+05) Asia/Yekaterinburg"), React.createElement("option", {
+        value: "Indian/Kerguelen"
+      }, "(GMT+05) Indian/Kerguelen"), React.createElement("option", {
+        value: "Indian/Maldives"
+      }, "(GMT+05) Indian/Maldives"), React.createElement("option", {
+        value: "Asia/Colombo"
+      }, "(GMT+05) Asia/Colombo"), React.createElement("option", {
+        value: "Asia/Kolkata"
+      }, "(GMT+05) Asia/Kolkata"), React.createElement("option", {
+        value: "Asia/Kathmandu"
+      }, "(GMT+05) Asia/Kathmandu"), React.createElement("option", {
+        value: "Antarctica/Vostok"
+      }, "(GMT+06) Antarctica/Vostok"), React.createElement("option", {
+        value: "Asia/Almaty"
+      }, "(GMT+06) Asia/Almaty"), React.createElement("option", {
+        value: "Asia/Bishkek"
+      }, "(GMT+06) Asia/Bishkek"), React.createElement("option", {
+        value: "Asia/Dhaka"
+      }, "(GMT+06) Asia/Dhaka"), React.createElement("option", {
+        value: "Asia/Omsk"
+      }, "(GMT+06) Asia/Omsk"), React.createElement("option", {
+        value: "Asia/Qyzylorda"
+      }, "(GMT+06) Asia/Qyzylorda"), React.createElement("option", {
+        value: "Asia/Thimphu"
+      }, "(GMT+06) Asia/Thimphu"), React.createElement("option", {
+        value: "Asia/Urumqi"
+      }, "(GMT+06) Asia/Urumqi"), React.createElement("option", {
+        value: "Indian/Chagos"
+      }, "(GMT+06) Indian/Chagos"), React.createElement("option", {
+        value: "Asia/Yangon"
+      }, "(GMT+06) Asia/Yangon"), React.createElement("option", {
+        value: "Indian/Cocos"
+      }, "(GMT+06) Indian/Cocos"), React.createElement("option", {
+        value: "Antarctica/Davis"
+      }, "(GMT+07) Antarctica/Davis"), React.createElement("option", {
+        value: "Asia/Bangkok"
+      }, "(GMT+07) Asia/Bangkok"), React.createElement("option", {
+        value: "Asia/Barnaul"
+      }, "(GMT+07) Asia/Barnaul"), React.createElement("option", {
+        value: "Asia/Ho_Chi_Minh"
+      }, "(GMT+07) Asia/Ho_Chi_Minh"), React.createElement("option", {
+        value: "Asia/Hovd"
+      }, "(GMT+07) Asia/Hovd"), React.createElement("option", {
+        value: "Asia/Jakarta"
+      }, "(GMT+07) Asia/Jakarta"), React.createElement("option", {
+        value: "Asia/Krasnoyarsk"
+      }, "(GMT+07) Asia/Krasnoyarsk"), React.createElement("option", {
+        value: "Asia/Novokuznetsk"
+      }, "(GMT+07) Asia/Novokuznetsk"), React.createElement("option", {
+        value: "Asia/Novosibirsk"
+      }, "(GMT+07) Asia/Novosibirsk"), React.createElement("option", {
+        value: "Asia/Phnom_Penh"
+      }, "(GMT+07) Asia/Phnom_Penh"), React.createElement("option", {
+        value: "Asia/Pontianak"
+      }, "(GMT+07) Asia/Pontianak"), React.createElement("option", {
+        value: "Asia/Tomsk"
+      }, "(GMT+07) Asia/Tomsk"), React.createElement("option", {
+        value: "Asia/Vientiane"
+      }, "(GMT+07) Asia/Vientiane"), React.createElement("option", {
+        value: "Indian/Christmas"
+      }, "(GMT+07) Indian/Christmas"), React.createElement("option", {
+        value: "Asia/Brunei"
+      }, "(GMT+08) Asia/Brunei"), React.createElement("option", {
+        value: "Asia/Choibalsan"
+      }, "(GMT+08) Asia/Choibalsan"), React.createElement("option", {
+        value: "Asia/Hong_Kong"
+      }, "(GMT+08) Asia/Hong_Kong"), React.createElement("option", {
+        value: "Asia/Irkutsk"
+      }, "(GMT+08) Asia/Irkutsk"), React.createElement("option", {
+        value: "Asia/Kuala_Lumpur"
+      }, "(GMT+08) Asia/Kuala_Lumpur"), React.createElement("option", {
+        value: "Asia/Kuching"
+      }, "(GMT+08) Asia/Kuching"), React.createElement("option", {
+        value: "Asia/Macau"
+      }, "(GMT+08) Asia/Macau"), React.createElement("option", {
+        value: "Asia/Makassar"
+      }, "(GMT+08) Asia/Makassar"), React.createElement("option", {
+        value: "Asia/Manila"
+      }, "(GMT+08) Asia/Manila"), React.createElement("option", {
+        value: "Asia/Shanghai"
+      }, "(GMT+08) Asia/Shanghai"), React.createElement("option", {
+        value: "Asia/Singapore"
+      }, "(GMT+08) Asia/Singapore"), React.createElement("option", {
+        value: "Asia/Taipei"
+      }, "(GMT+08) Asia/Taipei"), React.createElement("option", {
+        value: "Asia/Ulaanbaatar"
+      }, "(GMT+08) Asia/Ulaanbaatar"), React.createElement("option", {
+        value: "Australia/Perth"
+      }, "(GMT+08) Australia/Perth"), React.createElement("option", {
+        value: "Asia/Pyongyang"
+      }, "(GMT+08) Asia/Pyongyang"), React.createElement("option", {
+        value: "Australia/Eucla"
+      }, "(GMT+08) Australia/Eucla"), React.createElement("option", {
+        value: "Asia/Chita"
+      }, "(GMT+09) Asia/Chita"), React.createElement("option", {
+        value: "Asia/Dili"
+      }, "(GMT+09) Asia/Dili"), React.createElement("option", {
+        value: "Asia/Jayapura"
+      }, "(GMT+09) Asia/Jayapura"), React.createElement("option", {
+        value: "Asia/Khandyga"
+      }, "(GMT+09) Asia/Khandyga"), React.createElement("option", {
+        value: "Asia/Seoul"
+      }, "(GMT+09) Asia/Seoul"), React.createElement("option", {
+        value: "Asia/Tokyo"
+      }, "(GMT+09) Asia/Tokyo"), React.createElement("option", {
+        value: "Asia/Yakutsk"
+      }, "(GMT+09) Asia/Yakutsk"), React.createElement("option", {
+        value: "Pacific/Palau"
+      }, "(GMT+09) Pacific/Palau"), React.createElement("option", {
+        value: "Australia/Adelaide"
+      }, "(GMT+09) Australia/Adelaide"), React.createElement("option", {
+        value: "Australia/Broken_Hill"
+      }, "(GMT+09) Australia/Broken_Hill"), React.createElement("option", {
+        value: "Australia/Darwin"
+      }, "(GMT+09) Australia/Darwin"), React.createElement("option", {
+        value: "Antarctica/DumontDUrville"
+      }, "(GMT+10) Antarctica/DumontDUrville"), React.createElement("option", {
+        value: "Asia/Ust-Nera"
+      }, "(GMT+10) Asia/Ust-Nera"), React.createElement("option", {
+        value: "Asia/Vladivostok"
+      }, "(GMT+10) Asia/Vladivostok"), React.createElement("option", {
+        value: "Australia/Brisbane"
+      }, "(GMT+10) Australia/Brisbane"), React.createElement("option", {
+        value: "Australia/Currie"
+      }, "(GMT+10) Australia/Currie"), React.createElement("option", {
+        value: "Australia/Hobart"
+      }, "(GMT+10) Australia/Hobart"), React.createElement("option", {
+        value: "Australia/Lindeman"
+      }, "(GMT+10) Australia/Lindeman"), React.createElement("option", {
+        value: "Australia/Melbourne"
+      }, "(GMT+10) Australia/Melbourne"), React.createElement("option", {
+        value: "Australia/Sydney"
+      }, "(GMT+10) Australia/Sydney"), React.createElement("option", {
+        value: "Pacific/Chuuk"
+      }, "(GMT+10) Pacific/Chuuk"), React.createElement("option", {
+        value: "Pacific/Guam"
+      }, "(GMT+10) Pacific/Guam"), React.createElement("option", {
+        value: "Pacific/Port_Moresby"
+      }, "(GMT+10) Pacific/Port_Moresby"), React.createElement("option", {
+        value: "Pacific/Saipan"
+      }, "(GMT+10) Pacific/Saipan"), React.createElement("option", {
+        value: "Australia/Lord_Howe"
+      }, "(GMT+10) Australia/Lord_Howe"), React.createElement("option", {
+        value: "Antarctica/Casey"
+      }, "(GMT+11) Antarctica/Casey"), React.createElement("option", {
+        value: "Antarctica/Macquarie"
+      }, "(GMT+11) Antarctica/Macquarie"), React.createElement("option", {
+        value: "Asia/Magadan"
+      }, "(GMT+11) Asia/Magadan"), React.createElement("option", {
+        value: "Asia/Sakhalin"
+      }, "(GMT+11) Asia/Sakhalin"), React.createElement("option", {
+        value: "Asia/Srednekolymsk"
+      }, "(GMT+11) Asia/Srednekolymsk"), React.createElement("option", {
+        value: "Pacific/Bougainville"
+      }, "(GMT+11) Pacific/Bougainville"), React.createElement("option", {
+        value: "Pacific/Efate"
+      }, "(GMT+11) Pacific/Efate"), React.createElement("option", {
+        value: "Pacific/Guadalcanal"
+      }, "(GMT+11) Pacific/Guadalcanal"), React.createElement("option", {
+        value: "Pacific/Kosrae"
+      }, "(GMT+11) Pacific/Kosrae"), React.createElement("option", {
+        value: "Pacific/Norfolk"
+      }, "(GMT+11) Pacific/Norfolk"), React.createElement("option", {
+        value: "Pacific/Noumea"
+      }, "(GMT+11) Pacific/Noumea"), React.createElement("option", {
+        value: "Pacific/Pohnpei"
+      }, "(GMT+11) Pacific/Pohnpei"), React.createElement("option", {
+        value: "Antarctica/McMurdo"
+      }, "(GMT+12) Antarctica/McMurdo"), React.createElement("option", {
+        value: "Asia/Anadyr"
+      }, "(GMT+12) Asia/Anadyr"), React.createElement("option", {
+        value: "Asia/Kamchatka"
+      }, "(GMT+12) Asia/Kamchatka"), React.createElement("option", {
+        value: "Pacific/Auckland"
+      }, "(GMT+12) Pacific/Auckland"), React.createElement("option", {
+        value: "Pacific/Fiji"
+      }, "(GMT+12) Pacific/Fiji"), React.createElement("option", {
+        value: "Pacific/Funafuti"
+      }, "(GMT+12) Pacific/Funafuti"), React.createElement("option", {
+        value: "Pacific/Kwajalein"
+      }, "(GMT+12) Pacific/Kwajalein"), React.createElement("option", {
+        value: "Pacific/Majuro"
+      }, "(GMT+12) Pacific/Majuro"), React.createElement("option", {
+        value: "Pacific/Nauru"
+      }, "(GMT+12) Pacific/Nauru"), React.createElement("option", {
+        value: "Pacific/Tarawa"
+      }, "(GMT+12) Pacific/Tarawa"), React.createElement("option", {
+        value: "Pacific/Wake"
+      }, "(GMT+12) Pacific/Wake"), React.createElement("option", {
+        value: "Pacific/Wallis"
+      }, "(GMT+12) Pacific/Wallis"), React.createElement("option", {
+        value: "Pacific/Chatham"
+      }, "(GMT+12) Pacific/Chatham"), React.createElement("option", {
+        value: "Pacific/Apia"
+      }, "(GMT+13) Pacific/Apia"), React.createElement("option", {
+        value: "Pacific/Enderbury"
+      }, "(GMT+13) Pacific/Enderbury"), React.createElement("option", {
+        value: "Pacific/Fakaofo"
+      }, "(GMT+13) Pacific/Fakaofo"), React.createElement("option", {
+        value: "Pacific/Tongatapu"
+      }, "(GMT+13) Pacific/Tongatapu"), React.createElement("option", {
+        value: "Pacific/Kiritimati"
+      }, "(GMT+14) Pacific/Kiritimati")));
+    }
+  }]);
+
+  return TimezoneForm;
+}(React.Component); // Render all the things
+
+
 var domContainer = document.getElementById("top-tracks");
-ReactDOM.render(e(TopTracks), domContainer);
+
+if (domContainer != null) {
+  ReactDOM.render(e(TopTracks), domContainer);
+}
+
+domContainer = document.getElementById("timezone-form");
+
+if (domContainer != null) {
+  ReactDOM.render(e(TimezoneForm), domContainer);
+}
 
 /***/ }),
 
