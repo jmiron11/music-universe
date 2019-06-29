@@ -103,7 +103,7 @@
                             {% else %}
                             <div class="listen-entry-shaded">
                             {% endif %}
-                                <div class="listen-entry-art"></div>
+                                <img class="listen-entry-art" src="{{ config.ALBUM_ART_SERVING + l['img_id'] + "-small.jpg" }}"/>
                                 <div class="listen-entry-track"><h6>{{ l['artist'] }} - {{ l['track'] }}</h6></div>
                                 <div class="listen-entry-time"><h6>{{ l['time'] }}</h6></div>
                             </div>

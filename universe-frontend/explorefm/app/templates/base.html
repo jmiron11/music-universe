@@ -20,7 +20,10 @@
 
 <!-- Navigation -->
 <body>
-    <script type="text/javascript">var current_user = "{{ current_user.username }}";</script> <!-- Initial data passed to react app -->
+    <script type="text/javascript">
+        var current_user = "{{ current_user.username }}";
+        var img_endpoint = "{{ config.ALBUM_ART_SERVING }}"
+    </script> <!-- Initial data passed to react app -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">

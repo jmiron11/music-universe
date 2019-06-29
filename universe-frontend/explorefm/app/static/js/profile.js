@@ -56,10 +56,12 @@ class TopTracks extends React.Component {
         } else {
           className = "listen-entry-shaded"
         }
+
+        var img_path = img_endpoint + l[i]['img_id'] + '-small.jpg'
         newTop.push(
           <div key={ k }>
             <div className={className}>
-              <div className="listen-entry-art"></div>
+              <img className="listen-entry-art" src={ img_path }/>
               <div className="listen-entry-track"><h6>{ l[i]['artist'] } - { l[i]['track'] }</h6></div>
               <div className="listen-entry-time"><h6>{ l[i]['count'] }</h6></div>
             </div>

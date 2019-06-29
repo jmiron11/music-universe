@@ -16,3 +16,6 @@ class Config(object):
     # 
     BASIC_AUTH_USERNAME = os.environ.get('UNIVERSE_AUTH_USER')
     BASIC_AUTH_PASSWORD = os.environ.get('UNIVERSE_AUTH_PASS')
+
+    # CDN / Static file serving
+    ALBUM_ART_SERVING = "http://localhost:80/"

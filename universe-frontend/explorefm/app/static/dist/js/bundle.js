@@ -149,7 +149,7 @@ function (_React$Component) {
     value: function getSecondsSinceEpoch() {
       var d = new Date();
       console.log(d);
-      return Math.round(d.getTime() / 1000);
+      return Math.floor(d.getTime() / 1000);
     }
   }, {
     key: "getTimeOffsetByT",
@@ -192,12 +192,14 @@ function (_React$Component) {
             className = "listen-entry-shaded";
           }
 
+          var img_path = img_endpoint + l[i]['img_id'] + '-small.jpg';
           newTop.push(React.createElement("div", {
             key: k
           }, React.createElement("div", {
             className: className
-          }, React.createElement("div", {
-            className: "listen-entry-art"
+          }, React.createElement("img", {
+            className: "listen-entry-art",
+            src: img_path
           }), React.createElement("div", {
             className: "listen-entry-track"
           }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['track'])), React.createElement("div", {

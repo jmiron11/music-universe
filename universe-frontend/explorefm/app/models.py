@@ -56,7 +56,8 @@ class User(UserMixin, db.Model):
             formatted_listens.append({
                 'time': l.time.strftime("%w %b %-I:%M %p"), # TODO(justinmiron): Timezone conversion from UTC
                 'track': l.track.name,
-                'artist': l.track.artist.name
+                'artist': l.track.artist.name,
+                'img_id': str(l.track.album.id)
             })
 
         return formatted_listens
@@ -95,11 +96,12 @@ class User(UserMixin, db.Model):
 
         tracks = []
         for a in d:
-            tracks.append({
-                'artist': a.Listen.track.artist.name,
-                'track': a.Listen.track.name,
-                'count': a.count
-            })
+            track_data = {}
+            track_data['artist'] = a.Listen.track.artist.name
+            track_data['track'] = a.Listen.track.name
+            track_data['count'] = a.count
+            track_data['img_id'] = str(a.Listen.track.album.id)
+            tracks.append(track_data)
 
         return tracks
 
@@ -141,6 +143,8 @@ class Album(db.Model):
     name = db.Column(db.String(100))
     artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
     spotify_id = db.Column(db.String(30))
+
+    album_art = db.relationship('AlbumArt', lazy=False)
 
 class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
