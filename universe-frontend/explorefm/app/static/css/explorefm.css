@@ -453,6 +453,7 @@ a { color: inherit; }
 }
 
 .spotify-connect-button {
+  margin-left: 2vw;
   color: inherit;
   padding: 5px;
   display: flex;
