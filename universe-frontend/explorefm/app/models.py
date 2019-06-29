@@ -170,4 +170,4 @@ class AlbumArt(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     path_small = db.Column(db.String(300), unique=True)
     path_medium = db.Column(db.String(300), unique=True)
-    album_id = db.Column(db.Integer, db.ForeignKey(Album.Id), unique=True)
+    album_id = db.Column(db.Integer, db.ForeignKey(Album.id), unique=True)
