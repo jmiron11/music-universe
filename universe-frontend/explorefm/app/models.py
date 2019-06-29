@@ -3,7 +3,8 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func, desc, and_
 from sqlalchemy.orm import joinedload
-from datetime import datetime
+from datetime import datetime, tzinfo
+import pytz
 
 @login.user_loader
 def load_user(id):
@@ -52,10 +53,16 @@ class User(UserMixin, db.Model):
     def get_recent_listens(self, limit):
         recent_listens = [l for l in self.listen[:limit]]
 
+        # Get offset and create timedelta object.
+        timezone = pytz.timezone(self.get_timezone())
+        current = datetime.now()
+        timedelta = timezone.utcoffset(current)
+
         formatted_listens = []
         for l in recent_listens:
+            dt = l.time + timedelta
             formatted_listens.append({
-                'time': l.time.strftime("%w %b %-I:%M %p"), # TODO(justinmiron): Timezone conversion from UTC
+                'time': dt.strftime("%-d %b %-I:%M %p"), # TODO(justinmiron): Timezone conversion from UTC
                 'track': l.track.name,
                 'artist': l.track.artist.name,
                 'img_id': str(l.track.album.id)

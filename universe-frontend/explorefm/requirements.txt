@@ -6,3 +6,4 @@ mysqlclient
 flask-wtf
 spotipy
 Flask-BasicAuth
+pytz
