@@ -139,23 +139,32 @@ func WriteNewListen(db *sql.DB, listen *Listen) {
 	}
 }
 
-func GetAlbumsWithNoArt(db *sql.DB) {
-	results, err := db.Query("SELECT Al.id, Al.spotify_id FROM album Al LEFT OUTER JOIN album_art Aa on Aa.album_id = Al.id WHERE Aa.album_id is null")
+func GetAlbumsWithNoArt(db *sql.DB, limit int) []Album {
+	results, err := db.Query("SELECT Al.id, Al.spotify_id FROM album Al LEFT OUTER JOIN album_art Aa on Aa.album_id = Al.id WHERE Aa.album_id is null LIMIT ?", limit)
 
 	defer results.Close()
 	if err != nil {
 		panic(err.Error())
 	}
 
-	var album_id int
-	var spotify_id *string
+	var albums []Album
 	i := 0
 	for results.Next() {
-		err = results.Scan(&album_id, &spotify_id)
-		fmt.Println(album_id)
+		albums = append(albums, Album{})
+		err = results.Scan(&albums[i].Id, &albums[i].Spotify_id)
+		fmt.Println(albums[i].Id)
 		if err != nil {
 			panic(err.Error()) // proper error handling instead of panic in your app
 		}
 		i += 1
+	}
+
+	return albums
+}
+
+func WriteAlbumArt(db *sql.DB, album_art *AlbumArt) {
+	_, err := db.Query("INSERT INTO album_art (Path_medium, Path_small, album_id) VALUES (?, ?, ?)", album_art.Path_medium, album_art.Path_small, album_art.Album_id)
+	if err != nil {
+		panic(err.Error())
 	}
 }

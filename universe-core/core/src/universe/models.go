@@ -52,7 +52,8 @@ type Album struct {
 }
 
 type AlbumArt struct {
-	Id     int    `json:"id"`
-	Small  []byte `json:"small"`
-	Medium []byte `json:"medium"`
+	Id          int    `json:"id"`
+	Path_medium string `json:"path_medium"`
+	Path_small  string `json:"path_small"`
+	Album_id    int    `json:"album_id"`
 }

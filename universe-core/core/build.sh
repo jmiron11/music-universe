@@ -1,3 +1,3 @@
 go build universe
 go install spotify-tracker
-# go install album-arter
+go install album-arter

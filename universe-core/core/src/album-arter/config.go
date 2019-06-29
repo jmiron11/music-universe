@@ -7,10 +7,11 @@ import (
 )
 
 type Configuration struct {
-	TOKEN_DB_TYPE          string
-	TOKEN_DB_DSN           string
+	ALBUM_DB_TYPE          string
+	ALBUM_DB_DSN           string
 	ALBUM_ART_BASE_PATH    string
 	TRACK_INTERVAL_SECONDS int
+	CONCURRENT_ALBUMS      int
 }
 
 func ReadConfig(filename string) Configuration {

@@ -150,8 +150,8 @@ DROP TABLE IF EXISTS `album_art`;
     
 CREATE TABLE `album_art` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `small` BLOB(10000) NULL DEFAULT NULL,
-  `medium` BLOB(100000) NULL DEFAULT NULL,
+  `path_medium` VARCHAR(300) NULL DEFAULT NULL,
+  `path_small` VARCHAR(300) NULL DEFAULT NULL,
   `album_id` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
@@ -173,7 +173,7 @@ ALTER TABLE `profile_highlight` ADD FOREIGN KEY (artist_id) REFERENCES `artist` 
 ALTER TABLE `profile_highlight` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 ALTER TABLE `profile_highlight` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 ALTER TABLE `profile_bio` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
-ALTER TABLE `album_art` ADD FOREIGN KEY (id) REFERENCES `album` (`id`);
+ALTER TABLE `album_art` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 
 -- ---
 -- Table Properties
@@ -212,5 +212,5 @@ ALTER TABLE `album_art` ADD FOREIGN KEY (id) REFERENCES `album` (`id`);
 -- ('','','','','');
 -- INSERT INTO `profile_bio` (`id`,`bio`,`user_id`) VALUES
 -- ('','','');
--- INSERT INTO `album_art` (`id`,`small`,`medium`,`album_id`) VALUES
+-- INSERT INTO `album_art` (`id`,`path_medium`,`path_small`,`album_id`) VALUES
 -- ('','','','');

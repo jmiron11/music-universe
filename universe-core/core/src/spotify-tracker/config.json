@@ -2,5 +2,7 @@
 	"TOKEN_DB_TYPE": "mysql",
     "TOKEN_DB_DSN": "root:Cool1whip@/universe",
 
+    "ALBUM_ART_BASE_PATH" "/home/justinm/git/music-universe/
+
     "TRACK_INTERVAL_SECONDS": 2
 }
