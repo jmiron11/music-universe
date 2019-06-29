@@ -39,9 +39,6 @@
                                 <div class="profile-mini-link">
                                     <a href="">Listening Statistics</a>
                                 </div>
-                                <div class="profile-mini-link">
-                                    <a href="">Edit Profile</a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -50,46 +47,7 @@
                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                         <div class="profile-left">
                             <div id="bio"></div>
-                            {% set highlights = user.get_highlights() %}
-                            {% if highlights|length > 0 %}
-                            <div class="profile-section-header">
-                            <h6>Highlighted Music</h6>
-                            </div>
-                            <div class="highlighted-music">
-                                {% for highlight in highlights %}
-                                <div class="music-highlight">
-                                    {% if 'track' in highlight %}
-                                    <div class="highlight-img"></div>
-                                    <div class="highlight-desc">
-                                        <div class="highlight-icon"></div>
-                                        <div class="highlight-txt">
-                                            <h6 style="font-size: 15px">{{ highlight['track'] }}</h6>
-                                            <h6 style="font-size: 11px">{{ highlight['album'] }}</h6>
-                                            <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
-                                        </div>
-                                    </div>
-                                    {% elif 'album' in highlight %}
-                                    <div class="highlight-img"></div>
-                                    <div class="highlight-desc">
-                                        <div class="highlight-icon"></div>
-                                        <div class="highlight-txt">
-                                            <h6 style="font-size: 15px">{{ highlight['album'] }}</h6>
-                                            <h6 style="font-size: 11px">{{ highlight['artist'] }}</h6>
-                                        </div>
-                                    </div>
-                                    {% elif 'artist' in highlight %}
-                                    <div class="highlight-img"></div>
-                                    <div class="highlight-desc">
-                                        <div class="highlight-icon"></div>
-                                        <div class="highlight-txt">
-                                            <h6 style="font-size: 15px">{{ highlight['artist'] }}</h6>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                </div> 
-                                {% endfor %}
-                            {% endif %}
-                            </div>
+                            <div id="highlighted-music"></div> <!-- Highlighted music react component -->
                             <div id="top-tracks"></div> <!-- Top Tracks react component -->
                         </div> <!-- Profile left end -->
                     </div>

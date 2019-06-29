@@ -204,6 +204,64 @@ class Bio extends React.Component {
   }
 }
 
+
+class Highlight extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+                    inEditMode: false,
+                    highlights: []
+                 };
+  }
+
+  componentDidMount(){
+    var self = this
+    var request = '/user/' + user + '/highlight/'
+    axios.get(request).then(function(response) {
+      self.state.highlights = response['data']
+      self.setState(self.state)
+    })
+  }
+
+  activeEditMode = (event) => {
+    this.state.inEditMode = true
+    this.setState(this.state)
+  }
+
+  disableEditModeSaveHighlights = (event) => {
+
+  }
+
+  renderNoHighlights(isCurrentUser) {
+    return ""
+  }
+
+  renderHighlights(isCurrentUser) {
+    return (
+      <div class="profile-section-header">
+      <h6>Highlighted Music</h6>
+      </div>
+    )
+  }
+
+  renderEditMode() {
+    return ""
+  }
+
+  render() {
+    var isCurrentUser = (user == current_user)
+    if (this.state.inEditMode) {
+      return this.renderEditMode()
+    } else {
+      if (len(this.state.highlights) == 0)
+        return this.renderNoHighlights(isCurrentUser)
+      else {
+        return this.renderHighlights(isCurrentUser)
+      }
+    }
+  }
+}
+
 class TimezoneForm extends React.Component {
   constructor(props) {
     super(props);

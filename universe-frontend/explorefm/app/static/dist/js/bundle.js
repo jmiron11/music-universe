@@ -369,20 +369,92 @@ function (_React$Component2) {
   return Bio;
 }(React.Component);
 
-var TimezoneForm =
+var Highlight =
 /*#__PURE__*/
 function (_React$Component3) {
-  _inherits(TimezoneForm, _React$Component3);
+  _inherits(Highlight, _React$Component3);
+
+  function Highlight(props) {
+    var _this3;
+
+    _classCallCheck(this, Highlight);
+
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
+
+    _this3.activeEditMode = function (event) {
+      _this3.state.inEditMode = true;
+
+      _this3.setState(_this3.state);
+    };
+
+    _this3.disableEditModeSaveHighlights = function (event) {};
+
+    _this3.state = {
+      inEditMode: false,
+      highlights: []
+    };
+    return _this3;
+  }
+
+  _createClass(Highlight, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var self = this;
+      var request = '/user/' + user + '/highlight/';
+      axios.get(request).then(function (response) {
+        self.state.highlights = response['data'];
+        self.setState(self.state);
+      });
+    }
+  }, {
+    key: "renderNoHighlights",
+    value: function renderNoHighlights(isCurrentUser) {
+      return "";
+    }
+  }, {
+    key: "renderHighlights",
+    value: function renderHighlights(isCurrentUser) {
+      return React.createElement("div", {
+        "class": "profile-section-header"
+      }, React.createElement("h6", null, "Highlighted Music"));
+    }
+  }, {
+    key: "renderEditMode",
+    value: function renderEditMode() {
+      return "";
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var isCurrentUser = user == current_user;
+
+      if (this.state.inEditMode) {
+        return this.renderEditMode();
+      } else {
+        if (len(this.state.highlights) == 0) return this.renderNoHighlights(isCurrentUser);else {
+          return this.renderHighlights(isCurrentUser);
+        }
+      }
+    }
+  }]);
+
+  return Highlight;
+}(React.Component);
+
+var TimezoneForm =
+/*#__PURE__*/
+function (_React$Component4) {
+  _inherits(TimezoneForm, _React$Component4);
 
   function TimezoneForm(props) {
-    var _this3;
+    var _this4;
 
     _classCallCheck(this, TimezoneForm);
 
-    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
+    _this4 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
 
-    _this3.updateTimezone = function (event) {
-      _this3.setState({
+    _this4.updateTimezone = function (event) {
+      _this4.setState({
         timezone: event.target.value
       });
 
@@ -390,10 +462,10 @@ function (_React$Component3) {
       axios.post(request);
     };
 
-    _this3.state = {
+    _this4.state = {
       timezone: "America/Chicago"
     };
-    return _this3;
+    return _this4;
   }
 
   _createClass(TimezoneForm, [{

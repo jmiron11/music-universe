@@ -144,7 +144,7 @@ def updatetimezone(timezone):
     current_user.set_timezone(timezone)
     return "" # TODO(justinmiron): Return and handle status code.
 
-@app.route('/user/<username>/bio/', methods=['GET', 'POST'])
+@app.route('/user/<username>/bio/', methods=['GET'])
 def bio(username):
     user = User.query.filter_by(username=username).first_or_404()
     return user.get_bio()
@@ -156,7 +156,7 @@ def update_bio():
     current_user.set_bio(new_bio)
     return "" # TODO(justinmiron): Return and handle status code.
 
-# @app.route('/timezone')
-# @login_required
-# def timezone():
-#     return current_user.get_timezone()
+@app.route('/user/<username>/highlights/', methods=['GET'])
+def highlights(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return user.get_highlights()
