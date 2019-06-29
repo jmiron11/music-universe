@@ -1,4 +1,4 @@
-#  Music-universe / <Insert Name>.fm
+#  Music-universe / \<Insert Name\>.fm
 
 ## An open-source music community infrastructure.
 This project seeks to build upon the initial work of Last.fm and Libre.fm with more of a focus on the music community rather than data (although, we have data too).
