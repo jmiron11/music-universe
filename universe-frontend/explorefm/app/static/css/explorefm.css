@@ -113,6 +113,16 @@ a { color: inherit; }
     height: 160px;
     background: #29252b;
     opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.album-row-img {
+  max-height: 160px;
+  opacity: 0.8;
 }
 
 .album-image {
@@ -139,7 +149,7 @@ a { color: inherit; }
 .album-row-username h1 {
   font-size: 55px;
   color: #ffffff;
-  text-shadow: 1px 1px #000000;
+  text-shadow: 1px 1px 2px #000000;
   font-family: 'Alegreya Sans SC', sans-serif;
   padding-left: 14px;
 }

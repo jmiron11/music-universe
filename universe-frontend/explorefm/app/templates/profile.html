@@ -8,7 +8,11 @@
         <div class="row">
             <div class="col-md-12 col-xs-12 col-sm-12">
                 <div class="row"> <!-- Album art row -->
-                    <div class="album-row"></div>
+                    <div class="album-row">
+                        {% for l in user.get_top_albums(8) %}
+                        <img class="album-row-img" src="{{ config.ALBUM_ART_SERVING + l['img_id'] + "-medium.jpg" }}"/>
+                        {% endfor %}
+                    </div>
                     <div class="profile-stats-row"></div>
                     <div class="profile-info">
                         <div class="profile-left">

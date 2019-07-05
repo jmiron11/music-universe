@@ -72,6 +72,11 @@ def user_loved(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('loved.html', user=user)
 
+@app.route('/user/<username>/top_albums/')
+def user_top_album(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return jsonify(user.get_top_albums())
+
 @app.route('/settings')
 @login_required
 def settings():

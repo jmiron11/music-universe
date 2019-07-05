@@ -232,6 +232,32 @@ class User(UserMixin, db.Model):
             db.session.commit()
 
 
+    def get_top_albums(self, count=8):
+        d = db.session.query(
+            Listen, func.count(Track.album_id).label('count')
+        ).filter(and_(
+            Listen.user_id == self.id,
+            Listen.track_id == Track.id)
+        ).group_by(
+            Track.album_id
+        ).order_by(
+            desc('count'),
+            Track.album_id
+        ).limit(count).all()
+
+        tracks = []
+        for a in d:
+            track_data = {}
+            track_data['artist'] = a.Listen.track.artist.name
+            track_data['album'] = a.Listen.track.album.name
+            track_data['count'] = a.count
+            track_data['img_id'] = str(a.Listen.track.album.id)
+            tracks.append(track_data)
+
+        return tracks
+
+
+
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
 
