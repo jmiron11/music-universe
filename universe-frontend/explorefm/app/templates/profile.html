@@ -19,7 +19,38 @@
                             <div class="album-row-username">
                             <h1>{{ user.username }}</h1>
                             </div>
+                            <div class="profile-navigation">
+                                <div class="profile-nav-link-selected">
+                                    <a class="profile-nav-link" href="{{ url_for('user', username=user.username) }}">Profile</a>
+                                </div>
+                                <div class="profile-nav-link">
+                                    <a href="{{ url_for('user_loved', username=user.username) }}">Loved Music</a>
+                                </div>
+                                <div class="profile-nav-link">
+                                    <a href="{{ url_for('user_library', username=user.username) }}">Library</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-data"> <!-- Profile data -->
+                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                        <div class="profile-left">
+                            <div class="bio-area">
+                                <div id="bio"></div>
+                                    <div id="highlighted-music" class="highlighted-music"></div> <!-- Highlighted music react component -->
+                            </div>
+                            <div id="top-tracks"></div> <!-- Top Tracks react component -->
+
+                        </div> <!-- Profile left end -->
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                        <div class="profile-stats-area">
                             <div class="profile-stats">
+                                <i class="fa fa-music fa-2x music-icon" aria-hidden="true"></i>
+                                <h6>Listen Stats</h6>
+
                                 <div class="profile-stat">
                                     <div class="profile-stat-number">{{ user.get_total_listens() }}</div>
                                     <div class="profile-stat-name">Listens</div>
@@ -36,22 +67,8 @@
                                     <div class="profile-stat-number">{{ user.get_unique_artists() }}</div>
                                     <div class="profile-stat-name">Artists</div>
                                 </div>
-                                <div class="profile-mini-link">
-                                    <a href="">Listening Statistics</a>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-data"> <!-- Profile data -->
-                    <div class="col-md-6 col-sm-6 col-xs-12 ">
-                        <div class="profile-left">
-                            <div id="bio"></div>
-                            <div id="highlighted-music"></div> <!-- Highlighted music react component -->
-                            <div id="top-tracks"></div> <!-- Top Tracks react component -->
-                        </div> <!-- Profile left end -->
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                        </div> 
                         <div class="listens">
                             <div class="profile-section-header">
                                 <h6>Listens</h6>
@@ -77,9 +94,3 @@
     <div style="min-height:10vh;"></div>
 
 {% endblock %}
-
-
-
-<!-- <h1 class="logo">Explore.fm</h1>  -->
-               <!--  <h2>User: {{ user.username }}</h2>
-                <a href="{{ url_for('spotifyconnect') }}"><i class="fa fa-spotify fa-3x" aria-hidden="true"></i></a> -->

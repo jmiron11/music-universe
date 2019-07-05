@@ -228,24 +228,128 @@ class Highlight extends React.Component {
     this.setState(this.state)
   }
 
-  disableEditModeSaveHighlights = (event) => {
+  disableEditMode = (event) => {
+    this.state.inEditMode = false
+    this.setState(this.state)
+  }
 
+  saveHighlight = (event) => {
+    var artist = document.getElementById("highlight-edit-artist").value
+    var album = document.getElementById("highlight-edit-album").value
+    var track = document.getElementById("highlight-edit-track").value
+
+    if (artist != "") {
+      artist = "artist=" + artist
+    }
+    if (album != "") {
+      album = "&album=" + album
+    } else {
+      album = ""
+    }
+    if (track != "") {
+      track = "&track=" + track
+    } else {
+      track = ""
+    }
+    var self = this
+    var request = '/update/highlight?' + artist + album + track
+    axios.get(request).then(function(response) {
+      self.state.highlights = response['data']
+      self.state.inEditMode = false
+      self.setState(self.state)
+    })
   }
 
   renderNoHighlights(isCurrentUser) {
-    return ""
-  }
-
-  renderHighlights(isCurrentUser) {
     return (
-      <div class="profile-section-header">
-      <h6>Highlighted Music</h6>
+      <div className="no-highlights">
+        <button className="no-highlight-edit" onClick={ this.activeEditMode }>It looks like you have no highlighted tracks... Click here to add your first highlighted track</button>
       </div>
     )
   }
 
+  renderHighlights(isCurrentUser) {
+    var highlights = this.state.highlights
+    var self = this
+    
+    var data = []
+    for (let i = 0; i < highlights.length; ++i) {
+      var k = "highlight-" + i.toString();
+      var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg'
+      data.push( 
+        <div key={ k } className="highlight-entry">
+          <img className="highlight-img" src={ img_path }/>
+          <div className="highlight-desc">
+            <div className="highlight-txt">
+                {highlights[i]['track'] && <h6><b>Track:</b> {highlights[i]['track']}</h6>}
+                {highlights[i]['album'] && <h6><b>Album:</b> { highlights[i]['album'] }</h6>}
+                {highlights[i]['artist'] && <h6><b>Artist:</b> { highlights[i]['artist'] }</h6>}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    if (highlights.length < 6) {
+    data.push(
+      <div key="add-highlights" className="highlight-edit-area">
+      <button className="bio-edit" onClick={ this.activeEditMode }>Add highlighted music</button>
+      </div>
+    )
+    }
+
+    return data
+  }
+
+  // Each highlight can be clicked normally. Edit mode is only 
+  // for adding a new highlight. It displays the add a highlight after
+  // the other highlights.
   renderEditMode() {
-    return ""
+    var highlights = this.state.highlights
+    var self = this
+    
+    var data = []
+    for (let i = 0; i < highlights.length; ++i) {
+      var k = "highlight-" + i.toString();
+      var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg' 
+      data.push( 
+        <div key={ k } className="highlight-entry">
+          <img className="highlight-img" src={ img_path }/>
+          <div className="highlight-desc">
+            <div className="highlight-txt">
+                {highlights[i]['track'] && <h6><b>Track:</b> {highlights[i]['track']}</h6>}
+                {highlights[i]['album'] && <h6><b>Album:</b> { highlights[i]['album'] }</h6>}
+                {highlights[i]['artist'] && <h6><b>Artist:</b> { highlights[i]['artist'] }</h6>}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    if (highlights.length < 6) {
+      data.push(
+        <div key="highlight-edit" className="highlight-edit-entry">
+          <div className="highlight-edit-row">
+            <h6>Artist</h6>
+            <input id="highlight-edit-artist" className="highlight-edit-form" type="text" max-length="100"></input>
+          </div>
+          <div className="highlight-edit-row">
+          <h6>Album</h6>
+          <input id="highlight-edit-album" className="highlight-edit-form" type="text" max-length="100"></input>
+          </div>
+          <div className="highlight-edit-row">
+          <h6>Track</h6>
+          <input id="highlight-edit-track" className="highlight-edit-form" type="text" max-length="100"></input>
+          </div>
+          <div className="bio-button-row">
+            <button className="bio-button" onClick={ this.disableEditMode }>Cancel</button>
+            <button className="bio-button" onClick={ this.saveHighlight }>Save</button>
+          </div> 
+        </div>
+      )
+    }
+
+    return data
   }
 
   render() {
@@ -253,7 +357,7 @@ class Highlight extends React.Component {
     if (this.state.inEditMode) {
       return this.renderEditMode()
     } else {
-      if (len(this.state.highlights) == 0)
+      if (this.state.highlights.length == 0)
         return this.renderNoHighlights(isCurrentUser)
       else {
         return this.renderHighlights(isCurrentUser)
@@ -734,5 +838,10 @@ if (domContainer != null) {
 domContainer = document.getElementById("bio")
 if (domContainer != null) {
   ReactDOM.render(e(Bio), domContainer);
+}
+
+domContainer = document.getElementById("highlighted-music")
+if (domContainer != null) {
+  ReactDOM.render(e(Highlight), domContainer);
 }
 

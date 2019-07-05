@@ -387,7 +387,42 @@ function (_React$Component3) {
       _this3.setState(_this3.state);
     };
 
-    _this3.disableEditModeSaveHighlights = function (event) {};
+    _this3.disableEditMode = function (event) {
+      _this3.state.inEditMode = false;
+
+      _this3.setState(_this3.state);
+    };
+
+    _this3.saveHighlight = function (event) {
+      var artist = document.getElementById("highlight-edit-artist").value;
+      var album = document.getElementById("highlight-edit-album").value;
+      var track = document.getElementById("highlight-edit-track").value;
+
+      if (artist != "") {
+        artist = "artist=" + artist;
+      }
+
+      if (album != "") {
+        album = "&album=" + album;
+      } else {
+        album = "";
+      }
+
+      if (track != "") {
+        track = "&track=" + track;
+      } else {
+        track = "";
+      }
+
+      var self = _assertThisInitialized(_this3);
+
+      var request = '/update/highlight?' + artist + album + track;
+      axios.get(request).then(function (response) {
+        self.state.highlights = response['data'];
+        self.state.inEditMode = false;
+        self.setState(self.state);
+      });
+    };
 
     _this3.state = {
       inEditMode: false,
@@ -409,19 +444,111 @@ function (_React$Component3) {
   }, {
     key: "renderNoHighlights",
     value: function renderNoHighlights(isCurrentUser) {
-      return "";
+      return React.createElement("div", {
+        className: "no-highlights"
+      }, React.createElement("button", {
+        className: "no-highlight-edit",
+        onClick: this.activeEditMode
+      }, "It looks like you have no highlighted tracks... Click here to add your first highlighted track"));
     }
   }, {
     key: "renderHighlights",
     value: function renderHighlights(isCurrentUser) {
-      return React.createElement("div", {
-        "class": "profile-section-header"
-      }, React.createElement("h6", null, "Highlighted Music"));
-    }
+      var highlights = this.state.highlights;
+      var self = this;
+      var data = [];
+
+      for (var i = 0; i < highlights.length; ++i) {
+        var k = "highlight-" + i.toString();
+        var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg';
+        data.push(React.createElement("div", {
+          key: k,
+          className: "highlight-entry"
+        }, React.createElement("img", {
+          className: "highlight-img",
+          src: img_path
+        }), React.createElement("div", {
+          className: "highlight-desc"
+        }, React.createElement("div", {
+          className: "highlight-txt"
+        }, highlights[i]['track'] && React.createElement("h6", null, React.createElement("b", null, "Track:"), " ", highlights[i]['track']), highlights[i]['album'] && React.createElement("h6", null, React.createElement("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['artist'] && React.createElement("h6", null, React.createElement("b", null, "Artist:"), " ", highlights[i]['artist'])))));
+      }
+
+      if (highlights.length < 6) {
+        data.push(React.createElement("div", {
+          key: "add-highlights",
+          className: "highlight-edit-area"
+        }, React.createElement("button", {
+          className: "bio-edit",
+          onClick: this.activeEditMode
+        }, "Add highlighted music")));
+      }
+
+      return data;
+    } // Each highlight can be clicked normally. Edit mode is only 
+    // for adding a new highlight. It displays the add a highlight after
+    // the other highlights.
+
   }, {
     key: "renderEditMode",
     value: function renderEditMode() {
-      return "";
+      var highlights = this.state.highlights;
+      var self = this;
+      var data = [];
+
+      for (var i = 0; i < highlights.length; ++i) {
+        var k = "highlight-" + i.toString();
+        var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg';
+        data.push(React.createElement("div", {
+          key: k,
+          className: "highlight-entry"
+        }, React.createElement("img", {
+          className: "highlight-img",
+          src: img_path
+        }), React.createElement("div", {
+          className: "highlight-desc"
+        }, React.createElement("div", {
+          className: "highlight-txt"
+        }, highlights[i]['track'] && React.createElement("h6", null, React.createElement("b", null, "Track:"), " ", highlights[i]['track']), highlights[i]['album'] && React.createElement("h6", null, React.createElement("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['artist'] && React.createElement("h6", null, React.createElement("b", null, "Artist:"), " ", highlights[i]['artist'])))));
+      }
+
+      if (highlights.length < 6) {
+        data.push(React.createElement("div", {
+          key: "highlight-edit",
+          className: "highlight-edit-entry"
+        }, React.createElement("div", {
+          className: "highlight-edit-row"
+        }, React.createElement("h6", null, "Artist"), React.createElement("input", {
+          id: "highlight-edit-artist",
+          className: "highlight-edit-form",
+          type: "text",
+          "max-length": "100"
+        })), React.createElement("div", {
+          className: "highlight-edit-row"
+        }, React.createElement("h6", null, "Album"), React.createElement("input", {
+          id: "highlight-edit-album",
+          className: "highlight-edit-form",
+          type: "text",
+          "max-length": "100"
+        })), React.createElement("div", {
+          className: "highlight-edit-row"
+        }, React.createElement("h6", null, "Track"), React.createElement("input", {
+          id: "highlight-edit-track",
+          className: "highlight-edit-form",
+          type: "text",
+          "max-length": "100"
+        })), React.createElement("div", {
+          className: "bio-button-row"
+        }, React.createElement("button", {
+          className: "bio-button",
+          onClick: this.disableEditMode
+        }, "Cancel"), React.createElement("button", {
+          className: "bio-button",
+          onClick: this.saveHighlight
+        }, "Save"))));
+      }
+
+      return data;
     }
   }, {
     key: "render",
@@ -431,7 +558,7 @@ function (_React$Component3) {
       if (this.state.inEditMode) {
         return this.renderEditMode();
       } else {
-        if (len(this.state.highlights) == 0) return this.renderNoHighlights(isCurrentUser);else {
+        if (this.state.highlights.length == 0) return this.renderNoHighlights(isCurrentUser);else {
           return this.renderHighlights(isCurrentUser);
         }
       }
@@ -1358,6 +1485,12 @@ domContainer = document.getElementById("bio");
 
 if (domContainer != null) {
   ReactDOM.render(e(Bio), domContainer);
+}
+
+domContainer = document.getElementById("highlighted-music");
+
+if (domContainer != null) {
+  ReactDOM.render(e(Highlight), domContainer);
 }
 
 /***/ }),

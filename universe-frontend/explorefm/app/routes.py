@@ -62,6 +62,16 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('profile.html', user=user)
 
+@app.route('/user/<username>/library/')
+def user_library(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('library.html', user=user)
+
+@app.route('/user/<username>/loved/')
+def user_loved(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('loved.html', user=user)
+
 @app.route('/settings')
 @login_required
 def settings():
@@ -98,7 +108,6 @@ def spotifyconnect():
 def spotifydisconnect():
     current_user.unspotify()
     return redirect(url_for('settings'))
-
 
 @app.route('/authcallback')
 @login_required
@@ -156,7 +165,32 @@ def update_bio():
     current_user.set_bio(new_bio)
     return "" # TODO(justinmiron): Return and handle status code.
 
-@app.route('/user/<username>/highlights/', methods=['GET'])
+@app.route('/user/<username>/highlight/', methods=['GET'])
 def highlights(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return user.get_highlights()
+    return jsonify(user.get_highlights())
+
+# Returns the new set of highlights
+@app.route('/update/highlight/')
+@login_required
+def update_highlight():
+    artist = str(request.args.get('artist', default=""))
+    album = str(request.args.get('album', default=""))
+    track = str(request.args.get('track', default=""))
+    r_artist = str(request.args.get('old_artist', default=""))
+    r_album = str(request.args.get('old_album', default=""))
+    r_track = str(request.args.get('old_track', default=""))
+
+    highlight_obj = {}
+    highlight_obj['artist'] = artist
+    if album is not None:
+        highlight_obj['album'] = album
+    if track is not None:
+        highlight_obj['track'] = track
+
+    current_user.replace_highlight(highlight_obj, None)
+
+    # if r_artist is not None:
+    # for h in current_user.highlights:
+
+    return jsonify(current_user.get_highlights())

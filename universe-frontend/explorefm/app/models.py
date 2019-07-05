@@ -46,7 +46,6 @@ class User(UserMixin, db.Model):
             db.session.add(u_bio)
             db.session.commit()
 
-
     def get_highlights(self):
         formatted_highlight = []
         for h in self.highlights:
@@ -55,8 +54,13 @@ class User(UserMixin, db.Model):
                 highlight['track'] = h.track.name
             if h.album_id:
                 highlight['album'] = h.album.name
+                highlight['img_id'] = h.album.album_art[0].id
             if h.artist_id:
                 highlight['artist'] = h.artist.name
+                album = Album.query.filter(
+                        Album.artist_id==h.artist.id
+                        ).first()
+                highlight['img_id'] = album.album_art[0].album_id
             formatted_highlight.append(highlight)
 
         return formatted_highlight
@@ -156,6 +160,45 @@ class User(UserMixin, db.Model):
             db.session.commit()
             return 'UTC'
 
+    def replace_highlight(self, new_highlight, old_highlight):
+        artist = Artist.query.filter(Artist.name==new_highlight['artist']).first()
+        print(artist)
+        album = None
+        if 'album' in new_highlight and artist != None:
+            album = Album.query.filter(
+                and_(
+                    Album.name==new_highlight['album'], 
+                    Artist.id==artist.id
+                    )).first()
+
+        track = None
+        if 'track' in new_highlight and album != None:
+            track = Track.query.filter(
+                and_(
+                    Track.name==new_highlight['track'], 
+                    Album.id==album.id
+                    )).first()
+
+        # ID's used to create new profile highlight objects.
+        artist_id = artist.id
+        if album is not None:
+            album_id = album.id
+        else:
+            album_id = None
+
+        if track is not None:
+            track_id = track.id
+        else:
+            track_id = None
+
+        print(artist_id, album_id, track_id)
+
+        if old_highlight == None:
+            u_highlight = ProfileHighlight(user_id=self.id, artist_id=artist_id, album_id=album_id, track_id=track_id)
+            db.session.add(u_highlight)
+            db.session.commit()
+
+
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
 
@@ -194,6 +237,8 @@ class Album(db.Model):
     name = db.Column(db.String(100))
     artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
     spotify_id = db.Column(db.String(30))
+
+    artist = db.relationship('Artist', lazy=True)
 
     album_art = db.relationship('AlbumArt', lazy=False)
 
