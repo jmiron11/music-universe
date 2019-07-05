@@ -239,7 +239,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="760" y="618" name="loved_tracks">
+<table x="1048" y="602" name="loved_tracks">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -255,7 +255,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="759" y="721" name="loved_albums">
+<table x="1202" y="601" name="loved_albums">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -271,7 +271,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="757" y="826" name="loved_artists">
+<table x="1127" y="705" name="loved_artists">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -282,6 +282,21 @@
 <row name="artist_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="artist" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="761" y="620" name="profile_image">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="path" null="1" autoincrement="0">
+<datatype>VARCHAR(300)</datatype>
+<default>NULL</default></row>
+<row name="user_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="user" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>

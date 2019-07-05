@@ -22,7 +22,7 @@
 <body>
     <script type="text/javascript">
         var current_user = "{{ current_user.username }}";
-        var img_endpoint = "{{ config.ALBUM_ART_SERVING }}";
+        var album_art_endpoint = "{{ config.IMAGE_SERVING + config.ALBUM_ART_DIR }}";
     </script> <!-- Initial data passed to react app -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">

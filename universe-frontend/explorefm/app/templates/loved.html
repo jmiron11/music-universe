@@ -1,40 +1,5 @@
-{% extends "base.html" %}
+{% extends "profile_base.html" %}
 
-{% block content %} 
-    <script type="text/javascript">
-        var user = "{{ user.username }}";
-    </script> <!-- Initial data passed to react app -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 col-xs-12 col-sm-12">
-                <div class="row"> <!-- Album art row -->
-                    <div class="album-row"></div>
-                    <div class="profile-stats-row"></div>
-                    <div class="profile-info">
-                        <div class="profile-left">
-                            <div class="album-image"></div>
-                        </div>
-                        <div class="profile-right">
-                            <div style="padding: 15px 0 0 0"></div>
-                            <div class="album-row-username">
-                            <h1>{{ user.username }}</h1>
-                            </div>
-                            <div class="profile-navigation">
-                                <div class="profile-nav-link">
-                                    <a href="{{ url_for('user', username=user.username) }}">Profile</a>
-                                </div>
-                                <div class="profile-nav-link-selected">
-                                    <a href="{{ url_for('user_loved', username=user.username) }}">Loved Music</a>
-                                </div>
-                                <div class="profile-nav-link">
-                                    <a href="{{ url_for('user_library', username=user.username) }}">Library</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{% block profile %} 
 
 {% endblock %}

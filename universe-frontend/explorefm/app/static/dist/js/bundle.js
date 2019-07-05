@@ -192,7 +192,7 @@ function (_React$Component) {
             className = "listen-entry-shaded";
           }
 
-          var img_path = img_endpoint + l[i]['img_id'] + '-small.jpg';
+          var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
           newTop.push(React.createElement("div", {
             key: k
           }, React.createElement("div", {
@@ -614,7 +614,7 @@ function (_React$Component3) {
 
       for (var i = 0; i < highlights.length; ++i) {
         var k = "highlight-" + i.toString();
-        var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg';
+        var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg';
 
         if (i != this.state.editIndex) {
           data.push(React.createElement("div", {
@@ -700,7 +700,7 @@ function (_React$Component3) {
 
       for (var i = 0; i < highlights.length; ++i) {
         var k = "highlight-" + i.toString();
-        var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg';
+        var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg';
         data.push(React.createElement("div", {
           key: k,
           className: "highlight-entry"
@@ -1693,7 +1693,18 @@ domContainer = document.getElementById("highlighted-music");
 
 if (domContainer != null) {
   ReactDOM.render(e(Highlight), domContainer);
-}
+} // Native JS
+// Get the modal
+
+
+var modal = document.getElementById("myModal");
+
+document.getElementById("profile-pic").onclick = function () {
+  modal.style.display = "block";
+}; // $("#pop").on("click", function() {
+//    $('#imagepreview').attr('src', $('#imageresource').attr('src')); // here asign the image to the modal when the user click the enlarge link
+//    $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+// });
 
 /***/ }),
 

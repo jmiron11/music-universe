@@ -1,100 +1,60 @@
-{% extends "base.html" %}
+{% extends "profile_base.html" %}
 
-{% block content %}
-    <script type="text/javascript">
-        var user = "{{ user.username }}";
-    </script> <!-- Initial data passed to react app -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 col-xs-12 col-sm-12">
-                <div class="row"> <!-- Album art row -->
-                    <div class="album-row">
-                        {% for l in user.get_top_albums(8) %}
-                        <img class="album-row-img" src="{{ config.ALBUM_ART_SERVING + l['img_id'] + "-medium.jpg" }}"/>
-                        {% endfor %}
-                    </div>
-                    <div class="profile-stats-row"></div>
-                    <div class="profile-info">
-                        <div class="profile-left">
-                            <div class="album-image"></div>
-                        </div>
-                        <div class="profile-right">
-                            <div style="padding: 15px 0 0 0"></div>
-                            <div class="album-row-username">
-                            <h1>{{ user.username }}</h1>
-                            </div>
-                            <div class="profile-navigation">
-                                <div class="profile-nav-link-selected">
-                                    <a class="profile-nav-link" href="{{ url_for('user', username=user.username) }}">Profile</a>
-                                </div>
-                                <div class="profile-nav-link">
-                                    <a href="{{ url_for('user_loved', username=user.username) }}">Loved Music</a>
-                                </div>
-                                <div class="profile-nav-link">
-                                    <a href="{{ url_for('user_library', username=user.username) }}">Library</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{% block profile %} 
+
+<div class="profile-data"> <!-- Profile data -->
+    <div class="col-md-6 col-sm-6 col-xs-12 ">
+        <div class="profile-left">
+            <div class="bio-area">
+                <div id="bio"></div>
+                    <div id="highlighted-music" class="highlighted-music"></div> <!-- Highlighted music react component -->
+            </div>
+            <div id="top-tracks"></div> <!-- Top Tracks react component -->
+
+        </div> <!-- Profile left end -->
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12 ">
+        <div class="profile-stats-area">
+            <div class="profile-stats">
+                <i class="fa fa-music fa-2x music-icon" aria-hidden="true"></i>
+                <h6>Listen Stats</h6>
+
+                <div class="profile-stat">
+                    <div class="profile-stat-number">{{ user.get_total_listens() }}</div>
+                    <div class="profile-stat-name">Listens</div>
                 </div>
-
-                <div class="profile-data"> <!-- Profile data -->
-                    <div class="col-md-6 col-sm-6 col-xs-12 ">
-                        <div class="profile-left">
-                            <div class="bio-area">
-                                <div id="bio"></div>
-                                    <div id="highlighted-music" class="highlighted-music"></div> <!-- Highlighted music react component -->
-                            </div>
-                            <div id="top-tracks"></div> <!-- Top Tracks react component -->
-
-                        </div> <!-- Profile left end -->
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 ">
-                        <div class="profile-stats-area">
-                            <div class="profile-stats">
-                                <i class="fa fa-music fa-2x music-icon" aria-hidden="true"></i>
-                                <h6>Listen Stats</h6>
-
-                                <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ user.get_total_listens() }}</div>
-                                    <div class="profile-stat-name">Listens</div>
-                                </div>
-                                <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ user.get_unique_tracks() }}</div>
-                                    <div class="profile-stat-name">Tracks</div>
-                                </div>
-                                <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ user.get_unique_albums() }}</div>
-                                    <div class="profile-stat-name">Albums</div>
-                                </div>
-                                <div class="profile-stat">
-                                    <div class="profile-stat-number">{{ user.get_unique_artists() }}</div>
-                                    <div class="profile-stat-name">Artists</div>
-                                </div>
-                            </div>
-                        </div> 
-                        <div class="listens">
-                            <div class="profile-section-header">
-                                <h6>Listens</h6>
-                            </div>
-                            <div style="padding-bottom: 10px"></div>
-                            {% for l in user.get_recent_listens(10) %}
-                            {% if (loop.index + 1) % 2 == 0 %}
-                            <div class="listen-entry">
-                            {% else %}
-                            <div class="listen-entry-shaded">
-                            {% endif %}
-                                <img class="listen-entry-art" src="{{ config.ALBUM_ART_SERVING + l['img_id'] + "-small.jpg" }}"/>
-                                <div class="listen-entry-track"><h6>{{ l['artist'] }} - {{ l['track'] }}</h6></div>
-                                <div class="listen-entry-time"><h6>{{ l['time'] }}</h6></div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-number">{{ user.get_unique_tracks() }}</div>
+                    <div class="profile-stat-name">Tracks</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-number">{{ user.get_unique_albums() }}</div>
+                    <div class="profile-stat-name">Albums</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-number">{{ user.get_unique_artists() }}</div>
+                    <div class="profile-stat-name">Artists</div>
                 </div>
             </div>
+        </div> 
+        <div class="listens">
+            <div class="profile-section-header">
+                <h6>Listens</h6>
+            </div>
+            <div style="padding-bottom: 10px"></div>
+            {% for l in user.get_recent_listens(10) %}
+            {% if (loop.index + 1) % 2 == 0 %}
+            <div class="listen-entry">
+            {% else %}
+            <div class="listen-entry-shaded">
+            {% endif %}
+                <img class="listen-entry-art" src="{{ config.IMAGE_SERVING + config.ALBUM_ART_DIR + l['img_id'] + "-small.jpg" }}"/>
+                <div class="listen-entry-track"><h6>{{ l['artist'] }} - {{ l['track'] }}</h6></div>
+                <div class="listen-entry-time"><h6>{{ l['time'] }}</h6></div>
+            </div>
+            {% endfor %}
         </div>
     </div>
-    <div style="min-height:10vh;"></div>
+</div>
 
 {% endblock %}

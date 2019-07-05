@@ -57,7 +57,7 @@ class TopTracks extends React.Component {
           className = "listen-entry-shaded"
         }
 
-        var img_path = img_endpoint + l[i]['img_id'] + '-small.jpg'
+        var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg'
         newTop.push(
           <div key={ k }>
             <div className={className}>
@@ -416,7 +416,7 @@ class Highlight extends React.Component {
     var data = []
     for (let i = 0; i < highlights.length; ++i) {
       var k = "highlight-" + i.toString();
-      var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg'
+      var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg'
       if (i != this.state.editIndex) {
         data.push( 
           <div key={ k } id={k} className="highlight-entry-area" onClick={this.editHighlightEntry}>
@@ -480,7 +480,7 @@ class Highlight extends React.Component {
     var data = []
     for (let i = 0; i < highlights.length; ++i) {
       var k = "highlight-" + i.toString();
-      var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg' 
+      var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg' 
       data.push( 
         <div key={ k } className="highlight-entry">
           <img className="highlight-img" src={ img_path }/>
@@ -1013,4 +1013,3 @@ domContainer = document.getElementById("highlighted-music")
 if (domContainer != null) {
   ReactDOM.render(e(Highlight), domContainer);
 }
-

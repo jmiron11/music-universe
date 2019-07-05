@@ -18,4 +18,10 @@ class Config(object):
     BASIC_AUTH_PASSWORD = os.environ.get('UNIVERSE_AUTH_PASS')
 
     # CDN / Static file serving
-    ALBUM_ART_SERVING = "http://localhost:80/"
+    IMAGE_SERVING = "http://localhost:80/" 
+    IMAGE_SERVING_LOCAL_PATH = "/home/justinm/git/music-universe/images/"
+
+    ALBUM_ART_DIR = "album_art/"
+    PROFILE_PIC_DIR = "profile_pic/"
+
+    PROFILE_PIC_EXTENSIONS = set(['jpg', 'jpeg'])

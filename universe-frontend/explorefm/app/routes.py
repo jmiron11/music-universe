@@ -5,7 +5,9 @@ from app.forms import LoginForm, RegistrationForm
 from app.models import User, Token
 from app.spotify import get_authorize_url, get_access_token
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 import time
+import os
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -209,3 +211,31 @@ def update_highlight():
     current_user.replace_highlight(highlight_obj, old_highlight_obj)
 
     return jsonify(current_user.get_highlights())
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in app.config['PROFILE_PIC_EXTENSIONS']
+
+@app.route('/update/profile_image', methods=['GET', 'POST'])
+@login_required
+def upload_profile_image():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            extension = file.filename[file.filename.rfind('.') + 1:]
+            prefix = str(current_user.id)
+            filename = secure_filename(prefix + '.' + extension)
+            full_path = os.path.join(app.config['IMAGE_SERVING_LOCAL_PATH'] + app.config['PROFILE_PIC_DIR'], filename)
+            file.save(os.path.join(app.config['IMAGE_SERVING_LOCAL_PATH'] + app.config['PROFILE_PIC_DIR'], filename))
+            current_user.update_profile_image(full_path)
+            return redirect(url_for('user', username=current_user.username))
+    return render_template('upload_profile.html', user=current_user)

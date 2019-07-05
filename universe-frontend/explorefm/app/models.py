@@ -1,4 +1,4 @@
-from app import db, login
+from app import db, login, app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func, desc, and_
@@ -20,6 +20,7 @@ class User(UserMixin, db.Model):
     highlights = db.relationship('ProfileHighlight', lazy=True)
     listen = db.relationship('Listen', lazy=True, order_by="desc(Listen.time)")
     settings = db.relationship('Settings', lazy=True)
+    image = db.relationship('ProfileImage', lazy=True)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -38,13 +39,11 @@ class User(UserMixin, db.Model):
 
     def set_bio(self, bio):
         if len(self.bio) > 0:
-            print('Setting the bio to: %s' % bio)
             self.bio[0].bio = bio
-            db.session.commit()
         else:
             u_bio = ProfileBio(bio=bio, user_id=self.id)
             db.session.add(u_bio)
-            db.session.commit()
+        db.session.commit()
 
     def get_highlights(self):
         formatted_highlight = []
@@ -256,6 +255,22 @@ class User(UserMixin, db.Model):
 
         return tracks
 
+    def update_profile_image(self, path):
+        u_image = ProfileImage(user_id=self.id, path=path)
+        if len(self.image) > 0:
+            self.image[0].path = path
+        else:
+            db.session.add(u_image)
+        db.session.commit()
+
+    def get_profile_image_path(self):
+        if len(self.image) > 0:
+            full_path = self.image[0].path
+            postfix = full_path[full_path.rfind('/') + 1:]
+            remote_path = app.config['IMAGE_SERVING'] + app.config['PROFILE_PIC_DIR'] + postfix
+        else:
+            remote_path = app.config['IMAGE_SERVING'] + app.config['PROFILE_PIC_DIR'] + 'no_profile.jpg'
+        return remote_path
 
 
 class ProfileBio(db.Model):
@@ -335,4 +350,10 @@ class AlbumArt(db.Model):
 class Settings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timezone = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
+
+
+class ProfileImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    path = db.Column(db.String(300), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
