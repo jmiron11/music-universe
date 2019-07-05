@@ -171,6 +171,48 @@ CREATE TABLE `settings` (
 );
 
 -- ---
+-- Table 'loved_tracks'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `loved_tracks`;
+    
+CREATE TABLE `loved_tracks` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `track_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'loved_albums'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `loved_albums`;
+    
+CREATE TABLE `loved_albums` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `album_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'loved_artists'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `loved_artists`;
+    
+CREATE TABLE `loved_artists` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `artist_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -189,6 +231,12 @@ ALTER TABLE `profile_highlight` ADD FOREIGN KEY (track_id) REFERENCES `track` (`
 ALTER TABLE `profile_bio` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `album_art` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 ALTER TABLE `settings` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `loved_tracks` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `loved_tracks` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
+ALTER TABLE `loved_albums` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `loved_albums` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
+ALTER TABLE `loved_artists` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `loved_artists` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 
 -- ---
 -- Table Properties
@@ -205,6 +253,9 @@ ALTER TABLE `settings` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 -- ALTER TABLE `profile_bio` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `album_art` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `settings` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `loved_tracks` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `loved_albums` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `loved_artists` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -231,4 +282,10 @@ ALTER TABLE `settings` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 -- INSERT INTO `album_art` (`id`,`path_medium`,`path_small`,`album_id`) VALUES
 -- ('','','','');
 -- INSERT INTO `settings` (`id`,`timezone`,`user_id`) VALUES
+-- ('','','');
+-- INSERT INTO `loved_tracks` (`id`,`user_id`,`track_id`) VALUES
+-- ('','','');
+-- INSERT INTO `loved_albums` (`id`,`user_id`,`album_id`) VALUES
+-- ('','','');
+-- INSERT INTO `loved_artists` (`id`,`user_id`,`artist_id`) VALUES
 -- ('','','');
