@@ -5,6 +5,7 @@ from sqlalchemy import func, desc, and_
 from sqlalchemy.orm import joinedload
 from datetime import datetime, tzinfo
 import pytz
+import time
 
 @login.user_loader
 def load_user(id):
@@ -231,26 +232,54 @@ class User(UserMixin, db.Model):
             db.session.commit()
 
 
-    def get_top_albums(self, count=8):
+    def get_top_albums(self, start_t, end_t, limit=8):
         d = db.session.query(
             Listen, func.count(Track.album_id).label('count')
         ).filter(and_(
             Listen.user_id == self.id,
+            Listen.time > datetime.utcfromtimestamp(start_t),
+            Listen.time < datetime.utcfromtimestamp(end_t),
             Listen.track_id == Track.id)
         ).group_by(
             Track.album_id
         ).order_by(
             desc('count'),
             Track.album_id
-        ).limit(count).all()
+        ).limit(limit).all()
+
+        tracks = []
+        for a in d:
+            track_data = {}
+            track_data['album'] = a.Listen.track.album.name
+            track_data['artist'] = a.Listen.track.artist.name
+            track_data['count'] = a.count
+            track_data['img_id'] = str(a.Listen.track.album.id)
+            tracks.append(track_data)
+
+        return tracks
+
+
+    def get_top_artists(self, start_t, end_t, limit=8):
+        d = db.session.query(
+            Listen, func.count(Track.artist_id).label('count')
+        ).filter(and_(
+            Listen.user_id == self.id,
+            Listen.time > datetime.utcfromtimestamp(start_t),
+            Listen.time < datetime.utcfromtimestamp(end_t),
+            Listen.track_id == Track.id)
+        ).group_by(
+            Track.artist_id
+        ).order_by(
+            desc('count'),
+            Track.artist_id
+        ).limit(limit).all()
 
         tracks = []
         for a in d:
             track_data = {}
             track_data['artist'] = a.Listen.track.artist.name
-            track_data['album'] = a.Listen.track.album.name
             track_data['count'] = a.count
-            track_data['img_id'] = str(a.Listen.track.album.id)
+            # track_data['img_id'] = str(a.Listen.track.album.id)
             tracks.append(track_data)
 
         return tracks
