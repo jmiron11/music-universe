@@ -246,49 +246,303 @@ function (_React$Component) {
   return TopTracks;
 }(React.Component);
 
-var Bio =
+var TopAlbums =
 /*#__PURE__*/
 function (_React$Component2) {
-  _inherits(Bio, _React$Component2);
+  _inherits(TopAlbums, _React$Component2);
+
+  function TopAlbums(props) {
+    var _this2;
+
+    _classCallCheck(this, TopAlbums);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(TopAlbums).call(this, props));
+
+    _this2.updateTimespan = function (event) {
+      _this2.state.timespan = event.target.value;
+
+      _this2.getNewTimespanData(event.target.value);
+    };
+
+    _this2.state = {
+      timespan: "month",
+      top_albums: []
+    };
+    return _this2;
+  }
+
+  _createClass(TopAlbums, [{
+    key: "getSecondsSinceEpoch",
+    value: function getSecondsSinceEpoch() {
+      var d = new Date();
+      console.log(d);
+      return Math.floor(d.getTime() / 1000);
+    }
+  }, {
+    key: "getTimeOffsetByT",
+    value: function getTimeOffsetByT(t, offset) {
+      return t - offset;
+    }
+  }, {
+    key: "getNewTimespanData",
+    value: function getNewTimespanData(value) {
+      // Get the timeoffsets to be used in the track requests
+      var t_start;
+      var t_end = this.getSecondsSinceEpoch();
+
+      if (this.state.timespan == "day") {
+        t_start = this.getTimeOffsetByT(t_end, 24 * 60 * 60);
+      } else if (this.state.timespan == "week") {
+        t_start = this.getTimeOffsetByT(t_end, 7 * 24 * 60 * 60);
+      } else if (this.state.timespan == "month") {
+        t_start = this.getTimeOffsetByT(t_end, 30 * 24 * 60 * 60);
+      } else if (this.state.timespan == "year") {
+        t_start = this.getTimeOffsetByT(t_end, 365 * 24 * 60 * 60);
+      } else if (this.state.timespan == "all") {
+        t_start = this.getTimeOffsetByT(t_end, 10 * 365 * 24 * 60 * 60);
+      }
+
+      var newTop = [];
+      var self = this;
+      var request = '/user/' + user + '/top_albums?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
+      axios.get(request).then(function (response) {
+        l = response['data'];
+
+        for (var i = 0; i < l.length; ++i) {
+          var k = "album-" + i.toString();
+          var width_percent = 100;
+          var className;
+
+          if (i % 2 == 0) {
+            className = "listen-entry";
+          } else {
+            className = "listen-entry-shaded";
+          }
+
+          var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
+          newTop.push(React.createElement("div", {
+            key: k
+          }, React.createElement("div", {
+            className: className
+          }, React.createElement("img", {
+            className: "listen-entry-art",
+            src: img_path
+          }), React.createElement("div", {
+            className: "listen-entry-track"
+          }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['album'])), React.createElement("div", {
+            className: "listen-entry-time"
+          }, React.createElement("h6", null, l[i]['count'])))));
+        }
+
+        self.setState({
+          timespan: value,
+          top_albums: newTop
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getNewTimespanData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement("div", {
+        className: "top-album"
+      }, React.createElement("div", {
+        className: "profile-section-header-timespan"
+      }, React.createElement("h6", null, "Top Albums"), React.createElement("select", {
+        id: "ts-form",
+        onChange: this.updateTimespan,
+        value: this.state.timespan
+      }, React.createElement("option", {
+        value: "day"
+      }, "Last day"), React.createElement("option", {
+        value: "week"
+      }, "Last week"), React.createElement("option", {
+        value: "month"
+      }, "Last month"), React.createElement("option", {
+        value: "year"
+      }, "Last year"), React.createElement("option", {
+        value: "all"
+      }, "All time"))), this.state.top_albums);
+    }
+  }]);
+
+  return TopAlbums;
+}(React.Component);
+
+var TopArtists =
+/*#__PURE__*/
+function (_React$Component3) {
+  _inherits(TopArtists, _React$Component3);
+
+  function TopArtists(props) {
+    var _this3;
+
+    _classCallCheck(this, TopArtists);
+
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(TopArtists).call(this, props));
+
+    _this3.updateTimespan = function (event) {
+      _this3.state.timespan = event.target.value;
+
+      _this3.getNewTimespanData(event.target.value);
+    };
+
+    _this3.state = {
+      timespan: "month",
+      top_artists: []
+    };
+    return _this3;
+  }
+
+  _createClass(TopArtists, [{
+    key: "getSecondsSinceEpoch",
+    value: function getSecondsSinceEpoch() {
+      var d = new Date();
+      console.log(d);
+      return Math.floor(d.getTime() / 1000);
+    }
+  }, {
+    key: "getTimeOffsetByT",
+    value: function getTimeOffsetByT(t, offset) {
+      return t - offset;
+    }
+  }, {
+    key: "getNewTimespanData",
+    value: function getNewTimespanData(value) {
+      // Get the timeoffsets to be used in the track requests
+      var t_start;
+      var t_end = this.getSecondsSinceEpoch();
+
+      if (this.state.timespan == "day") {
+        t_start = this.getTimeOffsetByT(t_end, 24 * 60 * 60);
+      } else if (this.state.timespan == "week") {
+        t_start = this.getTimeOffsetByT(t_end, 7 * 24 * 60 * 60);
+      } else if (this.state.timespan == "month") {
+        t_start = this.getTimeOffsetByT(t_end, 30 * 24 * 60 * 60);
+      } else if (this.state.timespan == "year") {
+        t_start = this.getTimeOffsetByT(t_end, 365 * 24 * 60 * 60);
+      } else if (this.state.timespan == "all") {
+        t_start = this.getTimeOffsetByT(t_end, 10 * 365 * 24 * 60 * 60);
+      }
+
+      var newTop = [];
+      var self = this;
+      var request = '/user/' + user + '/top_artists?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
+      axios.get(request).then(function (response) {
+        l = response['data'];
+
+        for (var i = 0; i < l.length; ++i) {
+          var k = "artist-" + i.toString();
+          var width_percent = 100;
+          var className;
+
+          if (i % 2 == 0) {
+            className = "listen-entry";
+          } else {
+            className = "listen-entry-shaded";
+          }
+
+          var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
+          newTop.push(React.createElement("div", {
+            key: k
+          }, React.createElement("div", {
+            className: className
+          }, React.createElement("img", {
+            className: "listen-entry-art",
+            src: img_path
+          }), React.createElement("div", {
+            className: "listen-entry-track"
+          }, React.createElement("h6", null, l[i]['artist'])), React.createElement("div", {
+            className: "listen-entry-time"
+          }, React.createElement("h6", null, l[i]['count'])))));
+        }
+
+        self.setState({
+          timespan: value,
+          top_artists: newTop
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getNewTimespanData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement("div", {
+        className: "top-artist"
+      }, React.createElement("div", {
+        className: "profile-section-header-timespan"
+      }, React.createElement("h6", null, "Top Artists"), React.createElement("select", {
+        id: "ts-form",
+        onChange: this.updateTimespan,
+        value: this.state.timespan
+      }, React.createElement("option", {
+        value: "day"
+      }, "Last day"), React.createElement("option", {
+        value: "week"
+      }, "Last week"), React.createElement("option", {
+        value: "month"
+      }, "Last month"), React.createElement("option", {
+        value: "year"
+      }, "Last year"), React.createElement("option", {
+        value: "all"
+      }, "All time"))), this.state.top_artists);
+    }
+  }]);
+
+  return TopArtists;
+}(React.Component);
+
+var Bio =
+/*#__PURE__*/
+function (_React$Component4) {
+  _inherits(Bio, _React$Component4);
 
   function Bio(props) {
-    var _this2;
+    var _this4;
 
     _classCallCheck(this, Bio);
 
-    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
+    _this4 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
 
-    _this2.activeEditMode = function (event) {
-      _this2.state.inEditMode = true;
+    _this4.activeEditMode = function (event) {
+      _this4.state.inEditMode = true;
 
-      _this2.setState(_this2.state);
+      _this4.setState(_this4.state);
     };
 
-    _this2.disableEditModeClearBio = function (event) {
-      _this2.state.inEditMode = false;
+    _this4.disableEditModeClearBio = function (event) {
+      _this4.state.inEditMode = false;
       document.getElementById("bio-edit-form").value = "";
 
-      _this2.setState(_this2.state);
+      _this4.setState(_this4.state);
     };
 
-    _this2.disableEditModeSaveBio = function (event) {
+    _this4.disableEditModeSaveBio = function (event) {
       var new_bio = document.getElementById("bio-edit-form").value;
-      _this2.state.inEditMode = false;
-      _this2.state.bio = new_bio;
+      _this4.state.inEditMode = false;
+      _this4.state.bio = new_bio;
 
-      _this2.setState(_this2.state);
+      _this4.setState(_this4.state);
 
-      var self = _assertThisInitialized(_this2);
+      var self = _assertThisInitialized(_this4);
 
       var request = '/update/bio/?bio=' + new_bio;
       axios.get(request);
     };
 
-    _this2.state = {
+    _this4.state = {
       inEditMode: false,
       bio: "..."
     };
-    return _this2;
+    return _this4;
   }
 
   _createClass(Bio, [{
@@ -371,49 +625,49 @@ function (_React$Component2) {
 
 var Highlight =
 /*#__PURE__*/
-function (_React$Component3) {
-  _inherits(Highlight, _React$Component3);
+function (_React$Component5) {
+  _inherits(Highlight, _React$Component5);
 
   function Highlight(props) {
-    var _this3;
+    var _this5;
 
     _classCallCheck(this, Highlight);
 
-    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
+    _this5 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
 
-    _this3.activeEditMode = function (event) {
-      _this3.state.addNewHighlightMode = true;
+    _this5.activeEditMode = function (event) {
+      _this5.state.addNewHighlightMode = true;
 
-      _this3.setState(_this3.state);
+      _this5.setState(_this5.state);
     };
 
-    _this3.disableEditMode = function (event) {
-      _this3.state.addNewHighlightMode = false;
+    _this5.disableEditMode = function (event) {
+      _this5.state.addNewHighlightMode = false;
 
-      _this3.setState(_this3.state);
+      _this5.setState(_this5.state);
     };
 
-    _this3.editHighlightEntry = function (event) {
+    _this5.editHighlightEntry = function (event) {
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      _this3.state.editIndex = highlight_idx;
+      _this5.state.editIndex = highlight_idx;
 
-      _this3.setState(_this3.state);
+      _this5.setState(_this5.state);
     };
 
-    _this3.disableEditHighlight = function (event) {
-      _this3.state.editIndex = -1;
+    _this5.disableEditHighlight = function (event) {
+      _this5.state.editIndex = -1;
 
-      _this3.setState(_this3.state);
+      _this5.setState(_this5.state);
     };
 
-    _this3.deleteEditHighlight = function (event) {
+    _this5.deleteEditHighlight = function (event) {
       var artist = document.getElementById("exist-highlight-edit-artist").value;
       var album = document.getElementById("exist-highlight-edit-album").value;
       var track = document.getElementById("exist-highlight-edit-track").value;
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this3.state.highlights[highlight_idx];
+      var old_highlight = _this5.state.highlights[highlight_idx];
       var old_track, old_album, old_artist;
 
       if ('track' in old_highlight) {
@@ -434,7 +688,7 @@ function (_React$Component3) {
         old_artist = "";
       }
 
-      var self = _assertThisInitialized(_this3);
+      var self = _assertThisInitialized(_this5);
 
       var request = '/update/highlight?' + old_artist + old_album + old_track;
       axios.get(request).then(function (response) {
@@ -459,13 +713,13 @@ function (_React$Component3) {
       });
     };
 
-    _this3.saveEditHighlight = function (event) {
+    _this5.saveEditHighlight = function (event) {
       var artist = document.getElementById("exist-highlight-edit-artist").value;
       var album = document.getElementById("exist-highlight-edit-album").value;
       var track = document.getElementById("exist-highlight-edit-track").value;
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this3.state.highlights[highlight_idx];
+      var old_highlight = _this5.state.highlights[highlight_idx];
 
       if (artist != "") {
         artist = "artist=" + artist;
@@ -503,7 +757,7 @@ function (_React$Component3) {
         old_artist = "";
       }
 
-      var self = _assertThisInitialized(_this3);
+      var self = _assertThisInitialized(_this5);
 
       var request = '/update/highlight?' + artist + album + track + old_artist + old_album + old_track;
       axios.get(request).then(function (response) {
@@ -528,7 +782,7 @@ function (_React$Component3) {
       });
     };
 
-    _this3.saveHighlight = function (event) {
+    _this5.saveHighlight = function (event) {
       var artist = document.getElementById("highlight-edit-artist").value;
       var album = document.getElementById("highlight-edit-album").value;
       var track = document.getElementById("highlight-edit-track").value;
@@ -549,7 +803,7 @@ function (_React$Component3) {
         track = "";
       }
 
-      var self = _assertThisInitialized(_this3);
+      var self = _assertThisInitialized(_this5);
 
       var request = '/update/highlight?' + artist + album + track;
       axios.get(request).then(function (response) {
@@ -574,12 +828,12 @@ function (_React$Component3) {
       });
     };
 
-    _this3.state = {
+    _this5.state = {
       addNewHighlightMode: false,
       highlights: [],
       editIndex: -1
     };
-    return _this3;
+    return _this5;
   }
 
   _createClass(Highlight, [{
@@ -772,18 +1026,18 @@ function (_React$Component3) {
 
 var TimezoneForm =
 /*#__PURE__*/
-function (_React$Component4) {
-  _inherits(TimezoneForm, _React$Component4);
+function (_React$Component6) {
+  _inherits(TimezoneForm, _React$Component6);
 
   function TimezoneForm(props) {
-    var _this4;
+    var _this6;
 
     _classCallCheck(this, TimezoneForm);
 
-    _this4 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
+    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
 
-    _this4.updateTimezone = function (event) {
-      _this4.setState({
+    _this6.updateTimezone = function (event) {
+      _this6.setState({
         timezone: event.target.value
       });
 
@@ -791,10 +1045,10 @@ function (_React$Component4) {
       axios.post(request);
     };
 
-    _this4.state = {
+    _this6.state = {
       timezone: "America/Chicago"
     };
-    return _this4;
+    return _this6;
   }
 
   _createClass(TimezoneForm, [{
@@ -1677,6 +1931,18 @@ if (domContainer != null) {
   ReactDOM.render(e(TopTracks), domContainer);
 }
 
+domContainer = document.getElementById("top-albums");
+
+if (domContainer != null) {
+  ReactDOM.render(e(TopAlbums), domContainer);
+}
+
+domContainer = document.getElementById("top-artists");
+
+if (domContainer != null) {
+  ReactDOM.render(e(TopArtists), domContainer);
+}
+
 domContainer = document.getElementById("timezone-form");
 
 if (domContainer != null) {
@@ -1693,18 +1959,7 @@ domContainer = document.getElementById("highlighted-music");
 
 if (domContainer != null) {
   ReactDOM.render(e(Highlight), domContainer);
-} // Native JS
-// Get the modal
-
-
-var modal = document.getElementById("myModal");
-
-document.getElementById("profile-pic").onclick = function () {
-  modal.style.display = "block";
-}; // $("#pop").on("click", function() {
-//    $('#imagepreview').attr('src', $('#imageresource').attr('src')); // here asign the image to the modal when the user click the enlarge link
-//    $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-// });
+}
 
 /***/ }),
 

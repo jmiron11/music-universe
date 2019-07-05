@@ -232,7 +232,7 @@ class User(UserMixin, db.Model):
             db.session.commit()
 
 
-    def get_top_albums(self, start_t, end_t, limit=8):
+    def get_top_albums(self, start_t=0, end_t=time.time(), limit=8):
         d = db.session.query(
             Listen, func.count(Track.album_id).label('count')
         ).filter(and_(
