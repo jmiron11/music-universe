@@ -209,8 +209,9 @@ class Highlight extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-                    inEditMode: false,
-                    highlights: []
+                    addNewHighlightMode: false,
+                    highlights: [],
+                    editIndex: -1
                  };
   }
 
@@ -224,13 +225,137 @@ class Highlight extends React.Component {
   }
 
   activeEditMode = (event) => {
-    this.state.inEditMode = true
+    this.state.addNewHighlightMode = true
     this.setState(this.state)
   }
 
   disableEditMode = (event) => {
-    this.state.inEditMode = false
+    this.state.addNewHighlightMode = false
     this.setState(this.state)
+  }
+
+  editHighlightEntry = (event) => {
+    var id = event.currentTarget.id
+    var highlight_idx = Number(id.substring(id.length - 1))
+    this.state.editIndex = highlight_idx
+    this.setState(this.state)
+  }
+
+  disableEditHighlight = (event) => {
+    this.state.editIndex = -1
+    this.setState(this.state)
+  }
+
+  deleteEditHighlight = (event) => {
+    var artist = document.getElementById("exist-highlight-edit-artist").value
+    var album = document.getElementById("exist-highlight-edit-album").value
+    var track = document.getElementById("exist-highlight-edit-track").value
+
+    var id = event.currentTarget.id
+    var highlight_idx = Number(id.substring(id.length - 1))
+    var old_highlight = this.state.highlights[highlight_idx]
+    var old_track, old_album, old_artist
+    if ('track' in old_highlight) {
+      old_track = "&old_track=" + old_highlight['track']
+    } else {
+      old_track = ""
+    }
+
+    if ('album' in old_highlight) {
+      old_album = "&old_album=" + old_highlight['album']
+    } else {
+      old_album = ""
+    }
+
+    if ('artist' in old_highlight) {
+      old_artist = "&old_artist=" + old_highlight['artist']
+    } else {
+      old_artist = ""
+    }
+
+    var self = this
+    var request = '/update/highlight?' + old_artist + old_album + old_track
+    axios.get(request).then(function(response) {
+      self.state.highlights = response['data']
+      for (let i = 0; i < self.state.highlights.length; ++i) {
+        if (!('track' in self.state.highlights[i])) {
+          self.state.highlights[i]['track'] = ""
+        }
+        if (!('album' in self.state.highlights[i])) {
+          self.state.highlights[i]['album'] = ""
+        }
+        if (!('artist' in self.state.highlights[i])) {
+          self.state.highlights[i]['artist'] = ""
+        }
+      }
+
+      self.state.editIndex = -1
+      self.setState(self.state)
+    })
+  }
+
+  saveEditHighlight = (event) => {
+    var artist = document.getElementById("exist-highlight-edit-artist").value
+    var album = document.getElementById("exist-highlight-edit-album").value
+    var track = document.getElementById("exist-highlight-edit-track").value
+
+    var id = event.currentTarget.id
+    var highlight_idx = Number(id.substring(id.length - 1))
+
+    var old_highlight = this.state.highlights[highlight_idx]
+
+    if (artist != "") {
+          artist = "artist=" + artist
+    }
+    if (album != "") {
+      album = "&album=" + album
+    } else {
+      album = ""
+    }
+    if (track != "") {
+      track = "&track=" + track
+    } else {
+      track = ""
+    }
+
+    var old_track, old_album, old_artist
+    if ('track' in old_highlight) {
+      old_track = "&old_track=" + old_highlight['track']
+    } else {
+      old_track = ""
+    }
+
+    if ('album' in old_highlight) {
+      old_album = "&old_album=" + old_highlight['album']
+    } else {
+      old_album = ""
+    }
+
+    if ('artist' in old_highlight) {
+      old_artist = "&old_artist=" + old_highlight['artist']
+    } else {
+      old_artist = ""
+    }
+
+    var self = this
+    var request = '/update/highlight?' + artist + album + track + old_artist + old_album + old_track
+    axios.get(request).then(function(response) {
+      self.state.highlights = response['data']
+      for (let i = 0; i < self.state.highlights.length; ++i) {
+        if (!('track' in self.state.highlights[i])) {
+          self.state.highlights[i]['track'] = ""
+        }
+        if (!('album' in self.state.highlights[i])) {
+          self.state.highlights[i]['album'] = ""
+        }
+        if (!('artist' in self.state.highlights[i])) {
+          self.state.highlights[i]['artist'] = ""
+        }
+      }
+
+      self.state.editIndex = -1
+      self.setState(self.state)
+    })
   }
 
   saveHighlight = (event) => {
@@ -255,7 +380,19 @@ class Highlight extends React.Component {
     var request = '/update/highlight?' + artist + album + track
     axios.get(request).then(function(response) {
       self.state.highlights = response['data']
-      self.state.inEditMode = false
+      for (let i = 0; i < self.state.highlights.length; ++i) {
+        if (!('track' in self.state.highlights[i])) {
+          self.state.highlights[i]['track'] = ""
+        }
+        if (!('album' in self.state.highlights[i])) {
+          self.state.highlights[i]['album'] = ""
+        }
+        if (!('artist' in self.state.highlights[i])) {
+          self.state.highlights[i]['artist'] = ""
+        }
+      }
+
+      self.state.addNewHighlightMode = false
       self.setState(self.state)
     })
   }
@@ -268,6 +405,10 @@ class Highlight extends React.Component {
     )
   }
 
+  nothing() {
+
+  }
+
   renderHighlights(isCurrentUser) {
     var highlights = this.state.highlights
     var self = this
@@ -276,18 +417,46 @@ class Highlight extends React.Component {
     for (let i = 0; i < highlights.length; ++i) {
       var k = "highlight-" + i.toString();
       var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg'
-      data.push( 
-        <div key={ k } className="highlight-entry">
-          <img className="highlight-img" src={ img_path }/>
-          <div className="highlight-desc">
-            <div className="highlight-txt">
-                {highlights[i]['track'] && <h6><b>Track:</b> {highlights[i]['track']}</h6>}
-                {highlights[i]['album'] && <h6><b>Album:</b> { highlights[i]['album'] }</h6>}
-                {highlights[i]['artist'] && <h6><b>Artist:</b> { highlights[i]['artist'] }</h6>}
+      if (i != this.state.editIndex) {
+        data.push( 
+          <div key={ k } id={k} className="highlight-entry-area" onClick={this.editHighlightEntry}>
+            <div className="highlight-entry">
+              <img className="highlight-img" src={ img_path }/>
+              <div className="highlight-desc">
+                <div className="highlight-txt">
+                    {highlights[i]['artist'] && <h6><b>Artist:</b> { highlights[i]['artist'] }</h6>}
+                    {highlights[i]['album'] && <h6><b>Album:</b> { highlights[i]['album'] }</h6>}
+                    {highlights[i]['track'] && <h6><b>Track:</b> {highlights[i]['track']}</h6>}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )
+        )
+      } else {
+        var edit_idx = i
+        var key = "edit-highlight-" + edit_idx
+        data.push(
+          <div key={ key } className="highlight-edit-entry">
+            <div className="highlight-edit-row">
+              <h6>Artist</h6>
+              <input id="exist-highlight-edit-artist" className="highlight-edit-form" type="text" max-length="100"/>
+            </div>
+            <div className="highlight-edit-row">
+              <h6>Album</h6>
+              <input id="exist-highlight-edit-album" className="highlight-edit-form" type="text" max-length="100"/>
+            </div>
+            <div className="highlight-edit-row">
+              <h6>Track</h6>
+              <input id="exist-highlight-edit-track" className="highlight-edit-form" type="text" max-length="100"/>
+            </div>
+            <div className="bio-button-row">
+              <button id={key} className="bio-button" onClick={ this.deleteEditHighlight }>Delete</button>
+              <button className="bio-button" onClick={ this.disableEditHighlight }>Cancel</button>
+              <button id={ key } className="bio-button" onClick={ this.saveEditHighlight }>Save</button>
+            </div> 
+          </div>
+        )
+      }
     }
 
     if (highlights.length < 6) {
@@ -354,7 +523,7 @@ class Highlight extends React.Component {
 
   render() {
     var isCurrentUser = (user == current_user)
-    if (this.state.inEditMode) {
+    if (this.state.addNewHighlightMode) {
       return this.renderEditMode()
     } else {
       if (this.state.highlights.length == 0)

@@ -566,6 +566,7 @@ a { color: inherit; }
 }
 
 .highlight-entry {
+
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
@@ -576,6 +577,17 @@ a { color: inherit; }
   margin: 2px;
   width: 100%;
 }
+
+.highlight-entry-area {
+  display:block;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.highlight-entry-area:hover {
+  opacity: 0.5;
+}
+
 
 .highlight-edit-entry {
   display: flex;

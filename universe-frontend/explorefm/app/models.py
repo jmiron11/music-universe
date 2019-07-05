@@ -161,41 +161,74 @@ class User(UserMixin, db.Model):
             return 'UTC'
 
     def replace_highlight(self, new_highlight, old_highlight):
-        artist = Artist.query.filter(Artist.name==new_highlight['artist']).first()
-        print(artist)
-        album = None
-        if 'album' in new_highlight and artist != None:
-            album = Album.query.filter(
-                and_(
-                    Album.name==new_highlight['album'], 
-                    Artist.id==artist.id
-                    )).first()
+        if new_highlight is not None:
+            artist = Artist.query.filter(Artist.name==new_highlight['artist']).first()
+            album = None
+            if 'album' in new_highlight and artist != None:
+                album = Album.query.filter(
+                    and_(
+                        Album.name==new_highlight['album'], 
+                        Artist.id==artist.id
+                        )).first()
 
-        track = None
-        if 'track' in new_highlight and album != None:
-            track = Track.query.filter(
-                and_(
-                    Track.name==new_highlight['track'], 
-                    Album.id==album.id
-                    )).first()
+            track = None
+            if 'track' in new_highlight and album != None:
+                track = Track.query.filter(
+                    and_(
+                        Track.name==new_highlight['track'], 
+                        Album.id==album.id
+                        )).first()
 
-        # ID's used to create new profile highlight objects.
-        artist_id = artist.id
-        if album is not None:
-            album_id = album.id
-        else:
-            album_id = None
+            # ID's used to create new profile highlight objects.
+            artist_id = artist.id
+            if album is not None:
+                album_id = album.id
+            else:
+                album_id = None
 
-        if track is not None:
-            track_id = track.id
-        else:
-            track_id = None
+            if track is not None:
+                track_id = track.id
+            else:
+                track_id = None
 
-        print(artist_id, album_id, track_id)
-
-        if old_highlight == None:
             u_highlight = ProfileHighlight(user_id=self.id, artist_id=artist_id, album_id=album_id, track_id=track_id)
             db.session.add(u_highlight)
+
+            if old_highlight is None:
+                db.session.commit()
+
+        if old_highlight is not None:
+            artist = Artist.query.filter(Artist.name==old_highlight['artist']).first()
+            album = None
+            if 'album' in old_highlight and artist != None:
+                album = Album.query.filter(
+                    and_(
+                        Album.name==old_highlight['album'], 
+                        Artist.id==artist.id
+                        )).first()
+
+            track = None
+            if 'track' in old_highlight and album != None:
+                track = Track.query.filter(
+                    and_(
+                        Track.name==old_highlight['track'], 
+                        Album.id==album.id
+                        )).first()
+
+            # ID's used to create new profile highlight objects.
+            artist_id = artist.id
+            if album is not None:
+                album_id = album.id
+            else:
+                album_id = None
+
+            if track is not None:
+                track_id = track.id
+            else:
+                track_id = None
+
+            u_highlight = ProfileHighlight.query.filter(and_(ProfileHighlight.user_id==self.id, ProfileHighlight.artist_id==artist_id, ProfileHighlight.album_id==album_id, ProfileHighlight.track_id==track_id)).first()
+            db.session.delete(u_highlight)
             db.session.commit()
 
 

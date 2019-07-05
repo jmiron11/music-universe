@@ -188,9 +188,19 @@ def update_highlight():
     if track is not None:
         highlight_obj['track'] = track
 
-    current_user.replace_highlight(highlight_obj, None)
+    if highlight_obj['artist'] == "":
+        highlight_obj = None
 
-    # if r_artist is not None:
-    # for h in current_user.highlights:
+    old_highlight_obj = {}
+    old_highlight_obj['artist'] = r_artist
+    if r_album is not None:
+        old_highlight_obj['album'] = r_album
+    if r_track is not None:
+        old_highlight_obj['track'] = r_track
+
+    if old_highlight_obj['artist'] == "":
+        old_highlight_obj = None
+
+    current_user.replace_highlight(highlight_obj, old_highlight_obj)
 
     return jsonify(current_user.get_highlights())

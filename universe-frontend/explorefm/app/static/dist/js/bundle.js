@@ -382,15 +382,150 @@ function (_React$Component3) {
     _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
 
     _this3.activeEditMode = function (event) {
-      _this3.state.inEditMode = true;
+      _this3.state.addNewHighlightMode = true;
 
       _this3.setState(_this3.state);
     };
 
     _this3.disableEditMode = function (event) {
-      _this3.state.inEditMode = false;
+      _this3.state.addNewHighlightMode = false;
 
       _this3.setState(_this3.state);
+    };
+
+    _this3.editHighlightEntry = function (event) {
+      var id = event.currentTarget.id;
+      var highlight_idx = Number(id.substring(id.length - 1));
+      _this3.state.editIndex = highlight_idx;
+
+      _this3.setState(_this3.state);
+    };
+
+    _this3.disableEditHighlight = function (event) {
+      _this3.state.editIndex = -1;
+
+      _this3.setState(_this3.state);
+    };
+
+    _this3.deleteEditHighlight = function (event) {
+      var artist = document.getElementById("exist-highlight-edit-artist").value;
+      var album = document.getElementById("exist-highlight-edit-album").value;
+      var track = document.getElementById("exist-highlight-edit-track").value;
+      var id = event.currentTarget.id;
+      var highlight_idx = Number(id.substring(id.length - 1));
+      var old_highlight = _this3.state.highlights[highlight_idx];
+      var old_track, old_album, old_artist;
+
+      if ('track' in old_highlight) {
+        old_track = "&old_track=" + old_highlight['track'];
+      } else {
+        old_track = "";
+      }
+
+      if ('album' in old_highlight) {
+        old_album = "&old_album=" + old_highlight['album'];
+      } else {
+        old_album = "";
+      }
+
+      if ('artist' in old_highlight) {
+        old_artist = "&old_artist=" + old_highlight['artist'];
+      } else {
+        old_artist = "";
+      }
+
+      var self = _assertThisInitialized(_this3);
+
+      var request = '/update/highlight?' + old_artist + old_album + old_track;
+      axios.get(request).then(function (response) {
+        self.state.highlights = response['data'];
+
+        for (var i = 0; i < self.state.highlights.length; ++i) {
+          if (!('track' in self.state.highlights[i])) {
+            self.state.highlights[i]['track'] = "";
+          }
+
+          if (!('album' in self.state.highlights[i])) {
+            self.state.highlights[i]['album'] = "";
+          }
+
+          if (!('artist' in self.state.highlights[i])) {
+            self.state.highlights[i]['artist'] = "";
+          }
+        }
+
+        self.state.editIndex = -1;
+        self.setState(self.state);
+      });
+    };
+
+    _this3.saveEditHighlight = function (event) {
+      var artist = document.getElementById("exist-highlight-edit-artist").value;
+      var album = document.getElementById("exist-highlight-edit-album").value;
+      var track = document.getElementById("exist-highlight-edit-track").value;
+      var id = event.currentTarget.id;
+      var highlight_idx = Number(id.substring(id.length - 1));
+      var old_highlight = _this3.state.highlights[highlight_idx];
+
+      if (artist != "") {
+        artist = "artist=" + artist;
+      }
+
+      if (album != "") {
+        album = "&album=" + album;
+      } else {
+        album = "";
+      }
+
+      if (track != "") {
+        track = "&track=" + track;
+      } else {
+        track = "";
+      }
+
+      var old_track, old_album, old_artist;
+
+      if ('track' in old_highlight) {
+        old_track = "&old_track=" + old_highlight['track'];
+      } else {
+        old_track = "";
+      }
+
+      if ('album' in old_highlight) {
+        old_album = "&old_album=" + old_highlight['album'];
+      } else {
+        old_album = "";
+      }
+
+      if ('artist' in old_highlight) {
+        old_artist = "&old_artist=" + old_highlight['artist'];
+      } else {
+        old_artist = "";
+      }
+
+      var self = _assertThisInitialized(_this3);
+
+      var request = '/update/highlight?' + artist + album + track + old_artist + old_album + old_track;
+      axios.get(request).then(function (response) {
+        self.state.highlights = response['data'];
+
+        for (var i = 0; i < self.state.highlights.length; ++i) {
+          if (!('track' in self.state.highlights[i])) {
+            self.state.highlights[i]['track'] = "";
+          }
+
+          if (!('album' in self.state.highlights[i])) {
+            self.state.highlights[i]['album'] = "";
+          }
+
+          if (!('artist' in self.state.highlights[i])) {
+            self.state.highlights[i]['artist'] = "";
+          }
+        }
+
+        self.state.editIndex = -1;
+        self.setState(self.state);
+      });
     };
 
     _this3.saveHighlight = function (event) {
@@ -419,14 +554,30 @@ function (_React$Component3) {
       var request = '/update/highlight?' + artist + album + track;
       axios.get(request).then(function (response) {
         self.state.highlights = response['data'];
-        self.state.inEditMode = false;
+
+        for (var i = 0; i < self.state.highlights.length; ++i) {
+          if (!('track' in self.state.highlights[i])) {
+            self.state.highlights[i]['track'] = "";
+          }
+
+          if (!('album' in self.state.highlights[i])) {
+            self.state.highlights[i]['album'] = "";
+          }
+
+          if (!('artist' in self.state.highlights[i])) {
+            self.state.highlights[i]['artist'] = "";
+          }
+        }
+
+        self.state.addNewHighlightMode = false;
         self.setState(self.state);
       });
     };
 
     _this3.state = {
-      inEditMode: false,
-      highlights: []
+      addNewHighlightMode: false,
+      highlights: [],
+      editIndex: -1
     };
     return _this3;
   }
@@ -452,6 +603,9 @@ function (_React$Component3) {
       }, "It looks like you have no highlighted tracks... Click here to add your first highlighted track"));
     }
   }, {
+    key: "nothing",
+    value: function nothing() {}
+  }, {
     key: "renderHighlights",
     value: function renderHighlights(isCurrentUser) {
       var highlights = this.state.highlights;
@@ -461,17 +615,65 @@ function (_React$Component3) {
       for (var i = 0; i < highlights.length; ++i) {
         var k = "highlight-" + i.toString();
         var img_path = img_endpoint + highlights[i]['img_id'] + '-medium.jpg';
-        data.push(React.createElement("div", {
-          key: k,
-          className: "highlight-entry"
-        }, React.createElement("img", {
-          className: "highlight-img",
-          src: img_path
-        }), React.createElement("div", {
-          className: "highlight-desc"
-        }, React.createElement("div", {
-          className: "highlight-txt"
-        }, highlights[i]['track'] && React.createElement("h6", null, React.createElement("b", null, "Track:"), " ", highlights[i]['track']), highlights[i]['album'] && React.createElement("h6", null, React.createElement("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['artist'] && React.createElement("h6", null, React.createElement("b", null, "Artist:"), " ", highlights[i]['artist'])))));
+
+        if (i != this.state.editIndex) {
+          data.push(React.createElement("div", {
+            key: k,
+            id: k,
+            className: "highlight-entry-area",
+            onClick: this.editHighlightEntry
+          }, React.createElement("div", {
+            className: "highlight-entry"
+          }, React.createElement("img", {
+            className: "highlight-img",
+            src: img_path
+          }), React.createElement("div", {
+            className: "highlight-desc"
+          }, React.createElement("div", {
+            className: "highlight-txt"
+          }, highlights[i]['artist'] && React.createElement("h6", null, React.createElement("b", null, "Artist:"), " ", highlights[i]['artist']), highlights[i]['album'] && React.createElement("h6", null, React.createElement("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['track'] && React.createElement("h6", null, React.createElement("b", null, "Track:"), " ", highlights[i]['track']))))));
+        } else {
+          var edit_idx = i;
+          var key = "edit-highlight-" + edit_idx;
+          data.push(React.createElement("div", {
+            key: key,
+            className: "highlight-edit-entry"
+          }, React.createElement("div", {
+            className: "highlight-edit-row"
+          }, React.createElement("h6", null, "Artist"), React.createElement("input", {
+            id: "exist-highlight-edit-artist",
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), React.createElement("div", {
+            className: "highlight-edit-row"
+          }, React.createElement("h6", null, "Album"), React.createElement("input", {
+            id: "exist-highlight-edit-album",
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), React.createElement("div", {
+            className: "highlight-edit-row"
+          }, React.createElement("h6", null, "Track"), React.createElement("input", {
+            id: "exist-highlight-edit-track",
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), React.createElement("div", {
+            className: "bio-button-row"
+          }, React.createElement("button", {
+            id: key,
+            className: "bio-button",
+            onClick: this.deleteEditHighlight
+          }, "Delete"), React.createElement("button", {
+            className: "bio-button",
+            onClick: this.disableEditHighlight
+          }, "Cancel"), React.createElement("button", {
+            id: key,
+            className: "bio-button",
+            onClick: this.saveEditHighlight
+          }, "Save"))));
+        }
       }
 
       if (highlights.length < 6) {
@@ -555,7 +757,7 @@ function (_React$Component3) {
     value: function render() {
       var isCurrentUser = user == current_user;
 
-      if (this.state.inEditMode) {
+      if (this.state.addNewHighlightMode) {
         return this.renderEditMode();
       } else {
         if (this.state.highlights.length == 0) return this.renderNoHighlights(isCurrentUser);else {
