@@ -436,16 +436,7 @@ function (_React$Component3) {
 
         for (var i = 0; i < l.length; ++i) {
           var k = "artist-" + i.toString();
-          var width_percent = 100;
-          var className;
-
-          if (i % 2 == 0) {
-            className = "listen-entry";
-          } else {
-            className = "listen-entry-shaded";
-          }
-
-          var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
+          var img_path = artist_art_endpoint + l[i]['img_id'] + '-medium.jpg';
           newTop.push(React.createElement("div", {
             key: k
           }, React.createElement("div", {

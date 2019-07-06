@@ -2,7 +2,8 @@
 	"ALBUM_DB_TYPE": "mysql",
     "ALBUM_DB_DSN": "root:Cool1whip@/universe",
 
-    "ALBUM_ART_BASE_PATH": "/home/justinm/git/music-universe/album_arts/",
-    "TRACK_INTERVAL_SECONDS": 30,
+    "ALBUM_ART_BASE_PATH": "/home/justinm/git/music-universe/images/album_art/",
+    "ARTIST_ART_BASE_PATH": "/home/justinm/git/music-universe/images/artist_art/",
+    "TRACK_INTERVAL_SECONDS": 2,
     "CONCURRENT_ALBUMS": 10
 }

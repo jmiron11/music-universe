@@ -57,3 +57,10 @@ type AlbumArt struct {
 	Path_small  string `json:"path_small"`
 	Album_id    int    `json:"album_id"`
 }
+
+type ArtistArt struct {
+	Id          int    `json:"id"`
+	Path_medium string `json:"path_medium"`
+	Path_small  string `json:"path_small"`
+	Artist_id   int    `json:"artist_id"`
+}

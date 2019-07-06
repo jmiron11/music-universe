@@ -22,6 +22,7 @@ class Config(object):
     IMAGE_SERVING_LOCAL_PATH = "/home/justinm/git/music-universe/images/"
 
     ALBUM_ART_DIR = "album_art/"
+    ARTIST_ART_DIR = "artist_art/"
     PROFILE_PIC_DIR = "profile_pic/"
 
     PROFILE_PIC_EXTENSIONS = set(['jpg', 'jpeg'])

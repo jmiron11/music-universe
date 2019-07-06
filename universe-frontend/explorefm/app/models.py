@@ -278,7 +278,7 @@ class User(UserMixin, db.Model):
             track_data = {}
             track_data['artist'] = a.Listen.track.artist.name
             track_data['count'] = a.count
-            # track_data['img_id'] = str(a.Listen.track.album.id)
+            track_data['img_id'] = str(a.Listen.track.artist.id)
             tracks.append(track_data)
 
         return tracks
@@ -349,6 +349,8 @@ class Artist(db.Model):
     name = db.Column(db.String(100))
     spotify_id = db.Column(db.String(30))
 
+    artist_art = db.relationship('ArtistArt', lazy=False)
+
 class Listen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     time = db.Column(db.DateTime)
@@ -367,19 +369,22 @@ class Token(db.Model):
     def __repr__(self):
         return '<Token {0}, Refresh {1}, User {2}>'.format(self.access_token, self.refresh_token, self.user_id)
 
-
 class AlbumArt(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     path_small = db.Column(db.String(300), unique=True)
     path_medium = db.Column(db.String(300), unique=True)
     album_id = db.Column(db.Integer, db.ForeignKey(Album.id), unique=True)
 
+class ArtistArt(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    path_small = db.Column(db.String(300), unique=True)
+    path_medium = db.Column(db.String(300), unique=True)
+    artist_id = db.Column(db.Integer, db.ForeignKey(Artist.id), unique=True)
 
 class Settings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timezone = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
-
 
 class ProfileImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)

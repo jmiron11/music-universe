@@ -10,6 +10,7 @@ type Configuration struct {
 	ALBUM_DB_TYPE          string
 	ALBUM_DB_DSN           string
 	ALBUM_ART_BASE_PATH    string
+	ARTIST_ART_BASE_PATH   string
 	TRACK_INTERVAL_SECONDS int
 	CONCURRENT_ALBUMS      int
 }

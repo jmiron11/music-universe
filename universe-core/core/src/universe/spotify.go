@@ -128,6 +128,39 @@ func GetAlbumArtOfAlbum(client *spotify.Client, album *Album, image_path string)
 	return true, path_small, path_medium
 }
 
+func GetArtistArtOfArtist(client *spotify.Client, artist *Artist, image_path string) (bool, string, string) {
+	spotify_artist, err := client.GetArtist(spotify.ID(artist.Spotify_id))
+
+	if err != nil {
+		log.Fatalf("failed to retrieve album")
+		return false, "", ""
+	}
+
+	fmt.Printf("%s\n", spotify_artist.Name)
+
+	var path_small, path_medium string
+	for _, im := range spotify_artist.Images {
+		var path_name string
+		if im.Width == 320 { // Medium image is currently 300x300
+			path_name = image_path + strconv.Itoa(artist.Id) + "-" + "medium.jpg"
+			path_medium = path_name
+			err = DownloadImageToFile(im.URL, path_name)
+			if err != nil {
+				log.Fatalf("Failing downloading album")
+			}
+		} else if im.Width == 160 { // Small image is currently 64x64
+			path_name = image_path + strconv.Itoa(artist.Id) + "-" + "small.jpg"
+			path_small = path_name
+			err = DownloadImageToFile(im.URL, path_name)
+			if err != nil {
+				log.Fatalf("Failing downloading album")
+			}
+		}
+	}
+
+	return true, path_small, path_medium
+}
+
 func GetClientCredentials(config *clientcredentials.Config) spotify.Client {
 	token, err := config.Token(context.Background())
 	if err != nil {

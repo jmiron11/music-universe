@@ -2,7 +2,6 @@ package universe
 
 import (
 	"database/sql"
-	"fmt"
 )
 import _ "github.com/go-sql-driver/mysql"
 
@@ -152,7 +151,6 @@ func GetAlbumsWithNoArt(db *sql.DB, limit int) []Album {
 	for results.Next() {
 		albums = append(albums, Album{})
 		err = results.Scan(&albums[i].Id, &albums[i].Spotify_id)
-		fmt.Println(albums[i].Id)
 		if err != nil {
 			panic(err.Error()) // proper error handling instead of panic in your app
 		}
@@ -162,8 +160,37 @@ func GetAlbumsWithNoArt(db *sql.DB, limit int) []Album {
 	return albums
 }
 
+func GetArtistsWithNoArt(db *sql.DB, limit int) []Artist {
+	results, err := db.Query("SELECT Al.id, Al.spotify_id FROM artist Al LEFT OUTER JOIN artist_art Aa on Aa.artist_id = Al.id WHERE Aa.artist_id is null LIMIT ?", limit)
+
+	defer results.Close()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var artists []Artist
+	i := 0
+	for results.Next() {
+		artists = append(artists, Artist{})
+		err = results.Scan(&artists[i].Id, &artists[i].Spotify_id)
+		if err != nil {
+			panic(err.Error()) // proper error handling instead of panic in your app
+		}
+		i += 1
+	}
+
+	return artists
+}
+
 func WriteAlbumArt(db *sql.DB, album_art *AlbumArt) {
 	_, err := db.Query("INSERT INTO album_art (Path_medium, Path_small, album_id) VALUES (?, ?, ?)", album_art.Path_medium, album_art.Path_small, album_art.Album_id)
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
+func WriteArtistArt(db *sql.DB, artist_art *ArtistArt) {
+	_, err := db.Query("INSERT INTO artist_art (Path_medium, Path_small, artist_id) VALUES (?, ?, ?)", artist_art.Path_medium, artist_art.Path_small, artist_art.Artist_id)
 	if err != nil {
 		panic(err.Error())
 	}

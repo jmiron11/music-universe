@@ -38,6 +38,8 @@ func main() {
 		for {
 			select {
 			case <-ticker.C:
+
+				// Albums
 				albums := universe.GetAlbumsWithNoArt(album_db, cfg.CONCURRENT_ALBUMS)
 
 				var found bool
@@ -58,6 +60,26 @@ func main() {
 				}
 
 				fmt.Printf("Downloaded %d new album arts\n", len(albums))
+
+				// Artists
+				artists := universe.GetArtistsWithNoArt(album_db, cfg.CONCURRENT_ALBUMS)
+
+				var artist_art universe.ArtistArt
+				for _, al := range artists {
+					found, path_small, path_medium = universe.GetArtistArtOfArtist(&client, &al, cfg.ARTIST_ART_BASE_PATH)
+					artist_art.Artist_id = al.Id
+					artist_art.Path_small = path_small
+					artist_art.Path_medium = path_medium
+
+					if !found {
+						fmt.Printf("Could not find artist: %s\n", al.Name)
+					} else {
+						universe.WriteArtistArt(album_db, &artist_art)
+					}
+				}
+
+				fmt.Printf("Downloaded %d new artist arts\n", len(artists))
+
 			case <-quit:
 				ticker.Stop()
 				fmt.Println("Ticker stopped")
