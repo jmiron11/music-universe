@@ -24,6 +24,9 @@ type LastWritten struct {
 }
 
 func IsSameTrack(cp1 *spotify.CurrentlyPlaying, cp2 *spotify.CurrentlyPlaying) bool {
+	if cp1 == nil || cp2 == nil {
+		return false
+	}
 	return universe.GetArtist(cp1) == universe.GetArtist(cp2) && universe.GetAlbum(cp1) == universe.GetAlbum(cp2) && universe.GetTrack(cp1) == universe.GetTrack(cp2)
 }
 

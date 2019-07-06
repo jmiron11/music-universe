@@ -79,14 +79,14 @@ def user_top_album(username):
     t_start = int(request.args.get('t_start', default=0))
     t_end = int(request.args.get('t_end', default=time.time()))
     user = User.query.filter_by(username=username).first_or_404()
-    return jsonify(user.get_top_albums(t_start, t_end))
+    return jsonify(user.get_top_albums(t_start, t_end, 6))
 
 @app.route('/user/<username>/top_artists/')
 def user_top_artists(username):
     t_start = int(request.args.get('t_start', default=0))
     t_end = int(request.args.get('t_end', default=time.time()))
     user = User.query.filter_by(username=username).first_or_404()
-    return jsonify(user.get_top_artists(t_start, t_end))
+    return jsonify(user.get_top_artists(t_start, t_end, 6))
 
 @app.route('/user/<username>/listen_stats/')
 def user_total_stats(username):
@@ -172,7 +172,7 @@ def who_am_i():
 def spotify_connected(): 
     return current_user.is_spotified()
 
-@app.route('/updatetimezone/<timezone>/', methods=['GET', 'POST'])
+@app.route('/update/timezone/<timezone>/', methods=['GET', 'POST'])
 @login_required
 def updatetimezone(timezone):
     timezone = timezone.replace("-", "/")

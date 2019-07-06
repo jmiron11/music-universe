@@ -141,14 +141,14 @@ func GetArtistArtOfArtist(client *spotify.Client, artist *Artist, image_path str
 	var path_small, path_medium string
 	for _, im := range spotify_artist.Images {
 		var path_name string
-		if im.Width == 320 { // Medium image is currently 300x300
+		if im.Width == 320 || im.Width == 300 { // Medium image is currently 300x300
 			path_name = image_path + strconv.Itoa(artist.Id) + "-" + "medium.jpg"
 			path_medium = path_name
 			err = DownloadImageToFile(im.URL, path_name)
 			if err != nil {
 				log.Fatalf("Failing downloading album")
 			}
-		} else if im.Width == 160 { // Small image is currently 64x64
+		} else if im.Width == 160 || im.Width == 64 { // Small image is currently 64x64
 			path_name = image_path + strconv.Itoa(artist.Id) + "-" + "small.jpg"
 			path_small = path_name
 			err = DownloadImageToFile(im.URL, path_name)

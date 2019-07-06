@@ -745,7 +745,7 @@ class TimezoneForm extends React.Component {
     this.setState({ 
       timezone: event.target.value
     })
-    var request = '/updatetimezone/' + event.target.value.replace(/\//g,"-") + "/"
+    var request = '/update/timezone/' + event.target.value.replace(/\//g,"-") + "/"
     axios.post(request)
   }
 
