@@ -673,7 +673,7 @@ a { color: inherit; }
 }
 
 .album-entry-art-gradient {
-  background: linear-gradient(0deg, black 10%, transparent 100%);
+  background: linear-gradient(0deg, black 5%, transparent 100%);
   position:absolute;
   z-index: 50;
   top: 40%;

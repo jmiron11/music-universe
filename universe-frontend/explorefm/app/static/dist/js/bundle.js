@@ -449,15 +449,19 @@ function (_React$Component3) {
           newTop.push(React.createElement("div", {
             key: k
           }, React.createElement("div", {
-            className: className
+            className: "album-entry"
           }, React.createElement("img", {
-            className: "listen-entry-art",
+            className: "album-entry-art",
             src: img_path
           }), React.createElement("div", {
-            className: "listen-entry-track"
-          }, React.createElement("h6", null, l[i]['artist'])), React.createElement("div", {
-            className: "listen-entry-time"
-          }, React.createElement("h6", null, l[i]['count'])))));
+            className: "album-entry-art-gradient"
+          }), React.createElement("div", {
+            className: "album-entry-text-group"
+          }, React.createElement("div", {
+            className: "album-entry-text"
+          }, React.createElement("h5", null, l[i]['artist'])), React.createElement("div", {
+            className: "album-entry-text"
+          }, React.createElement("h6", null, l[i]['count'], " listens"))))));
         }
 
         self.setState({
@@ -492,7 +496,9 @@ function (_React$Component3) {
         value: "year"
       }, "Last year"), React.createElement("option", {
         value: "all"
-      }, "All time"))), this.state.top_artists);
+      }, "All time"))), React.createElement("div", {
+        "class": "top-album-wrapper"
+      }, this.state.top_artists));
     }
   }]);
 
