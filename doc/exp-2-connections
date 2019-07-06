@@ -2,10 +2,11 @@
 
 STATUS: Draft
 
-Table Following {
+Table Follow {
 	id 				INTEGER	PRIMARY KEY
-	follower_id 	INTEGER FOREIGN_KEY	
-	following_id 	INTEGER FOREIGN_KEY
+	from_id 		INTEGER FOREIGN_KEY	
+	to_id 			INTEGER FOREIGN_KEY
+	is_following 	BOOLEAN 
 }
 
 If not my profile:

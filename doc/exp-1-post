@@ -2,12 +2,13 @@
 
 STATUS: Draft
 
-Table ProfilePosts {
+Table MessageThread {
 	id 			INTEGER	PRIMARY KEY
 	posted_by 	INTEGER	FOREIGN_KEY
 	posted_to 	INTEGER FOREIGN_KEY
 	text		VARCHAR(500)
 	is_public 	BOOLEAN
+	is_read 	BOOLEAN
 
 	// Used if it refers to something
 	refer_track_id INTEGER FOREIGN KEY
@@ -15,7 +16,7 @@ Table ProfilePosts {
 	refer_album_id INTEGER FOREIGN KEY
 }
 
-Table PostComments {
+Table MessageThreadReply {
 	id			INTEGER PRIMARY KEY
 	post_id		INTEGER FOREIGN KEY
 	text 		VARCHAR(500)
@@ -34,5 +35,7 @@ Post types:
 	5. Ask user about a listened track.
 
 Profile actions:
-Post to profile: Add post component. Similar to social media posting. Options: Give recommendation, Ask for recommendation, Ask about track.
+Add messages to top nav bar, also indicating number of unread messages.
+
+Post to profile: Add message templates: Similar to social media posting. Options: Give recommendation, Ask for recommendation, Ask about track.
 On click a track, artist, album on a user's profile: Display pop out.
