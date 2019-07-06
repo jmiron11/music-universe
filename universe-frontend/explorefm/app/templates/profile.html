@@ -29,30 +29,29 @@
                 </div> 
                 <div id="highlighted-music" class="highlighted-music"></div> <!-- Highlighted music react component -->
             </div>
-            <div id="top-tracks"></div> <!-- Top Tracks react component -->
-            <div id="top-albums"></div> <!-- Top Albums react component -->
-            <div id="top-artists"></div> <!-- Top Artists react component -->
-
+            <div class="listens">
+                <div class="profile-section-header">
+                    <h6>Recent Listens</h6>
+                </div>
+                <div style="padding-bottom: 10px"></div>
+                {% for l in user.get_recent_listens(10) %}
+                {% if (loop.index + 1) % 2 == 0 %}
+                <div class="listen-entry">
+                {% else %}
+                <div class="listen-entry-shaded">
+                {% endif %}
+                    <img class="listen-entry-art" src="{{ config.IMAGE_SERVING + config.ALBUM_ART_DIR + l['img_id'] + "-small.jpg" }}"/>
+                    <div class="listen-entry-track"><h6>{{ l['artist'] }} - {{ l['track'] }}</h6></div>
+                    <div class="listen-entry-time"><h6>{{ l['time'] }}</h6></div>
+                </div>
+                {% endfor %}
+            </div>
         </div> <!-- Profile left end -->
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12 ">
-        <div class="listens">
-            <div class="profile-section-header">
-                <h6>Listens</h6>
-            </div>
-            <div style="padding-bottom: 10px"></div>
-            {% for l in user.get_recent_listens(10) %}
-            {% if (loop.index + 1) % 2 == 0 %}
-            <div class="listen-entry">
-            {% else %}
-            <div class="listen-entry-shaded">
-            {% endif %}
-                <img class="listen-entry-art" src="{{ config.IMAGE_SERVING + config.ALBUM_ART_DIR + l['img_id'] + "-small.jpg" }}"/>
-                <div class="listen-entry-track"><h6>{{ l['artist'] }} - {{ l['track'] }}</h6></div>
-                <div class="listen-entry-time"><h6>{{ l['time'] }}</h6></div>
-            </div>
-            {% endfor %}
-        </div>
+        <div id="top-artists"></div> <!-- Top Artists react component -->
+        <div id="top-albums"></div> <!-- Top Albums react component -->
+        <div id="top-tracks"></div> <!-- Top Tracks react component -->
     </div>
 </div>
 

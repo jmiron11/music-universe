@@ -663,3 +663,79 @@ a { color: inherit; }
   font-family: 'Roboto', sans-serif;
   font-size: 17px;
 }
+
+.album-entry {
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  position:relative;
+}
+
+.album-entry-art-gradient {
+  background: linear-gradient(0deg, black 10%, transparent 100%);
+  position:absolute;
+  z-index: 50;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  opacity: 0.4;
+}
+
+.album-entry-art {
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  /*margin: 0px 0 0px 10px;*/
+  opacity: 1.0;
+}
+
+.top-album-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+}
+
+.album-entry-text-group {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  padding: 9px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.album-entry-text {
+  width: 100%;
+  text-align: right;
+}
+
+.album-entry-text h6 {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  text-shadow: 0px 0px 3px #000;
+  color: #fff;
+}
+
+.album-entry-text h5 {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0px 0px 3px #000;
+  color: #fff;
+}

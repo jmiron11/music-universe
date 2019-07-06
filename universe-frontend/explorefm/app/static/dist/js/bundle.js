@@ -310,28 +310,25 @@ function (_React$Component2) {
 
         for (var i = 0; i < l.length; ++i) {
           var k = "album-" + i.toString();
-          var width_percent = 100;
-          var className;
-
-          if (i % 2 == 0) {
-            className = "listen-entry";
-          } else {
-            className = "listen-entry-shaded";
-          }
-
-          var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
+          var img_path = album_art_endpoint + l[i]['img_id'] + '-medium.jpg';
           newTop.push(React.createElement("div", {
             key: k
           }, React.createElement("div", {
-            className: className
+            className: "album-entry"
           }, React.createElement("img", {
-            className: "listen-entry-art",
+            className: "album-entry-art",
             src: img_path
           }), React.createElement("div", {
-            className: "listen-entry-track"
-          }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['album'])), React.createElement("div", {
-            className: "listen-entry-time"
-          }, React.createElement("h6", null, l[i]['count'])))));
+            className: "album-entry-art-gradient"
+          }), React.createElement("div", {
+            className: "album-entry-text-group"
+          }, React.createElement("div", {
+            className: "album-entry-text"
+          }, React.createElement("h5", null, l[i]['album'])), React.createElement("div", {
+            className: "album-entry-text"
+          }, React.createElement("h6", null, l[i]['artist'])), React.createElement("div", {
+            className: "album-entry-text"
+          }, React.createElement("h6", null, l[i]['count'], " listens"))))));
         }
 
         self.setState({
@@ -366,7 +363,9 @@ function (_React$Component2) {
         value: "year"
       }, "Last year"), React.createElement("option", {
         value: "all"
-      }, "All time"))), this.state.top_albums);
+      }, "All time"))), React.createElement("div", {
+        "class": "top-album-wrapper"
+      }, this.state.top_albums));
     }
   }]);
 

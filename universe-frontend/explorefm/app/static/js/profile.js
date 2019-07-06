@@ -147,21 +147,18 @@ class TopAlbums extends React.Component {
       l = response['data']
       for (let i = 0; i < l.length; ++i) {
         var k = "album-" + i.toString();
-        var width_percent=100
-        var className;
-        if (i % 2 == 0) {
-          className = "listen-entry"
-        } else {
-          className = "listen-entry-shaded"
-        }
 
-        var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg'
+        var img_path = album_art_endpoint + l[i]['img_id'] + '-medium.jpg'
         newTop.push(
           <div key={ k }>
-            <div className={className}>
-              <img className="listen-entry-art" src={ img_path }/>
-              <div className="listen-entry-track"><h6>{ l[i]['artist'] } - { l[i]['album'] }</h6></div>
-              <div className="listen-entry-time"><h6>{ l[i]['count'] }</h6></div>
+            <div className="album-entry">
+              <img className="album-entry-art" src={ img_path }/>
+              <div className="album-entry-art-gradient"></div>
+              <div className="album-entry-text-group">
+                <div className="album-entry-text"><h5>{ l[i]['album'] }</h5></div>
+                <div className="album-entry-text"><h6>{ l[i]['artist'] }</h6></div>
+                <div className="album-entry-text"><h6>{ l[i]['count'] } listens</h6></div>
+              </div>
             </div>
           </div>
           )
@@ -196,7 +193,9 @@ class TopAlbums extends React.Component {
                 <option value="all">All time</option>
             </select>
         </div>
+        <div class="top-album-wrapper">
         { this.state.top_albums }
+        </div>
       </div>
     );
   }
