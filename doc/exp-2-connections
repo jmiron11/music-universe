@@ -1,0 +1,14 @@
+# Connections between users
+
+STATUS: Draft
+
+Table Following {
+	id 				INTEGER	PRIMARY KEY
+	follower_id 	INTEGER FOREIGN_KEY	
+	following_id 	INTEGER FOREIGN_KEY
+}
+
+If not my profile:
+	Add follow button to profile.
+
+Build follower and following tabs of profile.

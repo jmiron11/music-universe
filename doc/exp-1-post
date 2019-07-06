@@ -1,6 +1,6 @@
 # Enables support for posts to a user's profile.
 
-TABLE: Profile Posts
+STATUS: Draft
 
 Table ProfilePosts {
 	id 			INTEGER	PRIMARY KEY
