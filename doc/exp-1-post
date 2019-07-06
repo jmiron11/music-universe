@@ -26,11 +26,13 @@ Table PostComments {
 	refer_album_id INTEGER FOREIGN KEY
 }
 
-
 Post types:
-	1. Request recommendation
-	2. Request recommendation response
+	1. Give unsolicited recommendation
+	2. Give unsolicited recommendation response
 	3. Ask for recommendation
 	4. Ask for recommendation response
-	5. Ask user about music.
+	5. Ask user about a listened track.
 
+Profile actions:
+Post to profile: Add post component. Similar to social media posting. Options: Give recommendation, Ask for recommendation, Ask about track.
+On click a track, artist, album on a user's profile: Display pop out.
