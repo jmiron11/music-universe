@@ -31,10 +31,16 @@
                                 <a class="profile-nav-link" href="{{ url_for('user', username=user.username) }}">Profile</a>
                             </div>
                             <div class="profile-nav-link">
-                                <a href="{{ url_for('user_loved', username=user.username) }}">Loved Music</a>
+                                <a href="{{ url_for('user_loved', username=user.username) }}">Listen Explorer</a>
                             </div>
                             <div class="profile-nav-link">
                                 <a href="{{ url_for('user_library', username=user.username) }}">Library</a>
+                            </div>
+                            <div class="profile-nav-link">
+                                <a href="">Followers</a>
+                            </div>
+                            <div class="profile-nav-link">
+                                <a href="">Following</a>
                             </div>
                         </div>
                     </div>

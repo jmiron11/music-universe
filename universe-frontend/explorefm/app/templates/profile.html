@@ -7,7 +7,27 @@
         <div class="profile-left">
             <div class="bio-area">
                 <div id="bio"></div>
-                    <div id="highlighted-music" class="highlighted-music"></div> <!-- Highlighted music react component -->
+                <div class="profile-stats-area">
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="profile-stat-number">{{ user.get_total_listens() }}</div>
+                            <div class="profile-stat-name">Listens</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-number">{{ user.get_unique_tracks() }}</div>
+                            <div class="profile-stat-name">Tracks</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-number">{{ user.get_unique_albums() }}</div>
+                            <div class="profile-stat-name">Albums</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-number">{{ user.get_unique_artists() }}</div>
+                            <div class="profile-stat-name">Artists</div>
+                        </div>
+                    </div>
+                </div> 
+                <div id="highlighted-music" class="highlighted-music"></div> <!-- Highlighted music react component -->
             </div>
             <div id="top-tracks"></div> <!-- Top Tracks react component -->
             <div id="top-albums"></div> <!-- Top Albums react component -->
@@ -16,29 +36,6 @@
         </div> <!-- Profile left end -->
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12 ">
-        <div class="profile-stats-area">
-            <div class="profile-stats">
-                <i class="fa fa-music fa-2x music-icon" aria-hidden="true"></i>
-                <h6>Listen Stats</h6>
-
-                <div class="profile-stat">
-                    <div class="profile-stat-number">{{ user.get_total_listens() }}</div>
-                    <div class="profile-stat-name">Listens</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="profile-stat-number">{{ user.get_unique_tracks() }}</div>
-                    <div class="profile-stat-name">Tracks</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="profile-stat-number">{{ user.get_unique_albums() }}</div>
-                    <div class="profile-stat-name">Albums</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="profile-stat-number">{{ user.get_unique_artists() }}</div>
-                    <div class="profile-stat-name">Artists</div>
-                </div>
-            </div>
-        </div> 
         <div class="listens">
             <div class="profile-section-header">
                 <h6>Listens</h6>

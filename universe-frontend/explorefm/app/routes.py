@@ -88,6 +88,16 @@ def user_top_artists(username):
     user = User.query.filter_by(username=username).first_or_404()
     return jsonify(user.get_top_artists(t_start, t_end))
 
+@app.route('/user/<username>/listen_stats/')
+def user_total_stats(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    listen_stat = {}
+    listen_stat['total'] = user.get_total_listens()
+    listen_stat['tracks'] = user.get_unique_tracks()
+    listen_stat['albums'] = user.get_unique_albums()
+    listen_stat['artists'] = user.get_unique_artists()
+    return jsonify(listen_stat) 
+
 @app.route('/settings')
 @login_required
 def settings():

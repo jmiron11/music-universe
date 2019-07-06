@@ -197,8 +197,7 @@ a { color: inherit; }
   -webkit-flex-direction: row;
   flex-direction: row;
   background: #fff;
-  border: 1px solid #b9bbbe;
-  border-radius: 3px;
+  padding-top: 2px;
 }
 
 .profile-stats-area {
