@@ -1,0 +1,36 @@
+# Enables support for posts to a user's profile.
+
+TABLE: Profile Posts
+
+Table ProfilePosts {
+	id 			INTEGER	PRIMARY KEY
+	posted_by 	INTEGER	FOREIGN_KEY
+	posted_to 	INTEGER FOREIGN_KEY
+	text		VARCHAR(500)
+	is_public 	BOOLEAN
+
+	// Used if it refers to something
+	refer_track_id INTEGER FOREIGN KEY
+	refer_artist_id INTEGER FOREIGN KEY
+	refer_album_id INTEGER FOREIGN KEY
+}
+
+Table PostComments {
+	id			INTEGER PRIMARY KEY
+	post_id		INTEGER FOREIGN KEY
+	text 		VARCHAR(500)
+
+	// Used if it refers to something
+	refer_track_id INTEGER FOREIGN KEY
+	refer_artist_id INTEGER FOREIGN KEY
+	refer_album_id INTEGER FOREIGN KEY
+}
+
+
+Post types:
+	1. Request recommendation
+	2. Request recommendation response
+	3. Ask for recommendation
+	4. Ask for recommendation response
+	5. Ask user about music.
+
