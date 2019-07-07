@@ -42,10 +42,10 @@
                                 <a href="{{ url_for('user_library', username=user.username) }}">Library</a>
                             </div>
                             <div class="profile-nav-link">
-                                <a href="">Followers</a>
+                                <a href="{{ url_for('user_followers', username=user.username) }}">Followers</a>
                             </div>
                             <div class="profile-nav-link">
-                                <a href="">Following</a>
+                                <a href="{{ url_for('user_following', username=user.username) }}">Following</a>
                             </div>
                         </div>
                     </div>

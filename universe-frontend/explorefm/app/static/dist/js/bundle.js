@@ -1930,13 +1930,11 @@ function (_React$Component7) {
     _this7 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
 
     _this7.buttonClicked = function (event) {
-      _this7.state.isFollowing = !_this7.state.isFollowing;
-
       var self = _assertThisInitialized(_this7);
 
-      var request = '/update/is_following/' + user + '/' + _this7.state.isFollowing.toString();
-
+      var request = '/update/is_following/' + user + '/' + (!_this7.state.isFollowing).toString();
       axios.get(request).then(function (response) {
+        self.state.isFollowing = response['data'];
         self.setState(self.state);
       });
     };
@@ -1953,7 +1951,7 @@ function (_React$Component7) {
       var self = this;
       var request = '/query/user/is_following/' + user;
       axios.get(request).then(function (response) {
-        self.state.isFollowing = response['data'];
+        self.state.isFollowing = response['data'][0];
         self.setState(self.state);
       });
     }

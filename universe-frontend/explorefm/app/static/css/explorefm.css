@@ -788,3 +788,50 @@ a { color: inherit; }
   font-weight: bold;
   padding-left: 6px;
 }
+
+
+/*** Follow page divs ***/
+
+.follow-user-group {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  margin: auto;
+  width: 50%;
+}
+
+.follow-user {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 1px 1px 3px #494b4e;
+}
+
+.follow-user:hover {
+  background: #eee;
+}
+
+.follow-img {
+  min-width: 130px;
+  min-height: 130px;
+  max-width: 130px;
+  max-height: 130px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.follow-user h1 {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  padding: 10px;
+}

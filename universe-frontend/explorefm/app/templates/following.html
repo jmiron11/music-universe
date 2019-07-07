@@ -1,0 +1,14 @@
+{% extends "profile_base.html" %}
+
+{% block profile %} 
+
+<div class="follow-user-group">
+	{% for u in user.get_following() %}
+	<div class="follow-user">
+		<img class="follow-img" src="{{ u['img_path'] }}"/>
+		<h1>{{ u['username'] }}</h1>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

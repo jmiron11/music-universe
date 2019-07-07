@@ -23,8 +23,8 @@ class User(UserMixin, db.Model):
     settings = db.relationship('Settings', lazy=True)
     image = db.relationship('ProfileImage', lazy=True)
 
-    following = db.relationship('Follow', foreign_keys='Follow.from_id', lazy=True)
-    followers = db.relationship('Follow', foreign_keys='Follow.to_id', lazy=True)
+    following = db.relationship('Follow', foreign_keys='Follow.from_id', lazy=True, backref="from_user")
+    followers = db.relationship('Follow', foreign_keys='Follow.to_id', lazy=True, backref="to_user")
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -361,6 +361,8 @@ class User(UserMixin, db.Model):
         if follow == None:
             u_follow = Follow(from_id=self.id, to_id=user_id, is_following=True, first_time_followed=datetime.now())
             db.session.add(u_follow)
+        else:
+            follow.is_following = True
 
         db.session.commit()
 
@@ -376,9 +378,34 @@ class User(UserMixin, db.Model):
                 Follow.to_id == user_id,
                 self.id == Follow.from_id)
             ).first()
-        print(follow)
+
         follow.is_following = False
         db.session.commit()
+
+    def get_followers(self):
+        user_followers = []
+
+        follower_data = {}
+        followers = db.session.query(Follow).filter(and_(Follow.is_following==True, Follow.to_id == self.id)).all()
+        for u in followers:
+            follower_data['username'] = u.from_user.username
+            follower_data['img_path'] = u.from_user.get_profile_image_path()
+            user_followers.append(follower_data)
+
+        return user_followers
+
+    def get_following(self):
+        user_following = []
+
+        following_data = {}
+        following = db.session.query(Follow).filter(and_(Follow.is_following==True, Follow.from_id == self.id)).all()
+        for u in following:
+            following_data['username'] = u.to_user.username
+            following_data['img_path'] = u.to_user.get_profile_image_path()
+            user_following.append(following_data)
+
+        return user_following
+
 
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'

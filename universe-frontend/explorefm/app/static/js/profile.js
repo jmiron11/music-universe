@@ -1190,10 +1190,10 @@ class FollowButton extends React.Component {
   }
 
   buttonClicked = (event) => {
-      this.state.isFollowing = !(this.state.isFollowing)
       var self = this
-      var request = '/update/is_following/' + user + '/' + this.state.isFollowing.toString()
+      var request = '/update/is_following/' + user + '/' + (!this.state.isFollowing).toString()
       axios.get(request).then(function(response) {
+        self.state.isFollowing = response['data']
         self.setState(self.state)
       })
   }
@@ -1202,7 +1202,7 @@ class FollowButton extends React.Component {
       var self = this
       var request = '/query/user/is_following/' + user
       axios.get(request).then(function(response) {
-        self.state.isFollowing = response['data']
+        self.state.isFollowing = response['data'][0]
         self.setState(self.state)
       })
   }

@@ -76,6 +76,16 @@ def user_loved(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('loved.html', user=user)
 
+@app.route('/user/<username>/followers/')
+def user_followers(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('followers.html', user=user)
+
+@app.route('/user/<username>/following/')
+def user_following(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('following.html', user=user)
+
 @app.route('/settings')
 @login_required
 def settings():
@@ -259,9 +269,10 @@ def upload_profile_image():
 def update_following(username, boolean):
     if boolean == 'true':
         current_user.follow(username)
+        return jsonify(True)
     else:
         current_user.unfollow(username)
-    return ""
+        return jsonify(False)
 
 # User query endpoints
 @app.route('/query/user/me')
@@ -276,4 +287,10 @@ def spotify_connected():
 @app.route('/query/user/is_following/<username>')
 @login_required
 def query_is_following(username): 
+    print(current_user.is_following(username))
     return jsonify(current_user.is_following(username))
+
+
+@app.route('/test/')
+def test():
+    return jsonify(current_user.get_following())
