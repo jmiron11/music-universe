@@ -10,7 +10,7 @@
         <div class="col-md-12 col-xs-12 col-sm-12">
             <div class="row"> <!-- Album art row -->
                 <div class="album-row">
-                    {% for l in user.get_top_albums(8) %}
+                    {% for l in user.get_top_albums(limit=8) %}
                     <img class="album-row-img" src="{{ config.IMAGE_SERVING + config.ALBUM_ART_DIR + l['img_id'] + "-medium.jpg" }}"/>
                     {% endfor %}
                 </div>

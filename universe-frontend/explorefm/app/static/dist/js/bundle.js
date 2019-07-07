@@ -119,29 +119,145 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 var e = React.createElement;
 
-var TopTracks =
+var LoveButton =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(TopTracks, _React$Component);
+  _inherits(LoveButton, _React$Component);
 
-  function TopTracks(props) {
+  function LoveButton(props) {
     var _this;
 
-    _classCallCheck(this, TopTracks);
+    _classCallCheck(this, LoveButton);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(TopTracks).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LoveButton).call(this, props));
 
-    _this.updateTimespan = function (event) {
-      _this.state.timespan = event.target.value;
+    _this.iconClicked = function (event) {
+      if (!_this.state.is_current_user) {
+        return; // Do nothing, icon is static.
+      }
 
-      _this.getNewTimespanData(event.target.value);
+      _this.state.is_loved = !_this.state.is_loved;
+      _this.state.is_hover = false;
+
+      _this.setState(_this.state);
+    };
+
+    _this.onMouse = function (event) {
+      _this.state.is_hover = true;
+
+      _this.setState(_this.state);
+    };
+
+    _this.offMouse = function (event) {
+      _this.state.is_hover = false;
+
+      _this.setState(_this.state);
     };
 
     _this.state = {
+      track_id: -1,
+      album_id: -1,
+      artist_id: -1,
+      is_loved: false,
+      is_current_user: true,
+      is_hover: false
+    };
+    return _this;
+  }
+
+  _createClass(LoveButton, [{
+    key: "render",
+    value: function render() {
+      if (this.state.is_current_user) {
+        if (this.state.is_loved) {
+          if (!this.state.is_hover) {
+            return React.createElement("i", {
+              onMouseOver: this.onMouse,
+              onMouseOut: this.offMouse,
+              onClick: this.iconClicked,
+              className: "fa fa-heart fa-lg",
+              style: {
+                color: 'red'
+              }
+            });
+          } else {
+            return React.createElement("i", {
+              onMouseOver: this.onMouse,
+              onMouseOut: this.offMouse,
+              onClick: this.iconClicked,
+              className: "fa fa-heart-o fa-lg",
+              style: {
+                color: 'black'
+              }
+            });
+          }
+        } else {
+          if (!this.state.is_hover) {
+            return React.createElement("i", {
+              onMouseOver: this.onMouse,
+              onMouseOut: this.offMouse,
+              onClick: this.iconClicked,
+              className: "fa fa-heart-o fa-lg",
+              style: {
+                color: 'black'
+              }
+            });
+          } else {
+            return React.createElement("i", {
+              onMouseOver: this.onMouse,
+              onMouseOut: this.offMouse,
+              onClick: this.iconClicked,
+              className: "fa fa-heart fa-lg",
+              style: {
+                color: 'red'
+              }
+            });
+          }
+        }
+      } else {
+        if (this.state.is_loved) {
+          return React.createElement("i", {
+            onMouseOver: this.onMouse,
+            onMouseOut: this.offMouse,
+            onClick: this.iconClicked,
+            className: "fa fa-heart fa-lg",
+            style: {
+              color: 'red'
+            }
+          });
+        } else {
+          return React.createElement("div", null);
+        }
+      }
+    }
+  }]);
+
+  return LoveButton;
+}(React.Component);
+
+var TopTracks =
+/*#__PURE__*/
+function (_React$Component2) {
+  _inherits(TopTracks, _React$Component2);
+
+  function TopTracks(props) {
+    var _this2;
+
+    _classCallCheck(this, TopTracks);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(TopTracks).call(this, props));
+
+    _this2.updateTimespan = function (event) {
+      _this2.state.timespan = event.target.value;
+
+      _this2.getNewTimespanData(event.target.value);
+    };
+
+    _this2.state = {
       timespan: "month",
       top: []
     };
-    return _this;
+    return _this2;
   }
 
   _createClass(TopTracks, [{
@@ -247,27 +363,27 @@ function (_React$Component) {
 
 var TopAlbums =
 /*#__PURE__*/
-function (_React$Component2) {
-  _inherits(TopAlbums, _React$Component2);
+function (_React$Component3) {
+  _inherits(TopAlbums, _React$Component3);
 
   function TopAlbums(props) {
-    var _this2;
+    var _this3;
 
     _classCallCheck(this, TopAlbums);
 
-    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(TopAlbums).call(this, props));
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(TopAlbums).call(this, props));
 
-    _this2.updateTimespan = function (event) {
-      _this2.state.timespan = event.target.value;
+    _this3.updateTimespan = function (event) {
+      _this3.state.timespan = event.target.value;
 
-      _this2.getNewTimespanData(event.target.value);
+      _this3.getNewTimespanData(event.target.value);
     };
 
-    _this2.state = {
+    _this3.state = {
       timespan: "month",
       top_albums: []
     };
-    return _this2;
+    return _this3;
   }
 
   _createClass(TopAlbums, [{
@@ -319,6 +435,8 @@ function (_React$Component2) {
           }), React.createElement("div", {
             className: "album-entry-art-gradient"
           }), React.createElement("div", {
+            className: "album-entry-layer-wrapper"
+          }, React.createElement(LoveButton, null), React.createElement("div", {
             className: "album-entry-text-group"
           }, React.createElement("div", {
             className: "album-entry-text"
@@ -326,7 +444,7 @@ function (_React$Component2) {
             className: "album-entry-text"
           }, React.createElement("h6", null, l[i]['artist'])), React.createElement("div", {
             className: "album-entry-text"
-          }, React.createElement("h6", null, l[i]['count'], " listens"))))));
+          }, React.createElement("h6", null, l[i]['count'], " listens")))))));
         }
 
         self.setState({
@@ -372,27 +490,27 @@ function (_React$Component2) {
 
 var TopArtists =
 /*#__PURE__*/
-function (_React$Component3) {
-  _inherits(TopArtists, _React$Component3);
+function (_React$Component4) {
+  _inherits(TopArtists, _React$Component4);
 
   function TopArtists(props) {
-    var _this3;
+    var _this4;
 
     _classCallCheck(this, TopArtists);
 
-    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(TopArtists).call(this, props));
+    _this4 = _possibleConstructorReturn(this, _getPrototypeOf(TopArtists).call(this, props));
 
-    _this3.updateTimespan = function (event) {
-      _this3.state.timespan = event.target.value;
+    _this4.updateTimespan = function (event) {
+      _this4.state.timespan = event.target.value;
 
-      _this3.getNewTimespanData(event.target.value);
+      _this4.getNewTimespanData(event.target.value);
     };
 
-    _this3.state = {
+    _this4.state = {
       timespan: "month",
       top_artists: []
     };
-    return _this3;
+    return _this4;
   }
 
   _createClass(TopArtists, [{
@@ -444,12 +562,14 @@ function (_React$Component3) {
           }), React.createElement("div", {
             className: "album-entry-art-gradient"
           }), React.createElement("div", {
+            className: "album-entry-layer-wrapper"
+          }, React.createElement("div", {
             className: "album-entry-text-group"
           }, React.createElement("div", {
             className: "album-entry-text"
           }, React.createElement("h5", null, l[i]['artist'])), React.createElement("div", {
             className: "album-entry-text"
-          }, React.createElement("h6", null, l[i]['count'], " listens"))))));
+          }, React.createElement("h6", null, l[i]['count'], " listens")))))));
         }
 
         self.setState({
@@ -495,47 +615,47 @@ function (_React$Component3) {
 
 var Bio =
 /*#__PURE__*/
-function (_React$Component4) {
-  _inherits(Bio, _React$Component4);
+function (_React$Component5) {
+  _inherits(Bio, _React$Component5);
 
   function Bio(props) {
-    var _this4;
+    var _this5;
 
     _classCallCheck(this, Bio);
 
-    _this4 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
+    _this5 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
 
-    _this4.activeEditMode = function (event) {
-      _this4.state.inEditMode = true;
+    _this5.activeEditMode = function (event) {
+      _this5.state.inEditMode = true;
 
-      _this4.setState(_this4.state);
+      _this5.setState(_this5.state);
     };
 
-    _this4.disableEditModeClearBio = function (event) {
-      _this4.state.inEditMode = false;
+    _this5.disableEditModeClearBio = function (event) {
+      _this5.state.inEditMode = false;
       document.getElementById("bio-edit-form").value = "";
 
-      _this4.setState(_this4.state);
+      _this5.setState(_this5.state);
     };
 
-    _this4.disableEditModeSaveBio = function (event) {
+    _this5.disableEditModeSaveBio = function (event) {
       var new_bio = document.getElementById("bio-edit-form").value;
-      _this4.state.inEditMode = false;
-      _this4.state.bio = new_bio;
+      _this5.state.inEditMode = false;
+      _this5.state.bio = new_bio;
 
-      _this4.setState(_this4.state);
+      _this5.setState(_this5.state);
 
-      var self = _assertThisInitialized(_this4);
+      var self = _assertThisInitialized(_this5);
 
       var request = '/update/bio/?bio=' + new_bio;
       axios.get(request);
     };
 
-    _this4.state = {
+    _this5.state = {
       inEditMode: false,
       bio: "..."
     };
-    return _this4;
+    return _this5;
   }
 
   _createClass(Bio, [{
@@ -618,49 +738,49 @@ function (_React$Component4) {
 
 var Highlight =
 /*#__PURE__*/
-function (_React$Component5) {
-  _inherits(Highlight, _React$Component5);
+function (_React$Component6) {
+  _inherits(Highlight, _React$Component6);
 
   function Highlight(props) {
-    var _this5;
+    var _this6;
 
     _classCallCheck(this, Highlight);
 
-    _this5 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
+    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
 
-    _this5.activeEditMode = function (event) {
-      _this5.state.addNewHighlightMode = true;
+    _this6.activeEditMode = function (event) {
+      _this6.state.addNewHighlightMode = true;
 
-      _this5.setState(_this5.state);
+      _this6.setState(_this6.state);
     };
 
-    _this5.disableEditMode = function (event) {
-      _this5.state.addNewHighlightMode = false;
+    _this6.disableEditMode = function (event) {
+      _this6.state.addNewHighlightMode = false;
 
-      _this5.setState(_this5.state);
+      _this6.setState(_this6.state);
     };
 
-    _this5.editHighlightEntry = function (event) {
+    _this6.editHighlightEntry = function (event) {
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      _this5.state.editIndex = highlight_idx;
+      _this6.state.editIndex = highlight_idx;
 
-      _this5.setState(_this5.state);
+      _this6.setState(_this6.state);
     };
 
-    _this5.disableEditHighlight = function (event) {
-      _this5.state.editIndex = -1;
+    _this6.disableEditHighlight = function (event) {
+      _this6.state.editIndex = -1;
 
-      _this5.setState(_this5.state);
+      _this6.setState(_this6.state);
     };
 
-    _this5.deleteEditHighlight = function (event) {
+    _this6.deleteEditHighlight = function (event) {
       var artist = document.getElementById("exist-highlight-edit-artist").value;
       var album = document.getElementById("exist-highlight-edit-album").value;
       var track = document.getElementById("exist-highlight-edit-track").value;
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this5.state.highlights[highlight_idx];
+      var old_highlight = _this6.state.highlights[highlight_idx];
       var old_track, old_album, old_artist;
 
       if ('track' in old_highlight) {
@@ -681,7 +801,7 @@ function (_React$Component5) {
         old_artist = "";
       }
 
-      var self = _assertThisInitialized(_this5);
+      var self = _assertThisInitialized(_this6);
 
       var request = '/update/highlight?' + old_artist + old_album + old_track;
       axios.get(request).then(function (response) {
@@ -706,13 +826,13 @@ function (_React$Component5) {
       });
     };
 
-    _this5.saveEditHighlight = function (event) {
+    _this6.saveEditHighlight = function (event) {
       var artist = document.getElementById("exist-highlight-edit-artist").value;
       var album = document.getElementById("exist-highlight-edit-album").value;
       var track = document.getElementById("exist-highlight-edit-track").value;
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this5.state.highlights[highlight_idx];
+      var old_highlight = _this6.state.highlights[highlight_idx];
 
       if (artist != "") {
         artist = "artist=" + artist;
@@ -750,7 +870,7 @@ function (_React$Component5) {
         old_artist = "";
       }
 
-      var self = _assertThisInitialized(_this5);
+      var self = _assertThisInitialized(_this6);
 
       var request = '/update/highlight?' + artist + album + track + old_artist + old_album + old_track;
       axios.get(request).then(function (response) {
@@ -775,7 +895,7 @@ function (_React$Component5) {
       });
     };
 
-    _this5.saveHighlight = function (event) {
+    _this6.saveHighlight = function (event) {
       var artist = document.getElementById("highlight-edit-artist").value;
       var album = document.getElementById("highlight-edit-album").value;
       var track = document.getElementById("highlight-edit-track").value;
@@ -796,7 +916,7 @@ function (_React$Component5) {
         track = "";
       }
 
-      var self = _assertThisInitialized(_this5);
+      var self = _assertThisInitialized(_this6);
 
       var request = '/update/highlight?' + artist + album + track;
       axios.get(request).then(function (response) {
@@ -821,12 +941,12 @@ function (_React$Component5) {
       });
     };
 
-    _this5.state = {
+    _this6.state = {
       addNewHighlightMode: false,
       highlights: [],
       editIndex: -1
     };
-    return _this5;
+    return _this6;
   }
 
   _createClass(Highlight, [{
@@ -1019,18 +1139,18 @@ function (_React$Component5) {
 
 var TimezoneForm =
 /*#__PURE__*/
-function (_React$Component6) {
-  _inherits(TimezoneForm, _React$Component6);
+function (_React$Component7) {
+  _inherits(TimezoneForm, _React$Component7);
 
   function TimezoneForm(props) {
-    var _this6;
+    var _this7;
 
     _classCallCheck(this, TimezoneForm);
 
-    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
+    _this7 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
 
-    _this6.updateTimezone = function (event) {
-      _this6.setState({
+    _this7.updateTimezone = function (event) {
+      _this7.setState({
         timezone: event.target.value
       });
 
@@ -1038,10 +1158,10 @@ function (_React$Component6) {
       axios.post(request);
     };
 
-    _this6.state = {
+    _this7.state = {
       timezone: "America/Chicago"
     };
-    return _this6;
+    return _this7;
   }
 
   _createClass(TimezoneForm, [{
@@ -1919,30 +2039,30 @@ function (_React$Component6) {
 
 var FollowButton =
 /*#__PURE__*/
-function (_React$Component7) {
-  _inherits(FollowButton, _React$Component7);
+function (_React$Component8) {
+  _inherits(FollowButton, _React$Component8);
 
   function FollowButton(props) {
-    var _this7;
+    var _this8;
 
     _classCallCheck(this, FollowButton);
 
-    _this7 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
+    _this8 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
 
-    _this7.buttonClicked = function (event) {
-      var self = _assertThisInitialized(_this7);
+    _this8.buttonClicked = function (event) {
+      var self = _assertThisInitialized(_this8);
 
-      var request = '/update/is_following/' + user + '/' + (!_this7.state.isFollowing).toString();
+      var request = '/update/is_following/' + user + '/' + (!_this8.state.isFollowing).toString();
       axios.get(request).then(function (response) {
         self.state.isFollowing = response['data'];
         self.setState(self.state);
       });
     };
 
-    _this7.state = {
+    _this8.state = {
       isFollowing: false
     };
-    return _this7;
+    return _this8;
   }
 
   _createClass(FollowButton, [{

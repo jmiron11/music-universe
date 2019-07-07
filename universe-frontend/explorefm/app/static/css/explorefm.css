@@ -722,16 +722,26 @@ a { color: inherit; }
 }
 
 .album-entry-text-group {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.album-entry-layer-wrapper {
+  padding: 9px;
   position: absolute;
   z-index: 100;
   top: 0;
-  right: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   padding: 9px;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
+  align-items: flex-end;
+  justify-content: space-between;
   flex-wrap: wrap;
   -webkit-flex-direction: column;
   flex-direction: column;

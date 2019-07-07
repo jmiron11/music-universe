@@ -6,6 +6,76 @@ const axios = require('axios')
 
 const e = React.createElement;
 
+class LoveButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+                    track_id: -1,
+                    album_id: -1,
+                    artist_id: -1,
+                    is_loved: false,
+                    is_current_user: true,
+                    is_hover: false,          
+                 };
+  }
+
+  iconClicked = (event) => {
+    if (!this.state.is_current_user) {
+      return // Do nothing, icon is static.
+    }
+
+    this.state.is_loved = !this.state.is_loved
+    this.state.is_hover = false
+    this.setState(this.state)
+  }
+
+  onMouse = (event) => {
+    this.state.is_hover = true
+    this.setState(this.state)
+  }
+
+  offMouse = (event) => {
+    this.state.is_hover = false
+    this.setState(this.state)
+  }
+
+  render() {
+    if (this.state.is_current_user) {
+      if (this.state.is_loved) {
+        if (!this.state.is_hover) {
+          return (
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg" style={{color: 'red'}}></i>
+          )
+        } else {
+          return (
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart-o fa-lg" style={{color: 'black'}}></i>
+          )
+        }
+      } else {
+        if (!this.state.is_hover) {
+          return (
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart-o fa-lg" style={{color: 'black'}}></i>
+          )
+        } else {
+          return (
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg" style={{color: 'red'}}></i>
+          )
+        }
+      }
+    } else {
+      if (this.state.is_loved) {
+       return (
+          <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg" style={{color: 'red'}}></i>
+        )
+      } else {
+        return (
+          <div></div>
+        )
+      }
+    }
+  }
+}
+
 class TopTracks extends React.Component {
   constructor(props) {
     super(props);
@@ -152,10 +222,13 @@ class TopAlbums extends React.Component {
             <div className="album-entry">
               <img className="album-entry-art" src={ img_path }/>
               <div className="album-entry-art-gradient"></div>
-              <div className="album-entry-text-group">
-                <div className="album-entry-text"><h5>{ l[i]['album'] }</h5></div>
-                <div className="album-entry-text"><h6>{ l[i]['artist'] }</h6></div>
-                <div className="album-entry-text"><h6>{ l[i]['count'] } listens</h6></div>
+              <div className="album-entry-layer-wrapper">
+                <LoveButton />
+                <div className="album-entry-text-group">
+                  <div className="album-entry-text"><h5>{ l[i]['album'] }</h5></div>
+                  <div className="album-entry-text"><h6>{ l[i]['artist'] }</h6></div>
+                  <div className="album-entry-text"><h6>{ l[i]['count'] } listens</h6></div>
+                </div>
               </div>
             </div>
           </div>
@@ -242,14 +315,17 @@ class TopArtists extends React.Component {
       for (let i = 0; i < l.length; ++i) {
         var k = "artist-" + i.toString();
         var img_path = artist_art_endpoint + l[i]['img_id'] + '-medium.jpg'
+
         newTop.push(
           <div key={ k }>
             <div className="album-entry">
               <img className="album-entry-art" src={ img_path }/>
               <div className="album-entry-art-gradient"></div>
-              <div className="album-entry-text-group">
-                <div className="album-entry-text"><h5>{ l[i]['artist'] }</h5></div>
-                <div className="album-entry-text"><h6>{ l[i]['count'] } listens</h6></div>
+              <div className="album-entry-layer-wrapper">
+                <div className="album-entry-text-group">
+                  <div className="album-entry-text"><h5>{ l[i]['artist'] }</h5></div>
+                  <div className="album-entry-text"><h6>{ l[i]['count'] } listens</h6></div>
+                </div>
               </div>
             </div>
           </div>

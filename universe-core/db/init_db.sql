@@ -171,51 +171,6 @@ CREATE TABLE `settings` (
 );
 
 -- ---
--- Table 'loved_tracks'
--- 
--- ---
-
-DROP TABLE IF EXISTS `loved_tracks`;
-    
-CREATE TABLE `loved_tracks` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `user_id` INTEGER NULL DEFAULT NULL,
-  `track_id` INTEGER NULL DEFAULT NULL,
-  `time` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-);
-
--- ---
--- Table 'loved_albums'
--- 
--- ---
-
-DROP TABLE IF EXISTS `loved_albums`;
-    
-CREATE TABLE `loved_albums` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `user_id` INTEGER NULL DEFAULT NULL,
-  `album_id` INTEGER NULL DEFAULT NULL,
-  `time` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-);
-
--- ---
--- Table 'loved_artists'
--- 
--- ---
-
-DROP TABLE IF EXISTS `loved_artists`;
-    
-CREATE TABLE `loved_artists` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `user_id` INTEGER NULL DEFAULT NULL,
-  `artist_id` INTEGER NULL DEFAULT NULL,
-  `time` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-);
-
--- ---
 -- Table 'profile_image'
 -- 
 -- ---
@@ -282,6 +237,41 @@ CREATE TABLE `message_thread` (
 );
 
 -- ---
+-- Table 'loved_music'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `loved_music`;
+    
+CREATE TABLE `loved_music` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `track_id` INTEGER NULL DEFAULT NULL,
+  `album_id` INTEGER NULL DEFAULT NULL,
+  `artist_id` INTEGER NULL DEFAULT NULL,
+  `first_time_loved` DATETIME NULL DEFAULT NULL,
+  `last_time_loved` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'note_music'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `note_music`;
+    
+CREATE TABLE `note_music` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `track_id` INTEGER NULL DEFAULT NULL,
+  `album_id` INTEGER NULL DEFAULT NULL,
+  `artist_id` INTEGER NULL DEFAULT NULL,
+  `time_noted` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -300,12 +290,6 @@ ALTER TABLE `profile_highlight` ADD FOREIGN KEY (track_id) REFERENCES `track` (`
 ALTER TABLE `profile_bio` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `album_art` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 ALTER TABLE `settings` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
-ALTER TABLE `loved_tracks` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
-ALTER TABLE `loved_tracks` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
-ALTER TABLE `loved_albums` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
-ALTER TABLE `loved_albums` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
-ALTER TABLE `loved_artists` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
-ALTER TABLE `loved_artists` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 ALTER TABLE `profile_image` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `artist_art` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 ALTER TABLE `follow` ADD FOREIGN KEY (from_id) REFERENCES `user` (`id`);
@@ -315,6 +299,14 @@ ALTER TABLE `message_thread` ADD FOREIGN KEY (posted_to) REFERENCES `user` (`id`
 ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_track_id) REFERENCES `track` (`id`);
 ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_album_id) REFERENCES `album` (`id`);
 ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `loved_music` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `loved_music` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
+ALTER TABLE `loved_music` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
+ALTER TABLE `loved_music` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `note_music` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `note_music` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
+ALTER TABLE `note_music` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
+ALTER TABLE `note_music` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 
 -- ---
 -- Table Properties
@@ -331,13 +323,12 @@ ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_artist_id) REFERENCES `artis
 -- ALTER TABLE `profile_bio` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `album_art` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `settings` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `loved_tracks` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `loved_albums` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `loved_artists` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `profile_image` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `artist_art` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `follow` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `message_thread` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `loved_music` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `note_music` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -365,12 +356,6 @@ ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_artist_id) REFERENCES `artis
 -- ('','','','');
 -- INSERT INTO `settings` (`id`,`timezone`,`user_id`) VALUES
 -- ('','','');
--- INSERT INTO `loved_tracks` (`id`,`user_id`,`track_id`,`time`) VALUES
--- ('','','','');
--- INSERT INTO `loved_albums` (`id`,`user_id`,`album_id`,`time`) VALUES
--- ('','','','');
--- INSERT INTO `loved_artists` (`id`,`user_id`,`artist_id`,`time`) VALUES
--- ('','','','');
 -- INSERT INTO `profile_image` (`id`,`path`,`user_id`) VALUES
 -- ('','','');
 -- INSERT INTO `artist_art` (`id`,`path_medium`,`path_small`,`artist_id`) VALUES
@@ -379,3 +364,7 @@ ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_artist_id) REFERENCES `artis
 -- ('','','','','');
 -- INSERT INTO `message_thread` (`id`,`posted_by`,`posted_to`,`text`,`is_public`,`is_read`,`refer_track_id`,`refer_album_id`,`refer_artist_id`,`time_posted`) VALUES
 -- ('','','','','','','','','','');
+-- INSERT INTO `loved_music` (`id`,`user_id`,`track_id`,`album_id`,`artist_id`,`first_time_loved`,`last_time_loved`) VALUES
+-- ('','','','','','','');
+-- INSERT INTO `note_music` (`id`,`user_id`,`track_id`,`album_id`,`artist_id`,`time_noted`) VALUES
+-- ('','','','','','');
