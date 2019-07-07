@@ -355,12 +355,19 @@ class TopArtists extends React.Component {
         var k = "artist-" + i.toString();
         var img_path = artist_art_endpoint + l[i]['img_id'] + '-medium.jpg'
 
+        const love_button_data = {
+          artist_id: l[i]['artist_id'],
+          is_current_user: current_user == user,
+          is_loved: l[i]['is_loved']
+        }
+
         newTop.push(
           <div key={ k }>
             <div className="album-entry">
               <img className="album-entry-art" src={ img_path }/>
               <div className="album-entry-art-gradient"></div>
               <div className="album-entry-layer-wrapper">
+                <LoveButton {...love_button_data}/>
                 <div className="album-entry-text-group">
                   <div className="album-entry-text"><h5>{ l[i]['artist'] }</h5></div>
                   <div className="album-entry-text"><h6>{ l[i]['count'] } listens</h6></div>

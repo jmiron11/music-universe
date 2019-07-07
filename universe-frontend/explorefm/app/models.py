@@ -142,13 +142,26 @@ class User(UserMixin, db.Model):
 
         tracks = []
         for a in d:
+
+            is_loved = db.session.query(
+                LovedMusic.is_loved
+            ).filter(and_(
+                LovedMusic.user_id == self.id,
+                LovedMusic.track_id == a.Listen.track.id
+            )).first()
+
+            if is_loved == None:
+                is_loved = False
+            else:
+                is_loved = bool(is_loved[0])
+
             track_data = {}
             track_data['track_id'] = a.Listen.track.id
             track_data['artist'] = a.Listen.track.artist.name
             track_data['track'] = a.Listen.track.name
             track_data['count'] = a.count
             track_data['img_id'] = str(a.Listen.track.album.id)
-            track_data['is_loved'] = False
+            track_data['is_loved'] = is_loved
             tracks.append(track_data)
 
         return tracks
@@ -315,12 +328,25 @@ class User(UserMixin, db.Model):
 
         artists = []
         for a in d:
+
+            is_loved = db.session.query(
+                LovedMusic.is_loved
+            ).filter(and_(
+                LovedMusic.user_id == self.id,
+                LovedMusic.artist_id == a.Listen.track.artist.id
+            )).first()
+
+            if is_loved == None:
+                is_loved = False
+            else:
+                is_loved = bool(is_loved[0])
+
             artist_data = {}
             artist_data['artist_id'] = a.Listen.track.artist.id
             artist_data['artist'] = a.Listen.track.artist.name
             artist_data['count'] = a.count
             artist_data['img_id'] = str(a.Listen.track.artist.id)
-            artist_data['is_loved'] = False
+            artist_data['is_loved'] = is_loved
             artists.append(artist_data)
 
         return artists

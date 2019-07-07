@@ -591,6 +591,11 @@ function (_React$Component4) {
         for (var i = 0; i < l.length; ++i) {
           var k = "artist-" + i.toString();
           var img_path = artist_art_endpoint + l[i]['img_id'] + '-medium.jpg';
+          var love_button_data = {
+            artist_id: l[i]['artist_id'],
+            is_current_user: current_user == user,
+            is_loved: l[i]['is_loved']
+          };
           newTop.push(React.createElement("div", {
             key: k
           }, React.createElement("div", {
@@ -602,7 +607,7 @@ function (_React$Component4) {
             className: "album-entry-art-gradient"
           }), React.createElement("div", {
             className: "album-entry-layer-wrapper"
-          }, React.createElement("div", {
+          }, React.createElement(LoveButton, love_button_data), React.createElement("div", {
             className: "album-entry-text-group"
           }, React.createElement("div", {
             className: "album-entry-text"
