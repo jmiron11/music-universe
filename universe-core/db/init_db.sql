@@ -181,6 +181,7 @@ CREATE TABLE `loved_tracks` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `user_id` INTEGER NULL DEFAULT NULL,
   `track_id` INTEGER NULL DEFAULT NULL,
+  `time` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -195,6 +196,7 @@ CREATE TABLE `loved_albums` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `user_id` INTEGER NULL DEFAULT NULL,
   `album_id` INTEGER NULL DEFAULT NULL,
+  `time` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -209,6 +211,7 @@ CREATE TABLE `loved_artists` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `user_id` INTEGER NULL DEFAULT NULL,
   `artist_id` INTEGER NULL DEFAULT NULL,
+  `time` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -242,6 +245,44 @@ CREATE TABLE `artist_art` (
 );
 
 -- ---
+-- Table 'follow'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `follow`;
+    
+CREATE TABLE `follow` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `from_id` INTEGER NULL DEFAULT NULL,
+  `to_id` INTEGER NULL DEFAULT NULL,
+  `is_following` bit NULL DEFAULT NULL,
+  `first_time_followed` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'message_thread'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `message_thread`;
+    
+CREATE TABLE `message_thread` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `posted_by` INTEGER NULL DEFAULT NULL,
+  `posted_to` INTEGER NULL DEFAULT NULL,
+  `text` VARCHAR(500) NULL DEFAULT NULL,
+  `is_public` bit NULL DEFAULT NULL,
+  `is_read` bit NULL DEFAULT NULL,
+  `refer_track_id` INTEGER NULL DEFAULT NULL,
+  `refer_album_id` INTEGER NULL DEFAULT NULL,
+  `refer_artist_id` INTEGER NULL DEFAULT NULL,
+  `time_posted` DATETIME NULL DEFAULT NULL,
+  `parent_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -268,6 +309,14 @@ ALTER TABLE `loved_artists` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `loved_artists` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 ALTER TABLE `profile_image` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `artist_art` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `follow` ADD FOREIGN KEY (from_id) REFERENCES `user` (`id`);
+ALTER TABLE `follow` ADD FOREIGN KEY (to_id) REFERENCES `user` (`id`);
+ALTER TABLE `message_thread` ADD FOREIGN KEY (posted_by) REFERENCES `user` (`id`);
+ALTER TABLE `message_thread` ADD FOREIGN KEY (posted_to) REFERENCES `user` (`id`);
+ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_track_id) REFERENCES `track` (`id`);
+ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_album_id) REFERENCES `album` (`id`);
+ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `message_thread` ADD FOREIGN KEY (parent_id) REFERENCES `message_thread` (`id`);
 
 -- ---
 -- Table Properties
@@ -289,6 +338,8 @@ ALTER TABLE `artist_art` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 -- ALTER TABLE `loved_artists` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `profile_image` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `artist_art` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `follow` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `message_thread` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -316,13 +367,17 @@ ALTER TABLE `artist_art` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 -- ('','','','');
 -- INSERT INTO `settings` (`id`,`timezone`,`user_id`) VALUES
 -- ('','','');
--- INSERT INTO `loved_tracks` (`id`,`user_id`,`track_id`) VALUES
--- ('','','');
--- INSERT INTO `loved_albums` (`id`,`user_id`,`album_id`) VALUES
--- ('','','');
--- INSERT INTO `loved_artists` (`id`,`user_id`,`artist_id`) VALUES
--- ('','','');
+-- INSERT INTO `loved_tracks` (`id`,`user_id`,`track_id`,`time`) VALUES
+-- ('','','','');
+-- INSERT INTO `loved_albums` (`id`,`user_id`,`album_id`,`time`) VALUES
+-- ('','','','');
+-- INSERT INTO `loved_artists` (`id`,`user_id`,`artist_id`,`time`) VALUES
+-- ('','','','');
 -- INSERT INTO `profile_image` (`id`,`path`,`user_id`) VALUES
 -- ('','','');
 -- INSERT INTO `artist_art` (`id`,`path_medium`,`path_small`,`artist_id`) VALUES
 -- ('','','','');
+-- INSERT INTO `follow` (`id`,`from_id`,`to_id`,`is_following`,`first_time_followed`) VALUES
+-- ('','','','','');
+-- INSERT INTO `message_thread` (`id`,`posted_by`,`posted_to`,`text`,`is_public`,`is_read`,`refer_track_id`,`refer_album_id`,`refer_artist_id`,`time_posted`,`parent_id`) VALUES
+-- ('','','','','','','','','','','');

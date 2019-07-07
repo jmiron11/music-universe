@@ -23,12 +23,19 @@
                     </div>
                     <div class="profile-right">
                         <div style="padding: 15px 0 0 0"></div>
-                        <div class="album-row-username">
-                        <h1>{{ user.username }}</h1>
+                        <div class="album-row-top">
+                            <div class="album-row-username">
+                                <h1>{{ user.username }}</h1>
+                            </div>
+                            {% if current_user.id == user.id %}
+                            <div class="follow-button">
+                                <h1>Follow</h1>
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="profile-navigation">
                             <div class="profile-nav-link">
-                                <a class="profile-nav-link" href="{{ url_for('user', username=user.username) }}">Profile</a>
+                                <a href="{{ url_for('user', username=user.username) }}">Profile</a>
                             </div>
                             <div class="profile-nav-link">
                                 <a href="{{ url_for('user_loved', username=user.username) }}">Listen Explorer</a>
@@ -46,7 +53,6 @@
                     </div>
                 </div>
             </div>
-
             {% block profile %}{% endblock %}
 
         </div>

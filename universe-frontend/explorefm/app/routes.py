@@ -90,6 +90,7 @@ def user_top_artists(username):
 
 @app.route('/user/<username>/listen_stats/')
 def user_total_stats(username):
+    console.log(username)
     user = User.query.filter_by(username=username).first_or_404()
     listen_stat = {}
     listen_stat['total'] = user.get_total_listens()

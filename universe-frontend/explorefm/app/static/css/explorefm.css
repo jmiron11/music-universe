@@ -146,8 +146,17 @@ a { color: inherit; }
   height: 100px;
 }
 
+.album-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
 .album-row-username {
   margin: 0 0 -15px 0;
+  width: 100%;
 }
 
 .album-row-username h1 {
@@ -643,10 +652,20 @@ a { color: inherit; }
   justify-content: flex-start;
   -webkit-flex-direction: row;
   flex-direction: row;
+  background: #fff;
+  width: 100%;
+  box-shadow: 2px 2px 3px #b9bbbe;
 }
 
 .profile-nav-link {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  -webkit-flex-direction: row;
+  flex-direction: row;
   padding: 6px 8px 6px 8px;
+  border-right: 1px solid #b9bbbe;
+  min-width: 12vh;
 }
 
 .profile-nav-link-selected {

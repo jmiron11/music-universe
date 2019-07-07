@@ -17,7 +17,6 @@ class TopTracks extends React.Component {
 
   getSecondsSinceEpoch() {
     var d = new Date();
-    console.log(d)
     return Math.floor(d.getTime() / 1000)
   }
 
@@ -193,7 +192,7 @@ class TopAlbums extends React.Component {
                 <option value="all">All time</option>
             </select>
         </div>
-        <div class="top-album-wrapper">
+        <div className="top-album-wrapper">
         { this.state.top_albums }
         </div>
       </div>
@@ -288,7 +287,7 @@ class TopArtists extends React.Component {
                 <option value="all">All time</option>
             </select>
         </div>
-        <div class="top-album-wrapper">
+        <div className="top-album-wrapper">
         { this.state.top_artists }
         </div>
       </div>

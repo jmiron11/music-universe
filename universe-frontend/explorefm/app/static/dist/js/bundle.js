@@ -364,7 +364,7 @@ function (_React$Component2) {
       }, "Last year"), React.createElement("option", {
         value: "all"
       }, "All time"))), React.createElement("div", {
-        "class": "top-album-wrapper"
+        className: "top-album-wrapper"
       }, this.state.top_albums));
     }
   }]);
@@ -488,7 +488,7 @@ function (_React$Component3) {
       }, "Last year"), React.createElement("option", {
         value: "all"
       }, "All time"))), React.createElement("div", {
-        "class": "top-album-wrapper"
+        className: "top-album-wrapper"
       }, this.state.top_artists));
     }
   }]);
@@ -1037,7 +1037,7 @@ function (_React$Component6) {
         timezone: event.target.value
       });
 
-      var request = '/updatetimezone/' + event.target.value.replace(/\//g, "-") + "/";
+      var request = '/update/timezone/' + event.target.value.replace(/\//g, "-") + "/";
       axios.post(request);
     };
 

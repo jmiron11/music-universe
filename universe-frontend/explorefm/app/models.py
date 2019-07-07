@@ -88,18 +88,36 @@ class User(UserMixin, db.Model):
     def get_total_listens(self):
         return db.session.query(
             User.listen
+        ).filter(
+            self.id == Listen.user_id
         ).count()
 
     def get_unique_tracks(self):
         return db.session.query(
             User.listen
+        ).filter(
+            self.id == Listen.user_id
         ).group_by(Listen.track_id).count()
 
     def get_unique_albums(self):
-        return db.session.query(User.listen, Track).filter(Listen.track_id == Track.id).group_by(Track.album_id).count()
+        return db.session.query(
+            User.listen, Track
+        ).filter(
+            and_(self.id == Listen.user_id,
+            Listen.track_id == Track.id)
+        ).group_by(
+            Track.album_id
+        ).count()
 
     def get_unique_artists(self):
-        return db.session.query(User.listen, Track).filter(Listen.track_id == Track.id).group_by(Track.artist_id).count()
+        return db.session.query(
+            User.listen, Track
+        ).filter(
+            and_(self.id == Listen.user_id,
+            Listen.track_id == Track.id)
+        ).group_by(
+            Track.artist_id
+        ).count()
 
     # start_t and end_t are seconds since epoch
     def get_tracks(self, start_t, end_t, limit=5, aggregate=True):
