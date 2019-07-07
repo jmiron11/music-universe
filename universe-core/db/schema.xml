@@ -360,11 +360,14 @@
 <row name="last_time_loved" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
+<row name="is_loved" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="1022" y="748" name="note_music">
+<table x="1019" y="773" name="note_music">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>

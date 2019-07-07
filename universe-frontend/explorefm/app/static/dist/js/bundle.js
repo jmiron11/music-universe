@@ -140,6 +140,29 @@ function (_React$Component) {
       _this.state.is_hover = false;
 
       _this.setState(_this.state);
+
+      var music_type = "";
+      var music_id = -1;
+
+      if (_this.state.track_id != -1) {
+        music_type = 'track';
+        music_id = _this.state.track_id;
+      } else if (_this.state.album_id != -1) {
+        music_type = 'album';
+        music_id = _this.state.album_id;
+      } else if (_this.artist_id != -1) {
+        music_type = 'artist';
+        music_id = _this.state.artist_id;
+      } // Update with ep
+
+
+      if (_this.state.is_loved) {
+        var request = '/update/love_music/' + music_type + '/' + music_id.toString();
+        axios.get(request);
+      } else {
+        var request = '/update/unlove_music/' + music_type + '/' + music_id.toString();
+        axios.get(request);
+      }
     };
 
     _this.onMouse = function (event) {

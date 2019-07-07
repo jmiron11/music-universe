@@ -26,6 +26,8 @@ class User(UserMixin, db.Model):
     following = db.relationship('Follow', foreign_keys='Follow.from_id', lazy=True, backref="from_user")
     followers = db.relationship('Follow', foreign_keys='Follow.to_id', lazy=True, backref="to_user")
 
+    loved_music = db.relationship('LovedMusic', lazy=True)
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
@@ -272,13 +274,26 @@ class User(UserMixin, db.Model):
 
         albums = []
         for a in d:
+
+            is_loved = db.session.query(
+                LovedMusic.is_loved
+            ).filter(and_(
+                LovedMusic.user_id == self.id,
+                LovedMusic.album_id == a.Listen.track.album.id
+            )).first()
+
+            if is_loved == None:
+                is_loved = False
+            else:
+                is_loved = bool(is_loved[0])
+
             album_data = {}
             album_data['album_id'] = a.Listen.track.album.id
             album_data['album'] = a.Listen.track.album.name
             album_data['artist'] = a.Listen.track.artist.name
             album_data['count'] = a.count
             album_data['img_id'] = str(a.Listen.track.album.id)
-            album_data['is_loved'] = False
+            album_data['is_loved'] = is_loved
             albums.append(album_data)
 
         return albums
@@ -412,6 +427,51 @@ class User(UserMixin, db.Model):
 
         return user_following
 
+    def love_music(self, music_type, music_id):
+        if music_type == 'track':
+            db_field = LovedMusic.track_id
+        elif music_type == 'album':
+            db_field = LovedMusic.album_id
+        else:
+            db_field = LovedMusic.artist_id
+
+        entry = db.session.query(LovedMusic).filter(
+            and_(
+                LovedMusic.user_id == self.id,
+                db_field == music_id
+            )).first()
+
+        if entry == None:
+            if music_type == 'track':
+                u_loved = LovedMusic(user_id=self.id, track_id=music_id, is_loved=True, first_time_loved=datetime.now())
+            elif music_type == 'album':
+                print('here')
+                u_loved = LovedMusic(user_id=self.id, album_id=music_id, is_loved=True, first_time_loved=datetime.now())
+            else:
+                u_loved = LovedMusic(user_id=self.id, artist_id=music_id, is_loved=True, first_time_loved=datetime.now())
+
+            db.session.add(u_loved)
+        else:
+            entry.is_loved = True
+            entry.last_time_loved = datetime.now()
+
+        db.session.commit()
+
+    def unlove_music(self, music_type, music_id):
+        if music_type == 'track':
+            music_type = LovedMusic.track_id
+        elif music_type == 'album':
+            music_type = LovedMusic.album_id
+        else:
+            music_type = LovedMusic.artist_id
+        entry = db.session.query(LovedMusic).filter(
+            and_(
+                LovedMusic.user_id == self.id,
+                music_type == music_id
+            )).first()
+
+        entry.is_loved = False
+        db.session.commit()
 
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
@@ -521,3 +581,14 @@ class MessageThread(db.Model):
     refer_album_id = db.Column(db.Integer, db.ForeignKey(Album.id))
     refer_artist_id = db.Column(db.Integer, db.ForeignKey(Artist.id))
     time_posted = db.Column(db.DateTime)
+
+class LovedMusic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
+    track_id = db.Column(db.Integer, db.ForeignKey(Track.id))
+    album_id = db.Column(db.Integer, db.ForeignKey(Album.id))
+    artist_id = db.Column(db.Integer, db.ForeignKey(Artist.id))
+    is_loved = db.Column(db.Integer)
+    first_time_loved = db.Column(db.DateTime)
+    last_time_loved = db.Column(db.DateTime)
+

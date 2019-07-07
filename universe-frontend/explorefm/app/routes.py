@@ -274,6 +274,18 @@ def update_following(username, boolean):
         current_user.unfollow(username)
         return jsonify(False)
 
+@app.route('/update/love_music/<music_type>/<music_id>', methods=['GET', 'POST'])
+@login_required
+def update_loved(music_type, music_id):
+    current_user.love_music(music_type, music_id)
+    return ""
+
+@app.route('/update/unlove_music/<music_type>/<music_id>', methods=['GET', 'POST'])
+@login_required
+def update_unloved(music_type, music_id):
+    current_user.unlove_music(music_type, music_id)
+    return ""
+
 # User query endpoints
 @app.route('/query/user/me')
 def who_am_i():
@@ -289,7 +301,6 @@ def spotify_connected():
 def query_is_following(username): 
     print(current_user.is_following(username))
     return jsonify(current_user.is_following(username))
-
 
 @app.route('/test/')
 def test():

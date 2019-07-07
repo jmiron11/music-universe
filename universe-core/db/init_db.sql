@@ -251,6 +251,7 @@ CREATE TABLE `loved_music` (
   `artist_id` INTEGER NULL DEFAULT NULL,
   `first_time_loved` DATETIME NULL DEFAULT NULL,
   `last_time_loved` DATETIME NULL DEFAULT NULL,
+  `is_loved` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -364,7 +365,7 @@ ALTER TABLE `note_music` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 -- ('','','','','');
 -- INSERT INTO `message_thread` (`id`,`posted_by`,`posted_to`,`text`,`is_public`,`is_read`,`refer_track_id`,`refer_album_id`,`refer_artist_id`,`time_posted`) VALUES
 -- ('','','','','','','','','','');
--- INSERT INTO `loved_music` (`id`,`user_id`,`track_id`,`album_id`,`artist_id`,`first_time_loved`,`last_time_loved`) VALUES
--- ('','','','','','','');
+-- INSERT INTO `loved_music` (`id`,`user_id`,`track_id`,`album_id`,`artist_id`,`first_time_loved`,`last_time_loved`,`is_loved`) VALUES
+-- ('','','','','','','','');
 -- INSERT INTO `note_music` (`id`,`user_id`,`track_id`,`album_id`,`artist_id`,`time_noted`) VALUES
 -- ('','','','','','');

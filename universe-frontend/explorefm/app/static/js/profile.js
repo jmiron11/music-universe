@@ -38,6 +38,28 @@ class LoveButton extends React.Component {
     this.state.is_loved = !this.state.is_loved
     this.state.is_hover = false
     this.setState(this.state)
+
+    var music_type = ""
+    var music_id = -1
+    if (this.state.track_id != -1) {
+      music_type = 'track'
+      music_id = this.state.track_id
+    } else if (this.state.album_id != -1) {
+      music_type = 'album'
+      music_id = this.state.album_id
+    } else if (this.artist_id != -1) {
+      music_type = 'artist'
+      music_id = this.state.artist_id
+    }
+
+    // Update with ep
+    if (this.state.is_loved) {
+      var request = '/update/love_music/' + music_type + '/' + music_id.toString()
+      axios.get(request)
+    } else {
+      var request = '/update/unlove_music/' + music_type + '/' + music_id.toString()
+      axios.get(request)
+    }
   }
 
   onMouse = (event) => {
