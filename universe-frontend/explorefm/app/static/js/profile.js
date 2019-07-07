@@ -17,6 +17,17 @@ class LoveButton extends React.Component {
                     is_current_user: true,
                     is_hover: false,          
                  };
+
+    if ('track_id' in this.props) {
+      this.state.track_id = this.props.track_id
+    } else if ('album_id' in this.props) {
+      this.state.album_id = this.props.album_id
+    } else if ('artist_id' in this.props) {
+      this.state.artist_id = this.props.artist_id
+    }
+
+    this.state.is_loved = this.props.is_loved
+    this.state.is_current_user = this.props.is_current_user
   }
 
   iconClicked = (event) => {
@@ -217,13 +228,19 @@ class TopAlbums extends React.Component {
         var k = "album-" + i.toString();
 
         var img_path = album_art_endpoint + l[i]['img_id'] + '-medium.jpg'
+
+        const love_button_data = {
+          album_id: l[i]['album_id'],
+          is_current_user: current_user == user,
+          is_loved: l[i]['is_loved']
+        }
         newTop.push(
           <div key={ k }>
             <div className="album-entry">
               <img className="album-entry-art" src={ img_path }/>
               <div className="album-entry-art-gradient"></div>
               <div className="album-entry-layer-wrapper">
-                <LoveButton />
+                <LoveButton {...love_button_data}/>
                 <div className="album-entry-text-group">
                   <div className="album-entry-text"><h5>{ l[i]['album'] }</h5></div>
                   <div className="album-entry-text"><h6>{ l[i]['artist'] }</h6></div>

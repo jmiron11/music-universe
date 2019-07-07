@@ -141,10 +141,12 @@ class User(UserMixin, db.Model):
         tracks = []
         for a in d:
             track_data = {}
+            track_data['track_id'] = a.Listen.track.id
             track_data['artist'] = a.Listen.track.artist.name
             track_data['track'] = a.Listen.track.name
             track_data['count'] = a.count
             track_data['img_id'] = str(a.Listen.track.album.id)
+            track_data['is_loved'] = False
             tracks.append(track_data)
 
         return tracks
@@ -268,16 +270,18 @@ class User(UserMixin, db.Model):
             Track.album_id
         ).limit(limit).all()
 
-        tracks = []
+        albums = []
         for a in d:
-            track_data = {}
-            track_data['album'] = a.Listen.track.album.name
-            track_data['artist'] = a.Listen.track.artist.name
-            track_data['count'] = a.count
-            track_data['img_id'] = str(a.Listen.track.album.id)
-            tracks.append(track_data)
+            album_data = {}
+            album_data['album_id'] = a.Listen.track.album.id
+            album_data['album'] = a.Listen.track.album.name
+            album_data['artist'] = a.Listen.track.artist.name
+            album_data['count'] = a.count
+            album_data['img_id'] = str(a.Listen.track.album.id)
+            album_data['is_loved'] = False
+            albums.append(album_data)
 
-        return tracks
+        return albums
 
     def get_top_artists(self, start_t, end_t, limit=5):
         d = db.session.query(
@@ -294,15 +298,17 @@ class User(UserMixin, db.Model):
             Track.artist_id
         ).limit(limit).all()
 
-        tracks = []
+        artists = []
         for a in d:
-            track_data = {}
-            track_data['artist'] = a.Listen.track.artist.name
-            track_data['count'] = a.count
-            track_data['img_id'] = str(a.Listen.track.artist.id)
-            tracks.append(track_data)
+            artist_data = {}
+            artist_data['artist_id'] = a.Listen.track.artist.id
+            artist_data['artist'] = a.Listen.track.artist.name
+            artist_data['count'] = a.count
+            artist_data['img_id'] = str(a.Listen.track.artist.id)
+            artist_data['is_loved'] = False
+            artists.append(artist_data)
 
-        return tracks
+        return artists
 
     def update_profile_image(self, path):
         u_image = ProfileImage(user_id=self.id, path=path)

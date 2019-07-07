@@ -162,6 +162,17 @@ function (_React$Component) {
       is_current_user: true,
       is_hover: false
     };
+
+    if ('track_id' in _this.props) {
+      _this.state.track_id = _this.props.track_id;
+    } else if ('album_id' in _this.props) {
+      _this.state.album_id = _this.props.album_id;
+    } else if ('artist_id' in _this.props) {
+      _this.state.artist_id = _this.props.artist_id;
+    }
+
+    _this.state.is_loved = _this.props.is_loved;
+    _this.state.is_current_user = _this.props.is_current_user;
     return _this;
   }
 
@@ -425,6 +436,11 @@ function (_React$Component3) {
         for (var i = 0; i < l.length; ++i) {
           var k = "album-" + i.toString();
           var img_path = album_art_endpoint + l[i]['img_id'] + '-medium.jpg';
+          var love_button_data = {
+            album_id: l[i]['album_id'],
+            is_current_user: current_user == user,
+            is_loved: l[i]['is_loved']
+          };
           newTop.push(React.createElement("div", {
             key: k
           }, React.createElement("div", {
@@ -436,7 +452,7 @@ function (_React$Component3) {
             className: "album-entry-art-gradient"
           }), React.createElement("div", {
             className: "album-entry-layer-wrapper"
-          }, React.createElement(LoveButton, null), React.createElement("div", {
+          }, React.createElement(LoveButton, love_button_data), React.createElement("div", {
             className: "album-entry-text-group"
           }, React.createElement("div", {
             className: "album-entry-text"
