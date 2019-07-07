@@ -77,28 +77,28 @@ class LoveButton extends React.Component {
       if (this.state.is_loved) {
         if (!this.state.is_hover) {
           return (
-            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg" style={{color: 'red'}}></i>
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg love-music-icon" style={{color: 'red'}}></i>
           )
         } else {
           return (
-            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart-o fa-lg" style={{color: 'black'}}></i>
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart-o fa-lg love-music-icon" style={{color: 'black'}}></i>
           )
         }
       } else {
         if (!this.state.is_hover) {
           return (
-            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart-o fa-lg" style={{color: 'black'}}></i>
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart-o fa-lg love-music-icon" style={{color: 'black'}}></i>
           )
         } else {
           return (
-            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg" style={{color: 'red'}}></i>
+            <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg love-music-icon" style={{color: 'red'}}></i>
           )
         }
       }
     } else {
       if (this.state.is_loved) {
        return (
-          <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg" style={{color: 'red'}}></i>
+          <i onMouseOver={this.onMouse} onMouseOut={this.offMouse} onClick={this.iconClicked} className="fa fa-heart fa-lg love-music-icon" style={{color: 'red'}}></i>
         )
       } else {
         return (
@@ -159,11 +159,18 @@ class TopTracks extends React.Component {
           className = "listen-entry-shaded"
         }
 
+        const love_button_data = {
+          track_id: l[i]['track_id'],
+          is_current_user: current_user == user,
+          is_loved: l[i]['is_loved']
+        }
+
         var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg'
         newTop.push(
           <div key={ k }>
             <div className={className}>
               <img className="listen-entry-art" src={ img_path }/>
+              <LoveButton {...love_button_data}/>
               <div className="listen-entry-track"><h6>{ l[i]['artist'] } - { l[i]['track'] }</h6></div>
               <div className="listen-entry-time"><h6>{ l[i]['count'] }</h6></div>
             </div>

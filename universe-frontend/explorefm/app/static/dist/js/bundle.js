@@ -209,7 +209,7 @@ function (_React$Component) {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
-              className: "fa fa-heart fa-lg",
+              className: "fa fa-heart fa-lg love-music-icon",
               style: {
                 color: 'red'
               }
@@ -219,7 +219,7 @@ function (_React$Component) {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
-              className: "fa fa-heart-o fa-lg",
+              className: "fa fa-heart-o fa-lg love-music-icon",
               style: {
                 color: 'black'
               }
@@ -231,7 +231,7 @@ function (_React$Component) {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
-              className: "fa fa-heart-o fa-lg",
+              className: "fa fa-heart-o fa-lg love-music-icon",
               style: {
                 color: 'black'
               }
@@ -241,7 +241,7 @@ function (_React$Component) {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
-              className: "fa fa-heart fa-lg",
+              className: "fa fa-heart fa-lg love-music-icon",
               style: {
                 color: 'red'
               }
@@ -254,7 +254,7 @@ function (_React$Component) {
             onMouseOver: this.onMouse,
             onMouseOut: this.offMouse,
             onClick: this.iconClicked,
-            className: "fa fa-heart fa-lg",
+            className: "fa fa-heart fa-lg love-music-icon",
             style: {
               color: 'red'
             }
@@ -341,6 +341,11 @@ function (_React$Component2) {
             className = "listen-entry-shaded";
           }
 
+          var love_button_data = {
+            track_id: l[i]['track_id'],
+            is_current_user: current_user == user,
+            is_loved: l[i]['is_loved']
+          };
           var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
           newTop.push(React.createElement("div", {
             key: k
@@ -349,7 +354,7 @@ function (_React$Component2) {
           }, React.createElement("img", {
             className: "listen-entry-art",
             src: img_path
-          }), React.createElement("div", {
+          }), React.createElement(LoveButton, love_button_data), React.createElement("div", {
             className: "listen-entry-track"
           }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['track'])), React.createElement("div", {
             className: "listen-entry-time"
