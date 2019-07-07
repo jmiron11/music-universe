@@ -148,7 +148,6 @@ function (_React$Component) {
     key: "getSecondsSinceEpoch",
     value: function getSecondsSinceEpoch() {
       var d = new Date();
-      console.log(d);
       return Math.floor(d.getTime() / 1000);
     }
   }, {
@@ -275,7 +274,6 @@ function (_React$Component2) {
     key: "getSecondsSinceEpoch",
     value: function getSecondsSinceEpoch() {
       var d = new Date();
-      console.log(d);
       return Math.floor(d.getTime() / 1000);
     }
   }, {
@@ -401,7 +399,6 @@ function (_React$Component3) {
     key: "getSecondsSinceEpoch",
     value: function getSecondsSinceEpoch() {
       var d = new Date();
-      console.log(d);
       return Math.floor(d.getTime() / 1000);
     }
   }, {
@@ -1918,6 +1915,82 @@ function (_React$Component6) {
   }]);
 
   return TimezoneForm;
+}(React.Component);
+
+var FollowButton =
+/*#__PURE__*/
+function (_React$Component7) {
+  _inherits(FollowButton, _React$Component7);
+
+  function FollowButton(props) {
+    var _this7;
+
+    _classCallCheck(this, FollowButton);
+
+    _this7 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
+
+    _this7.buttonClicked = function (event) {
+      _this7.state.isFollowing = !_this7.state.isFollowing;
+
+      var self = _assertThisInitialized(_this7);
+
+      var request = '/update/is_following/' + user + '/' + _this7.state.isFollowing.toString();
+
+      axios.get(request).then(function (response) {
+        self.setState(self.state);
+      });
+    };
+
+    _this7.state = {
+      isFollowing: false
+    };
+    return _this7;
+  }
+
+  _createClass(FollowButton, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var self = this;
+      var request = '/query/user/is_following/' + user;
+      axios.get(request).then(function (response) {
+        self.state.isFollowing = response['data'];
+        self.setState(self.state);
+      });
+    }
+  }, {
+    key: "renderFollowed",
+    value: function renderFollowed() {
+      return React.createElement("div", {
+        className: "follow-button",
+        onClick: this.buttonClicked
+      }, React.createElement("i", {
+        className: "fa fa-check",
+        "aria-hidden": "true"
+      }), React.createElement("h1", null, "Followed"));
+    }
+  }, {
+    key: "renderUnfollowed",
+    value: function renderUnfollowed() {
+      return React.createElement("div", {
+        className: "follow-button",
+        onClick: this.buttonClicked
+      }, React.createElement("i", {
+        className: "fa fa-user-plus",
+        "aria-hidden": "true"
+      }), React.createElement("h1", null, "Follow"));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.isFollowing) {
+        return this.renderFollowed();
+      } else {
+        return this.renderUnfollowed();
+      }
+    }
+  }]);
+
+  return FollowButton;
 }(React.Component); // Render all the things
 
 
@@ -1955,6 +2028,12 @@ domContainer = document.getElementById("highlighted-music");
 
 if (domContainer != null) {
   ReactDOM.render(e(Highlight), domContainer);
+}
+
+domContainer = document.getElementById("follow-button");
+
+if (domContainer != null) {
+  ReactDOM.render(e(FollowButton), domContainer);
 }
 
 /***/ }),

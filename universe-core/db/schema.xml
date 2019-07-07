@@ -342,7 +342,7 @@
 <default>NULL</default><relation table="user" row="id" />
 </row>
 <row name="is_following" null="1" autoincrement="0">
-<datatype>bit</datatype>
+<datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="first_time_followed" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>

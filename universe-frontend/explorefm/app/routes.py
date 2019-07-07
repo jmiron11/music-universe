@@ -9,6 +9,8 @@ from werkzeug.utils import secure_filename
 import time
 import os
 
+
+# Web routes endpoints.
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -74,31 +76,6 @@ def user_loved(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('loved.html', user=user)
 
-@app.route('/user/<username>/top_albums/')
-def user_top_album(username):
-    t_start = int(request.args.get('t_start', default=0))
-    t_end = int(request.args.get('t_end', default=time.time()))
-    user = User.query.filter_by(username=username).first_or_404()
-    return jsonify(user.get_top_albums(t_start, t_end, 6))
-
-@app.route('/user/<username>/top_artists/')
-def user_top_artists(username):
-    t_start = int(request.args.get('t_start', default=0))
-    t_end = int(request.args.get('t_end', default=time.time()))
-    user = User.query.filter_by(username=username).first_or_404()
-    return jsonify(user.get_top_artists(t_start, t_end, 6))
-
-@app.route('/user/<username>/listen_stats/')
-def user_total_stats(username):
-    console.log(username)
-    user = User.query.filter_by(username=username).first_or_404()
-    listen_stat = {}
-    listen_stat['total'] = user.get_total_listens()
-    listen_stat['tracks'] = user.get_unique_tracks()
-    listen_stat['albums'] = user.get_unique_albums()
-    listen_stat['artists'] = user.get_unique_artists()
-    return jsonify(listen_stat) 
-
 @app.route('/settings')
 @login_required
 def settings():
@@ -156,6 +133,7 @@ def authcallback():
 
     return redirect(url_for('settings'))
 
+# Public user endpoints, no authentication required.
 @app.route('/user/<username>/tracks', methods=['GET', 'POST'])
 def user_tracks(username):
     t_start = int(request.args.get('t_start', default=time.time()))
@@ -164,40 +142,42 @@ def user_tracks(username):
 
     return jsonify(user.get_tracks(t_start, t_end, aggregate=True))
 
-@app.route('/whoami')
-def who_am_i():
-    return current_user.username
-
-@app.route('/spotifyconnceted')
-@login_required
-def spotify_connected(): 
-    return current_user.is_spotified()
-
-@app.route('/update/timezone/<timezone>/', methods=['GET', 'POST'])
-@login_required
-def updatetimezone(timezone):
-    timezone = timezone.replace("-", "/")
-    current_user.set_timezone(timezone)
-    return "" # TODO(justinmiron): Return and handle status code.
-
 @app.route('/user/<username>/bio/', methods=['GET'])
 def bio(username):
     user = User.query.filter_by(username=username).first_or_404()
     return user.get_bio()
-
-@app.route('/update/bio/')
-@login_required
-def update_bio():
-    new_bio = str(request.args.get('bio', default=""))
-    current_user.set_bio(new_bio)
-    return "" # TODO(justinmiron): Return and handle status code.
 
 @app.route('/user/<username>/highlight/', methods=['GET'])
 def highlights(username):
     user = User.query.filter_by(username=username).first_or_404()
     return jsonify(user.get_highlights())
 
-# Returns the new set of highlights
+@app.route('/user/<username>/top_albums/')
+def user_top_album(username):
+    t_start = int(request.args.get('t_start', default=0))
+    t_end = int(request.args.get('t_end', default=time.time()))
+    user = User.query.filter_by(username=username).first_or_404()
+    return jsonify(user.get_top_albums(t_start, t_end, 6))
+
+@app.route('/user/<username>/top_artists/')
+def user_top_artists(username):
+    t_start = int(request.args.get('t_start', default=0))
+    t_end = int(request.args.get('t_end', default=time.time()))
+    user = User.query.filter_by(username=username).first_or_404()
+    return jsonify(user.get_top_artists(t_start, t_end, 6))
+
+@app.route('/user/<username>/listen_stats/')
+def user_total_stats(username):
+    console.log(username)
+    user = User.query.filter_by(username=username).first_or_404()
+    listen_stat = {}
+    listen_stat['total'] = user.get_total_listens()
+    listen_stat['tracks'] = user.get_unique_tracks()
+    listen_stat['albums'] = user.get_unique_albums()
+    listen_stat['artists'] = user.get_unique_artists()
+    return jsonify(listen_stat) 
+
+# User data update endpoints
 @app.route('/update/highlight/')
 @login_required
 def update_highlight():
@@ -232,9 +212,23 @@ def update_highlight():
 
     return jsonify(current_user.get_highlights())
 
+@app.route('/update/bio/')
+@login_required
+def update_bio():
+    new_bio = str(request.args.get('bio', default=""))
+    current_user.set_bio(new_bio)
+    return "" # TODO(justinmiron): Return and handle status code.
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['PROFILE_PIC_EXTENSIONS']
+
+@app.route('/update/timezone/<timezone>/', methods=['GET', 'POST'])
+@login_required
+def updatetimezone(timezone):
+    timezone = timezone.replace("-", "/")
+    current_user.set_timezone(timezone)
+    return "" # TODO(justinmiron): Return and handle status code.
 
 @app.route('/update/profile_image', methods=['GET', 'POST'])
 @login_required
@@ -259,3 +253,27 @@ def upload_profile_image():
             current_user.update_profile_image(full_path)
             return redirect(url_for('user', username=current_user.username))
     return render_template('upload_profile.html', user=current_user)
+
+@app.route('/update/is_following/<username>/<boolean>', methods=['GET', 'POST'])
+@login_required
+def update_following(username, boolean):
+    if boolean == 'true':
+        current_user.follow(username)
+    else:
+        current_user.unfollow(username)
+    return ""
+
+# User query endpoints
+@app.route('/query/user/me')
+def who_am_i():
+    return jsonify(current_user.username)
+
+@app.route('/query/user/spotifyconnected')
+@login_required
+def spotify_connected(): 
+    return jsonify(current_user.is_spotified())
+
+@app.route('/query/user/is_following/<username>')
+@login_required
+def query_is_following(username): 
+    return jsonify(current_user.is_following(username))

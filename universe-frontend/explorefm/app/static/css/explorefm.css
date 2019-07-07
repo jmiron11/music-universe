@@ -152,11 +152,11 @@ a { color: inherit; }
   justify-content: space-between;
   -webkit-flex-direction: row;
   flex-direction: row;
+  width: 100%;
 }
 
 .album-row-username {
   margin: 0 0 -15px 0;
-  width: 100%;
 }
 
 .album-row-username h1 {
@@ -757,4 +757,34 @@ a { color: inherit; }
   font-weight: bold;
   text-shadow: 0px 0px 3px #000;
   color: #fff;
+}
+
+/**** Follow button ****/
+
+.follow-button {
+  background: #fff;
+  z-index: 101;
+  margin-top: 30px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  padding: 6px 15px 6px 15px;
+  color: #494b4e;
+}
+
+.follow-button:hover
+{
+  background: #ddd;
+}
+
+.follow-button h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  margin: 0;
+  font-weight: bold;
+  padding-left: 6px;
 }

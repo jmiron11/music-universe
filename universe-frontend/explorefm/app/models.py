@@ -23,6 +23,9 @@ class User(UserMixin, db.Model):
     settings = db.relationship('Settings', lazy=True)
     image = db.relationship('ProfileImage', lazy=True)
 
+    following = db.relationship('Follow', foreign_keys='Follow.from_id', lazy=True)
+    followers = db.relationship('Follow', foreign_keys='Follow.to_id', lazy=True)
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
@@ -318,6 +321,64 @@ class User(UserMixin, db.Model):
             remote_path = app.config['IMAGE_SERVING'] + app.config['PROFILE_PIC_DIR'] + 'no_profile.jpg'
         return remote_path
 
+    def is_following(self, username):
+        user_id = User.query.with_entities(
+                User.id).filter_by(username=username).first()
+
+        if user_id == None:
+            return False
+
+        follow = db.session.query(
+                Follow
+            ).with_entities(
+                Follow.is_following
+            ).filter(
+                and_(
+                Follow.to_id == user_id,
+                self.id == Follow.from_id)
+            ).first()
+
+        if follow == None:
+            return False
+        else:
+            return follow
+
+    def follow(self, username):
+        user_id = User.query.with_entities(
+                User.id).filter_by(username=username).first()
+
+        if user_id == None:
+            return False
+
+        follow = db.session.query(
+                Follow
+            ).filter(
+                and_(
+                Follow.to_id == user_id,
+                self.id == Follow.from_id)
+            ).first()
+
+        if follow == None:
+            u_follow = Follow(from_id=self.id, to_id=user_id, is_following=True, first_time_followed=datetime.now())
+            db.session.add(u_follow)
+
+        db.session.commit()
+
+    def unfollow(self, username):
+        user_id = User.query.with_entities(
+                User.id).filter_by(username=username).first()
+
+        if user_id == None:
+            return False
+
+        follow = Follow.query.filter(
+                and_(
+                Follow.to_id == user_id,
+                self.id == Follow.from_id)
+            ).first()
+        print(follow)
+        follow.is_following = False
+        db.session.commit()
 
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
@@ -408,3 +469,22 @@ class ProfileImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     path = db.Column(db.String(300), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
+
+class Follow(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    from_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    to_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    is_following = db.Column(db.Boolean)
+    first_time_followed = db.Column(db.DateTime)
+
+class MessageThread(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    posted_by = db.Column(db.Integer, db.ForeignKey(User.id))
+    posted_to = db.Column(db.Integer, db.ForeignKey(User.id))
+    text = db.Column(db.String(500))
+    is_public = db.Column(db.Boolean)
+    is_read = db.Column(db.Boolean)
+    refer_track_id = db.Column(db.Integer, db.ForeignKey(Track.id))
+    refer_album_id = db.Column(db.Integer, db.ForeignKey(Album.id))
+    refer_artist_id = db.Column(db.Integer, db.ForeignKey(Artist.id))
+    time_posted = db.Column(db.DateTime)

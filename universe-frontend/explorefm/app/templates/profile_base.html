@@ -27,10 +27,8 @@
                             <div class="album-row-username">
                                 <h1>{{ user.username }}</h1>
                             </div>
-                            {% if current_user.id == user.id %}
-                            <div class="follow-button">
-                                <h1>Follow</h1>
-                            </div>
+                            {% if current_user.id != user.id %}
+                            <div id="follow-button"></div> <!-- Follow button react -->
                             {% endif %}
                         </div>
                         <div class="profile-navigation">

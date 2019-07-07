@@ -255,7 +255,7 @@ CREATE TABLE `follow` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `from_id` INTEGER NULL DEFAULT NULL,
   `to_id` INTEGER NULL DEFAULT NULL,
-  `is_following` bit NULL DEFAULT NULL,
+  `is_following` INTEGER NULL DEFAULT NULL,
   `first_time_followed` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
@@ -278,7 +278,6 @@ CREATE TABLE `message_thread` (
   `refer_album_id` INTEGER NULL DEFAULT NULL,
   `refer_artist_id` INTEGER NULL DEFAULT NULL,
   `time_posted` DATETIME NULL DEFAULT NULL,
-  `parent_id` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -316,7 +315,6 @@ ALTER TABLE `message_thread` ADD FOREIGN KEY (posted_to) REFERENCES `user` (`id`
 ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_track_id) REFERENCES `track` (`id`);
 ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_album_id) REFERENCES `album` (`id`);
 ALTER TABLE `message_thread` ADD FOREIGN KEY (refer_artist_id) REFERENCES `artist` (`id`);
-ALTER TABLE `message_thread` ADD FOREIGN KEY (parent_id) REFERENCES `message_thread` (`id`);
 
 -- ---
 -- Table Properties
@@ -379,5 +377,5 @@ ALTER TABLE `message_thread` ADD FOREIGN KEY (parent_id) REFERENCES `message_thr
 -- ('','','','');
 -- INSERT INTO `follow` (`id`,`from_id`,`to_id`,`is_following`,`first_time_followed`) VALUES
 -- ('','','','','');
--- INSERT INTO `message_thread` (`id`,`posted_by`,`posted_to`,`text`,`is_public`,`is_read`,`refer_track_id`,`refer_album_id`,`refer_artist_id`,`time_posted`,`parent_id`) VALUES
--- ('','','','','','','','','','','');
+-- INSERT INTO `message_thread` (`id`,`posted_by`,`posted_to`,`text`,`is_public`,`is_read`,`refer_track_id`,`refer_album_id`,`refer_artist_id`,`time_posted`) VALUES
+-- ('','','','','','','','','','');

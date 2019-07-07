@@ -114,7 +114,6 @@ class TopAlbums extends React.Component {
 
   getSecondsSinceEpoch() {
     var d = new Date();
-    console.log(d)
     return Math.floor(d.getTime() / 1000)
   }
 
@@ -211,7 +210,6 @@ class TopArtists extends React.Component {
 
   getSecondsSinceEpoch() {
     var d = new Date();
-    console.log(d)
     return Math.floor(d.getTime() / 1000)
   }
 
@@ -1183,6 +1181,59 @@ class TimezoneForm extends React.Component {
   }
 }
 
+class FollowButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+                    isFollowing: false,
+                 };
+  }
+
+  buttonClicked = (event) => {
+      this.state.isFollowing = !(this.state.isFollowing)
+      var self = this
+      var request = '/update/is_following/' + user + '/' + this.state.isFollowing.toString()
+      axios.get(request).then(function(response) {
+        self.setState(self.state)
+      })
+  }
+
+  componentDidMount(){
+      var self = this
+      var request = '/query/user/is_following/' + user
+      axios.get(request).then(function(response) {
+        self.state.isFollowing = response['data']
+        self.setState(self.state)
+      })
+  }
+
+  renderFollowed() {
+    return (
+      <div className="follow-button" onClick={this.buttonClicked}>
+          <i className="fa fa-check" aria-hidden="true"></i>
+          <h1>Followed</h1>
+      </div>
+    );
+  }
+
+  renderUnfollowed() {
+      return (
+      <div className="follow-button" onClick={this.buttonClicked}>
+          <i className="fa fa-user-plus" aria-hidden="true"></i>
+          <h1>Follow</h1>
+      </div>
+    );
+  }
+
+  render() {
+    if (this.state.isFollowing) {
+      return this.renderFollowed();
+    } else {
+      return this.renderUnfollowed();
+    }
+  }
+}
+
 // Render all the things
 var domContainer = document.getElementById("top-tracks")
 if (domContainer != null) {
@@ -1212,4 +1263,9 @@ if (domContainer != null) {
 domContainer = document.getElementById("highlighted-music")
 if (domContainer != null) {
   ReactDOM.render(e(Highlight), domContainer);
+}
+
+domContainer = document.getElementById("follow-button")
+if (domContainer != null) {
+  ReactDOM.render(e(FollowButton), domContainer);
 }
