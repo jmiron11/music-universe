@@ -203,7 +203,6 @@ class User(UserMixin, db.Model):
 
     def set_timezone(self, new_timezone):
         if len(self.settings) > 0:
-            print('Setting timezone')
             self.settings[0].timezone = new_timezone
             db.session.commit()
         else:
@@ -485,7 +484,6 @@ class User(UserMixin, db.Model):
             if music_type == 'track':
                 u_loved = LovedMusic(user_id=self.id, track_id=music_id, is_loved=True, first_time_loved=datetime.now())
             elif music_type == 'album':
-                print('here')
                 u_loved = LovedMusic(user_id=self.id, album_id=music_id, is_loved=True, first_time_loved=datetime.now())
             else:
                 u_loved = LovedMusic(user_id=self.id, artist_id=music_id, is_loved=True, first_time_loved=datetime.now())

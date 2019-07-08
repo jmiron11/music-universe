@@ -178,7 +178,6 @@ def user_top_artists(username):
 
 @app.route('/user/<username>/listen_stats/')
 def user_total_stats(username):
-    console.log(username)
     user = User.query.filter_by(username=username).first_or_404()
     listen_stat = {}
     listen_stat['total'] = user.get_total_listens()
@@ -305,7 +304,6 @@ def spotify_connected():
 @app.route('/query/user/is_following/<username>')
 @login_required
 def query_is_following(username): 
-    print(current_user.is_following(username))
     return jsonify(current_user.is_following(username))
 
 @app.route('/test/')
