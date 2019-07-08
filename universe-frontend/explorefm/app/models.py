@@ -80,12 +80,26 @@ class User(UserMixin, db.Model):
 
         formatted_listens = []
         for l in recent_listens:
+            is_loved = db.session.query(
+                LovedMusic.is_loved
+            ).filter(and_(
+                LovedMusic.user_id == self.id,
+                LovedMusic.track_id == l.track.id
+            )).first()
+
+            if is_loved == None:
+                is_loved = False
+            else:
+                is_loved = bool(is_loved[0])
+
             dt = l.time + timedelta
             formatted_listens.append({
                 'time': dt.strftime("%-d %b %-I:%M %p"), # TODO(justinmiron): Timezone conversion from UTC
+                'track_id': l.track.id,
                 'track': l.track.name,
                 'artist': l.track.artist.name,
-                'img_id': str(l.track.album.id)
+                'img_id': str(l.track.album.id),
+                'is_loved': is_loved
             })
 
         return formatted_listens

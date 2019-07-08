@@ -187,6 +187,12 @@ def user_total_stats(username):
     listen_stat['artists'] = user.get_unique_artists()
     return jsonify(listen_stat) 
 
+@app.route('/user/<username>/recent_listens/')
+def user_recent_listens(username):
+    count = int(request.args.get('count', default=10))
+    user = User.query.filter_by(username=username).first_or_404()
+    return jsonify(user.get_recent_listens(count))
+
 # User data update endpoints
 @app.route('/update/highlight/')
 @login_required

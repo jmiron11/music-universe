@@ -354,9 +354,9 @@ function (_React$Component2) {
           }, React.createElement("img", {
             className: "listen-entry-art",
             src: img_path
-          }), React.createElement(LoveButton, love_button_data), React.createElement("div", {
+          }), React.createElement("div", {
             className: "listen-entry-track"
-          }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['track'])), React.createElement("div", {
+          }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['track'])), React.createElement(LoveButton, love_button_data), React.createElement("div", {
             className: "listen-entry-time"
           }, React.createElement("h6", null, l[i]['count'])))));
         }
@@ -662,49 +662,127 @@ function (_React$Component4) {
   return TopArtists;
 }(React.Component);
 
-var Bio =
+var RecentListens =
 /*#__PURE__*/
 function (_React$Component5) {
-  _inherits(Bio, _React$Component5);
+  _inherits(RecentListens, _React$Component5);
+
+  function RecentListens(props) {
+    var _this5;
+
+    _classCallCheck(this, RecentListens);
+
+    _this5 = _possibleConstructorReturn(this, _getPrototypeOf(RecentListens).call(this, props));
+    _this5.state = {
+      top: []
+    };
+    return _this5;
+  }
+
+  _createClass(RecentListens, [{
+    key: "updateRecentListenData",
+    value: function updateRecentListenData() {
+      var newTop = [];
+      var self = this;
+      var request = '/user/' + user + '/recent_listens?count=10';
+      axios.get(request).then(function (response) {
+        l = response['data'];
+
+        for (var i = 0; i < l.length; ++i) {
+          var k = "listen-" + i.toString();
+          var className;
+
+          if (i % 2 == 0) {
+            className = "listen-entry";
+          } else {
+            className = "listen-entry-shaded";
+          }
+
+          var love_button_data = {
+            track_id: l[i]['track_id'],
+            is_current_user: current_user == user,
+            is_loved: l[i]['is_loved']
+          };
+          var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
+          newTop.push(React.createElement("div", {
+            key: k
+          }, React.createElement("div", {
+            className: className
+          }, React.createElement("img", {
+            className: "listen-entry-art",
+            src: img_path
+          }), React.createElement("div", {
+            className: "listen-entry-track"
+          }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['track'])), React.createElement(LoveButton, love_button_data), React.createElement("div", {
+            className: "listen-entry-time"
+          }, React.createElement("h6", null, l[i]['time'])))));
+        }
+
+        self.setState({
+          top: newTop
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updateRecentListenData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement("div", {
+        className: "top-track"
+      }, this.state.top);
+    }
+  }]);
+
+  return RecentListens;
+}(React.Component);
+
+var Bio =
+/*#__PURE__*/
+function (_React$Component6) {
+  _inherits(Bio, _React$Component6);
 
   function Bio(props) {
-    var _this5;
+    var _this6;
 
     _classCallCheck(this, Bio);
 
-    _this5 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
+    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
 
-    _this5.activeEditMode = function (event) {
-      _this5.state.inEditMode = true;
+    _this6.activeEditMode = function (event) {
+      _this6.state.inEditMode = true;
 
-      _this5.setState(_this5.state);
+      _this6.setState(_this6.state);
     };
 
-    _this5.disableEditModeClearBio = function (event) {
-      _this5.state.inEditMode = false;
+    _this6.disableEditModeClearBio = function (event) {
+      _this6.state.inEditMode = false;
       document.getElementById("bio-edit-form").value = "";
 
-      _this5.setState(_this5.state);
+      _this6.setState(_this6.state);
     };
 
-    _this5.disableEditModeSaveBio = function (event) {
+    _this6.disableEditModeSaveBio = function (event) {
       var new_bio = document.getElementById("bio-edit-form").value;
-      _this5.state.inEditMode = false;
-      _this5.state.bio = new_bio;
+      _this6.state.inEditMode = false;
+      _this6.state.bio = new_bio;
 
-      _this5.setState(_this5.state);
+      _this6.setState(_this6.state);
 
-      var self = _assertThisInitialized(_this5);
+      var self = _assertThisInitialized(_this6);
 
       var request = '/update/bio/?bio=' + new_bio;
       axios.get(request);
     };
 
-    _this5.state = {
+    _this6.state = {
       inEditMode: false,
       bio: "..."
     };
-    return _this5;
+    return _this6;
   }
 
   _createClass(Bio, [{
@@ -787,49 +865,49 @@ function (_React$Component5) {
 
 var Highlight =
 /*#__PURE__*/
-function (_React$Component6) {
-  _inherits(Highlight, _React$Component6);
+function (_React$Component7) {
+  _inherits(Highlight, _React$Component7);
 
   function Highlight(props) {
-    var _this6;
+    var _this7;
 
     _classCallCheck(this, Highlight);
 
-    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
+    _this7 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
 
-    _this6.activeEditMode = function (event) {
-      _this6.state.addNewHighlightMode = true;
+    _this7.activeEditMode = function (event) {
+      _this7.state.addNewHighlightMode = true;
 
-      _this6.setState(_this6.state);
+      _this7.setState(_this7.state);
     };
 
-    _this6.disableEditMode = function (event) {
-      _this6.state.addNewHighlightMode = false;
+    _this7.disableEditMode = function (event) {
+      _this7.state.addNewHighlightMode = false;
 
-      _this6.setState(_this6.state);
+      _this7.setState(_this7.state);
     };
 
-    _this6.editHighlightEntry = function (event) {
+    _this7.editHighlightEntry = function (event) {
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      _this6.state.editIndex = highlight_idx;
+      _this7.state.editIndex = highlight_idx;
 
-      _this6.setState(_this6.state);
+      _this7.setState(_this7.state);
     };
 
-    _this6.disableEditHighlight = function (event) {
-      _this6.state.editIndex = -1;
+    _this7.disableEditHighlight = function (event) {
+      _this7.state.editIndex = -1;
 
-      _this6.setState(_this6.state);
+      _this7.setState(_this7.state);
     };
 
-    _this6.deleteEditHighlight = function (event) {
+    _this7.deleteEditHighlight = function (event) {
       var artist = document.getElementById("exist-highlight-edit-artist").value;
       var album = document.getElementById("exist-highlight-edit-album").value;
       var track = document.getElementById("exist-highlight-edit-track").value;
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this6.state.highlights[highlight_idx];
+      var old_highlight = _this7.state.highlights[highlight_idx];
       var old_track, old_album, old_artist;
 
       if ('track' in old_highlight) {
@@ -850,7 +928,7 @@ function (_React$Component6) {
         old_artist = "";
       }
 
-      var self = _assertThisInitialized(_this6);
+      var self = _assertThisInitialized(_this7);
 
       var request = '/update/highlight?' + old_artist + old_album + old_track;
       axios.get(request).then(function (response) {
@@ -875,13 +953,13 @@ function (_React$Component6) {
       });
     };
 
-    _this6.saveEditHighlight = function (event) {
+    _this7.saveEditHighlight = function (event) {
       var artist = document.getElementById("exist-highlight-edit-artist").value;
       var album = document.getElementById("exist-highlight-edit-album").value;
       var track = document.getElementById("exist-highlight-edit-track").value;
       var id = event.currentTarget.id;
       var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this6.state.highlights[highlight_idx];
+      var old_highlight = _this7.state.highlights[highlight_idx];
 
       if (artist != "") {
         artist = "artist=" + artist;
@@ -919,7 +997,7 @@ function (_React$Component6) {
         old_artist = "";
       }
 
-      var self = _assertThisInitialized(_this6);
+      var self = _assertThisInitialized(_this7);
 
       var request = '/update/highlight?' + artist + album + track + old_artist + old_album + old_track;
       axios.get(request).then(function (response) {
@@ -944,7 +1022,7 @@ function (_React$Component6) {
       });
     };
 
-    _this6.saveHighlight = function (event) {
+    _this7.saveHighlight = function (event) {
       var artist = document.getElementById("highlight-edit-artist").value;
       var album = document.getElementById("highlight-edit-album").value;
       var track = document.getElementById("highlight-edit-track").value;
@@ -965,7 +1043,7 @@ function (_React$Component6) {
         track = "";
       }
 
-      var self = _assertThisInitialized(_this6);
+      var self = _assertThisInitialized(_this7);
 
       var request = '/update/highlight?' + artist + album + track;
       axios.get(request).then(function (response) {
@@ -990,12 +1068,12 @@ function (_React$Component6) {
       });
     };
 
-    _this6.state = {
+    _this7.state = {
       addNewHighlightMode: false,
       highlights: [],
       editIndex: -1
     };
-    return _this6;
+    return _this7;
   }
 
   _createClass(Highlight, [{
@@ -1188,18 +1266,18 @@ function (_React$Component6) {
 
 var TimezoneForm =
 /*#__PURE__*/
-function (_React$Component7) {
-  _inherits(TimezoneForm, _React$Component7);
+function (_React$Component8) {
+  _inherits(TimezoneForm, _React$Component8);
 
   function TimezoneForm(props) {
-    var _this7;
+    var _this8;
 
     _classCallCheck(this, TimezoneForm);
 
-    _this7 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
+    _this8 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
 
-    _this7.updateTimezone = function (event) {
-      _this7.setState({
+    _this8.updateTimezone = function (event) {
+      _this8.setState({
         timezone: event.target.value
       });
 
@@ -1207,10 +1285,10 @@ function (_React$Component7) {
       axios.post(request);
     };
 
-    _this7.state = {
+    _this8.state = {
       timezone: "America/Chicago"
     };
-    return _this7;
+    return _this8;
   }
 
   _createClass(TimezoneForm, [{
@@ -2088,30 +2166,30 @@ function (_React$Component7) {
 
 var FollowButton =
 /*#__PURE__*/
-function (_React$Component8) {
-  _inherits(FollowButton, _React$Component8);
+function (_React$Component9) {
+  _inherits(FollowButton, _React$Component9);
 
   function FollowButton(props) {
-    var _this8;
+    var _this9;
 
     _classCallCheck(this, FollowButton);
 
-    _this8 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
+    _this9 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
 
-    _this8.buttonClicked = function (event) {
-      var self = _assertThisInitialized(_this8);
+    _this9.buttonClicked = function (event) {
+      var self = _assertThisInitialized(_this9);
 
-      var request = '/update/is_following/' + user + '/' + (!_this8.state.isFollowing).toString();
+      var request = '/update/is_following/' + user + '/' + (!_this9.state.isFollowing).toString();
       axios.get(request).then(function (response) {
         self.state.isFollowing = response['data'];
         self.setState(self.state);
       });
     };
 
-    _this8.state = {
+    _this9.state = {
       isFollowing: false
     };
-    return _this8;
+    return _this9;
   }
 
   _createClass(FollowButton, [{
@@ -2177,6 +2255,12 @@ domContainer = document.getElementById("top-artists");
 
 if (domContainer != null) {
   ReactDOM.render(e(TopArtists), domContainer);
+}
+
+domContainer = document.getElementById("recent-listens");
+
+if (domContainer != null) {
+  ReactDOM.render(e(RecentListens), domContainer);
 }
 
 domContainer = document.getElementById("timezone-form");
