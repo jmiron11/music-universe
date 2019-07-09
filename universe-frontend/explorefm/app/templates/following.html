@@ -4,9 +4,23 @@
 
 <div class="follow-user-group">
 	{% for u in user.get_following() %}
-	<div class="follow-user" onclick="location.href='/user/{{ u['username'] }}'">
+	<div class="follow-user" data-toggle="modal" data-target="#userProfileModal">
 		<img class="follow-img" src="{{ u['img_path'] }}"/>
 		<h1>{{ u['username'] }}</h1>
+	</div>
+	<div id="userProfileModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <script type="text/javascript">
+	        var profile_modal_user = "{{ user.username }}";
+	    </script> <!-- Initial data passed to react app -->
+	    <div class="modal-content">
+	    	<div class="modal-body">
+	    		<div id="profile-snapshot"></div>
+	    	</div>
+	    </div>
+	  </div>
 	</div>
 	{% endfor %}
 </div>

@@ -192,6 +192,20 @@ def user_recent_listens(username):
     user = User.query.filter_by(username=username).first_or_404()
     return jsonify(user.get_recent_listens(count))
 
+@app.route('/user/<username>/profile_snapshot/')
+def user_profile_snapshot(username):
+    profile_snapshot = {}
+    curr_t = time.time()
+    prev_t = curr_t - 60*60*24*30
+    user = User.query.filter_by(username=username).first_or_404()   
+    profile_snapshot['top_artist'] = user.get_top_artists(prev_t, curr_t, 1)
+    profile_snapshot['top_album'] = user.get_top_albums(prev_t, curr_t, 1)
+    profile_snapshot['top_track'] = user.get_tracks(prev_t, curr_t, 1)
+    profile_snapshot['recent_tracks'] = user.get_recent_listens(5)
+    profile_snapshot['img_id'] = user.id
+
+    return jsonify(profile_snapshot)
+
 # User data update endpoints
 @app.route('/update/highlight/')
 @login_required

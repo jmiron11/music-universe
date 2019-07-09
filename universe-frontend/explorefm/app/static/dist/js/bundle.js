@@ -90,9 +90,13 @@
 /*!***********************!*\
   !*** ./js/profile.js ***!
   \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -113,11 +117,13 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 __webpack_require__(/*! @babel/register */ "./node_modules/@babel/register/lib/index.js");
 
+
+
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 'use strict';
 
-var e = React.createElement;
+var e = react__WEBPACK_IMPORTED_MODULE_0__["createElement"];
 
 var LoveButton =
 /*#__PURE__*/
@@ -205,7 +211,7 @@ function (_React$Component) {
       if (this.state.is_current_user) {
         if (this.state.is_loved) {
           if (!this.state.is_hover) {
-            return React.createElement("i", {
+            return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
@@ -215,7 +221,7 @@ function (_React$Component) {
               }
             });
           } else {
-            return React.createElement("i", {
+            return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
@@ -227,7 +233,7 @@ function (_React$Component) {
           }
         } else {
           if (!this.state.is_hover) {
-            return React.createElement("i", {
+            return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
@@ -237,7 +243,7 @@ function (_React$Component) {
               }
             });
           } else {
-            return React.createElement("i", {
+            return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
               onMouseOver: this.onMouse,
               onMouseOut: this.offMouse,
               onClick: this.iconClicked,
@@ -250,7 +256,7 @@ function (_React$Component) {
         }
       } else {
         if (this.state.is_loved) {
-          return React.createElement("i", {
+          return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
             onMouseOver: this.onMouse,
             onMouseOut: this.offMouse,
             onClick: this.iconClicked,
@@ -260,14 +266,14 @@ function (_React$Component) {
             }
           });
         } else {
-          return React.createElement("div", null);
+          return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null);
         }
       }
     }
   }]);
 
   return LoveButton;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var TopTracks =
 /*#__PURE__*/
@@ -324,11 +330,11 @@ function (_React$Component2) {
         t_start = this.getTimeOffsetByT(t_end, 10 * 365 * 24 * 60 * 60);
       }
 
-      newTop = [];
+      var newTop = [];
       var self = this;
       var request = '/user/' + user + '/tracks?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
       axios.get(request).then(function (response) {
-        l = response['data'];
+        var l = response['data'];
 
         for (var i = 0; i < l.length; ++i) {
           var k = "track-" + i.toString();
@@ -347,18 +353,18 @@ function (_React$Component2) {
             is_loved: l[i]['is_loved']
           };
           var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
-          newTop.push(React.createElement("div", {
+          newTop.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             key: k
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: className
-          }, React.createElement("img", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
             className: "listen-entry-art",
             src: img_path
-          }), React.createElement("div", {
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "listen-entry-track"
-          }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['track'])), React.createElement(LoveButton, love_button_data), React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, l[i]['artist'], " - ", l[i]['track'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "listen-entry-time"
-          }, React.createElement("h6", null, l[i]['count'])))));
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, l[i]['count'])))));
         }
 
         self.setState({
@@ -375,30 +381,30 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "top-track"
-      }, React.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "profile-section-header-timespan"
-      }, React.createElement("h6", null, "Top Tracks"), React.createElement("select", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Top Tracks"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
         id: "ts-form",
         onChange: this.updateTimespan,
         value: this.state.timespan
-      }, React.createElement("option", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "day"
-      }, "Last day"), React.createElement("option", {
+      }, "Last day"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "week"
-      }, "Last week"), React.createElement("option", {
+      }, "Last week"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "month"
-      }, "Last month"), React.createElement("option", {
+      }, "Last month"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "year"
-      }, "Last year"), React.createElement("option", {
+      }, "Last year"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "all"
       }, "All time"))), this.state.top);
     }
   }]);
 
   return TopTracks;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var TopAlbums =
 /*#__PURE__*/
@@ -459,7 +465,7 @@ function (_React$Component3) {
       var self = this;
       var request = '/user/' + user + '/top_albums?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
       axios.get(request).then(function (response) {
-        l = response['data'];
+        var l = response['data'];
 
         for (var i = 0; i < l.length; ++i) {
           var k = "album-" + i.toString();
@@ -469,26 +475,26 @@ function (_React$Component3) {
             is_current_user: current_user == user,
             is_loved: l[i]['is_loved']
           };
-          newTop.push(React.createElement("div", {
+          newTop.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             key: k
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry"
-          }, React.createElement("img", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
             className: "album-entry-art",
             src: img_path
-          }), React.createElement("div", {
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-art-gradient"
-          }), React.createElement("div", {
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-layer-wrapper"
-          }, React.createElement(LoveButton, love_button_data), React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-text-group"
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-text"
-          }, React.createElement("h5", null, l[i]['album'])), React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, l[i]['album'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-text"
-          }, React.createElement("h6", null, l[i]['artist'])), React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, l[i]['artist'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-text"
-          }, React.createElement("h6", null, l[i]['count'], " listens")))))));
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, l[i]['count'], " listens")))))));
         }
 
         self.setState({
@@ -505,32 +511,32 @@ function (_React$Component3) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "top-album"
-      }, React.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "profile-section-header-timespan"
-      }, React.createElement("h6", null, "Top Albums"), React.createElement("select", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Top Albums"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
         id: "ts-form",
         onChange: this.updateTimespan,
         value: this.state.timespan
-      }, React.createElement("option", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "day"
-      }, "Last day"), React.createElement("option", {
+      }, "Last day"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "week"
-      }, "Last week"), React.createElement("option", {
+      }, "Last week"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "month"
-      }, "Last month"), React.createElement("option", {
+      }, "Last month"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "year"
-      }, "Last year"), React.createElement("option", {
+      }, "Last year"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "all"
-      }, "All time"))), React.createElement("div", {
+      }, "All time"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "top-album-wrapper"
       }, this.state.top_albums));
     }
   }]);
 
   return TopAlbums;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var TopArtists =
 /*#__PURE__*/
@@ -591,7 +597,7 @@ function (_React$Component4) {
       var self = this;
       var request = '/user/' + user + '/top_artists?t_start=' + t_start.toString() + '&t_end=' + t_end.toString();
       axios.get(request).then(function (response) {
-        l = response['data'];
+        var l = response['data'];
 
         for (var i = 0; i < l.length; ++i) {
           var k = "artist-" + i.toString();
@@ -601,24 +607,24 @@ function (_React$Component4) {
             is_current_user: current_user == user,
             is_loved: l[i]['is_loved']
           };
-          newTop.push(React.createElement("div", {
+          newTop.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             key: k
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry"
-          }, React.createElement("img", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
             className: "album-entry-art",
             src: img_path
-          }), React.createElement("div", {
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-art-gradient"
-          }), React.createElement("div", {
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-layer-wrapper"
-          }, React.createElement(LoveButton, love_button_data), React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-text-group"
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-text"
-          }, React.createElement("h5", null, l[i]['artist'])), React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, l[i]['artist'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "album-entry-text"
-          }, React.createElement("h6", null, l[i]['count'], " listens")))))));
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, l[i]['count'], " listens")))))));
         }
 
         self.setState({
@@ -635,32 +641,32 @@ function (_React$Component4) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "top-artist"
-      }, React.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "profile-section-header-timespan"
-      }, React.createElement("h6", null, "Top Artists"), React.createElement("select", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Top Artists"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
         id: "ts-form",
         onChange: this.updateTimespan,
         value: this.state.timespan
-      }, React.createElement("option", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "day"
-      }, "Last day"), React.createElement("option", {
+      }, "Last day"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "week"
-      }, "Last week"), React.createElement("option", {
+      }, "Last week"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "month"
-      }, "Last month"), React.createElement("option", {
+      }, "Last month"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "year"
-      }, "Last year"), React.createElement("option", {
+      }, "Last year"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "all"
-      }, "All time"))), React.createElement("div", {
+      }, "All time"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "top-album-wrapper"
       }, this.state.top_artists));
     }
   }]);
 
   return TopArtists;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var RecentListens =
 /*#__PURE__*/
@@ -686,7 +692,7 @@ function (_React$Component5) {
       var self = this;
       var request = '/user/' + user + '/recent_listens?count=10';
       axios.get(request).then(function (response) {
-        l = response['data'];
+        var l = response['data'];
 
         for (var i = 0; i < l.length; ++i) {
           var k = "listen-" + i.toString();
@@ -704,18 +710,18 @@ function (_React$Component5) {
             is_loved: l[i]['is_loved']
           };
           var img_path = album_art_endpoint + l[i]['img_id'] + '-small.jpg';
-          newTop.push(React.createElement("div", {
+          newTop.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             key: k
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: className
-          }, React.createElement("img", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
             className: "listen-entry-art",
             src: img_path
-          }), React.createElement("div", {
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "listen-entry-track"
-          }, React.createElement("h6", null, l[i]['artist'], " - ", l[i]['track'])), React.createElement(LoveButton, love_button_data), React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, l[i]['artist'], " - ", l[i]['track'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "listen-entry-time"
-          }, React.createElement("h6", null, l[i]['time'])))));
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, l[i]['time'])))));
         }
 
         self.setState({
@@ -731,14 +737,14 @@ function (_React$Component5) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "top-track"
       }, this.state.top);
     }
   }]);
 
   return RecentListens;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var Bio =
 /*#__PURE__*/
@@ -799,9 +805,9 @@ function (_React$Component6) {
     key: "renderNoBio",
     value: function renderNoBio(isCurrentUser) {
       if (isCurrentUser) {
-        return React.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "bio"
-        }, React.createElement("h6", null, "Add a bio to tell people about you and the music you love."), React.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Add a bio to tell people about you and the music you love."), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "bio-edit",
           onClick: this.activeEditMode
         }, "Add Bio"));
@@ -813,34 +819,34 @@ function (_React$Component6) {
     key: "renderBio",
     value: function renderBio(isCurrentUser) {
       if (isCurrentUser) {
-        return React.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "bio"
-        }, React.createElement("h6", null, this.state.bio), React.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, this.state.bio), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "bio-edit",
           onClick: this.activeEditMode
         }, "Edit Bio"));
       } else {
-        return React.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "bio"
-        }, React.createElement("h6", null, this.state.bio));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, this.state.bio));
       }
     }
   }, {
     key: "renderEditMode",
     value: function renderEditMode() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         "class": "bio-edit-area"
-      }, React.createElement("textarea", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
         id: "bio-edit-form",
         className: "bio-edit-form",
         type: "text",
         "max-length": "500"
-      }, this.state.bio), React.createElement("div", {
+      }, this.state.bio), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         "class": "bio-button-row"
-      }, React.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
         className: "bio-button",
         onClick: this.disableEditModeClearBio
-      }, "Cancel"), React.createElement("button", {
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
         className: "bio-button",
         onClick: this.disableEditModeSaveBio
       }, "Save")));
@@ -861,7 +867,7 @@ function (_React$Component6) {
   }]);
 
   return Bio;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var Highlight =
 /*#__PURE__*/
@@ -1089,9 +1095,9 @@ function (_React$Component7) {
   }, {
     key: "renderNoHighlights",
     value: function renderNoHighlights(isCurrentUser) {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "no-highlights"
-      }, React.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
         className: "no-highlight-edit",
         onClick: this.activeEditMode
       }, "It looks like you have no highlighted tracks... Click here to add your first highlighted track"));
@@ -1111,58 +1117,58 @@ function (_React$Component7) {
         var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg';
 
         if (i != this.state.editIndex) {
-          data.push(React.createElement("div", {
+          data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             key: k,
             id: k,
             className: "highlight-entry-area",
             onClick: this.editHighlightEntry
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "highlight-entry"
-          }, React.createElement("img", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
             className: "highlight-img",
             src: img_path
-          }), React.createElement("div", {
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "highlight-desc"
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "highlight-txt"
-          }, highlights[i]['artist'] && React.createElement("h6", null, React.createElement("b", null, "Artist:"), " ", highlights[i]['artist']), highlights[i]['album'] && React.createElement("h6", null, React.createElement("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['track'] && React.createElement("h6", null, React.createElement("b", null, "Track:"), " ", highlights[i]['track']))))));
+          }, highlights[i]['artist'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Artist:"), " ", highlights[i]['artist']), highlights[i]['album'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['track'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Track:"), " ", highlights[i]['track']))))));
         } else {
           var edit_idx = i;
           var key = "edit-highlight-" + edit_idx;
-          data.push(React.createElement("div", {
+          data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             key: key,
             className: "highlight-edit-entry"
-          }, React.createElement("div", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "highlight-edit-row"
-          }, React.createElement("h6", null, "Artist"), React.createElement("input", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
             id: "exist-highlight-edit-artist",
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
-          })), React.createElement("div", {
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "highlight-edit-row"
-          }, React.createElement("h6", null, "Album"), React.createElement("input", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
             id: "exist-highlight-edit-album",
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
-          })), React.createElement("div", {
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "highlight-edit-row"
-          }, React.createElement("h6", null, "Track"), React.createElement("input", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Track"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
             id: "exist-highlight-edit-track",
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
-          })), React.createElement("div", {
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "bio-button-row"
-          }, React.createElement("button", {
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
             id: key,
             className: "bio-button",
             onClick: this.deleteEditHighlight
-          }, "Delete"), React.createElement("button", {
+          }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
             className: "bio-button",
             onClick: this.disableEditHighlight
-          }, "Cancel"), React.createElement("button", {
+          }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
             id: key,
             className: "bio-button",
             onClick: this.saveEditHighlight
@@ -1171,10 +1177,10 @@ function (_React$Component7) {
       }
 
       if (highlights.length < 6) {
-        data.push(React.createElement("div", {
+        data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: "add-highlights",
           className: "highlight-edit-area"
-        }, React.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "bio-edit",
           onClick: this.activeEditMode
         }, "Add highlighted music")));
@@ -1195,50 +1201,50 @@ function (_React$Component7) {
       for (var i = 0; i < highlights.length; ++i) {
         var k = "highlight-" + i.toString();
         var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg';
-        data.push(React.createElement("div", {
+        data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: k,
           className: "highlight-entry"
-        }, React.createElement("img", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
           className: "highlight-img",
           src: img_path
-        }), React.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "highlight-desc"
-        }, React.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "highlight-txt"
-        }, highlights[i]['track'] && React.createElement("h6", null, React.createElement("b", null, "Track:"), " ", highlights[i]['track']), highlights[i]['album'] && React.createElement("h6", null, React.createElement("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['artist'] && React.createElement("h6", null, React.createElement("b", null, "Artist:"), " ", highlights[i]['artist'])))));
+        }, highlights[i]['track'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Track:"), " ", highlights[i]['track']), highlights[i]['album'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['artist'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Artist:"), " ", highlights[i]['artist'])))));
       }
 
       if (highlights.length < 6) {
-        data.push(React.createElement("div", {
+        data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: "highlight-edit",
           className: "highlight-edit-entry"
-        }, React.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "highlight-edit-row"
-        }, React.createElement("h6", null, "Artist"), React.createElement("input", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
           id: "highlight-edit-artist",
           className: "highlight-edit-form",
           type: "text",
           "max-length": "100"
-        })), React.createElement("div", {
+        })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "highlight-edit-row"
-        }, React.createElement("h6", null, "Album"), React.createElement("input", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
           id: "highlight-edit-album",
           className: "highlight-edit-form",
           type: "text",
           "max-length": "100"
-        })), React.createElement("div", {
+        })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "highlight-edit-row"
-        }, React.createElement("h6", null, "Track"), React.createElement("input", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Track"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
           id: "highlight-edit-track",
           className: "highlight-edit-form",
           type: "text",
           "max-length": "100"
-        })), React.createElement("div", {
+        })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "bio-button-row"
-        }, React.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "bio-button",
           onClick: this.disableEditMode
-        }, "Cancel"), React.createElement("button", {
+        }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "bio-button",
           onClick: this.saveHighlight
         }, "Save"))));
@@ -1262,7 +1268,7 @@ function (_React$Component7) {
   }]);
 
   return Highlight;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var TimezoneForm =
 /*#__PURE__*/
@@ -1301,868 +1307,868 @@ function (_React$Component8) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "timezone-form"
-      }, React.createElement("select", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
         id: "tz-form",
         onChange: this.updateTimezone,
         value: this.state.timezone
-      }, React.createElement("option", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Midway"
-      }, "(GMT-11) Pacific/Midway"), React.createElement("option", {
+      }, "(GMT-11) Pacific/Midway"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Niue"
-      }, "(GMT-11) Pacific/Niue"), React.createElement("option", {
+      }, "(GMT-11) Pacific/Niue"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Pago_Pago"
-      }, "(GMT-11) Pacific/Pago_Pago"), React.createElement("option", {
+      }, "(GMT-11) Pacific/Pago_Pago"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Honolulu"
-      }, "(GMT-10) Pacific/Honolulu"), React.createElement("option", {
+      }, "(GMT-10) Pacific/Honolulu"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Rarotonga"
-      }, "(GMT-10) Pacific/Rarotonga"), React.createElement("option", {
+      }, "(GMT-10) Pacific/Rarotonga"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Tahiti"
-      }, "(GMT-10) Pacific/Tahiti"), React.createElement("option", {
+      }, "(GMT-10) Pacific/Tahiti"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Marquesas"
-      }, "(GMT-09) Pacific/Marquesas"), React.createElement("option", {
+      }, "(GMT-09) Pacific/Marquesas"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Adak"
-      }, "(GMT-09) America/Adak"), React.createElement("option", {
+      }, "(GMT-09) America/Adak"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Gambier"
-      }, "(GMT-09) Pacific/Gambier"), React.createElement("option", {
+      }, "(GMT-09) Pacific/Gambier"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Anchorage"
-      }, "(GMT-08) America/Anchorage"), React.createElement("option", {
+      }, "(GMT-08) America/Anchorage"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Juneau"
-      }, "(GMT-08) America/Juneau"), React.createElement("option", {
+      }, "(GMT-08) America/Juneau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Metlakatla"
-      }, "(GMT-08) America/Metlakatla"), React.createElement("option", {
+      }, "(GMT-08) America/Metlakatla"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Nome"
-      }, "(GMT-08) America/Nome"), React.createElement("option", {
+      }, "(GMT-08) America/Nome"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Sitka"
-      }, "(GMT-08) America/Sitka"), React.createElement("option", {
+      }, "(GMT-08) America/Sitka"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Yakutat"
-      }, "(GMT-08) America/Yakutat"), React.createElement("option", {
+      }, "(GMT-08) America/Yakutat"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Pitcairn"
-      }, "(GMT-08) Pacific/Pitcairn"), React.createElement("option", {
+      }, "(GMT-08) Pacific/Pitcairn"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Creston"
-      }, "(GMT-07) America/Creston"), React.createElement("option", {
+      }, "(GMT-07) America/Creston"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Dawson"
-      }, "(GMT-07) America/Dawson"), React.createElement("option", {
+      }, "(GMT-07) America/Dawson"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Dawson_Creek"
-      }, "(GMT-07) America/Dawson_Creek"), React.createElement("option", {
+      }, "(GMT-07) America/Dawson_Creek"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Fort_Nelson"
-      }, "(GMT-07) America/Fort_Nelson"), React.createElement("option", {
+      }, "(GMT-07) America/Fort_Nelson"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Hermosillo"
-      }, "(GMT-07) America/Hermosillo"), React.createElement("option", {
+      }, "(GMT-07) America/Hermosillo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Los_Angeles"
-      }, "(GMT-07) America/Los_Angeles"), React.createElement("option", {
+      }, "(GMT-07) America/Los_Angeles"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Phoenix"
-      }, "(GMT-07) America/Phoenix"), React.createElement("option", {
+      }, "(GMT-07) America/Phoenix"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Tijuana"
-      }, "(GMT-07) America/Tijuana"), React.createElement("option", {
+      }, "(GMT-07) America/Tijuana"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Vancouver"
-      }, "(GMT-07) America/Vancouver"), React.createElement("option", {
+      }, "(GMT-07) America/Vancouver"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Whitehorse"
-      }, "(GMT-07) America/Whitehorse"), React.createElement("option", {
+      }, "(GMT-07) America/Whitehorse"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Belize"
-      }, "(GMT-06) America/Belize"), React.createElement("option", {
+      }, "(GMT-06) America/Belize"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Boise"
-      }, "(GMT-06) America/Boise"), React.createElement("option", {
+      }, "(GMT-06) America/Boise"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Cambridge_Bay"
-      }, "(GMT-06) America/Cambridge_Bay"), React.createElement("option", {
+      }, "(GMT-06) America/Cambridge_Bay"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Chihuahua"
-      }, "(GMT-06) America/Chihuahua"), React.createElement("option", {
+      }, "(GMT-06) America/Chihuahua"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Costa_Rica"
-      }, "(GMT-06) America/Costa_Rica"), React.createElement("option", {
+      }, "(GMT-06) America/Costa_Rica"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Denver"
-      }, "(GMT-06) America/Denver"), React.createElement("option", {
+      }, "(GMT-06) America/Denver"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Edmonton"
-      }, "(GMT-06) America/Edmonton"), React.createElement("option", {
+      }, "(GMT-06) America/Edmonton"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/El_Salvador"
-      }, "(GMT-06) America/El_Salvador"), React.createElement("option", {
+      }, "(GMT-06) America/El_Salvador"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Guatemala"
-      }, "(GMT-06) America/Guatemala"), React.createElement("option", {
+      }, "(GMT-06) America/Guatemala"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Inuvik"
-      }, "(GMT-06) America/Inuvik"), React.createElement("option", {
+      }, "(GMT-06) America/Inuvik"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Managua"
-      }, "(GMT-06) America/Managua"), React.createElement("option", {
+      }, "(GMT-06) America/Managua"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Mazatlan"
-      }, "(GMT-06) America/Mazatlan"), React.createElement("option", {
+      }, "(GMT-06) America/Mazatlan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Ojinaga"
-      }, "(GMT-06) America/Ojinaga"), React.createElement("option", {
+      }, "(GMT-06) America/Ojinaga"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Regina"
-      }, "(GMT-06) America/Regina"), React.createElement("option", {
+      }, "(GMT-06) America/Regina"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Swift_Current"
-      }, "(GMT-06) America/Swift_Current"), React.createElement("option", {
+      }, "(GMT-06) America/Swift_Current"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Tegucigalpa"
-      }, "(GMT-06) America/Tegucigalpa"), React.createElement("option", {
+      }, "(GMT-06) America/Tegucigalpa"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Yellowknife"
-      }, "(GMT-06) America/Yellowknife"), React.createElement("option", {
+      }, "(GMT-06) America/Yellowknife"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Easter"
-      }, "(GMT-06) Pacific/Easter"), React.createElement("option", {
+      }, "(GMT-06) Pacific/Easter"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Galapagos"
-      }, "(GMT-06) Pacific/Galapagos"), React.createElement("option", {
+      }, "(GMT-06) Pacific/Galapagos"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Atikokan"
-      }, "(GMT-05) America/Atikokan"), React.createElement("option", {
+      }, "(GMT-05) America/Atikokan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Bahia_Banderas"
-      }, "(GMT-05) America/Bahia_Banderas"), React.createElement("option", {
+      }, "(GMT-05) America/Bahia_Banderas"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Bogota"
-      }, "(GMT-05) America/Bogota"), React.createElement("option", {
+      }, "(GMT-05) America/Bogota"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Cancun"
-      }, "(GMT-05) America/Cancun"), React.createElement("option", {
+      }, "(GMT-05) America/Cancun"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Cayman"
-      }, "(GMT-05) America/Cayman"), React.createElement("option", {
+      }, "(GMT-05) America/Cayman"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Chicago"
-      }, "(GMT-05) America/Chicago"), React.createElement("option", {
+      }, "(GMT-05) America/Chicago"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Eirunepe"
-      }, "(GMT-05) America/Eirunepe"), React.createElement("option", {
+      }, "(GMT-05) America/Eirunepe"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Guayaquil"
-      }, "(GMT-05) America/Guayaquil"), React.createElement("option", {
+      }, "(GMT-05) America/Guayaquil"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Knox"
-      }, "(GMT-05) America/Indiana/Knox"), React.createElement("option", {
+      }, "(GMT-05) America/Indiana/Knox"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Tell_City"
-      }, "(GMT-05) America/Indiana/Tell_City"), React.createElement("option", {
+      }, "(GMT-05) America/Indiana/Tell_City"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Jamaica"
-      }, "(GMT-05) America/Jamaica"), React.createElement("option", {
+      }, "(GMT-05) America/Jamaica"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Lima"
-      }, "(GMT-05) America/Lima"), React.createElement("option", {
+      }, "(GMT-05) America/Lima"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Matamoros"
-      }, "(GMT-05) America/Matamoros"), React.createElement("option", {
+      }, "(GMT-05) America/Matamoros"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Menominee"
-      }, "(GMT-05) America/Menominee"), React.createElement("option", {
+      }, "(GMT-05) America/Menominee"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Merida"
-      }, "(GMT-05) America/Merida"), React.createElement("option", {
+      }, "(GMT-05) America/Merida"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Mexico_City"
-      }, "(GMT-05) America/Mexico_City"), React.createElement("option", {
+      }, "(GMT-05) America/Mexico_City"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Monterrey"
-      }, "(GMT-05) America/Monterrey"), React.createElement("option", {
+      }, "(GMT-05) America/Monterrey"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/North_Dakota/Beulah"
-      }, "(GMT-05) America/North_Dakota/Beulah"), React.createElement("option", {
+      }, "(GMT-05) America/North_Dakota/Beulah"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/North_Dakota/Center"
-      }, "(GMT-05) America/North_Dakota/Center"), React.createElement("option", {
+      }, "(GMT-05) America/North_Dakota/Center"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/North_Dakota/New_Salem"
-      }, "(GMT-05) America/North_Dakota/New_Salem"), React.createElement("option", {
+      }, "(GMT-05) America/North_Dakota/New_Salem"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Panama"
-      }, "(GMT-05) America/Panama"), React.createElement("option", {
+      }, "(GMT-05) America/Panama"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Rainy_River"
-      }, "(GMT-05) America/Rainy_River"), React.createElement("option", {
+      }, "(GMT-05) America/Rainy_River"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Rankin_Inlet"
-      }, "(GMT-05) America/Rankin_Inlet"), React.createElement("option", {
+      }, "(GMT-05) America/Rankin_Inlet"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Resolute"
-      }, "(GMT-05) America/Resolute"), React.createElement("option", {
+      }, "(GMT-05) America/Resolute"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Rio_Branco"
-      }, "(GMT-05) America/Rio_Branco"), React.createElement("option", {
+      }, "(GMT-05) America/Rio_Branco"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Winnipeg"
-      }, "(GMT-05) America/Winnipeg"), React.createElement("option", {
+      }, "(GMT-05) America/Winnipeg"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Anguilla"
-      }, "(GMT-04) America/Anguilla"), React.createElement("option", {
+      }, "(GMT-04) America/Anguilla"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Antigua"
-      }, "(GMT-04) America/Antigua"), React.createElement("option", {
+      }, "(GMT-04) America/Antigua"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Aruba"
-      }, "(GMT-04) America/Aruba"), React.createElement("option", {
+      }, "(GMT-04) America/Aruba"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Asuncion"
-      }, "(GMT-04) America/Asuncion"), React.createElement("option", {
+      }, "(GMT-04) America/Asuncion"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Barbados"
-      }, "(GMT-04) America/Barbados"), React.createElement("option", {
+      }, "(GMT-04) America/Barbados"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Blanc-Sablon"
-      }, "(GMT-04) America/Blanc-Sablon"), React.createElement("option", {
+      }, "(GMT-04) America/Blanc-Sablon"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Boa_Vista"
-      }, "(GMT-04) America/Boa_Vista"), React.createElement("option", {
+      }, "(GMT-04) America/Boa_Vista"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Campo_Grande"
-      }, "(GMT-04) America/Campo_Grande"), React.createElement("option", {
+      }, "(GMT-04) America/Campo_Grande"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Caracas"
-      }, "(GMT-04) America/Caracas"), React.createElement("option", {
+      }, "(GMT-04) America/Caracas"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Cuiaba"
-      }, "(GMT-04) America/Cuiaba"), React.createElement("option", {
+      }, "(GMT-04) America/Cuiaba"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Curacao"
-      }, "(GMT-04) America/Curacao"), React.createElement("option", {
+      }, "(GMT-04) America/Curacao"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Detroit"
-      }, "(GMT-04) America/Detroit"), React.createElement("option", {
+      }, "(GMT-04) America/Detroit"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Dominica"
-      }, "(GMT-04) America/Dominica"), React.createElement("option", {
+      }, "(GMT-04) America/Dominica"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Grand_Turk"
-      }, "(GMT-04) America/Grand_Turk"), React.createElement("option", {
+      }, "(GMT-04) America/Grand_Turk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Grenada"
-      }, "(GMT-04) America/Grenada"), React.createElement("option", {
+      }, "(GMT-04) America/Grenada"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Guadeloupe"
-      }, "(GMT-04) America/Guadeloupe"), React.createElement("option", {
+      }, "(GMT-04) America/Guadeloupe"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Guyana"
-      }, "(GMT-04) America/Guyana"), React.createElement("option", {
+      }, "(GMT-04) America/Guyana"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Havana"
-      }, "(GMT-04) America/Havana"), React.createElement("option", {
+      }, "(GMT-04) America/Havana"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Indianapolis"
-      }, "(GMT-04) America/Indiana/Indianapolis"), React.createElement("option", {
+      }, "(GMT-04) America/Indiana/Indianapolis"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Marengo"
-      }, "(GMT-04) America/Indiana/Marengo"), React.createElement("option", {
+      }, "(GMT-04) America/Indiana/Marengo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Petersburg"
-      }, "(GMT-04) America/Indiana/Petersburg"), React.createElement("option", {
+      }, "(GMT-04) America/Indiana/Petersburg"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Vevay"
-      }, "(GMT-04) America/Indiana/Vevay"), React.createElement("option", {
+      }, "(GMT-04) America/Indiana/Vevay"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Vincennes"
-      }, "(GMT-04) America/Indiana/Vincennes"), React.createElement("option", {
+      }, "(GMT-04) America/Indiana/Vincennes"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Indiana/Winamac"
-      }, "(GMT-04) America/Indiana/Winamac"), React.createElement("option", {
+      }, "(GMT-04) America/Indiana/Winamac"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Iqaluit"
-      }, "(GMT-04) America/Iqaluit"), React.createElement("option", {
+      }, "(GMT-04) America/Iqaluit"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Kentucky/Louisville"
-      }, "(GMT-04) America/Kentucky/Louisville"), React.createElement("option", {
+      }, "(GMT-04) America/Kentucky/Louisville"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Kentucky/Monticello"
-      }, "(GMT-04) America/Kentucky/Monticello"), React.createElement("option", {
+      }, "(GMT-04) America/Kentucky/Monticello"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Kralendijk"
-      }, "(GMT-04) America/Kralendijk"), React.createElement("option", {
+      }, "(GMT-04) America/Kralendijk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/La_Paz"
-      }, "(GMT-04) America/La_Paz"), React.createElement("option", {
+      }, "(GMT-04) America/La_Paz"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Lower_Princes"
-      }, "(GMT-04) America/Lower_Princes"), React.createElement("option", {
+      }, "(GMT-04) America/Lower_Princes"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Manaus"
-      }, "(GMT-04) America/Manaus"), React.createElement("option", {
+      }, "(GMT-04) America/Manaus"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Marigot"
-      }, "(GMT-04) America/Marigot"), React.createElement("option", {
+      }, "(GMT-04) America/Marigot"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Martinique"
-      }, "(GMT-04) America/Martinique"), React.createElement("option", {
+      }, "(GMT-04) America/Martinique"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Montserrat"
-      }, "(GMT-04) America/Montserrat"), React.createElement("option", {
+      }, "(GMT-04) America/Montserrat"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Nassau"
-      }, "(GMT-04) America/Nassau"), React.createElement("option", {
+      }, "(GMT-04) America/Nassau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/New_York"
-      }, "(GMT-04) America/New_York"), React.createElement("option", {
+      }, "(GMT-04) America/New_York"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Nipigon"
-      }, "(GMT-04) America/Nipigon"), React.createElement("option", {
+      }, "(GMT-04) America/Nipigon"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Pangnirtung"
-      }, "(GMT-04) America/Pangnirtung"), React.createElement("option", {
+      }, "(GMT-04) America/Pangnirtung"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Port-au-Prince"
-      }, "(GMT-04) America/Port-au-Prince"), React.createElement("option", {
+      }, "(GMT-04) America/Port-au-Prince"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Port_of_Spain"
-      }, "(GMT-04) America/Port_of_Spain"), React.createElement("option", {
+      }, "(GMT-04) America/Port_of_Spain"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Porto_Velho"
-      }, "(GMT-04) America/Porto_Velho"), React.createElement("option", {
+      }, "(GMT-04) America/Porto_Velho"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Puerto_Rico"
-      }, "(GMT-04) America/Puerto_Rico"), React.createElement("option", {
+      }, "(GMT-04) America/Puerto_Rico"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Santiago"
-      }, "(GMT-04) America/Santiago"), React.createElement("option", {
+      }, "(GMT-04) America/Santiago"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Santo_Domingo"
-      }, "(GMT-04) America/Santo_Domingo"), React.createElement("option", {
+      }, "(GMT-04) America/Santo_Domingo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/St_Barthelemy"
-      }, "(GMT-04) America/St_Barthelemy"), React.createElement("option", {
+      }, "(GMT-04) America/St_Barthelemy"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/St_Kitts"
-      }, "(GMT-04) America/St_Kitts"), React.createElement("option", {
+      }, "(GMT-04) America/St_Kitts"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/St_Lucia"
-      }, "(GMT-04) America/St_Lucia"), React.createElement("option", {
+      }, "(GMT-04) America/St_Lucia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/St_Thomas"
-      }, "(GMT-04) America/St_Thomas"), React.createElement("option", {
+      }, "(GMT-04) America/St_Thomas"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/St_Vincent"
-      }, "(GMT-04) America/St_Vincent"), React.createElement("option", {
+      }, "(GMT-04) America/St_Vincent"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Thunder_Bay"
-      }, "(GMT-04) America/Thunder_Bay"), React.createElement("option", {
+      }, "(GMT-04) America/Thunder_Bay"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Toronto"
-      }, "(GMT-04) America/Toronto"), React.createElement("option", {
+      }, "(GMT-04) America/Toronto"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Tortola"
-      }, "(GMT-04) America/Tortola"), React.createElement("option", {
+      }, "(GMT-04) America/Tortola"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Araguaina"
-      }, "(GMT-03) America/Araguaina"), React.createElement("option", {
+      }, "(GMT-03) America/Araguaina"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Buenos_Aires"
-      }, "(GMT-03) America/Argentina/Buenos_Aires"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Buenos_Aires"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Catamarca"
-      }, "(GMT-03) America/Argentina/Catamarca"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Catamarca"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Cordoba"
-      }, "(GMT-03) America/Argentina/Cordoba"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Cordoba"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Jujuy"
-      }, "(GMT-03) America/Argentina/Jujuy"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Jujuy"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/La_Rioja"
-      }, "(GMT-03) America/Argentina/La_Rioja"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/La_Rioja"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Mendoza"
-      }, "(GMT-03) America/Argentina/Mendoza"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Mendoza"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Rio_Gallegos"
-      }, "(GMT-03) America/Argentina/Rio_Gallegos"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Rio_Gallegos"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Salta"
-      }, "(GMT-03) America/Argentina/Salta"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Salta"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/San_Juan"
-      }, "(GMT-03) America/Argentina/San_Juan"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/San_Juan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/San_Luis"
-      }, "(GMT-03) America/Argentina/San_Luis"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/San_Luis"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Tucuman"
-      }, "(GMT-03) America/Argentina/Tucuman"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Tucuman"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Argentina/Ushuaia"
-      }, "(GMT-03) America/Argentina/Ushuaia"), React.createElement("option", {
+      }, "(GMT-03) America/Argentina/Ushuaia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Bahia"
-      }, "(GMT-03) America/Bahia"), React.createElement("option", {
+      }, "(GMT-03) America/Bahia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Belem"
-      }, "(GMT-03) America/Belem"), React.createElement("option", {
+      }, "(GMT-03) America/Belem"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Cayenne"
-      }, "(GMT-03) America/Cayenne"), React.createElement("option", {
+      }, "(GMT-03) America/Cayenne"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Fortaleza"
-      }, "(GMT-03) America/Fortaleza"), React.createElement("option", {
+      }, "(GMT-03) America/Fortaleza"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Glace_Bay"
-      }, "(GMT-03) America/Glace_Bay"), React.createElement("option", {
+      }, "(GMT-03) America/Glace_Bay"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Goose_Bay"
-      }, "(GMT-03) America/Goose_Bay"), React.createElement("option", {
+      }, "(GMT-03) America/Goose_Bay"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Halifax"
-      }, "(GMT-03) America/Halifax"), React.createElement("option", {
+      }, "(GMT-03) America/Halifax"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Maceio"
-      }, "(GMT-03) America/Maceio"), React.createElement("option", {
+      }, "(GMT-03) America/Maceio"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Moncton"
-      }, "(GMT-03) America/Moncton"), React.createElement("option", {
+      }, "(GMT-03) America/Moncton"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Montevideo"
-      }, "(GMT-03) America/Montevideo"), React.createElement("option", {
+      }, "(GMT-03) America/Montevideo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Paramaribo"
-      }, "(GMT-03) America/Paramaribo"), React.createElement("option", {
+      }, "(GMT-03) America/Paramaribo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Punta_Arenas"
-      }, "(GMT-03) America/Punta_Arenas"), React.createElement("option", {
+      }, "(GMT-03) America/Punta_Arenas"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Recife"
-      }, "(GMT-03) America/Recife"), React.createElement("option", {
+      }, "(GMT-03) America/Recife"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Santarem"
-      }, "(GMT-03) America/Santarem"), React.createElement("option", {
+      }, "(GMT-03) America/Santarem"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Sao_Paulo"
-      }, "(GMT-03) America/Sao_Paulo"), React.createElement("option", {
+      }, "(GMT-03) America/Sao_Paulo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Thule"
-      }, "(GMT-03) America/Thule"), React.createElement("option", {
+      }, "(GMT-03) America/Thule"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Palmer"
-      }, "(GMT-03) Antarctica/Palmer"), React.createElement("option", {
+      }, "(GMT-03) Antarctica/Palmer"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Rothera"
-      }, "(GMT-03) Antarctica/Rothera"), React.createElement("option", {
+      }, "(GMT-03) Antarctica/Rothera"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Bermuda"
-      }, "(GMT-03) Atlantic/Bermuda"), React.createElement("option", {
+      }, "(GMT-03) Atlantic/Bermuda"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Stanley"
-      }, "(GMT-03) Atlantic/Stanley"), React.createElement("option", {
+      }, "(GMT-03) Atlantic/Stanley"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/St_Johns"
-      }, "(GMT-02) America/St_Johns"), React.createElement("option", {
+      }, "(GMT-02) America/St_Johns"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Godthab"
-      }, "(GMT-02) America/Godthab"), React.createElement("option", {
+      }, "(GMT-02) America/Godthab"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Miquelon"
-      }, "(GMT-02) America/Miquelon"), React.createElement("option", {
+      }, "(GMT-02) America/Miquelon"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Noronha"
-      }, "(GMT-02) America/Noronha"), React.createElement("option", {
+      }, "(GMT-02) America/Noronha"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/South_Georgia"
-      }, "(GMT-02) Atlantic/South_Georgia"), React.createElement("option", {
+      }, "(GMT-02) Atlantic/South_Georgia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Cape_Verde"
-      }, "(GMT-01) Atlantic/Cape_Verde"), React.createElement("option", {
+      }, "(GMT-01) Atlantic/Cape_Verde"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Abidjan"
-      }, "(GMT+00) Africa/Abidjan"), React.createElement("option", {
+      }, "(GMT+00) Africa/Abidjan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Accra"
-      }, "(GMT+00) Africa/Accra"), React.createElement("option", {
+      }, "(GMT+00) Africa/Accra"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Bamako"
-      }, "(GMT+00) Africa/Bamako"), React.createElement("option", {
+      }, "(GMT+00) Africa/Bamako"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Banjul"
-      }, "(GMT+00) Africa/Banjul"), React.createElement("option", {
+      }, "(GMT+00) Africa/Banjul"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Bissau"
-      }, "(GMT+00) Africa/Bissau"), React.createElement("option", {
+      }, "(GMT+00) Africa/Bissau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Conakry"
-      }, "(GMT+00) Africa/Conakry"), React.createElement("option", {
+      }, "(GMT+00) Africa/Conakry"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Dakar"
-      }, "(GMT+00) Africa/Dakar"), React.createElement("option", {
+      }, "(GMT+00) Africa/Dakar"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Freetown"
-      }, "(GMT+00) Africa/Freetown"), React.createElement("option", {
+      }, "(GMT+00) Africa/Freetown"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Lome"
-      }, "(GMT+00) Africa/Lome"), React.createElement("option", {
+      }, "(GMT+00) Africa/Lome"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Monrovia"
-      }, "(GMT+00) Africa/Monrovia"), React.createElement("option", {
+      }, "(GMT+00) Africa/Monrovia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Nouakchott"
-      }, "(GMT+00) Africa/Nouakchott"), React.createElement("option", {
+      }, "(GMT+00) Africa/Nouakchott"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Ouagadougou"
-      }, "(GMT+00) Africa/Ouagadougou"), React.createElement("option", {
+      }, "(GMT+00) Africa/Ouagadougou"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Sao_Tome"
-      }, "(GMT+00) Africa/Sao_Tome"), React.createElement("option", {
+      }, "(GMT+00) Africa/Sao_Tome"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Danmarkshavn"
-      }, "(GMT+00) America/Danmarkshavn"), React.createElement("option", {
+      }, "(GMT+00) America/Danmarkshavn"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "America/Scoresbysund"
-      }, "(GMT+00) America/Scoresbysund"), React.createElement("option", {
+      }, "(GMT+00) America/Scoresbysund"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Azores"
-      }, "(GMT+00) Atlantic/Azores"), React.createElement("option", {
+      }, "(GMT+00) Atlantic/Azores"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Reykjavik"
-      }, "(GMT+00) Atlantic/Reykjavik"), React.createElement("option", {
+      }, "(GMT+00) Atlantic/Reykjavik"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/St_Helena"
-      }, "(GMT+00) Atlantic/St_Helena"), React.createElement("option", {
+      }, "(GMT+00) Atlantic/St_Helena"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "UTC"
-      }, "(GMT+00) UTC"), React.createElement("option", {
+      }, "(GMT+00) UTC"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Algiers"
-      }, "(GMT+01) Africa/Algiers"), React.createElement("option", {
+      }, "(GMT+01) Africa/Algiers"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Bangui"
-      }, "(GMT+01) Africa/Bangui"), React.createElement("option", {
+      }, "(GMT+01) Africa/Bangui"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Brazzaville"
-      }, "(GMT+01) Africa/Brazzaville"), React.createElement("option", {
+      }, "(GMT+01) Africa/Brazzaville"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Casablanca"
-      }, "(GMT+01) Africa/Casablanca"), React.createElement("option", {
+      }, "(GMT+01) Africa/Casablanca"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Douala"
-      }, "(GMT+01) Africa/Douala"), React.createElement("option", {
+      }, "(GMT+01) Africa/Douala"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/El_Aaiun"
-      }, "(GMT+01) Africa/El_Aaiun"), React.createElement("option", {
+      }, "(GMT+01) Africa/El_Aaiun"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Kinshasa"
-      }, "(GMT+01) Africa/Kinshasa"), React.createElement("option", {
+      }, "(GMT+01) Africa/Kinshasa"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Lagos"
-      }, "(GMT+01) Africa/Lagos"), React.createElement("option", {
+      }, "(GMT+01) Africa/Lagos"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Libreville"
-      }, "(GMT+01) Africa/Libreville"), React.createElement("option", {
+      }, "(GMT+01) Africa/Libreville"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Luanda"
-      }, "(GMT+01) Africa/Luanda"), React.createElement("option", {
+      }, "(GMT+01) Africa/Luanda"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Malabo"
-      }, "(GMT+01) Africa/Malabo"), React.createElement("option", {
+      }, "(GMT+01) Africa/Malabo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Ndjamena"
-      }, "(GMT+01) Africa/Ndjamena"), React.createElement("option", {
+      }, "(GMT+01) Africa/Ndjamena"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Niamey"
-      }, "(GMT+01) Africa/Niamey"), React.createElement("option", {
+      }, "(GMT+01) Africa/Niamey"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Porto-Novo"
-      }, "(GMT+01) Africa/Porto-Novo"), React.createElement("option", {
+      }, "(GMT+01) Africa/Porto-Novo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Tunis"
-      }, "(GMT+01) Africa/Tunis"), React.createElement("option", {
+      }, "(GMT+01) Africa/Tunis"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Windhoek"
-      }, "(GMT+01) Africa/Windhoek"), React.createElement("option", {
+      }, "(GMT+01) Africa/Windhoek"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Canary"
-      }, "(GMT+01) Atlantic/Canary"), React.createElement("option", {
+      }, "(GMT+01) Atlantic/Canary"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Faroe"
-      }, "(GMT+01) Atlantic/Faroe"), React.createElement("option", {
+      }, "(GMT+01) Atlantic/Faroe"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Atlantic/Madeira"
-      }, "(GMT+01) Atlantic/Madeira"), React.createElement("option", {
+      }, "(GMT+01) Atlantic/Madeira"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Dublin"
-      }, "(GMT+01) Europe/Dublin"), React.createElement("option", {
+      }, "(GMT+01) Europe/Dublin"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Guernsey"
-      }, "(GMT+01) Europe/Guernsey"), React.createElement("option", {
+      }, "(GMT+01) Europe/Guernsey"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Isle_of_Man"
-      }, "(GMT+01) Europe/Isle_of_Man"), React.createElement("option", {
+      }, "(GMT+01) Europe/Isle_of_Man"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Jersey"
-      }, "(GMT+01) Europe/Jersey"), React.createElement("option", {
+      }, "(GMT+01) Europe/Jersey"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Lisbon"
-      }, "(GMT+01) Europe/Lisbon"), React.createElement("option", {
+      }, "(GMT+01) Europe/Lisbon"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/London"
-      }, "(GMT+01) Europe/London"), React.createElement("option", {
+      }, "(GMT+01) Europe/London"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Blantyre"
-      }, "(GMT+02) Africa/Blantyre"), React.createElement("option", {
+      }, "(GMT+02) Africa/Blantyre"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Bujumbura"
-      }, "(GMT+02) Africa/Bujumbura"), React.createElement("option", {
+      }, "(GMT+02) Africa/Bujumbura"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Cairo"
-      }, "(GMT+02) Africa/Cairo"), React.createElement("option", {
+      }, "(GMT+02) Africa/Cairo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Ceuta"
-      }, "(GMT+02) Africa/Ceuta"), React.createElement("option", {
+      }, "(GMT+02) Africa/Ceuta"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Gaborone"
-      }, "(GMT+02) Africa/Gaborone"), React.createElement("option", {
+      }, "(GMT+02) Africa/Gaborone"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Harare"
-      }, "(GMT+02) Africa/Harare"), React.createElement("option", {
+      }, "(GMT+02) Africa/Harare"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Johannesburg"
-      }, "(GMT+02) Africa/Johannesburg"), React.createElement("option", {
+      }, "(GMT+02) Africa/Johannesburg"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Kigali"
-      }, "(GMT+02) Africa/Kigali"), React.createElement("option", {
+      }, "(GMT+02) Africa/Kigali"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Lubumbashi"
-      }, "(GMT+02) Africa/Lubumbashi"), React.createElement("option", {
+      }, "(GMT+02) Africa/Lubumbashi"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Lusaka"
-      }, "(GMT+02) Africa/Lusaka"), React.createElement("option", {
+      }, "(GMT+02) Africa/Lusaka"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Maputo"
-      }, "(GMT+02) Africa/Maputo"), React.createElement("option", {
+      }, "(GMT+02) Africa/Maputo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Maseru"
-      }, "(GMT+02) Africa/Maseru"), React.createElement("option", {
+      }, "(GMT+02) Africa/Maseru"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Mbabane"
-      }, "(GMT+02) Africa/Mbabane"), React.createElement("option", {
+      }, "(GMT+02) Africa/Mbabane"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Tripoli"
-      }, "(GMT+02) Africa/Tripoli"), React.createElement("option", {
+      }, "(GMT+02) Africa/Tripoli"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Troll"
-      }, "(GMT+02) Antarctica/Troll"), React.createElement("option", {
+      }, "(GMT+02) Antarctica/Troll"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Arctic/Longyearbyen"
-      }, "(GMT+02) Arctic/Longyearbyen"), React.createElement("option", {
+      }, "(GMT+02) Arctic/Longyearbyen"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Amsterdam"
-      }, "(GMT+02) Europe/Amsterdam"), React.createElement("option", {
+      }, "(GMT+02) Europe/Amsterdam"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Andorra"
-      }, "(GMT+02) Europe/Andorra"), React.createElement("option", {
+      }, "(GMT+02) Europe/Andorra"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Belgrade"
-      }, "(GMT+02) Europe/Belgrade"), React.createElement("option", {
+      }, "(GMT+02) Europe/Belgrade"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Berlin"
-      }, "(GMT+02) Europe/Berlin"), React.createElement("option", {
+      }, "(GMT+02) Europe/Berlin"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Bratislava"
-      }, "(GMT+02) Europe/Bratislava"), React.createElement("option", {
+      }, "(GMT+02) Europe/Bratislava"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Brussels"
-      }, "(GMT+02) Europe/Brussels"), React.createElement("option", {
+      }, "(GMT+02) Europe/Brussels"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Budapest"
-      }, "(GMT+02) Europe/Budapest"), React.createElement("option", {
+      }, "(GMT+02) Europe/Budapest"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Busingen"
-      }, "(GMT+02) Europe/Busingen"), React.createElement("option", {
+      }, "(GMT+02) Europe/Busingen"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Copenhagen"
-      }, "(GMT+02) Europe/Copenhagen"), React.createElement("option", {
+      }, "(GMT+02) Europe/Copenhagen"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Gibraltar"
-      }, "(GMT+02) Europe/Gibraltar"), React.createElement("option", {
+      }, "(GMT+02) Europe/Gibraltar"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Kaliningrad"
-      }, "(GMT+02) Europe/Kaliningrad"), React.createElement("option", {
+      }, "(GMT+02) Europe/Kaliningrad"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Ljubljana"
-      }, "(GMT+02) Europe/Ljubljana"), React.createElement("option", {
+      }, "(GMT+02) Europe/Ljubljana"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Luxembourg"
-      }, "(GMT+02) Europe/Luxembourg"), React.createElement("option", {
+      }, "(GMT+02) Europe/Luxembourg"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Madrid"
-      }, "(GMT+02) Europe/Madrid"), React.createElement("option", {
+      }, "(GMT+02) Europe/Madrid"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Malta"
-      }, "(GMT+02) Europe/Malta"), React.createElement("option", {
+      }, "(GMT+02) Europe/Malta"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Monaco"
-      }, "(GMT+02) Europe/Monaco"), React.createElement("option", {
+      }, "(GMT+02) Europe/Monaco"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Oslo"
-      }, "(GMT+02) Europe/Oslo"), React.createElement("option", {
+      }, "(GMT+02) Europe/Oslo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Paris"
-      }, "(GMT+02) Europe/Paris"), React.createElement("option", {
+      }, "(GMT+02) Europe/Paris"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Podgorica"
-      }, "(GMT+02) Europe/Podgorica"), React.createElement("option", {
+      }, "(GMT+02) Europe/Podgorica"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Prague"
-      }, "(GMT+02) Europe/Prague"), React.createElement("option", {
+      }, "(GMT+02) Europe/Prague"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Rome"
-      }, "(GMT+02) Europe/Rome"), React.createElement("option", {
+      }, "(GMT+02) Europe/Rome"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/San_Marino"
-      }, "(GMT+02) Europe/San_Marino"), React.createElement("option", {
+      }, "(GMT+02) Europe/San_Marino"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Sarajevo"
-      }, "(GMT+02) Europe/Sarajevo"), React.createElement("option", {
+      }, "(GMT+02) Europe/Sarajevo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Skopje"
-      }, "(GMT+02) Europe/Skopje"), React.createElement("option", {
+      }, "(GMT+02) Europe/Skopje"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Stockholm"
-      }, "(GMT+02) Europe/Stockholm"), React.createElement("option", {
+      }, "(GMT+02) Europe/Stockholm"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Tirane"
-      }, "(GMT+02) Europe/Tirane"), React.createElement("option", {
+      }, "(GMT+02) Europe/Tirane"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Vaduz"
-      }, "(GMT+02) Europe/Vaduz"), React.createElement("option", {
+      }, "(GMT+02) Europe/Vaduz"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Vatican"
-      }, "(GMT+02) Europe/Vatican"), React.createElement("option", {
+      }, "(GMT+02) Europe/Vatican"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Vienna"
-      }, "(GMT+02) Europe/Vienna"), React.createElement("option", {
+      }, "(GMT+02) Europe/Vienna"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Warsaw"
-      }, "(GMT+02) Europe/Warsaw"), React.createElement("option", {
+      }, "(GMT+02) Europe/Warsaw"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Zagreb"
-      }, "(GMT+02) Europe/Zagreb"), React.createElement("option", {
+      }, "(GMT+02) Europe/Zagreb"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Zurich"
-      }, "(GMT+02) Europe/Zurich"), React.createElement("option", {
+      }, "(GMT+02) Europe/Zurich"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Addis_Ababa"
-      }, "(GMT+03) Africa/Addis_Ababa"), React.createElement("option", {
+      }, "(GMT+03) Africa/Addis_Ababa"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Asmara"
-      }, "(GMT+03) Africa/Asmara"), React.createElement("option", {
+      }, "(GMT+03) Africa/Asmara"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Dar_es_Salaam"
-      }, "(GMT+03) Africa/Dar_es_Salaam"), React.createElement("option", {
+      }, "(GMT+03) Africa/Dar_es_Salaam"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Djibouti"
-      }, "(GMT+03) Africa/Djibouti"), React.createElement("option", {
+      }, "(GMT+03) Africa/Djibouti"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Juba"
-      }, "(GMT+03) Africa/Juba"), React.createElement("option", {
+      }, "(GMT+03) Africa/Juba"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Kampala"
-      }, "(GMT+03) Africa/Kampala"), React.createElement("option", {
+      }, "(GMT+03) Africa/Kampala"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Khartoum"
-      }, "(GMT+03) Africa/Khartoum"), React.createElement("option", {
+      }, "(GMT+03) Africa/Khartoum"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Mogadishu"
-      }, "(GMT+03) Africa/Mogadishu"), React.createElement("option", {
+      }, "(GMT+03) Africa/Mogadishu"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Africa/Nairobi"
-      }, "(GMT+03) Africa/Nairobi"), React.createElement("option", {
+      }, "(GMT+03) Africa/Nairobi"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Syowa"
-      }, "(GMT+03) Antarctica/Syowa"), React.createElement("option", {
+      }, "(GMT+03) Antarctica/Syowa"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Aden"
-      }, "(GMT+03) Asia/Aden"), React.createElement("option", {
+      }, "(GMT+03) Asia/Aden"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Amman"
-      }, "(GMT+03) Asia/Amman"), React.createElement("option", {
+      }, "(GMT+03) Asia/Amman"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Baghdad"
-      }, "(GMT+03) Asia/Baghdad"), React.createElement("option", {
+      }, "(GMT+03) Asia/Baghdad"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Bahrain"
-      }, "(GMT+03) Asia/Bahrain"), React.createElement("option", {
+      }, "(GMT+03) Asia/Bahrain"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Beirut"
-      }, "(GMT+03) Asia/Beirut"), React.createElement("option", {
+      }, "(GMT+03) Asia/Beirut"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Damascus"
-      }, "(GMT+03) Asia/Damascus"), React.createElement("option", {
+      }, "(GMT+03) Asia/Damascus"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Famagusta"
-      }, "(GMT+03) Asia/Famagusta"), React.createElement("option", {
+      }, "(GMT+03) Asia/Famagusta"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Gaza"
-      }, "(GMT+03) Asia/Gaza"), React.createElement("option", {
+      }, "(GMT+03) Asia/Gaza"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Hebron"
-      }, "(GMT+03) Asia/Hebron"), React.createElement("option", {
+      }, "(GMT+03) Asia/Hebron"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Jerusalem"
-      }, "(GMT+03) Asia/Jerusalem"), React.createElement("option", {
+      }, "(GMT+03) Asia/Jerusalem"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Kuwait"
-      }, "(GMT+03) Asia/Kuwait"), React.createElement("option", {
+      }, "(GMT+03) Asia/Kuwait"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Nicosia"
-      }, "(GMT+03) Asia/Nicosia"), React.createElement("option", {
+      }, "(GMT+03) Asia/Nicosia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Qatar"
-      }, "(GMT+03) Asia/Qatar"), React.createElement("option", {
+      }, "(GMT+03) Asia/Qatar"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Riyadh"
-      }, "(GMT+03) Asia/Riyadh"), React.createElement("option", {
+      }, "(GMT+03) Asia/Riyadh"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Athens"
-      }, "(GMT+03) Europe/Athens"), React.createElement("option", {
+      }, "(GMT+03) Europe/Athens"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Bucharest"
-      }, "(GMT+03) Europe/Bucharest"), React.createElement("option", {
+      }, "(GMT+03) Europe/Bucharest"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Chisinau"
-      }, "(GMT+03) Europe/Chisinau"), React.createElement("option", {
+      }, "(GMT+03) Europe/Chisinau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Helsinki"
-      }, "(GMT+03) Europe/Helsinki"), React.createElement("option", {
+      }, "(GMT+03) Europe/Helsinki"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Istanbul"
-      }, "(GMT+03) Europe/Istanbul"), React.createElement("option", {
+      }, "(GMT+03) Europe/Istanbul"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Kiev"
-      }, "(GMT+03) Europe/Kiev"), React.createElement("option", {
+      }, "(GMT+03) Europe/Kiev"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Kirov"
-      }, "(GMT+03) Europe/Kirov"), React.createElement("option", {
+      }, "(GMT+03) Europe/Kirov"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Mariehamn"
-      }, "(GMT+03) Europe/Mariehamn"), React.createElement("option", {
+      }, "(GMT+03) Europe/Mariehamn"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Minsk"
-      }, "(GMT+03) Europe/Minsk"), React.createElement("option", {
+      }, "(GMT+03) Europe/Minsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Moscow"
-      }, "(GMT+03) Europe/Moscow"), React.createElement("option", {
+      }, "(GMT+03) Europe/Moscow"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Riga"
-      }, "(GMT+03) Europe/Riga"), React.createElement("option", {
+      }, "(GMT+03) Europe/Riga"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Simferopol"
-      }, "(GMT+03) Europe/Simferopol"), React.createElement("option", {
+      }, "(GMT+03) Europe/Simferopol"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Sofia"
-      }, "(GMT+03) Europe/Sofia"), React.createElement("option", {
+      }, "(GMT+03) Europe/Sofia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Tallinn"
-      }, "(GMT+03) Europe/Tallinn"), React.createElement("option", {
+      }, "(GMT+03) Europe/Tallinn"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Uzhgorod"
-      }, "(GMT+03) Europe/Uzhgorod"), React.createElement("option", {
+      }, "(GMT+03) Europe/Uzhgorod"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Vilnius"
-      }, "(GMT+03) Europe/Vilnius"), React.createElement("option", {
+      }, "(GMT+03) Europe/Vilnius"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Volgograd"
-      }, "(GMT+03) Europe/Volgograd"), React.createElement("option", {
+      }, "(GMT+03) Europe/Volgograd"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Zaporozhye"
-      }, "(GMT+03) Europe/Zaporozhye"), React.createElement("option", {
+      }, "(GMT+03) Europe/Zaporozhye"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Antananarivo"
-      }, "(GMT+03) Indian/Antananarivo"), React.createElement("option", {
+      }, "(GMT+03) Indian/Antananarivo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Comoro"
-      }, "(GMT+03) Indian/Comoro"), React.createElement("option", {
+      }, "(GMT+03) Indian/Comoro"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Mayotte"
-      }, "(GMT+03) Indian/Mayotte"), React.createElement("option", {
+      }, "(GMT+03) Indian/Mayotte"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Baku"
-      }, "(GMT+04) Asia/Baku"), React.createElement("option", {
+      }, "(GMT+04) Asia/Baku"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Dubai"
-      }, "(GMT+04) Asia/Dubai"), React.createElement("option", {
+      }, "(GMT+04) Asia/Dubai"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Muscat"
-      }, "(GMT+04) Asia/Muscat"), React.createElement("option", {
+      }, "(GMT+04) Asia/Muscat"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Tbilisi"
-      }, "(GMT+04) Asia/Tbilisi"), React.createElement("option", {
+      }, "(GMT+04) Asia/Tbilisi"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Yerevan"
-      }, "(GMT+04) Asia/Yerevan"), React.createElement("option", {
+      }, "(GMT+04) Asia/Yerevan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Astrakhan"
-      }, "(GMT+04) Europe/Astrakhan"), React.createElement("option", {
+      }, "(GMT+04) Europe/Astrakhan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Samara"
-      }, "(GMT+04) Europe/Samara"), React.createElement("option", {
+      }, "(GMT+04) Europe/Samara"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Saratov"
-      }, "(GMT+04) Europe/Saratov"), React.createElement("option", {
+      }, "(GMT+04) Europe/Saratov"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Europe/Ulyanovsk"
-      }, "(GMT+04) Europe/Ulyanovsk"), React.createElement("option", {
+      }, "(GMT+04) Europe/Ulyanovsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Mahe"
-      }, "(GMT+04) Indian/Mahe"), React.createElement("option", {
+      }, "(GMT+04) Indian/Mahe"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Mauritius"
-      }, "(GMT+04) Indian/Mauritius"), React.createElement("option", {
+      }, "(GMT+04) Indian/Mauritius"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Reunion"
-      }, "(GMT+04) Indian/Reunion"), React.createElement("option", {
+      }, "(GMT+04) Indian/Reunion"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Kabul"
-      }, "(GMT+04) Asia/Kabul"), React.createElement("option", {
+      }, "(GMT+04) Asia/Kabul"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Tehran"
-      }, "(GMT+04) Asia/Tehran"), React.createElement("option", {
+      }, "(GMT+04) Asia/Tehran"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Mawson"
-      }, "(GMT+05) Antarctica/Mawson"), React.createElement("option", {
+      }, "(GMT+05) Antarctica/Mawson"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Aqtau"
-      }, "(GMT+05) Asia/Aqtau"), React.createElement("option", {
+      }, "(GMT+05) Asia/Aqtau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Aqtobe"
-      }, "(GMT+05) Asia/Aqtobe"), React.createElement("option", {
+      }, "(GMT+05) Asia/Aqtobe"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Ashgabat"
-      }, "(GMT+05) Asia/Ashgabat"), React.createElement("option", {
+      }, "(GMT+05) Asia/Ashgabat"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Atyrau"
-      }, "(GMT+05) Asia/Atyrau"), React.createElement("option", {
+      }, "(GMT+05) Asia/Atyrau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Dushanbe"
-      }, "(GMT+05) Asia/Dushanbe"), React.createElement("option", {
+      }, "(GMT+05) Asia/Dushanbe"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Karachi"
-      }, "(GMT+05) Asia/Karachi"), React.createElement("option", {
+      }, "(GMT+05) Asia/Karachi"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Oral"
-      }, "(GMT+05) Asia/Oral"), React.createElement("option", {
+      }, "(GMT+05) Asia/Oral"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Samarkand"
-      }, "(GMT+05) Asia/Samarkand"), React.createElement("option", {
+      }, "(GMT+05) Asia/Samarkand"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Tashkent"
-      }, "(GMT+05) Asia/Tashkent"), React.createElement("option", {
+      }, "(GMT+05) Asia/Tashkent"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Yekaterinburg"
-      }, "(GMT+05) Asia/Yekaterinburg"), React.createElement("option", {
+      }, "(GMT+05) Asia/Yekaterinburg"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Kerguelen"
-      }, "(GMT+05) Indian/Kerguelen"), React.createElement("option", {
+      }, "(GMT+05) Indian/Kerguelen"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Maldives"
-      }, "(GMT+05) Indian/Maldives"), React.createElement("option", {
+      }, "(GMT+05) Indian/Maldives"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Colombo"
-      }, "(GMT+05) Asia/Colombo"), React.createElement("option", {
+      }, "(GMT+05) Asia/Colombo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Kolkata"
-      }, "(GMT+05) Asia/Kolkata"), React.createElement("option", {
+      }, "(GMT+05) Asia/Kolkata"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Kathmandu"
-      }, "(GMT+05) Asia/Kathmandu"), React.createElement("option", {
+      }, "(GMT+05) Asia/Kathmandu"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Vostok"
-      }, "(GMT+06) Antarctica/Vostok"), React.createElement("option", {
+      }, "(GMT+06) Antarctica/Vostok"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Almaty"
-      }, "(GMT+06) Asia/Almaty"), React.createElement("option", {
+      }, "(GMT+06) Asia/Almaty"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Bishkek"
-      }, "(GMT+06) Asia/Bishkek"), React.createElement("option", {
+      }, "(GMT+06) Asia/Bishkek"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Dhaka"
-      }, "(GMT+06) Asia/Dhaka"), React.createElement("option", {
+      }, "(GMT+06) Asia/Dhaka"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Omsk"
-      }, "(GMT+06) Asia/Omsk"), React.createElement("option", {
+      }, "(GMT+06) Asia/Omsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Qyzylorda"
-      }, "(GMT+06) Asia/Qyzylorda"), React.createElement("option", {
+      }, "(GMT+06) Asia/Qyzylorda"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Thimphu"
-      }, "(GMT+06) Asia/Thimphu"), React.createElement("option", {
+      }, "(GMT+06) Asia/Thimphu"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Urumqi"
-      }, "(GMT+06) Asia/Urumqi"), React.createElement("option", {
+      }, "(GMT+06) Asia/Urumqi"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Chagos"
-      }, "(GMT+06) Indian/Chagos"), React.createElement("option", {
+      }, "(GMT+06) Indian/Chagos"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Yangon"
-      }, "(GMT+06) Asia/Yangon"), React.createElement("option", {
+      }, "(GMT+06) Asia/Yangon"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Cocos"
-      }, "(GMT+06) Indian/Cocos"), React.createElement("option", {
+      }, "(GMT+06) Indian/Cocos"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Davis"
-      }, "(GMT+07) Antarctica/Davis"), React.createElement("option", {
+      }, "(GMT+07) Antarctica/Davis"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Bangkok"
-      }, "(GMT+07) Asia/Bangkok"), React.createElement("option", {
+      }, "(GMT+07) Asia/Bangkok"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Barnaul"
-      }, "(GMT+07) Asia/Barnaul"), React.createElement("option", {
+      }, "(GMT+07) Asia/Barnaul"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Ho_Chi_Minh"
-      }, "(GMT+07) Asia/Ho_Chi_Minh"), React.createElement("option", {
+      }, "(GMT+07) Asia/Ho_Chi_Minh"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Hovd"
-      }, "(GMT+07) Asia/Hovd"), React.createElement("option", {
+      }, "(GMT+07) Asia/Hovd"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Jakarta"
-      }, "(GMT+07) Asia/Jakarta"), React.createElement("option", {
+      }, "(GMT+07) Asia/Jakarta"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Krasnoyarsk"
-      }, "(GMT+07) Asia/Krasnoyarsk"), React.createElement("option", {
+      }, "(GMT+07) Asia/Krasnoyarsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Novokuznetsk"
-      }, "(GMT+07) Asia/Novokuznetsk"), React.createElement("option", {
+      }, "(GMT+07) Asia/Novokuznetsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Novosibirsk"
-      }, "(GMT+07) Asia/Novosibirsk"), React.createElement("option", {
+      }, "(GMT+07) Asia/Novosibirsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Phnom_Penh"
-      }, "(GMT+07) Asia/Phnom_Penh"), React.createElement("option", {
+      }, "(GMT+07) Asia/Phnom_Penh"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Pontianak"
-      }, "(GMT+07) Asia/Pontianak"), React.createElement("option", {
+      }, "(GMT+07) Asia/Pontianak"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Tomsk"
-      }, "(GMT+07) Asia/Tomsk"), React.createElement("option", {
+      }, "(GMT+07) Asia/Tomsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Vientiane"
-      }, "(GMT+07) Asia/Vientiane"), React.createElement("option", {
+      }, "(GMT+07) Asia/Vientiane"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Indian/Christmas"
-      }, "(GMT+07) Indian/Christmas"), React.createElement("option", {
+      }, "(GMT+07) Indian/Christmas"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Brunei"
-      }, "(GMT+08) Asia/Brunei"), React.createElement("option", {
+      }, "(GMT+08) Asia/Brunei"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Choibalsan"
-      }, "(GMT+08) Asia/Choibalsan"), React.createElement("option", {
+      }, "(GMT+08) Asia/Choibalsan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Hong_Kong"
-      }, "(GMT+08) Asia/Hong_Kong"), React.createElement("option", {
+      }, "(GMT+08) Asia/Hong_Kong"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Irkutsk"
-      }, "(GMT+08) Asia/Irkutsk"), React.createElement("option", {
+      }, "(GMT+08) Asia/Irkutsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Kuala_Lumpur"
-      }, "(GMT+08) Asia/Kuala_Lumpur"), React.createElement("option", {
+      }, "(GMT+08) Asia/Kuala_Lumpur"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Kuching"
-      }, "(GMT+08) Asia/Kuching"), React.createElement("option", {
+      }, "(GMT+08) Asia/Kuching"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Macau"
-      }, "(GMT+08) Asia/Macau"), React.createElement("option", {
+      }, "(GMT+08) Asia/Macau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Makassar"
-      }, "(GMT+08) Asia/Makassar"), React.createElement("option", {
+      }, "(GMT+08) Asia/Makassar"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Manila"
-      }, "(GMT+08) Asia/Manila"), React.createElement("option", {
+      }, "(GMT+08) Asia/Manila"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Shanghai"
-      }, "(GMT+08) Asia/Shanghai"), React.createElement("option", {
+      }, "(GMT+08) Asia/Shanghai"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Singapore"
-      }, "(GMT+08) Asia/Singapore"), React.createElement("option", {
+      }, "(GMT+08) Asia/Singapore"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Taipei"
-      }, "(GMT+08) Asia/Taipei"), React.createElement("option", {
+      }, "(GMT+08) Asia/Taipei"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Ulaanbaatar"
-      }, "(GMT+08) Asia/Ulaanbaatar"), React.createElement("option", {
+      }, "(GMT+08) Asia/Ulaanbaatar"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Perth"
-      }, "(GMT+08) Australia/Perth"), React.createElement("option", {
+      }, "(GMT+08) Australia/Perth"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Pyongyang"
-      }, "(GMT+08) Asia/Pyongyang"), React.createElement("option", {
+      }, "(GMT+08) Asia/Pyongyang"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Eucla"
-      }, "(GMT+08) Australia/Eucla"), React.createElement("option", {
+      }, "(GMT+08) Australia/Eucla"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Chita"
-      }, "(GMT+09) Asia/Chita"), React.createElement("option", {
+      }, "(GMT+09) Asia/Chita"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Dili"
-      }, "(GMT+09) Asia/Dili"), React.createElement("option", {
+      }, "(GMT+09) Asia/Dili"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Jayapura"
-      }, "(GMT+09) Asia/Jayapura"), React.createElement("option", {
+      }, "(GMT+09) Asia/Jayapura"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Khandyga"
-      }, "(GMT+09) Asia/Khandyga"), React.createElement("option", {
+      }, "(GMT+09) Asia/Khandyga"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Seoul"
-      }, "(GMT+09) Asia/Seoul"), React.createElement("option", {
+      }, "(GMT+09) Asia/Seoul"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Tokyo"
-      }, "(GMT+09) Asia/Tokyo"), React.createElement("option", {
+      }, "(GMT+09) Asia/Tokyo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Yakutsk"
-      }, "(GMT+09) Asia/Yakutsk"), React.createElement("option", {
+      }, "(GMT+09) Asia/Yakutsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Palau"
-      }, "(GMT+09) Pacific/Palau"), React.createElement("option", {
+      }, "(GMT+09) Pacific/Palau"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Adelaide"
-      }, "(GMT+09) Australia/Adelaide"), React.createElement("option", {
+      }, "(GMT+09) Australia/Adelaide"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Broken_Hill"
-      }, "(GMT+09) Australia/Broken_Hill"), React.createElement("option", {
+      }, "(GMT+09) Australia/Broken_Hill"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Darwin"
-      }, "(GMT+09) Australia/Darwin"), React.createElement("option", {
+      }, "(GMT+09) Australia/Darwin"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/DumontDUrville"
-      }, "(GMT+10) Antarctica/DumontDUrville"), React.createElement("option", {
+      }, "(GMT+10) Antarctica/DumontDUrville"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Ust-Nera"
-      }, "(GMT+10) Asia/Ust-Nera"), React.createElement("option", {
+      }, "(GMT+10) Asia/Ust-Nera"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Vladivostok"
-      }, "(GMT+10) Asia/Vladivostok"), React.createElement("option", {
+      }, "(GMT+10) Asia/Vladivostok"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Brisbane"
-      }, "(GMT+10) Australia/Brisbane"), React.createElement("option", {
+      }, "(GMT+10) Australia/Brisbane"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Currie"
-      }, "(GMT+10) Australia/Currie"), React.createElement("option", {
+      }, "(GMT+10) Australia/Currie"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Hobart"
-      }, "(GMT+10) Australia/Hobart"), React.createElement("option", {
+      }, "(GMT+10) Australia/Hobart"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Lindeman"
-      }, "(GMT+10) Australia/Lindeman"), React.createElement("option", {
+      }, "(GMT+10) Australia/Lindeman"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Melbourne"
-      }, "(GMT+10) Australia/Melbourne"), React.createElement("option", {
+      }, "(GMT+10) Australia/Melbourne"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Sydney"
-      }, "(GMT+10) Australia/Sydney"), React.createElement("option", {
+      }, "(GMT+10) Australia/Sydney"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Chuuk"
-      }, "(GMT+10) Pacific/Chuuk"), React.createElement("option", {
+      }, "(GMT+10) Pacific/Chuuk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Guam"
-      }, "(GMT+10) Pacific/Guam"), React.createElement("option", {
+      }, "(GMT+10) Pacific/Guam"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Port_Moresby"
-      }, "(GMT+10) Pacific/Port_Moresby"), React.createElement("option", {
+      }, "(GMT+10) Pacific/Port_Moresby"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Saipan"
-      }, "(GMT+10) Pacific/Saipan"), React.createElement("option", {
+      }, "(GMT+10) Pacific/Saipan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Australia/Lord_Howe"
-      }, "(GMT+10) Australia/Lord_Howe"), React.createElement("option", {
+      }, "(GMT+10) Australia/Lord_Howe"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Casey"
-      }, "(GMT+11) Antarctica/Casey"), React.createElement("option", {
+      }, "(GMT+11) Antarctica/Casey"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/Macquarie"
-      }, "(GMT+11) Antarctica/Macquarie"), React.createElement("option", {
+      }, "(GMT+11) Antarctica/Macquarie"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Magadan"
-      }, "(GMT+11) Asia/Magadan"), React.createElement("option", {
+      }, "(GMT+11) Asia/Magadan"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Sakhalin"
-      }, "(GMT+11) Asia/Sakhalin"), React.createElement("option", {
+      }, "(GMT+11) Asia/Sakhalin"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Srednekolymsk"
-      }, "(GMT+11) Asia/Srednekolymsk"), React.createElement("option", {
+      }, "(GMT+11) Asia/Srednekolymsk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Bougainville"
-      }, "(GMT+11) Pacific/Bougainville"), React.createElement("option", {
+      }, "(GMT+11) Pacific/Bougainville"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Efate"
-      }, "(GMT+11) Pacific/Efate"), React.createElement("option", {
+      }, "(GMT+11) Pacific/Efate"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Guadalcanal"
-      }, "(GMT+11) Pacific/Guadalcanal"), React.createElement("option", {
+      }, "(GMT+11) Pacific/Guadalcanal"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Kosrae"
-      }, "(GMT+11) Pacific/Kosrae"), React.createElement("option", {
+      }, "(GMT+11) Pacific/Kosrae"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Norfolk"
-      }, "(GMT+11) Pacific/Norfolk"), React.createElement("option", {
+      }, "(GMT+11) Pacific/Norfolk"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Noumea"
-      }, "(GMT+11) Pacific/Noumea"), React.createElement("option", {
+      }, "(GMT+11) Pacific/Noumea"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Pohnpei"
-      }, "(GMT+11) Pacific/Pohnpei"), React.createElement("option", {
+      }, "(GMT+11) Pacific/Pohnpei"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Antarctica/McMurdo"
-      }, "(GMT+12) Antarctica/McMurdo"), React.createElement("option", {
+      }, "(GMT+12) Antarctica/McMurdo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Anadyr"
-      }, "(GMT+12) Asia/Anadyr"), React.createElement("option", {
+      }, "(GMT+12) Asia/Anadyr"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Asia/Kamchatka"
-      }, "(GMT+12) Asia/Kamchatka"), React.createElement("option", {
+      }, "(GMT+12) Asia/Kamchatka"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Auckland"
-      }, "(GMT+12) Pacific/Auckland"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Auckland"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Fiji"
-      }, "(GMT+12) Pacific/Fiji"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Fiji"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Funafuti"
-      }, "(GMT+12) Pacific/Funafuti"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Funafuti"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Kwajalein"
-      }, "(GMT+12) Pacific/Kwajalein"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Kwajalein"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Majuro"
-      }, "(GMT+12) Pacific/Majuro"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Majuro"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Nauru"
-      }, "(GMT+12) Pacific/Nauru"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Nauru"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Tarawa"
-      }, "(GMT+12) Pacific/Tarawa"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Tarawa"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Wake"
-      }, "(GMT+12) Pacific/Wake"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Wake"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Wallis"
-      }, "(GMT+12) Pacific/Wallis"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Wallis"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Chatham"
-      }, "(GMT+12) Pacific/Chatham"), React.createElement("option", {
+      }, "(GMT+12) Pacific/Chatham"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Apia"
-      }, "(GMT+13) Pacific/Apia"), React.createElement("option", {
+      }, "(GMT+13) Pacific/Apia"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Enderbury"
-      }, "(GMT+13) Pacific/Enderbury"), React.createElement("option", {
+      }, "(GMT+13) Pacific/Enderbury"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Fakaofo"
-      }, "(GMT+13) Pacific/Fakaofo"), React.createElement("option", {
+      }, "(GMT+13) Pacific/Fakaofo"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Tongatapu"
-      }, "(GMT+13) Pacific/Tongatapu"), React.createElement("option", {
+      }, "(GMT+13) Pacific/Tongatapu"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "Pacific/Kiritimati"
       }, "(GMT+14) Pacific/Kiritimati")));
     }
   }]);
 
   return TimezoneForm;
-}(React.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var FollowButton =
 /*#__PURE__*/
@@ -2205,24 +2211,24 @@ function (_React$Component9) {
   }, {
     key: "renderFollowed",
     value: function renderFollowed() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "follow-button",
         onClick: this.buttonClicked
-      }, React.createElement("i", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
         className: "fa fa-check",
         "aria-hidden": "true"
-      }), React.createElement("h1", null, "Followed"));
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "Followed"));
     }
   }, {
     key: "renderUnfollowed",
     value: function renderUnfollowed() {
-      return React.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "follow-button",
         onClick: this.buttonClicked
-      }, React.createElement("i", {
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
         className: "fa fa-user-plus",
         "aria-hidden": "true"
-      }), React.createElement("h1", null, "Follow"));
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "Follow"));
     }
   }, {
     key: "render",
@@ -2236,13 +2242,191 @@ function (_React$Component9) {
   }]);
 
   return FollowButton;
-}(React.Component); // Render all the things
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var ProfileSnapshot =
+/*#__PURE__*/
+function (_React$Component10) {
+  _inherits(ProfileSnapshot, _React$Component10);
+
+  function ProfileSnapshot(props) {
+    var _this10;
+
+    _classCallCheck(this, ProfileSnapshot);
+
+    _this10 = _possibleConstructorReturn(this, _getPrototypeOf(ProfileSnapshot).call(this, props));
+    _this10.state = {
+      profile_snapshot: {}
+    };
+    return _this10;
+  }
+
+  _createClass(ProfileSnapshot, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var self = this;
+      var request = '/user/' + profile_modal_user + '/profile_snapshot/';
+      axios.get(request).then(function (response) {
+        console.log(response.data);
+        self.state.profile_snapshot = response.data;
+        self.setState(self.state);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var profile_path = profile_art_endpoint + this.state.profile_snapshot['img_id'] + '.jpg';
+
+      if (!('top_artist' in this.state.profile_snapshot)) {
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "profile-snapshot-modal-space"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, " Loading... "));
+      }
+
+      var artist_img = artist_art_endpoint + this.state.profile_snapshot['top_artist'][0]['img_id'] + '-medium.jpg';
+      var album_img = album_art_endpoint + this.state.profile_snapshot['top_album'][0]['img_id'] + '-medium.jpg';
+      var track_img = album_art_endpoint + this.state.profile_snapshot['top_track'][0]['img_id'] + '-medium.jpg';
+      var top_artist = this.state.profile_snapshot['top_artist'][0];
+      var top_album = this.state.profile_snapshot['top_album'][0];
+      var top_track = this.state.profile_snapshot['top_track'][0];
+      var recent_listens_state = this.state.profile_snapshot['recent_tracks'];
+      var album_love_button_data = {
+        album_id: top_album['album_id'],
+        is_current_user: false,
+        is_loved: top_album['is_loved']
+      };
+      var artist_love_button_data = {
+        artist_id: top_artist['artist_id'],
+        is_current_user: false,
+        is_loved: top_artist['is_loved']
+      };
+      var track_love_button_data = {
+        track_id: top_track['track_id'],
+        is_current_user: false,
+        is_loved: top_track['is_loved']
+      };
+      var recent_listens = [];
+
+      for (var i = 0; i < recent_listens_state.length; ++i) {
+        var k = "listen-snapshot-" + i.toString();
+        var className;
+
+        if (i % 2 == 0) {
+          className = "listen-entry";
+        } else {
+          className = "listen-entry-shaded";
+        }
+
+        var love_button_data = {
+          track_id: recent_listens_state[i]['track_id'],
+          is_current_user: false,
+          is_loved: recent_listens_state[i]['is_loved']
+        };
+        var img_path = album_art_endpoint + recent_listens_state[i]['img_id'] + '-small.jpg';
+        recent_listens.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          key: k
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: className
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+          className: "listen-entry-art",
+          src: img_path
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "listen-entry-track"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, recent_listens_state[i]['artist'], " - ", recent_listens_state[i]['track'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "listen-entry-time"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, recent_listens_state[i]['time'])))));
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-modal-space"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-row-underlined"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+        className: "profile-snapshot-img",
+        src: profile_path
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-username"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, profile_modal_user))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-top-music"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "Top Track (1m)"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-profile-snapshot"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+        className: "album-entry-art-profile-snapshot",
+        src: track_img
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-art-gradient"
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-layer-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, track_love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, top_track['track'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, top_track['album'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, top_track['artist'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, top_track['count'], " listens")))))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-top-music"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "Top Album (1m)"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-profile-snapshot"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+        className: "album-entry-art-profile-snapshot",
+        src: album_img
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-art-gradient"
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-layer-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, album_love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, top_album['album'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, top_album['artist'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, top_album['count'], " listens")))))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-top-music"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "Top Artist (1m)"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-profile-snapshot"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+        className: "album-entry-art-profile-snapshot",
+        src: artist_img
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-art-gradient"
+      }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-layer-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](LoveButton, artist_love_button_data), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h5", null, top_artist['artist'])), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "album-entry-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, top_artist['count'], " listens")))))))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "recent-tracks-profile-snapshot"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, " Recent Listens "), recent_listens))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-snapshot-row"
+      }));
+    }
+  }]);
+
+  return ProfileSnapshot;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // Render all the things
 
 
 var domContainer = document.getElementById("top-tracks");
 
 if (domContainer != null) {
-  ReactDOM.render(e(TopTracks), domContainer);
+  ReactDOM.render(react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, null), domContainer);
 }
 
 domContainer = document.getElementById("top-albums");
@@ -2285,6 +2469,12 @@ domContainer = document.getElementById("follow-button");
 
 if (domContainer != null) {
   ReactDOM.render(e(FollowButton), domContainer);
+}
+
+domContainer = document.getElementById("profile-snapshot");
+
+if (domContainer != null) {
+  ReactDOM.render(e(ProfileSnapshot), domContainer);
 }
 
 /***/ }),
@@ -4096,6 +4286,108 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/object-assign/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/object-assign/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -4287,6 +4579,2074 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/checkPropTypes.js":
+/*!***************************************************!*\
+  !*** ./node_modules/prop-types/checkPropTypes.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var printWarning = function() {};
+
+if (true) {
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+  var loggedTypeFailures = {};
+  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (true) {
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error(
+              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
+              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
+            );
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        if (error && !(error instanceof Error)) {
+          printWarning(
+            (componentName || 'React class') + ': type specification of ' +
+            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
+            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
+            'You may have forgotten to pass an argument to the type checker ' +
+            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+            'shape all require an argument).'
+          );
+        }
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          printWarning(
+            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+checkPropTypes.resetWarningCache = function() {
+  if (true) {
+    loggedTypeFailures = {};
+  }
+}
+
+module.exports = checkPropTypes;
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ "./node_modules/react/cjs/react.development.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/react/cjs/react.development.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/** @license React v16.8.6
+ * react.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
+
+// TODO: this is special because it gets imported during build.
+
+var ReactVersion = '16.8.6';
+
+// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
+var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+
+var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
+var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
+var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
+var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
+var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
+var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
+var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace;
+
+var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
+var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
+var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
+var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
+var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
+
+var MAYBE_ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+var FAUX_ITERATOR_SYMBOL = '@@iterator';
+
+function getIteratorFn(maybeIterable) {
+  if (maybeIterable === null || typeof maybeIterable !== 'object') {
+    return null;
+  }
+  var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
+  if (typeof maybeIterator === 'function') {
+    return maybeIterator;
+  }
+  return null;
+}
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var validateFormat = function () {};
+
+{
+  validateFormat = function (format) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
+
+  if (!condition) {
+    var error = void 0;
+    if (format === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+}
+
+// Relying on the `invariant()` implementation lets us
+// preserve the format and params in the www builds.
+
+/**
+ * Forked from fbjs/warning:
+ * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
+ *
+ * Only change is we use console.warn instead of console.error,
+ * and do nothing when 'console' is not supported.
+ * This really simplifies the code.
+ * ---
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var lowPriorityWarning = function () {};
+
+{
+  var printWarning = function (format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.warn(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  lowPriorityWarning = function (condition, format) {
+    if (format === undefined) {
+      throw new Error('`lowPriorityWarning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
+      }
+
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
+}
+
+var lowPriorityWarning$1 = lowPriorityWarning;
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warningWithoutStack = function () {};
+
+{
+  warningWithoutStack = function (condition, format) {
+    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
+    if (format === undefined) {
+      throw new Error('`warningWithoutStack(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+    if (args.length > 8) {
+      // Check before the condition to catch violations early.
+      throw new Error('warningWithoutStack() currently supports at most 8 arguments.');
+    }
+    if (condition) {
+      return;
+    }
+    if (typeof console !== 'undefined') {
+      var argsWithFormat = args.map(function (item) {
+        return '' + item;
+      });
+      argsWithFormat.unshift('Warning: ' + format);
+
+      // We intentionally don't use spread (or .apply) directly because it
+      // breaks IE9: https://github.com/facebook/react/issues/13610
+      Function.prototype.apply.call(console.error, console, argsWithFormat);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      var argIndex = 0;
+      var message = 'Warning: ' + format.replace(/%s/g, function () {
+        return args[argIndex++];
+      });
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+var warningWithoutStack$1 = warningWithoutStack;
+
+var didWarnStateUpdateForUnmountedComponent = {};
+
+function warnNoop(publicInstance, callerName) {
+  {
+    var _constructor = publicInstance.constructor;
+    var componentName = _constructor && (_constructor.displayName || _constructor.name) || 'ReactClass';
+    var warningKey = componentName + '.' + callerName;
+    if (didWarnStateUpdateForUnmountedComponent[warningKey]) {
+      return;
+    }
+    warningWithoutStack$1(false, "Can't call %s on a component that is not yet mounted. " + 'This is a no-op, but it might indicate a bug in your application. ' + 'Instead, assign to `this.state` directly or define a `state = {};` ' + 'class property with the desired state in the %s component.', callerName, componentName);
+    didWarnStateUpdateForUnmountedComponent[warningKey] = true;
+  }
+}
+
+/**
+ * This is the abstract API for an update queue.
+ */
+var ReactNoopUpdateQueue = {
+  /**
+   * Checks whether or not this composite component is mounted.
+   * @param {ReactClass} publicInstance The instance we want to test.
+   * @return {boolean} True if mounted, false otherwise.
+   * @protected
+   * @final
+   */
+  isMounted: function (publicInstance) {
+    return false;
+  },
+
+  /**
+   * Forces an update. This should only be invoked when it is known with
+   * certainty that we are **not** in a DOM transaction.
+   *
+   * You may want to call this when you know that some deeper aspect of the
+   * component's state has changed but `setState` was not called.
+   *
+   * This will not invoke `shouldComponentUpdate`, but it will invoke
+   * `componentWillUpdate` and `componentDidUpdate`.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {?function} callback Called after component is updated.
+   * @param {?string} callerName name of the calling function in the public API.
+   * @internal
+   */
+  enqueueForceUpdate: function (publicInstance, callback, callerName) {
+    warnNoop(publicInstance, 'forceUpdate');
+  },
+
+  /**
+   * Replaces all of the state. Always use this or `setState` to mutate state.
+   * You should treat `this.state` as immutable.
+   *
+   * There is no guarantee that `this.state` will be immediately updated, so
+   * accessing `this.state` after calling this method may return the old value.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} completeState Next state.
+   * @param {?function} callback Called after component is updated.
+   * @param {?string} callerName name of the calling function in the public API.
+   * @internal
+   */
+  enqueueReplaceState: function (publicInstance, completeState, callback, callerName) {
+    warnNoop(publicInstance, 'replaceState');
+  },
+
+  /**
+   * Sets a subset of the state. This only exists because _pendingState is
+   * internal. This provides a merging strategy that is not available to deep
+   * properties which is confusing. TODO: Expose pendingState or don't use it
+   * during the merge.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} partialState Next partial state to be merged with state.
+   * @param {?function} callback Called after component is updated.
+   * @param {?string} Name of the calling function in the public API.
+   * @internal
+   */
+  enqueueSetState: function (publicInstance, partialState, callback, callerName) {
+    warnNoop(publicInstance, 'setState');
+  }
+};
+
+var emptyObject = {};
+{
+  Object.freeze(emptyObject);
+}
+
+/**
+ * Base class helpers for the updating state of a component.
+ */
+function Component(props, context, updater) {
+  this.props = props;
+  this.context = context;
+  // If a component has string refs, we will assign a different object later.
+  this.refs = emptyObject;
+  // We initialize the default updater but the real one gets injected by the
+  // renderer.
+  this.updater = updater || ReactNoopUpdateQueue;
+}
+
+Component.prototype.isReactComponent = {};
+
+/**
+ * Sets a subset of the state. Always use this to mutate
+ * state. You should treat `this.state` as immutable.
+ *
+ * There is no guarantee that `this.state` will be immediately updated, so
+ * accessing `this.state` after calling this method may return the old value.
+ *
+ * There is no guarantee that calls to `setState` will run synchronously,
+ * as they may eventually be batched together.  You can provide an optional
+ * callback that will be executed when the call to setState is actually
+ * completed.
+ *
+ * When a function is provided to setState, it will be called at some point in
+ * the future (not synchronously). It will be called with the up to date
+ * component arguments (state, props, context). These values can be different
+ * from this.* because your function may be called after receiveProps but before
+ * shouldComponentUpdate, and this new state, props, and context will not yet be
+ * assigned to this.
+ *
+ * @param {object|function} partialState Next partial state or function to
+ *        produce next partial state to be merged with current state.
+ * @param {?function} callback Called after state is updated.
+ * @final
+ * @protected
+ */
+Component.prototype.setState = function (partialState, callback) {
+  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? invariant(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : void 0;
+  this.updater.enqueueSetState(this, partialState, callback, 'setState');
+};
+
+/**
+ * Forces an update. This should only be invoked when it is known with
+ * certainty that we are **not** in a DOM transaction.
+ *
+ * You may want to call this when you know that some deeper aspect of the
+ * component's state has changed but `setState` was not called.
+ *
+ * This will not invoke `shouldComponentUpdate`, but it will invoke
+ * `componentWillUpdate` and `componentDidUpdate`.
+ *
+ * @param {?function} callback Called after update is complete.
+ * @final
+ * @protected
+ */
+Component.prototype.forceUpdate = function (callback) {
+  this.updater.enqueueForceUpdate(this, callback, 'forceUpdate');
+};
+
+/**
+ * Deprecated APIs. These APIs used to exist on classic React classes but since
+ * we would like to deprecate them, we're not going to move them over to this
+ * modern base class. Instead, we define a getter that warns if it's accessed.
+ */
+{
+  var deprecatedAPIs = {
+    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
+    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
+  };
+  var defineDeprecationWarning = function (methodName, info) {
+    Object.defineProperty(Component.prototype, methodName, {
+      get: function () {
+        lowPriorityWarning$1(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]);
+        return undefined;
+      }
+    });
+  };
+  for (var fnName in deprecatedAPIs) {
+    if (deprecatedAPIs.hasOwnProperty(fnName)) {
+      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
+    }
+  }
+}
+
+function ComponentDummy() {}
+ComponentDummy.prototype = Component.prototype;
+
+/**
+ * Convenience component with default shallow equality check for sCU.
+ */
+function PureComponent(props, context, updater) {
+  this.props = props;
+  this.context = context;
+  // If a component has string refs, we will assign a different object later.
+  this.refs = emptyObject;
+  this.updater = updater || ReactNoopUpdateQueue;
+}
+
+var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
+pureComponentPrototype.constructor = PureComponent;
+// Avoid an extra prototype jump for these methods.
+_assign(pureComponentPrototype, Component.prototype);
+pureComponentPrototype.isPureReactComponent = true;
+
+// an immutable object with a single mutable value
+function createRef() {
+  var refObject = {
+    current: null
+  };
+  {
+    Object.seal(refObject);
+  }
+  return refObject;
+}
+
+/**
+ * Keeps track of the current dispatcher.
+ */
+var ReactCurrentDispatcher = {
+  /**
+   * @internal
+   * @type {ReactComponent}
+   */
+  current: null
+};
+
+/**
+ * Keeps track of the current owner.
+ *
+ * The current owner is the component who should own any components that are
+ * currently being constructed.
+ */
+var ReactCurrentOwner = {
+  /**
+   * @internal
+   * @type {ReactComponent}
+   */
+  current: null
+};
+
+var BEFORE_SLASH_RE = /^(.*)[\\\/]/;
+
+var describeComponentFrame = function (name, source, ownerName) {
+  var sourceInfo = '';
+  if (source) {
+    var path = source.fileName;
+    var fileName = path.replace(BEFORE_SLASH_RE, '');
+    {
+      // In DEV, include code for a common special case:
+      // prefer "folder/index.js" instead of just "index.js".
+      if (/^index\./.test(fileName)) {
+        var match = path.match(BEFORE_SLASH_RE);
+        if (match) {
+          var pathBeforeSlash = match[1];
+          if (pathBeforeSlash) {
+            var folderName = pathBeforeSlash.replace(BEFORE_SLASH_RE, '');
+            fileName = folderName + '/' + fileName;
+          }
+        }
+      }
+    }
+    sourceInfo = ' (at ' + fileName + ':' + source.lineNumber + ')';
+  } else if (ownerName) {
+    sourceInfo = ' (created by ' + ownerName + ')';
+  }
+  return '\n    in ' + (name || 'Unknown') + sourceInfo;
+};
+
+var Resolved = 1;
+
+
+function refineResolvedLazyComponent(lazyComponent) {
+  return lazyComponent._status === Resolved ? lazyComponent._result : null;
+}
+
+function getWrappedName(outerType, innerType, wrapperName) {
+  var functionName = innerType.displayName || innerType.name || '';
+  return outerType.displayName || (functionName !== '' ? wrapperName + '(' + functionName + ')' : wrapperName);
+}
+
+function getComponentName(type) {
+  if (type == null) {
+    // Host root, text node or just invalid type.
+    return null;
+  }
+  {
+    if (typeof type.tag === 'number') {
+      warningWithoutStack$1(false, 'Received an unexpected object in getComponentName(). ' + 'This is likely a bug in React. Please file an issue.');
+    }
+  }
+  if (typeof type === 'function') {
+    return type.displayName || type.name || null;
+  }
+  if (typeof type === 'string') {
+    return type;
+  }
+  switch (type) {
+    case REACT_CONCURRENT_MODE_TYPE:
+      return 'ConcurrentMode';
+    case REACT_FRAGMENT_TYPE:
+      return 'Fragment';
+    case REACT_PORTAL_TYPE:
+      return 'Portal';
+    case REACT_PROFILER_TYPE:
+      return 'Profiler';
+    case REACT_STRICT_MODE_TYPE:
+      return 'StrictMode';
+    case REACT_SUSPENSE_TYPE:
+      return 'Suspense';
+  }
+  if (typeof type === 'object') {
+    switch (type.$$typeof) {
+      case REACT_CONTEXT_TYPE:
+        return 'Context.Consumer';
+      case REACT_PROVIDER_TYPE:
+        return 'Context.Provider';
+      case REACT_FORWARD_REF_TYPE:
+        return getWrappedName(type, type.render, 'ForwardRef');
+      case REACT_MEMO_TYPE:
+        return getComponentName(type.type);
+      case REACT_LAZY_TYPE:
+        {
+          var thenable = type;
+          var resolvedThenable = refineResolvedLazyComponent(thenable);
+          if (resolvedThenable) {
+            return getComponentName(resolvedThenable);
+          }
+        }
+    }
+  }
+  return null;
+}
+
+var ReactDebugCurrentFrame = {};
+
+var currentlyValidatingElement = null;
+
+function setCurrentlyValidatingElement(element) {
+  {
+    currentlyValidatingElement = element;
+  }
+}
+
+{
+  // Stack implementation injected by the current renderer.
+  ReactDebugCurrentFrame.getCurrentStack = null;
+
+  ReactDebugCurrentFrame.getStackAddendum = function () {
+    var stack = '';
+
+    // Add an extra top frame while an element is being validated
+    if (currentlyValidatingElement) {
+      var name = getComponentName(currentlyValidatingElement.type);
+      var owner = currentlyValidatingElement._owner;
+      stack += describeComponentFrame(name, currentlyValidatingElement._source, owner && getComponentName(owner.type));
+    }
+
+    // Delegate to the injected renderer-specific implementation
+    var impl = ReactDebugCurrentFrame.getCurrentStack;
+    if (impl) {
+      stack += impl() || '';
+    }
+
+    return stack;
+  };
+}
+
+var ReactSharedInternals = {
+  ReactCurrentDispatcher: ReactCurrentDispatcher,
+  ReactCurrentOwner: ReactCurrentOwner,
+  // Used by renderers to avoid bundling object-assign twice in UMD bundles:
+  assign: _assign
+};
+
+{
+  _assign(ReactSharedInternals, {
+    // These should not be included in production.
+    ReactDebugCurrentFrame: ReactDebugCurrentFrame,
+    // Shim for React DOM 16.0.0 which still destructured (but not used) this.
+    // TODO: remove in React 17.0.
+    ReactComponentTreeHook: {}
+  });
+}
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warning = warningWithoutStack$1;
+
+{
+  warning = function (condition, format) {
+    if (condition) {
+      return;
+    }
+    var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+    var stack = ReactDebugCurrentFrame.getStackAddendum();
+    // eslint-disable-next-line react-internal/warning-and-invariant-args
+
+    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
+    warningWithoutStack$1.apply(undefined, [false, format + '%s'].concat(args, [stack]));
+  };
+}
+
+var warning$1 = warning;
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+var RESERVED_PROPS = {
+  key: true,
+  ref: true,
+  __self: true,
+  __source: true
+};
+
+var specialPropKeyWarningShown = void 0;
+var specialPropRefWarningShown = void 0;
+
+function hasValidRef(config) {
+  {
+    if (hasOwnProperty.call(config, 'ref')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+  return config.ref !== undefined;
+}
+
+function hasValidKey(config) {
+  {
+    if (hasOwnProperty.call(config, 'key')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'key').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+  return config.key !== undefined;
+}
+
+function defineKeyPropWarningGetter(props, displayName) {
+  var warnAboutAccessingKey = function () {
+    if (!specialPropKeyWarningShown) {
+      specialPropKeyWarningShown = true;
+      warningWithoutStack$1(false, '%s: `key` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName);
+    }
+  };
+  warnAboutAccessingKey.isReactWarning = true;
+  Object.defineProperty(props, 'key', {
+    get: warnAboutAccessingKey,
+    configurable: true
+  });
+}
+
+function defineRefPropWarningGetter(props, displayName) {
+  var warnAboutAccessingRef = function () {
+    if (!specialPropRefWarningShown) {
+      specialPropRefWarningShown = true;
+      warningWithoutStack$1(false, '%s: `ref` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName);
+    }
+  };
+  warnAboutAccessingRef.isReactWarning = true;
+  Object.defineProperty(props, 'ref', {
+    get: warnAboutAccessingRef,
+    configurable: true
+  });
+}
+
+/**
+ * Factory method to create a new React element. This no longer adheres to
+ * the class pattern, so do not use new to call it. Also, no instanceof check
+ * will work. Instead test $$typeof field against Symbol.for('react.element') to check
+ * if something is a React Element.
+ *
+ * @param {*} type
+ * @param {*} key
+ * @param {string|object} ref
+ * @param {*} self A *temporary* helper to detect places where `this` is
+ * different from the `owner` when React.createElement is called, so that we
+ * can warn. We want to get rid of owner and replace string `ref`s with arrow
+ * functions, and as long as `this` and owner are the same, there will be no
+ * change in behavior.
+ * @param {*} source An annotation object (added by a transpiler or otherwise)
+ * indicating filename, line number, and/or other information.
+ * @param {*} owner
+ * @param {*} props
+ * @internal
+ */
+var ReactElement = function (type, key, ref, self, source, owner, props) {
+  var element = {
+    // This tag allows us to uniquely identify this as a React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+
+    // Built-in properties that belong on the element
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+
+    // Record the component responsible for creating this element.
+    _owner: owner
+  };
+
+  {
+    // The validation flag is currently mutative. We put it on
+    // an external backing store so that we can freeze the whole object.
+    // This can be replaced with a WeakMap once they are implemented in
+    // commonly used development environments.
+    element._store = {};
+
+    // To make comparing ReactElements easier for testing purposes, we make
+    // the validation flag non-enumerable (where possible, which should
+    // include every environment we run tests in), so the test framework
+    // ignores it.
+    Object.defineProperty(element._store, 'validated', {
+      configurable: false,
+      enumerable: false,
+      writable: true,
+      value: false
+    });
+    // self and source are DEV only properties.
+    Object.defineProperty(element, '_self', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: self
+    });
+    // Two elements created in two different places should be considered
+    // equal for testing purposes and therefore we hide it from enumeration.
+    Object.defineProperty(element, '_source', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: source
+    });
+    if (Object.freeze) {
+      Object.freeze(element.props);
+      Object.freeze(element);
+    }
+  }
+
+  return element;
+};
+
+/**
+ * Create and return a new ReactElement of the given type.
+ * See https://reactjs.org/docs/react-api.html#createelement
+ */
+function createElement(type, config, children) {
+  var propName = void 0;
+
+  // Reserved names are extracted
+  var props = {};
+
+  var key = null;
+  var ref = null;
+  var self = null;
+  var source = null;
+
+  if (config != null) {
+    if (hasValidRef(config)) {
+      ref = config.ref;
+    }
+    if (hasValidKey(config)) {
+      key = '' + config.key;
+    }
+
+    self = config.__self === undefined ? null : config.__self;
+    source = config.__source === undefined ? null : config.__source;
+    // Remaining properties are added to a new props object
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        props[propName] = config[propName];
+      }
+    }
+  }
+
+  // Children can be more than one argument, and those are transferred onto
+  // the newly allocated props object.
+  var childrenLength = arguments.length - 2;
+  if (childrenLength === 1) {
+    props.children = children;
+  } else if (childrenLength > 1) {
+    var childArray = Array(childrenLength);
+    for (var i = 0; i < childrenLength; i++) {
+      childArray[i] = arguments[i + 2];
+    }
+    {
+      if (Object.freeze) {
+        Object.freeze(childArray);
+      }
+    }
+    props.children = childArray;
+  }
+
+  // Resolve default props
+  if (type && type.defaultProps) {
+    var defaultProps = type.defaultProps;
+    for (propName in defaultProps) {
+      if (props[propName] === undefined) {
+        props[propName] = defaultProps[propName];
+      }
+    }
+  }
+  {
+    if (key || ref) {
+      var displayName = typeof type === 'function' ? type.displayName || type.name || 'Unknown' : type;
+      if (key) {
+        defineKeyPropWarningGetter(props, displayName);
+      }
+      if (ref) {
+        defineRefPropWarningGetter(props, displayName);
+      }
+    }
+  }
+  return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+}
+
+/**
+ * Return a function that produces ReactElements of a given type.
+ * See https://reactjs.org/docs/react-api.html#createfactory
+ */
+
+
+function cloneAndReplaceKey(oldElement, newKey) {
+  var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
+
+  return newElement;
+}
+
+/**
+ * Clone and return a new ReactElement using element as the starting point.
+ * See https://reactjs.org/docs/react-api.html#cloneelement
+ */
+function cloneElement(element, config, children) {
+  !!(element === null || element === undefined) ? invariant(false, 'React.cloneElement(...): The argument must be a React element, but you passed %s.', element) : void 0;
+
+  var propName = void 0;
+
+  // Original props are copied
+  var props = _assign({}, element.props);
+
+  // Reserved names are extracted
+  var key = element.key;
+  var ref = element.ref;
+  // Self is preserved since the owner is preserved.
+  var self = element._self;
+  // Source is preserved since cloneElement is unlikely to be targeted by a
+  // transpiler, and the original source is probably a better indicator of the
+  // true owner.
+  var source = element._source;
+
+  // Owner will be preserved, unless ref is overridden
+  var owner = element._owner;
+
+  if (config != null) {
+    if (hasValidRef(config)) {
+      // Silently steal the ref from the parent.
+      ref = config.ref;
+      owner = ReactCurrentOwner.current;
+    }
+    if (hasValidKey(config)) {
+      key = '' + config.key;
+    }
+
+    // Remaining properties override existing props
+    var defaultProps = void 0;
+    if (element.type && element.type.defaultProps) {
+      defaultProps = element.type.defaultProps;
+    }
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        if (config[propName] === undefined && defaultProps !== undefined) {
+          // Resolve default props
+          props[propName] = defaultProps[propName];
+        } else {
+          props[propName] = config[propName];
+        }
+      }
+    }
+  }
+
+  // Children can be more than one argument, and those are transferred onto
+  // the newly allocated props object.
+  var childrenLength = arguments.length - 2;
+  if (childrenLength === 1) {
+    props.children = children;
+  } else if (childrenLength > 1) {
+    var childArray = Array(childrenLength);
+    for (var i = 0; i < childrenLength; i++) {
+      childArray[i] = arguments[i + 2];
+    }
+    props.children = childArray;
+  }
+
+  return ReactElement(element.type, key, ref, self, source, owner, props);
+}
+
+/**
+ * Verifies the object is a ReactElement.
+ * See https://reactjs.org/docs/react-api.html#isvalidelement
+ * @param {?object} object
+ * @return {boolean} True if `object` is a ReactElement.
+ * @final
+ */
+function isValidElement(object) {
+  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+}
+
+var SEPARATOR = '.';
+var SUBSEPARATOR = ':';
+
+/**
+ * Escape and wrap key so it is safe to use as a reactid
+ *
+ * @param {string} key to be escaped.
+ * @return {string} the escaped key.
+ */
+function escape(key) {
+  var escapeRegex = /[=:]/g;
+  var escaperLookup = {
+    '=': '=0',
+    ':': '=2'
+  };
+  var escapedString = ('' + key).replace(escapeRegex, function (match) {
+    return escaperLookup[match];
+  });
+
+  return '$' + escapedString;
+}
+
+/**
+ * TODO: Test that a single child and an array with one item have the same key
+ * pattern.
+ */
+
+var didWarnAboutMaps = false;
+
+var userProvidedKeyEscapeRegex = /\/+/g;
+function escapeUserProvidedKey(text) {
+  return ('' + text).replace(userProvidedKeyEscapeRegex, '$&/');
+}
+
+var POOL_SIZE = 10;
+var traverseContextPool = [];
+function getPooledTraverseContext(mapResult, keyPrefix, mapFunction, mapContext) {
+  if (traverseContextPool.length) {
+    var traverseContext = traverseContextPool.pop();
+    traverseContext.result = mapResult;
+    traverseContext.keyPrefix = keyPrefix;
+    traverseContext.func = mapFunction;
+    traverseContext.context = mapContext;
+    traverseContext.count = 0;
+    return traverseContext;
+  } else {
+    return {
+      result: mapResult,
+      keyPrefix: keyPrefix,
+      func: mapFunction,
+      context: mapContext,
+      count: 0
+    };
+  }
+}
+
+function releaseTraverseContext(traverseContext) {
+  traverseContext.result = null;
+  traverseContext.keyPrefix = null;
+  traverseContext.func = null;
+  traverseContext.context = null;
+  traverseContext.count = 0;
+  if (traverseContextPool.length < POOL_SIZE) {
+    traverseContextPool.push(traverseContext);
+  }
+}
+
+/**
+ * @param {?*} children Children tree container.
+ * @param {!string} nameSoFar Name of the key path so far.
+ * @param {!function} callback Callback to invoke with each child found.
+ * @param {?*} traverseContext Used to pass information throughout the traversal
+ * process.
+ * @return {!number} The number of children in this subtree.
+ */
+function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext) {
+  var type = typeof children;
+
+  if (type === 'undefined' || type === 'boolean') {
+    // All of the above are perceived as null.
+    children = null;
+  }
+
+  var invokeCallback = false;
+
+  if (children === null) {
+    invokeCallback = true;
+  } else {
+    switch (type) {
+      case 'string':
+      case 'number':
+        invokeCallback = true;
+        break;
+      case 'object':
+        switch (children.$$typeof) {
+          case REACT_ELEMENT_TYPE:
+          case REACT_PORTAL_TYPE:
+            invokeCallback = true;
+        }
+    }
+  }
+
+  if (invokeCallback) {
+    callback(traverseContext, children,
+    // If it's the only child, treat the name as if it was wrapped in an array
+    // so that it's consistent if the number of children grows.
+    nameSoFar === '' ? SEPARATOR + getComponentKey(children, 0) : nameSoFar);
+    return 1;
+  }
+
+  var child = void 0;
+  var nextName = void 0;
+  var subtreeCount = 0; // Count of children found in the current subtree.
+  var nextNamePrefix = nameSoFar === '' ? SEPARATOR : nameSoFar + SUBSEPARATOR;
+
+  if (Array.isArray(children)) {
+    for (var i = 0; i < children.length; i++) {
+      child = children[i];
+      nextName = nextNamePrefix + getComponentKey(child, i);
+      subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
+    }
+  } else {
+    var iteratorFn = getIteratorFn(children);
+    if (typeof iteratorFn === 'function') {
+      {
+        // Warn about using Maps as children
+        if (iteratorFn === children.entries) {
+          !didWarnAboutMaps ? warning$1(false, 'Using Maps as children is unsupported and will likely yield ' + 'unexpected results. Convert it to a sequence/iterable of keyed ' + 'ReactElements instead.') : void 0;
+          didWarnAboutMaps = true;
+        }
+      }
+
+      var iterator = iteratorFn.call(children);
+      var step = void 0;
+      var ii = 0;
+      while (!(step = iterator.next()).done) {
+        child = step.value;
+        nextName = nextNamePrefix + getComponentKey(child, ii++);
+        subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
+      }
+    } else if (type === 'object') {
+      var addendum = '';
+      {
+        addendum = ' If you meant to render a collection of children, use an array ' + 'instead.' + ReactDebugCurrentFrame.getStackAddendum();
+      }
+      var childrenString = '' + children;
+      invariant(false, 'Objects are not valid as a React child (found: %s).%s', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum);
+    }
+  }
+
+  return subtreeCount;
+}
+
+/**
+ * Traverses children that are typically specified as `props.children`, but
+ * might also be specified through attributes:
+ *
+ * - `traverseAllChildren(this.props.children, ...)`
+ * - `traverseAllChildren(this.props.leftPanelChildren, ...)`
+ *
+ * The `traverseContext` is an optional argument that is passed through the
+ * entire traversal. It can be used to store accumulations or anything else that
+ * the callback might find relevant.
+ *
+ * @param {?*} children Children tree object.
+ * @param {!function} callback To invoke upon traversing each child.
+ * @param {?*} traverseContext Context for traversal.
+ * @return {!number} The number of children in this subtree.
+ */
+function traverseAllChildren(children, callback, traverseContext) {
+  if (children == null) {
+    return 0;
+  }
+
+  return traverseAllChildrenImpl(children, '', callback, traverseContext);
+}
+
+/**
+ * Generate a key string that identifies a component within a set.
+ *
+ * @param {*} component A component that could contain a manual key.
+ * @param {number} index Index that is used if a manual key is not provided.
+ * @return {string}
+ */
+function getComponentKey(component, index) {
+  // Do some typechecking here since we call this blindly. We want to ensure
+  // that we don't block potential future ES APIs.
+  if (typeof component === 'object' && component !== null && component.key != null) {
+    // Explicit key
+    return escape(component.key);
+  }
+  // Implicit key determined by the index in the set
+  return index.toString(36);
+}
+
+function forEachSingleChild(bookKeeping, child, name) {
+  var func = bookKeeping.func,
+      context = bookKeeping.context;
+
+  func.call(context, child, bookKeeping.count++);
+}
+
+/**
+ * Iterates through children that are typically specified as `props.children`.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrenforeach
+ *
+ * The provided forEachFunc(child, index) will be called for each
+ * leaf child.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} forEachFunc
+ * @param {*} forEachContext Context for forEachContext.
+ */
+function forEachChildren(children, forEachFunc, forEachContext) {
+  if (children == null) {
+    return children;
+  }
+  var traverseContext = getPooledTraverseContext(null, null, forEachFunc, forEachContext);
+  traverseAllChildren(children, forEachSingleChild, traverseContext);
+  releaseTraverseContext(traverseContext);
+}
+
+function mapSingleChildIntoContext(bookKeeping, child, childKey) {
+  var result = bookKeeping.result,
+      keyPrefix = bookKeeping.keyPrefix,
+      func = bookKeeping.func,
+      context = bookKeeping.context;
+
+
+  var mappedChild = func.call(context, child, bookKeeping.count++);
+  if (Array.isArray(mappedChild)) {
+    mapIntoWithKeyPrefixInternal(mappedChild, result, childKey, function (c) {
+      return c;
+    });
+  } else if (mappedChild != null) {
+    if (isValidElement(mappedChild)) {
+      mappedChild = cloneAndReplaceKey(mappedChild,
+      // Keep both the (mapped) and old keys if they differ, just as
+      // traverseAllChildren used to do for objects as children
+      keyPrefix + (mappedChild.key && (!child || child.key !== mappedChild.key) ? escapeUserProvidedKey(mappedChild.key) + '/' : '') + childKey);
+    }
+    result.push(mappedChild);
+  }
+}
+
+function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
+  var escapedPrefix = '';
+  if (prefix != null) {
+    escapedPrefix = escapeUserProvidedKey(prefix) + '/';
+  }
+  var traverseContext = getPooledTraverseContext(array, escapedPrefix, func, context);
+  traverseAllChildren(children, mapSingleChildIntoContext, traverseContext);
+  releaseTraverseContext(traverseContext);
+}
+
+/**
+ * Maps children that are typically specified as `props.children`.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrenmap
+ *
+ * The provided mapFunction(child, key, index) will be called for each
+ * leaf child.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} func The map function.
+ * @param {*} context Context for mapFunction.
+ * @return {object} Object containing the ordered map of results.
+ */
+function mapChildren(children, func, context) {
+  if (children == null) {
+    return children;
+  }
+  var result = [];
+  mapIntoWithKeyPrefixInternal(children, result, null, func, context);
+  return result;
+}
+
+/**
+ * Count the number of children that are typically specified as
+ * `props.children`.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrencount
+ *
+ * @param {?*} children Children tree container.
+ * @return {number} The number of children.
+ */
+function countChildren(children) {
+  return traverseAllChildren(children, function () {
+    return null;
+  }, null);
+}
+
+/**
+ * Flatten a children object (typically specified as `props.children`) and
+ * return an array with appropriately re-keyed children.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrentoarray
+ */
+function toArray(children) {
+  var result = [];
+  mapIntoWithKeyPrefixInternal(children, result, null, function (child) {
+    return child;
+  });
+  return result;
+}
+
+/**
+ * Returns the first child in a collection of children and verifies that there
+ * is only one child in the collection.
+ *
+ * See https://reactjs.org/docs/react-api.html#reactchildrenonly
+ *
+ * The current implementation of this function assumes that a single child gets
+ * passed without a wrapper, but the purpose of this helper function is to
+ * abstract away the particular structure of children.
+ *
+ * @param {?object} children Child collection structure.
+ * @return {ReactElement} The first and only `ReactElement` contained in the
+ * structure.
+ */
+function onlyChild(children) {
+  !isValidElement(children) ? invariant(false, 'React.Children.only expected to receive a single React element child.') : void 0;
+  return children;
+}
+
+function createContext(defaultValue, calculateChangedBits) {
+  if (calculateChangedBits === undefined) {
+    calculateChangedBits = null;
+  } else {
+    {
+      !(calculateChangedBits === null || typeof calculateChangedBits === 'function') ? warningWithoutStack$1(false, 'createContext: Expected the optional second argument to be a ' + 'function. Instead received: %s', calculateChangedBits) : void 0;
+    }
+  }
+
+  var context = {
+    $$typeof: REACT_CONTEXT_TYPE,
+    _calculateChangedBits: calculateChangedBits,
+    // As a workaround to support multiple concurrent renderers, we categorize
+    // some renderers as primary and others as secondary. We only expect
+    // there to be two concurrent renderers at most: React Native (primary) and
+    // Fabric (secondary); React DOM (primary) and React ART (secondary).
+    // Secondary renderers store their context values on separate fields.
+    _currentValue: defaultValue,
+    _currentValue2: defaultValue,
+    // Used to track how many concurrent renderers this context currently
+    // supports within in a single renderer. Such as parallel server rendering.
+    _threadCount: 0,
+    // These are circular
+    Provider: null,
+    Consumer: null
+  };
+
+  context.Provider = {
+    $$typeof: REACT_PROVIDER_TYPE,
+    _context: context
+  };
+
+  var hasWarnedAboutUsingNestedContextConsumers = false;
+  var hasWarnedAboutUsingConsumerProvider = false;
+
+  {
+    // A separate object, but proxies back to the original context object for
+    // backwards compatibility. It has a different $$typeof, so we can properly
+    // warn for the incorrect usage of Context as a Consumer.
+    var Consumer = {
+      $$typeof: REACT_CONTEXT_TYPE,
+      _context: context,
+      _calculateChangedBits: context._calculateChangedBits
+    };
+    // $FlowFixMe: Flow complains about not setting a value, which is intentional here
+    Object.defineProperties(Consumer, {
+      Provider: {
+        get: function () {
+          if (!hasWarnedAboutUsingConsumerProvider) {
+            hasWarnedAboutUsingConsumerProvider = true;
+            warning$1(false, 'Rendering <Context.Consumer.Provider> is not supported and will be removed in ' + 'a future major release. Did you mean to render <Context.Provider> instead?');
+          }
+          return context.Provider;
+        },
+        set: function (_Provider) {
+          context.Provider = _Provider;
+        }
+      },
+      _currentValue: {
+        get: function () {
+          return context._currentValue;
+        },
+        set: function (_currentValue) {
+          context._currentValue = _currentValue;
+        }
+      },
+      _currentValue2: {
+        get: function () {
+          return context._currentValue2;
+        },
+        set: function (_currentValue2) {
+          context._currentValue2 = _currentValue2;
+        }
+      },
+      _threadCount: {
+        get: function () {
+          return context._threadCount;
+        },
+        set: function (_threadCount) {
+          context._threadCount = _threadCount;
+        }
+      },
+      Consumer: {
+        get: function () {
+          if (!hasWarnedAboutUsingNestedContextConsumers) {
+            hasWarnedAboutUsingNestedContextConsumers = true;
+            warning$1(false, 'Rendering <Context.Consumer.Consumer> is not supported and will be removed in ' + 'a future major release. Did you mean to render <Context.Consumer> instead?');
+          }
+          return context.Consumer;
+        }
+      }
+    });
+    // $FlowFixMe: Flow complains about missing properties because it doesn't understand defineProperty
+    context.Consumer = Consumer;
+  }
+
+  {
+    context._currentRenderer = null;
+    context._currentRenderer2 = null;
+  }
+
+  return context;
+}
+
+function lazy(ctor) {
+  var lazyType = {
+    $$typeof: REACT_LAZY_TYPE,
+    _ctor: ctor,
+    // React uses these fields to store the result.
+    _status: -1,
+    _result: null
+  };
+
+  {
+    // In production, this would just set it on the object.
+    var defaultProps = void 0;
+    var propTypes = void 0;
+    Object.defineProperties(lazyType, {
+      defaultProps: {
+        configurable: true,
+        get: function () {
+          return defaultProps;
+        },
+        set: function (newDefaultProps) {
+          warning$1(false, 'React.lazy(...): It is not supported to assign `defaultProps` to ' + 'a lazy component import. Either specify them where the component ' + 'is defined, or create a wrapping component around it.');
+          defaultProps = newDefaultProps;
+          // Match production behavior more closely:
+          Object.defineProperty(lazyType, 'defaultProps', {
+            enumerable: true
+          });
+        }
+      },
+      propTypes: {
+        configurable: true,
+        get: function () {
+          return propTypes;
+        },
+        set: function (newPropTypes) {
+          warning$1(false, 'React.lazy(...): It is not supported to assign `propTypes` to ' + 'a lazy component import. Either specify them where the component ' + 'is defined, or create a wrapping component around it.');
+          propTypes = newPropTypes;
+          // Match production behavior more closely:
+          Object.defineProperty(lazyType, 'propTypes', {
+            enumerable: true
+          });
+        }
+      }
+    });
+  }
+
+  return lazyType;
+}
+
+function forwardRef(render) {
+  {
+    if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
+      warningWithoutStack$1(false, 'forwardRef requires a render function but received a `memo` ' + 'component. Instead of forwardRef(memo(...)), use ' + 'memo(forwardRef(...)).');
+    } else if (typeof render !== 'function') {
+      warningWithoutStack$1(false, 'forwardRef requires a render function but was given %s.', render === null ? 'null' : typeof render);
+    } else {
+      !(
+      // Do not warn for 0 arguments because it could be due to usage of the 'arguments' object
+      render.length === 0 || render.length === 2) ? warningWithoutStack$1(false, 'forwardRef render functions accept exactly two parameters: props and ref. %s', render.length === 1 ? 'Did you forget to use the ref parameter?' : 'Any additional parameter will be undefined.') : void 0;
+    }
+
+    if (render != null) {
+      !(render.defaultProps == null && render.propTypes == null) ? warningWithoutStack$1(false, 'forwardRef render functions do not support propTypes or defaultProps. ' + 'Did you accidentally pass a React component?') : void 0;
+    }
+  }
+
+  return {
+    $$typeof: REACT_FORWARD_REF_TYPE,
+    render: render
+  };
+}
+
+function isValidElementType(type) {
+  return typeof type === 'string' || typeof type === 'function' ||
+  // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE);
+}
+
+function memo(type, compare) {
+  {
+    if (!isValidElementType(type)) {
+      warningWithoutStack$1(false, 'memo: The first argument must be a component. Instead ' + 'received: %s', type === null ? 'null' : typeof type);
+    }
+  }
+  return {
+    $$typeof: REACT_MEMO_TYPE,
+    type: type,
+    compare: compare === undefined ? null : compare
+  };
+}
+
+function resolveDispatcher() {
+  var dispatcher = ReactCurrentDispatcher.current;
+  !(dispatcher !== null) ? invariant(false, 'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.') : void 0;
+  return dispatcher;
+}
+
+function useContext(Context, unstable_observedBits) {
+  var dispatcher = resolveDispatcher();
+  {
+    !(unstable_observedBits === undefined) ? warning$1(false, 'useContext() second argument is reserved for future ' + 'use in React. Passing it is not supported. ' + 'You passed: %s.%s', unstable_observedBits, typeof unstable_observedBits === 'number' && Array.isArray(arguments[2]) ? '\n\nDid you call array.map(useContext)? ' + 'Calling Hooks inside a loop is not supported. ' + 'Learn more at https://fb.me/rules-of-hooks' : '') : void 0;
+
+    // TODO: add a more generic warning for invalid values.
+    if (Context._context !== undefined) {
+      var realContext = Context._context;
+      // Don't deduplicate because this legitimately causes bugs
+      // and nobody should be using this in existing code.
+      if (realContext.Consumer === Context) {
+        warning$1(false, 'Calling useContext(Context.Consumer) is not supported, may cause bugs, and will be ' + 'removed in a future major release. Did you mean to call useContext(Context) instead?');
+      } else if (realContext.Provider === Context) {
+        warning$1(false, 'Calling useContext(Context.Provider) is not supported. ' + 'Did you mean to call useContext(Context) instead?');
+      }
+    }
+  }
+  return dispatcher.useContext(Context, unstable_observedBits);
+}
+
+function useState(initialState) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useState(initialState);
+}
+
+function useReducer(reducer, initialArg, init) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useReducer(reducer, initialArg, init);
+}
+
+function useRef(initialValue) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useRef(initialValue);
+}
+
+function useEffect(create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useEffect(create, inputs);
+}
+
+function useLayoutEffect(create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useLayoutEffect(create, inputs);
+}
+
+function useCallback(callback, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useCallback(callback, inputs);
+}
+
+function useMemo(create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useMemo(create, inputs);
+}
+
+function useImperativeHandle(ref, create, inputs) {
+  var dispatcher = resolveDispatcher();
+  return dispatcher.useImperativeHandle(ref, create, inputs);
+}
+
+function useDebugValue(value, formatterFn) {
+  {
+    var dispatcher = resolveDispatcher();
+    return dispatcher.useDebugValue(value, formatterFn);
+  }
+}
+
+/**
+ * ReactElementValidator provides a wrapper around a element factory
+ * which validates the props passed to the element. This is intended to be
+ * used only in DEV and could be replaced by a static type checker for languages
+ * that support it.
+ */
+
+var propTypesMisspellWarningShown = void 0;
+
+{
+  propTypesMisspellWarningShown = false;
+}
+
+function getDeclarationErrorAddendum() {
+  if (ReactCurrentOwner.current) {
+    var name = getComponentName(ReactCurrentOwner.current.type);
+    if (name) {
+      return '\n\nCheck the render method of `' + name + '`.';
+    }
+  }
+  return '';
+}
+
+function getSourceInfoErrorAddendum(elementProps) {
+  if (elementProps !== null && elementProps !== undefined && elementProps.__source !== undefined) {
+    var source = elementProps.__source;
+    var fileName = source.fileName.replace(/^.*[\\\/]/, '');
+    var lineNumber = source.lineNumber;
+    return '\n\nCheck your code at ' + fileName + ':' + lineNumber + '.';
+  }
+  return '';
+}
+
+/**
+ * Warn if there's no key explicitly set on dynamic arrays of children or
+ * object keys are not valid. This allows us to keep track of children between
+ * updates.
+ */
+var ownerHasKeyUseWarning = {};
+
+function getCurrentComponentErrorInfo(parentType) {
+  var info = getDeclarationErrorAddendum();
+
+  if (!info) {
+    var parentName = typeof parentType === 'string' ? parentType : parentType.displayName || parentType.name;
+    if (parentName) {
+      info = '\n\nCheck the top-level render call using <' + parentName + '>.';
+    }
+  }
+  return info;
+}
+
+/**
+ * Warn if the element doesn't have an explicit key assigned to it.
+ * This element is in an array. The array could grow and shrink or be
+ * reordered. All children that haven't already been validated are required to
+ * have a "key" property assigned to it. Error statuses are cached so a warning
+ * will only be shown once.
+ *
+ * @internal
+ * @param {ReactElement} element Element that requires a key.
+ * @param {*} parentType element's parent's type.
+ */
+function validateExplicitKey(element, parentType) {
+  if (!element._store || element._store.validated || element.key != null) {
+    return;
+  }
+  element._store.validated = true;
+
+  var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+  if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
+    return;
+  }
+  ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
+
+  // Usually the current owner is the offender, but if it accepts children as a
+  // property, it may be the creator of the child that's responsible for
+  // assigning it a key.
+  var childOwner = '';
+  if (element && element._owner && element._owner !== ReactCurrentOwner.current) {
+    // Give the component that originally created this child.
+    childOwner = ' It was passed a child from ' + getComponentName(element._owner.type) + '.';
+  }
+
+  setCurrentlyValidatingElement(element);
+  {
+    warning$1(false, 'Each child in a list should have a unique "key" prop.' + '%s%s See https://fb.me/react-warning-keys for more information.', currentComponentErrorInfo, childOwner);
+  }
+  setCurrentlyValidatingElement(null);
+}
+
+/**
+ * Ensure that every element either is passed in a static location, in an
+ * array with an explicit keys property defined, or in an object literal
+ * with valid key property.
+ *
+ * @internal
+ * @param {ReactNode} node Statically passed child of any type.
+ * @param {*} parentType node's parent's type.
+ */
+function validateChildKeys(node, parentType) {
+  if (typeof node !== 'object') {
+    return;
+  }
+  if (Array.isArray(node)) {
+    for (var i = 0; i < node.length; i++) {
+      var child = node[i];
+      if (isValidElement(child)) {
+        validateExplicitKey(child, parentType);
+      }
+    }
+  } else if (isValidElement(node)) {
+    // This element was passed in a valid location.
+    if (node._store) {
+      node._store.validated = true;
+    }
+  } else if (node) {
+    var iteratorFn = getIteratorFn(node);
+    if (typeof iteratorFn === 'function') {
+      // Entry iterators used to provide implicit keys,
+      // but now we print a separate warning for them later.
+      if (iteratorFn !== node.entries) {
+        var iterator = iteratorFn.call(node);
+        var step = void 0;
+        while (!(step = iterator.next()).done) {
+          if (isValidElement(step.value)) {
+            validateExplicitKey(step.value, parentType);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Given an element, validate that its props follow the propTypes definition,
+ * provided by the type.
+ *
+ * @param {ReactElement} element
+ */
+function validatePropTypes(element) {
+  var type = element.type;
+  if (type === null || type === undefined || typeof type === 'string') {
+    return;
+  }
+  var name = getComponentName(type);
+  var propTypes = void 0;
+  if (typeof type === 'function') {
+    propTypes = type.propTypes;
+  } else if (typeof type === 'object' && (type.$$typeof === REACT_FORWARD_REF_TYPE ||
+  // Note: Memo only checks outer props here.
+  // Inner props are checked in the reconciler.
+  type.$$typeof === REACT_MEMO_TYPE)) {
+    propTypes = type.propTypes;
+  } else {
+    return;
+  }
+  if (propTypes) {
+    setCurrentlyValidatingElement(element);
+    checkPropTypes(propTypes, element.props, 'prop', name, ReactDebugCurrentFrame.getStackAddendum);
+    setCurrentlyValidatingElement(null);
+  } else if (type.PropTypes !== undefined && !propTypesMisspellWarningShown) {
+    propTypesMisspellWarningShown = true;
+    warningWithoutStack$1(false, 'Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', name || 'Unknown');
+  }
+  if (typeof type.getDefaultProps === 'function') {
+    !type.getDefaultProps.isReactClassApproved ? warningWithoutStack$1(false, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
+  }
+}
+
+/**
+ * Given a fragment, validate that it can only be provided with fragment props
+ * @param {ReactElement} fragment
+ */
+function validateFragmentProps(fragment) {
+  setCurrentlyValidatingElement(fragment);
+
+  var keys = Object.keys(fragment.props);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    if (key !== 'children' && key !== 'key') {
+      warning$1(false, 'Invalid prop `%s` supplied to `React.Fragment`. ' + 'React.Fragment can only have `key` and `children` props.', key);
+      break;
+    }
+  }
+
+  if (fragment.ref !== null) {
+    warning$1(false, 'Invalid attribute `ref` supplied to `React.Fragment`.');
+  }
+
+  setCurrentlyValidatingElement(null);
+}
+
+function createElementWithValidation(type, props, children) {
+  var validType = isValidElementType(type);
+
+  // We warn in this case but don't throw. We expect the element creation to
+  // succeed and there will likely be errors in render.
+  if (!validType) {
+    var info = '';
+    if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+      info += ' You likely forgot to export your component from the file ' + "it's defined in, or you might have mixed up default and named imports.";
+    }
+
+    var sourceInfo = getSourceInfoErrorAddendum(props);
+    if (sourceInfo) {
+      info += sourceInfo;
+    } else {
+      info += getDeclarationErrorAddendum();
+    }
+
+    var typeString = void 0;
+    if (type === null) {
+      typeString = 'null';
+    } else if (Array.isArray(type)) {
+      typeString = 'array';
+    } else if (type !== undefined && type.$$typeof === REACT_ELEMENT_TYPE) {
+      typeString = '<' + (getComponentName(type.type) || 'Unknown') + ' />';
+      info = ' Did you accidentally export a JSX literal instead of a component?';
+    } else {
+      typeString = typeof type;
+    }
+
+    warning$1(false, 'React.createElement: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', typeString, info);
+  }
+
+  var element = createElement.apply(this, arguments);
+
+  // The result can be nullish if a mock or a custom function is used.
+  // TODO: Drop this when these are no longer allowed as the type argument.
+  if (element == null) {
+    return element;
+  }
+
+  // Skip key warning if the type isn't valid since our key validation logic
+  // doesn't expect a non-string/function type and can throw confusing errors.
+  // We don't want exception behavior to differ between dev and prod.
+  // (Rendering will throw with a helpful message and as soon as the type is
+  // fixed, the key warnings will appear.)
+  if (validType) {
+    for (var i = 2; i < arguments.length; i++) {
+      validateChildKeys(arguments[i], type);
+    }
+  }
+
+  if (type === REACT_FRAGMENT_TYPE) {
+    validateFragmentProps(element);
+  } else {
+    validatePropTypes(element);
+  }
+
+  return element;
+}
+
+function createFactoryWithValidation(type) {
+  var validatedFactory = createElementWithValidation.bind(null, type);
+  validatedFactory.type = type;
+  // Legacy hook: remove it
+  {
+    Object.defineProperty(validatedFactory, 'type', {
+      enumerable: false,
+      get: function () {
+        lowPriorityWarning$1(false, 'Factory.type is deprecated. Access the class directly ' + 'before passing it to createFactory.');
+        Object.defineProperty(this, 'type', {
+          value: type
+        });
+        return type;
+      }
+    });
+  }
+
+  return validatedFactory;
+}
+
+function cloneElementWithValidation(element, props, children) {
+  var newElement = cloneElement.apply(this, arguments);
+  for (var i = 2; i < arguments.length; i++) {
+    validateChildKeys(arguments[i], newElement.type);
+  }
+  validatePropTypes(newElement);
+  return newElement;
+}
+
+// Helps identify side effects in begin-phase lifecycle hooks and setState reducers:
+
+
+// In some cases, StrictMode should also double-render lifecycles.
+// This can be confusing for tests though,
+// And it can be bad for performance in production.
+// This feature flag can be used to control the behavior:
+
+
+// To preserve the "Pause on caught exceptions" behavior of the debugger, we
+// replay the begin phase of a failed component inside invokeGuardedCallback.
+
+
+// Warn about deprecated, async-unsafe lifecycles; relates to RFC #6:
+
+
+// Gather advanced timing metrics for Profiler subtrees.
+
+
+// Trace which interactions trigger each commit.
+
+
+// Only used in www builds.
+ // TODO: true? Here it might just be false.
+
+// Only used in www builds.
+
+
+// Only used in www builds.
+
+
+// React Fire: prevent the value and checked attributes from syncing
+// with their related DOM properties
+
+
+// These APIs will no longer be "unstable" in the upcoming 16.7 release,
+// Control this behavior with a flag to support 16.6 minor releases in the meanwhile.
+var enableStableConcurrentModeAPIs = false;
+
+var React = {
+  Children: {
+    map: mapChildren,
+    forEach: forEachChildren,
+    count: countChildren,
+    toArray: toArray,
+    only: onlyChild
+  },
+
+  createRef: createRef,
+  Component: Component,
+  PureComponent: PureComponent,
+
+  createContext: createContext,
+  forwardRef: forwardRef,
+  lazy: lazy,
+  memo: memo,
+
+  useCallback: useCallback,
+  useContext: useContext,
+  useEffect: useEffect,
+  useImperativeHandle: useImperativeHandle,
+  useDebugValue: useDebugValue,
+  useLayoutEffect: useLayoutEffect,
+  useMemo: useMemo,
+  useReducer: useReducer,
+  useRef: useRef,
+  useState: useState,
+
+  Fragment: REACT_FRAGMENT_TYPE,
+  StrictMode: REACT_STRICT_MODE_TYPE,
+  Suspense: REACT_SUSPENSE_TYPE,
+
+  createElement: createElementWithValidation,
+  cloneElement: cloneElementWithValidation,
+  createFactory: createFactoryWithValidation,
+  isValidElement: isValidElement,
+
+  version: ReactVersion,
+
+  unstable_ConcurrentMode: REACT_CONCURRENT_MODE_TYPE,
+  unstable_Profiler: REACT_PROFILER_TYPE,
+
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: ReactSharedInternals
+};
+
+// Note: some APIs are added with feature flags.
+// Make sure that stable builds for open source
+// don't modify the React object to avoid deopts.
+// Also let's not expose their names in stable builds.
+
+if (enableStableConcurrentModeAPIs) {
+  React.ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+  React.Profiler = REACT_PROFILER_TYPE;
+  React.unstable_ConcurrentMode = undefined;
+  React.unstable_Profiler = undefined;
+}
+
+
+
+var React$2 = Object.freeze({
+	default: React
+});
+
+var React$3 = ( React$2 && React ) || React$2;
+
+// TODO: decide on the top-level export form.
+// This is hacky but makes it work with both Rollup and Jest.
+var react = React$3.default || React$3;
+
+module.exports = react;
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react/index.js":
+/*!*************************************!*\
+  !*** ./node_modules/react/index.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/react.development.js */ "./node_modules/react/cjs/react.development.js");
+}
 
 
 /***/ })

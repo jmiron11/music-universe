@@ -24,6 +24,7 @@
         var current_user = "{{ current_user.username }}";
         var album_art_endpoint = "{{ config.IMAGE_SERVING + config.ALBUM_ART_DIR }}";
         var artist_art_endpoint = "{{ config.IMAGE_SERVING + config.ARTIST_ART_DIR }}";
+        var profile_art_endpoint = "{{ config.IMAGE_SERVING + config.PROFILE_PIC_DIR }}";
     </script> <!-- Initial data passed to react app -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -62,8 +63,8 @@
     {% block content %}{% endblock %}
 
     </div>
-    
-    <script src="/static/js/react-bootstrap.min.js"/>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/7d6346c2db.js"></script>
     <script src="/static/dist/js/bundle.js"></script>
 </body>
