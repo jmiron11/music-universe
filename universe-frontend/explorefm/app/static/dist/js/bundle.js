@@ -738,8 +738,12 @@ function (_React$Component5) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "top-track-area"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        "class": "profile-section-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Recent Listens")), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "top-track"
-      }, this.state.top);
+      }, this.state.top));
     }
   }]);
 
@@ -2420,25 +2424,55 @@ function (_React$Component10) {
   }]);
 
   return ProfileSnapshot;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var Profile =
+/*#__PURE__*/
+function (_React$Component11) {
+  _inherits(Profile, _React$Component11);
+
+  function Profile(props) {
+    var _this11;
+
+    _classCallCheck(this, Profile);
+
+    _this11 = _possibleConstructorReturn(this, _getPrototypeOf(Profile).call(this, props));
+    _this11.state = {
+      profile_layout: [],
+      component_data: {}
+    };
+    return _this11;
+  }
+
+  _createClass(Profile, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
+    key: "render",
+    value: function render() {
+      // Single file layout, each col-md-6 components.
+      var components = [];
+
+      for (var i = 0; i < this.state.profile_layout.length; ++i) {
+        components.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "profile-component"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, " Hello ")));
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "profile-data"
+      }, components);
+    }
+  }]);
+
+  return Profile;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // Render all the things
 
 
-var domContainer = document.getElementById("top-tracks");
+var domContainer = document.getElementById("profile");
 
 if (domContainer != null) {
-  ReactDOM.render(react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, null), domContainer);
-}
-
-domContainer = document.getElementById("top-albums");
-
-if (domContainer != null) {
-  ReactDOM.render(e(TopAlbums), domContainer);
-}
-
-domContainer = document.getElementById("top-artists");
-
-if (domContainer != null) {
-  ReactDOM.render(e(TopArtists), domContainer);
+  ReactDOM.render(e(Profile), domContainer);
 }
 
 domContainer = document.getElementById("recent-listens");
@@ -2451,18 +2485,6 @@ domContainer = document.getElementById("timezone-form");
 
 if (domContainer != null) {
   ReactDOM.render(e(TimezoneForm), domContainer);
-}
-
-domContainer = document.getElementById("bio");
-
-if (domContainer != null) {
-  ReactDOM.render(e(Bio), domContainer);
-}
-
-domContainer = document.getElementById("highlighted-music");
-
-if (domContainer != null) {
-  ReactDOM.render(e(Highlight), domContainer);
 }
 
 domContainer = document.getElementById("follow-button");

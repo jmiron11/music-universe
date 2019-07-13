@@ -477,8 +477,13 @@ class RecentListens extends React.Component {
 
   render() {
     return (
-      <div className="top-track">
-        { this.state.top }
+      <div className="top-track-area">
+        <div class="profile-section-header">
+            <h6>Recent Listens</h6>
+        </div>
+        <div className="top-track">
+          { this.state.top }
+        </div>
       </div>
     );
   }
@@ -1578,27 +1583,48 @@ class ProfileSnapshot extends React.Component {
           </div>
         </div>
         <div className="profile-snapshot-row">
-
         </div>
       </div>
     )
   }
 }
 
+class Profile extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { 
+                  profile_layout: [],
+                  component_data: {}
+                 };
+  }
+
+  componentDidMount(){
+
+  }
+
+  render() {
+    // Single file layout, each col-md-6 components.
+    var components = []
+    for(let i = 0; i < this.state.profile_layout.length; ++i) {
+      components.push(
+        <div className="profile-component">
+          <h1> Hello </h1>
+        </div>
+      )
+    }
+
+    return (
+      <div className="profile-data">
+        { components }
+      </div>
+    )
+  }
+}
+
 // Render all the things
-var domContainer = document.getElementById("top-tracks")
+var domContainer = document.getElementById("profile")
 if (domContainer != null) {
-  ReactDOM.render(<TopTracks />, domContainer);
-}
-
-domContainer = document.getElementById("top-albums")
-if (domContainer != null) {
-  ReactDOM.render(e(TopAlbums), domContainer);
-}
-
-domContainer = document.getElementById("top-artists")
-if (domContainer != null) {
-  ReactDOM.render(e(TopArtists), domContainer);
+  ReactDOM.render(e(Profile), domContainer);
 }
 
 domContainer = document.getElementById("recent-listens")
@@ -1609,16 +1635,6 @@ if (domContainer != null) {
 domContainer = document.getElementById("timezone-form")
 if (domContainer != null) {
   ReactDOM.render(e(TimezoneForm), domContainer);
-}
-
-domContainer = document.getElementById("bio")
-if (domContainer != null) {
-  ReactDOM.render(e(Bio), domContainer);
-}
-
-domContainer = document.getElementById("highlighted-music")
-if (domContainer != null) {
-  ReactDOM.render(e(Highlight), domContainer);
 }
 
 domContainer = document.getElementById("follow-button")

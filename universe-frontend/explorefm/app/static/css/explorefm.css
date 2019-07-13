@@ -259,6 +259,16 @@ a { color: inherit; }
 
 .profile-data {
   padding: 0 5% 0 5%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.profile-component {
+  width: 43vw;
 }
 
 .profile-section-header {
