@@ -124,6 +124,7 @@ CREATE TABLE `profile_highlight` (
   `artist_id` INTEGER NULL DEFAULT NULL,
   `album_id` INTEGER NULL DEFAULT NULL,
   `track_id` INTEGER NULL DEFAULT NULL,
+  `note` VARCHAR(500) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -273,6 +274,39 @@ CREATE TABLE `note_music` (
 );
 
 -- ---
+-- Table 'profile_layout'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `profile_layout`;
+    
+CREATE TABLE `profile_layout` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `layout` VARCHAR(500) NULL DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'profile_piece'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `profile_piece`;
+    
+CREATE TABLE `profile_piece` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `piece_type` VARCHAR(30) NULL DEFAULT NULL,
+  `piece_options` VARCHAR(500) NULL DEFAULT NULL,
+  `refer_track_id` INTEGER NULL DEFAULT NULL,
+  `refer_artist_id` INTEGER NULL DEFAULT NULL,
+  `refer_album_id` INTEGER NULL DEFAULT NULL,
+  `pieceText` VARCHAR(500) NULL DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
 -- Foreign Keys 
 -- ---
 
@@ -308,6 +342,11 @@ ALTER TABLE `note_music` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 ALTER TABLE `note_music` ADD FOREIGN KEY (track_id) REFERENCES `track` (`id`);
 ALTER TABLE `note_music` ADD FOREIGN KEY (album_id) REFERENCES `album` (`id`);
 ALTER TABLE `note_music` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `profile_layout` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
+ALTER TABLE `profile_piece` ADD FOREIGN KEY (refer_track_id) REFERENCES `track` (`id`);
+ALTER TABLE `profile_piece` ADD FOREIGN KEY (refer_artist_id) REFERENCES `artist` (`id`);
+ALTER TABLE `profile_piece` ADD FOREIGN KEY (refer_album_id) REFERENCES `album` (`id`);
+ALTER TABLE `profile_piece` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 
 -- ---
 -- Table Properties
@@ -330,6 +369,8 @@ ALTER TABLE `note_music` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 -- ALTER TABLE `message_thread` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `loved_music` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `note_music` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `profile_layout` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `profile_piece` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
@@ -349,8 +390,8 @@ ALTER TABLE `note_music` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 -- ('','','','');
 -- INSERT INTO `user_listen` (`id`,`user_id`,`track_id`,`progress`) VALUES
 -- ('','','','');
--- INSERT INTO `profile_highlight` (`id`,`user_id`,`artist_id`,`album_id`,`track_id`) VALUES
--- ('','','','','');
+-- INSERT INTO `profile_highlight` (`id`,`user_id`,`artist_id`,`album_id`,`track_id`,`note`) VALUES
+-- ('','','','','','');
 -- INSERT INTO `profile_bio` (`id`,`bio`,`user_id`) VALUES
 -- ('','','');
 -- INSERT INTO `album_art` (`id`,`path_medium`,`path_small`,`album_id`) VALUES
@@ -369,3 +410,7 @@ ALTER TABLE `note_music` ADD FOREIGN KEY (artist_id) REFERENCES `artist` (`id`);
 -- ('','','','','','','','');
 -- INSERT INTO `note_music` (`id`,`user_id`,`track_id`,`album_id`,`artist_id`,`time_noted`) VALUES
 -- ('','','','','','');
+-- INSERT INTO `profile_layout` (`id`,`layout`,`user_id`) VALUES
+-- ('','','');
+-- INSERT INTO `profile_piece` (`id`,`piece_type`,`piece_options`,`refer_track_id`,`refer_artist_id`,`refer_album_id`,`pieceText`,`user_id`) VALUES
+-- ('','','','','','','','');

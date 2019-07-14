@@ -28,6 +28,9 @@ class User(UserMixin, db.Model):
 
     loved_music = db.relationship('LovedMusic', lazy=True)
 
+    profile_pieces = db.relationship('ProfilePiece', lazy=True)
+    profile_layout = db.relationship('ProfileLayout', lazy=True)
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
@@ -511,6 +514,40 @@ class User(UserMixin, db.Model):
         entry.is_loved = False
         db.session.commit()
 
+    def update_profile_piece(self, piece_id, piece_type, piece_options):
+        if piece_id == -1:
+            if piece_type == "TopTracks":
+                u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
+            elif piece_type == "TopAlbums":
+                u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
+            elif piece_type == "TopArtists":
+                u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
+            elif piece_type == "Bio":
+                bio = str(piece_options["Text"])
+                piece_options.pop("Text")
+                u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options), text=bio) 
+            elif piece_type == "ListenSummary":
+                pass
+            elif piece_type == "RecentListens":
+                u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
+            elif piece_type == "MusicHighlight":
+                pass
+
+            if u_piece: #Remove once all entries create u_piece
+                db.session.add(u_piece)
+                db.session.commit()
+                db.session.flush()
+                return u_piece.id
+
+    def update_profile_layout(self, profile_layout):
+        if len(self.profile_layout) > 0:
+            self.profile_layout[0].layout = str(profile_layout)
+        else:
+            u_profile_layout = ProfileLayout(user_id=self.id, layout=str(profile_layout))
+            db.session.add(u_profile_layout)
+        db.session.commit()
+
+
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'
 
@@ -622,7 +659,7 @@ class MessageThread(db.Model):
 
 class LovedMusic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     track_id = db.Column(db.Integer, db.ForeignKey(Track.id))
     album_id = db.Column(db.Integer, db.ForeignKey(Album.id))
     artist_id = db.Column(db.Integer, db.ForeignKey(Artist.id))
@@ -630,3 +667,17 @@ class LovedMusic(db.Model):
     first_time_loved = db.Column(db.DateTime)
     last_time_loved = db.Column(db.DateTime)
 
+class ProfilePiece(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    piece_type = db.Column(db.String(30))
+    piece_options = db.Column(db.String(500))
+    refer_track_id = db.Column(db.Integer, db.ForeignKey(Track.id))
+    refer_album_id = db.Column(db.Integer, db.ForeignKey(Album.id))
+    refer_artist_id = db.Column(db.Integer, db.ForeignKey(Artist.id))
+    pieceText = db.Column(db.String(500))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+
+class ProfileLayout(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    layout = db.Column(db.String(500))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))

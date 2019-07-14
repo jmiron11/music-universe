@@ -1,0 +1,38 @@
+Serialization of profile pieces
+
+Format of all profile pieces:
+{
+	"PieceId": <Int or -1 if new piece>
+	"PieceType": <One of:
+					"TopTracks",
+					"TopAlbums",
+					"TopArtists",
+					"Bio",
+					"ListenSummary",
+					"RecentListens",
+					"MusicHighlight"
+				 >,
+
+	"PieceData": { // See PieceData for each field
+		"Field": "Value"
+	}
+}
+
+
+
+Piece Data:
+
+RecentListens {
+	"Number": <Int> // The number of recent listens to include.
+}
+
+Bio {
+	"Text": <String>
+}
+
+MusicHighlight {
+	"Type": <One of "Track", "Album", "Artist">
+	"Track": <TrackName or omitted>
+	"Album": <AlbumName or omitted>	
+	"Artist": <ArtistName or omitted>
+}

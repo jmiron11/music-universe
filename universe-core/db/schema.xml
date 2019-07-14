@@ -167,7 +167,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="757" y="359" name="profile_highlight">
+<table x="243" y="1031" name="profile_highlight">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -187,11 +187,14 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="track" row="id" />
 </row>
+<row name="note" null="1" autoincrement="0">
+<datatype>VARCHAR(500)</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="759" y="515" name="profile_bio">
+<table x="242" y="933" name="profile_bio">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -239,7 +242,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="761" y="620" name="profile_image">
+<table x="242" y="834" name="profile_image">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -294,7 +297,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="762" y="897" name="message_thread">
+<table x="764" y="899" name="message_thread">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -390,6 +393,54 @@
 <row name="time_noted" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="244" y="1205" name="profile_layout">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="layout" null="1" autoincrement="0">
+<datatype>VARCHAR(500)</datatype>
+<default>NULL</default></row>
+<row name="user_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="user" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="245" y="1305" name="profile_piece">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="piece_type" null="1" autoincrement="0">
+<datatype>VARCHAR(30)</datatype>
+<default>NULL</default></row>
+<row name="piece_options" null="1" autoincrement="0">
+<datatype>VARCHAR(500)</datatype>
+<default>NULL</default></row>
+<row name="refer_track_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="track" row="id" />
+</row>
+<row name="refer_artist_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="artist" row="id" />
+</row>
+<row name="refer_album_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="album" row="id" />
+</row>
+<row name="pieceText" null="1" autoincrement="0">
+<datatype>VARCHAR(500)</datatype>
+<default>NULL</default></row>
+<row name="user_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="user" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

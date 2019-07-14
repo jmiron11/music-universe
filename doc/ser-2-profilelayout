@@ -1,0 +1,5 @@
+Serialization of profile layout
+
+{
+	"Format": [List of profile highlight ids]
+}

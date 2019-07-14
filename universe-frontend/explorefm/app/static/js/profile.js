@@ -478,7 +478,7 @@ class RecentListens extends React.Component {
   render() {
     return (
       <div className="top-track-area">
-        <div class="profile-section-header">
+        <div className="profile-section-header">
             <h6>Recent Listens</h6>
         </div>
         <div className="top-track">
@@ -563,10 +563,10 @@ class Bio extends React.Component {
 
   renderEditMode() {
     return (
-      <div class="bio-edit-area">
+      <div className="bio-edit-area">
       <textarea id="bio-edit-form" className="bio-edit-form" type="text" max-length="500">{this.state.bio}
       </textarea>
-      <div class="bio-button-row">
+      <div className="bio-button-row">
         <button className="bio-button" onClick={ this.disableEditModeClearBio }>Cancel</button>
         <button className="bio-button" onClick={ this.disableEditModeSaveBio }>Save</button>
       </div>
@@ -1442,7 +1442,6 @@ class ProfileSnapshot extends React.Component {
       var self = this
       var request = '/user/' + profile_modal_user + '/profile_snapshot/'
       axios.get(request).then(function(response) {
-        console.log(response.data)
         self.state.profile_snapshot = response.data
         self.setState(self.state)
       })
@@ -1594,28 +1593,252 @@ class Profile extends React.Component {
     super(props)
     this.state = { 
                   profile_layout: [],
-                  component_data: {}
+                  profile_pieces: {}, // Profile pieces we already have stored.
+                  editProfileModalValue: "SelectComponent",
+                  editProfileModalOptions: {},
+                  pendingUpdateMode: false
                  };
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    var self = this
+    var request = '/user/' + user + '/profile/'
+    axios.get(request).then(function(response) {
+      self.state.profile_layout = response.data["ProfileLayout"]["Format"]
+      for (var piece_id in response.data["ProfilePieces"]) {
+        self.state.profile_pieces[piece_id] = response.data["ProfilePieces"][piece_id]
+      } 
+      self.setState(self.state)
+    })
 
+  }
+
+  // Serialization format:
+  // { 
+  //  "ProfileFormat": [ <Profile Piece Id>, ... ]
+  // }
+  //
+  serializeProfileFromState() {
+    var json_layout = {
+      "Format": this.state.profile_layout
+    }
+
+    var request_endpoint = '/update/profile_layout'
+    axios.post(request_endpoint, json_layout).then(function(response) {
+      console.log(response)
+    })
+
+  }
+
+  deserializeProfileToState(profile_data) {
+
+  }
+
+  // On submit, assumes that editProfileModalValue and editProfileModalOptions are appropriately set.
+  submitProfileEdit = (event) => {
+    // Submit the new profile piece, it returns an identifier.
+    var json_piece = {
+      "PieceId": -1,
+      "PieceType": this.state.editProfileModalValue,
+      "PieceOptions": this.state.editProfileModalOptions // Probably add option validation
+    }
+
+    var self = this
+    var request_endpoint = '/update/profile_piece'
+    axios.post(request_endpoint, json_piece).then(function(response) {
+      // Submit the new serialized profile.
+      self.state.profile_layout.push(response.data)
+      self.state.profile_pieces[response.data] = json_piece
+      self.setState(self.state)
+      self.serializeProfileFromState()
+    })
+
+    // Reset the add component modal.
+    this.state.editProfileModalValue = "SelectComponent"
+    this.setState(this.state)
+
+    // Close the modal using jquery.
+    $(function () {
+       $('#profileEditModal').modal('toggle');
+    });
+  }
+
+  updateEditProfileModal = (event) => {
+    this.state.editProfileModalValue = event.target.value
+    this.state.editProfileModalOptions = {} // Reset the modal options
+    this.setState(this.state)
+  }
+
+  updateModalOption = (event) => {
+    if (event.target.id == "recentListenCount") {
+      this.state.editProfileModalOptions["Number"] = event.target.value
+    }
+
+    this.setState(this.state)
+  }
+
+  displayProfileEditModal() {
+
+  }
+
+  displayModalHelp() {
+    return (
+      <div className="profile-edit-help">
+        <h1 className="profile-edit-help-text">Want to cancel your changes? Just click outside the edit box!</h1>
+      </div>
+    )
+  }
+
+  getAddComponent() {
+    var additionalOptions;
+
+    if (this.state.editProfileModalOptions == "SelectComponent") {
+      additionalOptions = undefined
+    } else if (this.state.editProfileModalValue == "TopTracks") {
+      additionalOptions = (
+        <div className="profile-edit-options">
+          <div className="profile-edit-row">
+            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+          </div>
+        </div>
+      )
+    } else if (this.state.editProfileModalValue == "TopAlbums") {
+      additionalOptions = (
+        <div className="profile-edit-options">
+          <div className="profile-edit-row">
+            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+          </div>
+        </div>
+      )
+    } else if (this.state.editProfileModalValue == "TopArtists") {
+      additionalOptions = (
+        <div className="profile-edit-options">
+          <div className="profile-edit-row">
+            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+          </div>
+        </div>
+      )
+    } else if (this.state.editProfileModalValue == "Bio") {
+      additionalOptions = (
+        <div className="profile-edit-options">
+          <div className="profile-edit-row">
+            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+          </div>
+        </div>
+      )
+    } else if (this.state.editProfileModalValue == "ListenSummary") {
+      additionalOptions = (
+        <div className="profile-edit-options">
+          <div className="profile-edit-row">
+            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+          </div>
+        </div>
+      )
+    } else if (this.state.editProfileModalValue == "RecentListens") {
+      // Initialize the default values for the modal options
+
+      if (!("Number" in this.state.editProfileModalOptions)) {
+        this.state.editProfileModalOptions["Number"] = "5"
+      }
+
+      additionalOptions = (
+        <div className="profile-edit-options">
+          <div className="profile-edit-row">
+            <h1 className="profile-edit-options-name">Number of listens</h1>
+            <select id="recentListenCount" onChange={this.updateModalOption} value={this.state.editProfileModalOptions["Number"]}>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+          <div className="profile-edit-row">
+            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="profile-component">
+        <button className="profile-edit-button" data-toggle="modal" data-target="#profileEditModal">Add Profile Piece</button>
+        <div id="profileEditModal" className="modal fade" role="dialog">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-body profile-edit-modal">
+                <div className="profile-edit-row">
+                  <h1 className="profile-edit-options-name">Profile Piece</h1>
+                  <select id="profile-area" onChange={this.updateEditProfileModal} value={this.state.editProfileModalValue}>
+                    <option value="SelectComponent">Select a component...</option>
+                    <option value="TopTracks">Top Tracks</option>
+                    <option value="TopAlbums">Top Albums</option>
+                    <option value="TopArtists">Top Artists</option>
+                    <option value="Bio">Bio</option>
+                    <option value="ListenSummary">Listen Summary</option>
+                    <option value="RecentListens">Recent Listens</option>
+                  </select>
+                </div>
+                { additionalOptions }
+                { this.displayModalHelp() }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   render() {
     // Single file layout, each col-md-6 components.
     var components = []
     for(let i = 0; i < this.state.profile_layout.length; ++i) {
-      components.push(
-        <div className="profile-component">
-          <h1> Hello </h1>
-        </div>
-      )
-    }
+      var piece_id = this.state.profile_layout[i]
+      var key = "profile-piece-" + piece_id.toString()
+      if (piece_id in this.state.profile_pieces) {
+        var piece_data = this.state.profile_pieces[piece_id]
+        if (piece_data["PieceType"] == "TopTracks") {
+          components.push(
+            <div id={key} className="profile-component">
+              <TopTracks />
+            </div>
+          )
+        } else if (piece_data["PieceType"] == "TopAlbums") {
+          components.push(
+            <div id={key} className="profile-component">
+              <TopAlbums />
+            </div>
+          )
+        } else if (piece_data["PieceType"] == "TopArtists") {
+          components.push(
+            <div id={key} className="profile-component">
+              <TopArtists />
+            </div>
+          )
+        } else if (piece_data["PieceType"] == "Bio") {
+          components.push(
+            <div id={key} className="profile-component">
+              <Bio />
+            </div>
+          )
+        } else if (piece_data["PieceType"] == "ListenSummary") {
+          components.push(
+            <div id={key} className="profile-component">
+              <h1>To Implement</h1>
+            </div>
+          )
+        } else if (piece_data["PieceType"] == "RecentListens") {
+          components.push(
+            <div id={key} className="profile-component">
+              <RecentListens />
+            </div>
+          )
+        }
+      }    }
 
     return (
-      <div className="profile-data">
+      <div key="profile" className="profile-data">
         { components }
+        { this.getAddComponent() }
       </div>
     )
   }
@@ -1625,11 +1848,6 @@ class Profile extends React.Component {
 var domContainer = document.getElementById("profile")
 if (domContainer != null) {
   ReactDOM.render(e(Profile), domContainer);
-}
-
-domContainer = document.getElementById("recent-listens")
-if (domContainer != null) {
-  ReactDOM.render(e(RecentListens), domContainer);
 }
 
 domContainer = document.getElementById("timezone-form")

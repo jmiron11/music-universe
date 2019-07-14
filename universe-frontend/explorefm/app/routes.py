@@ -8,7 +8,7 @@ from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 import time
 import os
-
+from collections import defaultdict
 
 # Web routes endpoints.
 @app.route('/login', methods=['GET', 'POST'])
@@ -206,6 +206,26 @@ def user_profile_snapshot(username):
 
     return jsonify(profile_snapshot)
 
+@app.route('/user/<username>/profile/')
+def user_profile(username):
+    user = User.query.filter_by(username=username).first_or_404()   
+    profile_data = {
+        "ProfilePieces": defaultdict(dict),
+        "ProfileLayout": {
+            "Format": []
+        }
+    }
+
+    if len(user.profile_layout) > 0:
+        profile_data["ProfileLayout"]["Format"] = eval(user.profile_layout[0].layout)
+    
+    for piece in user.profile_pieces:
+       piece_data = profile_data["ProfilePieces"][piece.id]
+       piece_data["PieceType"] = piece.piece_type
+       piece_data["PieceData"] = piece.piece_options
+
+    return jsonify(profile_data)
+
 # User data update endpoints
 @app.route('/update/highlight/')
 @login_required
@@ -282,6 +302,20 @@ def upload_profile_image():
             current_user.update_profile_image(full_path)
             return redirect(url_for('user', username=current_user.username))
     return render_template('upload_profile.html', user=current_user)
+
+@app.route('/update/profile_piece', methods=['POST'])
+@login_required
+def update_profile_piece():
+    profile_piece_json = request.get_json()
+    piece_id = current_user.update_profile_piece(profile_piece_json["PieceId"], profile_piece_json["PieceType"], profile_piece_json["PieceOptions"])
+    return jsonify(piece_id)
+
+@app.route('/update/profile_layout', methods=['POST'])
+@login_required
+def update_profile_layout():
+    profile_layout_json = request.get_json()
+    current_user.update_profile_layout(profile_layout_json["Format"])
+    return "Some data"
 
 @app.route('/update/is_following/<username>/<boolean>', methods=['GET', 'POST'])
 @login_required
