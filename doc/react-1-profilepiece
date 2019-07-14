@@ -1,0 +1,16 @@
+This details the design of the profile piece, a react component that can be dynamically changed.
+
+A profile piece's state is composed of:
+{
+	PieceId: <Int>
+	PieceType: <String>
+	PieceData: { Dict of data for the piece } // i.e. the text for a bio, the number of listens to display.
+}
+
+A profile is always composed of atleast 2 profile pieces that are blank and can be added to. These are 
+only displayed when the profile belongs to the user. Otherwise they are not displayed.
+
+A profile piece is typically composed of:
+ - A profile piece object
+ - a settings modal
+ - a settings button

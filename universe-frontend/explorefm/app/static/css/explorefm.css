@@ -262,6 +262,12 @@ a { color: inherit; }
   padding-bottom: 1vh;
 }
 
+.profile-piece-settings-button {
+  position: absolute;
+  top: 0;
+  right 0;
+}
+
 .profile-edit-save {
   margin-left: auto;
 }

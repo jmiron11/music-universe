@@ -2372,9 +2372,11 @@ function (_React$Component11) {
       },
       profile_pieces: {},
       // Profile pieces we already have stored.
+      profile_piece_edits: {},
       editProfileModalValue: "SelectComponent",
       editProfileModalOptions: {},
-      pendingUpdateMode: false
+      pendingUpdateMode: false,
+      isCurrentUser: true
     };
     return _this11;
   }
@@ -2414,7 +2416,7 @@ function (_React$Component11) {
 
   }, {
     key: "submitProfileEdit",
-    value: function submitProfileEdit(column_to_place) {
+    value: function submitProfileEdit(piece_id) {
       if (this.state.editProfileModalValue == "Bio") {
         this.state.editProfileModalOptions["Text"] = document.getElementById("profile-bio-edit-form").value;
       } // Submit the new profile piece, it returns an identifier.
@@ -2426,25 +2428,37 @@ function (_React$Component11) {
         "PieceData": this.state.editProfileModalOptions // Probably add option validation
 
       };
+
+      if (piece_id >= 0) {
+        json_piece["PieceId"] = piece_id;
+      }
+
       var self = this;
       var request_endpoint = '/update/profile_piece';
       axios.post(request_endpoint, json_piece).then(function (response) {
         // Submit the new serialized profile.
-        self.state.profile_layout[column_to_place].push(response.data); // Update state internally once we have the piece_id
+        if (piece_id == -1) {
+          self.state.profile_layout["Left"].push(response.data);
+        } else if (piece_id == -2) {
+          self.state.profile_layout["Right"].push(repsonse.data);
+        } // Update state internally once we have the piece_id
 
-        console.log(json_piece);
+
         self.state.profile_pieces[response.data] = json_piece;
-        self.setState(self.state);
-        self.serializeProfileFromState();
+        self.setState(self.state); // A new piece has been added.
+
+        if (piece_id < 0) {
+          self.serializeProfileFromState();
+        }
       }); // Reset the add component modal.
 
       this.state.editProfileModalValue = "SelectComponent";
       this.setState(this.state); // Close the modal using jquery. Both columns are hidden as we currently don't track which
       // column called this function.
 
+      var self = this;
       $(function () {
-        $('#profileEditModal-Left').modal('hide');
-        $('#profileEditModal-Right').modal('hide');
+        $('#' + self.getModalTag(piece_id)).modal('hide');
       });
     }
   }, {
@@ -2460,12 +2474,32 @@ function (_React$Component11) {
       }, "Want to cancel your changes? Just click outside the edit box!"));
     }
   }, {
-    key: "getAddComponent",
-    value: function getAddComponent(column) {
+    key: "getModalTag",
+    value: function getModalTag(piece_id) {
+      return "profileEditModal" + piece_id.toString();
+    }
+  }, {
+    key: "getNewComponent",
+    value: function getNewComponent(piece_id) {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        key: "new-profile-piece-group" + piece_id.toString(),
+        className: "profile-component"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+        className: "profile-edit-button",
+        "data-toggle": "modal",
+        "data-target": "#" + this.getModalTag(piece_id)
+      }, "Add Profile Piece"), this.getComponentModal(piece_id));
+    }
+  }, {
+    key: "getComponentModal",
+    value: function getComponentModal(piece_id) {
       var _this12 = this;
 
-      var myColumn = column;
-      var additionalOptions;
+      var additionalOptions; // if (!(piece_id in this.state.profile_piece_edits)) {
+      //   if (piece_id in this.state.profile_pieces) {
+      //     this.state.profile_piece_edits[piece_id] = this.state.profile_pieces[piece_id]
+      //   }
+      // }
 
       if (this.state.editProfileModalOptions == "SelectComponent") {
         additionalOptions = undefined;
@@ -2477,7 +2511,7 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
-            return _this12.submitProfileEdit(myColumn);
+            return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
       } else if (this.state.editProfileModalValue == "TopAlbums") {
@@ -2488,7 +2522,7 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
-            return _this12.submitProfileEdit(myColumn);
+            return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
       } else if (this.state.editProfileModalValue == "TopArtists") {
@@ -2499,7 +2533,7 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
-            return _this12.submitProfileEdit(myColumn);
+            return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
       } else if (this.state.editProfileModalValue == "Bio") {
@@ -2523,7 +2557,7 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
-            return _this12.submitProfileEdit(myColumn);
+            return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
       } else if (this.state.editProfileModalValue == "ListenSummary") {
@@ -2534,7 +2568,7 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
-            return _this12.submitProfileEdit(myColumn);
+            return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
       } else if (this.state.editProfileModalValue == "RecentListens") {
@@ -2566,23 +2600,13 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
-            return _this12.submitProfileEdit(myColumn);
+            return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
       }
 
-      var key = "add-component-" + column;
-      var id = "profileEditModal-" + column;
-      var target = "#" + id;
       return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        key: key,
-        className: "profile-component"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-        className: "profile-edit-button",
-        "data-toggle": "modal",
-        "data-target": target
-      }, "Add Profile Piece"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        id: id,
+        id: this.getModalTag(piece_id),
         className: "modal fade",
         role: "dialog"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2613,35 +2637,52 @@ function (_React$Component11) {
         value: "ListenSummary"
       }, "Listen Summary"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "RecentListens"
-      }, "Recent Listens"))), additionalOptions, this.displayModalHelp())))));
+      }, "Recent Listens"))), additionalOptions, this.displayModalHelp()))));
+    }
+  }, {
+    key: "getSettingsButtonForPiece",
+    value: function getSettingsButtonForPiece(piece_id) {
+      if (this.state.isCurrentUser) {
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "profile-settings-button-group"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-piece-settings-button",
+          "data-toggle": "modal",
+          "data-target": "#" + this.getModalTag(piece_id)
+        }, "Settings"), this.getComponentModal(piece_id));
+      } else {
+        return "";
+      }
     }
   }, {
     key: "getProfilePieceComponent",
     value: function getProfilePieceComponent(piece_id, piece_data) {
       var key = "profile-piece-" + piece_id.toString();
-      var props = {};
+      var props = {
+        piece_id: piece_id
+      };
 
       if (piece_data["PieceType"] == "TopTracks") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, props));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, props), this.getSettingsButtonForPiece(piece_id));
       } else if (piece_data["PieceType"] == "TopAlbums") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopAlbums, props));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopAlbums, props), this.getSettingsButtonForPiece(piece_id));
       } else if (piece_data["PieceType"] == "TopArtists") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopArtists, props));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopArtists, props), this.getSettingsButtonForPiece(piece_id));
       } else if (piece_data["PieceType"] == "Bio") {
         props["bio_text"] = piece_data["PieceData"]["Text"];
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Bio, props));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Bio, props), this.getSettingsButtonForPiece(piece_id));
       } else if (piece_data["PieceType"] == "ListenSummary") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
@@ -2651,7 +2692,7 @@ function (_React$Component11) {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, props));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, props), this.getSettingsButtonForPiece(piece_id));
       }
     }
   }, {
@@ -2688,10 +2729,10 @@ function (_React$Component11) {
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         id: "col-left",
         className: "col-md-6 col-sm-6 col-xs-12"
-      }, components_left, this.getAddComponent("Left")), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+      }, components_left, this.getNewComponent(-1)), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         id: "col-right",
         className: "col-md-6 col-sm-6 col-xs-12"
-      }, components_right, this.getAddComponent("Right"))));
+      }, components_right, this.getNewComponent(-2))));
     }
   }]);
 

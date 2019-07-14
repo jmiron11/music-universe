@@ -538,6 +538,23 @@ class User(UserMixin, db.Model):
                 db.session.commit()
                 db.session.flush()
                 return u_piece.id
+        else:
+            entry = db.session.query(ProfilePiece).filter(
+            and_(
+                ProfilePiece.user_id == self.id,
+                ProfilePiece.id == piece_id
+            )).first()
+
+            entry.piece_type = str(piece_type)
+            if piece_type in ["TopTracks", "TopAlbums", "TopArtists", "ListenSummary", "RecentListens", "MusicHighlight"]:
+                entry.piece_options = str(piece_options)
+            elif piece_type == "Bio":
+                bio = str(piece_options["Text"])
+                piece_options.pop("Text")
+                entry.piece_text = bio
+
+            db.session.commit()
+            return entry.id
 
     def update_profile_layout(self, profile_layout):
         if len(self.profile_layout) > 0:

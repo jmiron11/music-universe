@@ -1519,9 +1519,11 @@ class Profile extends React.Component {
                     "Right": []
                   },
                   profile_pieces: {}, // Profile pieces we already have stored.
+                  profile_piece_edits: {},
                   editProfileModalValue: "SelectComponent",
                   editProfileModalOptions: {},
-                  pendingUpdateMode: false
+                  pendingUpdateMode: false,
+                  isCurrentUser: true
                  };
   }
 
@@ -1558,7 +1560,7 @@ class Profile extends React.Component {
   }
 
   // On submit, assumes that editProfileModalValue and editProfileModalOptions are appropriately set.
-  submitProfileEdit(column_to_place) {
+  submitProfileEdit(piece_id) {
 
     if (this.state.editProfileModalValue == "Bio") {
       this.state.editProfileModalOptions["Text"] = document.getElementById("profile-bio-edit-form").value
@@ -1571,18 +1573,29 @@ class Profile extends React.Component {
       "PieceData": this.state.editProfileModalOptions // Probably add option validation
     }
 
+    if (piece_id >= 0) {
+      json_piece["PieceId"] = piece_id
+    }
+
     var self = this
     var request_endpoint = '/update/profile_piece'
     axios.post(request_endpoint, json_piece).then(function(response) {
       // Submit the new serialized profile.
-      self.state.profile_layout[column_to_place].push(response.data)
+
+      if (piece_id == -1) {
+        self.state.profile_layout["Left"].push(response.data)
+      } else if (piece_id == -2) {
+        self.state.profile_layout["Right"].push(repsonse.data)
+      }
 
       // Update state internally once we have the piece_id
-      console.log(json_piece)
       self.state.profile_pieces[response.data] = json_piece
-
       self.setState(self.state)
-      self.serializeProfileFromState()
+
+      // A new piece has been added.
+      if (piece_id < 0) {
+        self.serializeProfileFromState()
+      }
     })
 
     // Reset the add component modal.
@@ -1591,9 +1604,9 @@ class Profile extends React.Component {
 
     // Close the modal using jquery. Both columns are hidden as we currently don't track which
     // column called this function.
+    var self = this
     $(function () {
-       $('#profileEditModal-Left').modal('hide');
-       $('#profileEditModal-Right').modal('hide');
+       $('#' + self.getModalTag(piece_id)).modal('hide');
     });
   }
 
@@ -1625,9 +1638,27 @@ class Profile extends React.Component {
     )
   }
 
-  getAddComponent(column) {
-    var myColumn = column
+  getModalTag(piece_id) {
+    return "profileEditModal" + piece_id.toString()
+  }
+
+  getNewComponent(piece_id) {
+    return (
+      <div key={ "new-profile-piece-group" + piece_id.toString()} className="profile-component">
+        <button className="profile-edit-button" data-toggle="modal" data-target={ "#" + this.getModalTag(piece_id) }>Add Profile Piece</button>
+        { this.getComponentModal(piece_id) }
+      </div>
+    )
+  }
+
+  getComponentModal(piece_id) {
     var additionalOptions;
+
+    // if (!(piece_id in this.state.profile_piece_edits)) {
+    //   if (piece_id in this.state.profile_pieces) {
+    //     this.state.profile_piece_edits[piece_id] = this.state.profile_pieces[piece_id]
+    //   }
+    // }
 
     if (this.state.editProfileModalOptions == "SelectComponent") {
       additionalOptions = undefined
@@ -1635,7 +1666,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
@@ -1643,7 +1674,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
@@ -1651,7 +1682,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
@@ -1665,7 +1696,7 @@ class Profile extends React.Component {
             <textarea id="profile-bio-edit-form" className="bio-edit-form" type="text" max-length="500" value={this.state.editProfileModalOptions["Text"]} onChange={this.updateModalOption} />
           </div>
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
@@ -1673,7 +1704,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
@@ -1696,37 +1727,31 @@ class Profile extends React.Component {
             </select>
           </div>
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
     }
 
-    var key = "add-component-" + column
-    var id = "profileEditModal-" + column
-    var target = "#" + id
     return (
-      <div key={key} className="profile-component">
-        <button className="profile-edit-button" data-toggle="modal" data-target={target}>Add Profile Piece</button>
-        <div id={id} className="modal fade" role="dialog">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-body profile-edit-modal">
-                <div className="profile-edit-row">
-                  <h1 className="profile-edit-options-name">Profile Piece</h1>
-                  <select id="profile-area" onChange={this.updateEditProfileModal} value={this.state.editProfileModalValue}>
-                    <option value="SelectComponent">Select a component...</option>
-                    <option value="TopTracks">Top Tracks</option>
-                    <option value="TopAlbums">Top Albums</option>
-                    <option value="TopArtists">Top Artists</option>
-                    <option value="Bio">Bio</option>
-                    <option value="ListenSummary">Listen Summary</option>
-                    <option value="RecentListens">Recent Listens</option>
-                  </select>
-                </div>
-                { additionalOptions }
-                { this.displayModalHelp() }
+      <div id={ this.getModalTag(piece_id) } className="modal fade" role="dialog">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-body profile-edit-modal">
+              <div className="profile-edit-row">
+                <h1 className="profile-edit-options-name">Profile Piece</h1>
+                <select id="profile-area" onChange={this.updateEditProfileModal} value={this.state.editProfileModalValue}>
+                  <option value="SelectComponent">Select a component...</option>
+                  <option value="TopTracks">Top Tracks</option>
+                  <option value="TopAlbums">Top Albums</option>
+                  <option value="TopArtists">Top Artists</option>
+                  <option value="Bio">Bio</option>
+                  <option value="ListenSummary">Listen Summary</option>
+                  <option value="RecentListens">Recent Listens</option>
+                </select>
               </div>
+              { additionalOptions }
+              { this.displayModalHelp() }
             </div>
           </div>
         </div>
@@ -1734,25 +1759,45 @@ class Profile extends React.Component {
     )
   }
 
+  getSettingsButtonForPiece(piece_id) {
+
+    if (this.state.isCurrentUser) {
+      return (
+        <div className="profile-settings-button-group">
+          <button className="profile-piece-settings-button" data-toggle="modal" data-target={ "#" + this.getModalTag(piece_id) }>Settings</button>
+          { this.getComponentModal(piece_id) }
+        </div>
+
+      )
+    } else {
+      return "";
+    }
+  }
+
   getProfilePieceComponent(piece_id, piece_data) {
     var key = "profile-piece-" + piece_id.toString()
-    var props = {}
+    var props = {
+      piece_id: piece_id
+    }
     if (piece_data["PieceType"] == "TopTracks") {
       return (
         <div key={key} className="profile-component">
           <TopTracks {...props} />
+          { this.getSettingsButtonForPiece(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "TopAlbums") {
       return (
         <div key={key} className="profile-component">
           <TopAlbums {...props}/>
+          { this.getSettingsButtonForPiece(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "TopArtists") {
       return (
         <div key={key} className="profile-component">
           <TopArtists {...props}/>
+          { this.getSettingsButtonForPiece(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "Bio") {
@@ -1761,6 +1806,7 @@ class Profile extends React.Component {
       return (
         <div key={key} className="profile-component">
           <Bio {...props} />
+          { this.getSettingsButtonForPiece(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "ListenSummary") {
@@ -1773,6 +1819,7 @@ class Profile extends React.Component {
       return (
         <div key={key} className="profile-component">
           <RecentListens {...props}/>
+          { this.getSettingsButtonForPiece(piece_id) }
         </div>
       )
     }
@@ -1803,11 +1850,11 @@ class Profile extends React.Component {
           <div className="row profile-data-row">
             <div id="col-left" className="col-md-6 col-sm-6 col-xs-12">
             { components_left }
-            { this.getAddComponent("Left") }
+            { this.getNewComponent(-1) }
             </div>
             <div id="col-right" className="col-md-6 col-sm-6 col-xs-12">
             { components_right }
-            { this.getAddComponent("Right") }
+            { this.getNewComponent(-2) }
             </div>
           </div>
         </div>
