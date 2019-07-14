@@ -515,7 +515,7 @@ class User(UserMixin, db.Model):
         db.session.commit()
 
     def update_profile_piece(self, piece_id, piece_type, piece_options):
-        if piece_id == -1:
+        if piece_id < 0:
             if piece_type == "TopTracks":
                 u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
             elif piece_type == "TopAlbums":
@@ -538,6 +538,8 @@ class User(UserMixin, db.Model):
                 db.session.commit()
                 db.session.flush()
                 return u_piece.id
+            else:
+                return -1000
         else:
             entry = db.session.query(ProfilePiece).filter(
             and_(

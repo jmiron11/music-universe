@@ -1519,7 +1519,7 @@ class Profile extends React.Component {
                     "Right": []
                   },
                   profile_pieces: {}, // Profile pieces we already have stored.
-                  profile_piece_edits: {},
+                  profile_pieces_edits: {},
                   editProfileModalValue: "SelectComponent",
                   editProfileModalOptions: {},
                   pendingUpdateMode: false,
@@ -1562,21 +1562,29 @@ class Profile extends React.Component {
   // On submit, assumes that editProfileModalValue and editProfileModalOptions are appropriately set.
   submitProfileEdit(piece_id) {
 
+
     if (this.state.editProfileModalValue == "Bio") {
-      this.state.editProfileModalOptions["Text"] = document.getElementById("profile-bio-edit-form").value
+      if (piece_id < 0) {
+        this.state.editProfileModalOptions["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value
+      } else {
+        this.state.profile_pieces_edits[piece_id]["PieceData"]["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value
+      }
     }
 
     // Submit the new profile piece, it returns an identifier.
-    var json_piece = {
-      "PieceId": -1,
-      "PieceType": this.state.editProfileModalValue,
-      "PieceData": this.state.editProfileModalOptions // Probably add option validation
+    var json_piece = {}
+    json_piece["PieceId"] = piece_id
+    if (piece_id < 0) {
+      json_piece["PieceType"] = this.state.editProfileModalValue
+      json_piece["PieceData"] = this.state.editProfileModalOptions
+    } else {
+      json_piece["PieceType"] = this.state.profile_pieces_edits[piece_id]["PieceType"]
+      json_piece["PieceData"] = this.state.profile_pieces_edits[piece_id]["PieceData"]
     }
 
     if (piece_id >= 0) {
       json_piece["PieceId"] = piece_id
     }
-
     var self = this
     var request_endpoint = '/update/profile_piece'
     axios.post(request_endpoint, json_piece).then(function(response) {
@@ -1585,7 +1593,7 @@ class Profile extends React.Component {
       if (piece_id == -1) {
         self.state.profile_layout["Left"].push(response.data)
       } else if (piece_id == -2) {
-        self.state.profile_layout["Right"].push(repsonse.data)
+        self.state.profile_layout["Right"].push(response.data)
       }
 
       // Update state internally once we have the piece_id
@@ -1602,8 +1610,7 @@ class Profile extends React.Component {
     this.state.editProfileModalValue = "SelectComponent"
     this.setState(this.state)
 
-    // Close the modal using jquery. Both columns are hidden as we currently don't track which
-    // column called this function.
+    // Close the modal using jquery.
     var self = this
     $(function () {
        $('#' + self.getModalTag(piece_id)).modal('hide');
@@ -1611,23 +1618,42 @@ class Profile extends React.Component {
   }
 
   updateEditProfileModal = (event) => {
-    this.state.editProfileModalValue = event.target.value
-    this.state.editProfileModalOptions = {} // Reset the modal options
-    this.setState(this.state)
-  }
+    var id = event.target.id
+    var split = id.split('-')
+    var piece_id = split[1]
+    var field = split[0]
 
-  updateModalOption = (event) => {
-    if (event.target.id == "recentListenCount") {
-      this.state.editProfileModalOptions["Number"] = event.target.value
-    } else if (event.target.id == "profile-bio-edit-form") {
-      this.state.editProfileModalOptions["Text"] = event.target.value
+    if (piece_id == "") {
+      this.state.editProfileModalValue = event.target.value
+      this.state.editProfileModalOptions = {} // Reset the modal options
+    } else {
+      this.state.profile_pieces_edits[Number(piece_id)]["PieceType"] = event.target.value
+      this.state.profile_pieces_edits[Number(piece_id)]["PieceData"] = {}
     }
 
     this.setState(this.state)
   }
 
-  displayProfileEditModal() {
+  updateModalOption = (event) => {
+    var id = event.target.id
+    var split = id.split('-')
+    var piece_id = split[1]
+    var field = split[0]
+    if (piece_id == "") {
+      if (field == "recentListenCount") {
+        this.state.editProfileModalOptions["Number"] = event.target.value
+      } else if (field == "profileBioEditForm") {
+        this.state.editProfileModalOptions["Text"] = event.target.value
+      }
+    } else {
+      if (field == "recentListenCount") {
+        this.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Number"] = event.target.value
+      } else if (field == "profileBioEditForm") {
+        this.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Text"] = event.target.value
+      }
+    }
 
+    this.setState(this.state)
   }
 
   displayModalHelp() {
@@ -1651,18 +1677,33 @@ class Profile extends React.Component {
     )
   }
 
+  // The modal is set based on the profile piece's current options. We modify those directly unless this piece_id 
+  // refers to a piece that doesn't exist (piece_id < 0)
   getComponentModal(piece_id) {
     var additionalOptions;
 
-    // if (!(piece_id in this.state.profile_piece_edits)) {
-    //   if (piece_id in this.state.profile_pieces) {
-    //     this.state.profile_piece_edits[piece_id] = this.state.profile_pieces[piece_id]
-    //   }
-    // }
+    var value;
+    var options;
+    if(piece_id >= 0) {
 
-    if (this.state.editProfileModalOptions == "SelectComponent") {
+      // Create a copy in  default values for the piece.
+
+      if (!(piece_id in this.state.profile_pieces_edits)) {
+        this.state.profile_pieces_edits[piece_id] = {}
+        this.state.profile_pieces_edits[piece_id]["PieceType"] = this.state.profile_pieces[piece_id]["PieceType"]
+        this.state.profile_pieces_edits[piece_id]["PieceData"] = this.state.profile_pieces[piece_id]["PieceData"]
+      }
+
+      value = this.state.profile_pieces_edits[piece_id]["PieceType"]
+      options = this.state.profile_pieces_edits[piece_id]["PieceData"]
+    } else {
+      value = this.state.editProfileModalValue
+      options = this.state.editProfileModalOptions
+    }
+
+    if (options == "SelectComponent") {
       additionalOptions = undefined
-    } else if (this.state.editProfileModalValue == "TopTracks") {
+    } else if (value == "TopTracks") {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
@@ -1670,7 +1711,7 @@ class Profile extends React.Component {
           </div>
         </div>
       )
-    } else if (this.state.editProfileModalValue == "TopAlbums") {
+    } else if (value == "TopAlbums") {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
@@ -1678,7 +1719,7 @@ class Profile extends React.Component {
           </div>
         </div>
       )
-    } else if (this.state.editProfileModalValue == "TopArtists") {
+    } else if (value == "TopArtists") {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
@@ -1686,21 +1727,21 @@ class Profile extends React.Component {
           </div>
         </div>
       )
-    } else if (this.state.editProfileModalValue == "Bio") {
-      if (!("Text" in this.state.editProfileModalOptions)) {
-        this.state.editProfileModalOptions["Text"] = ""
+    } else if (value == "Bio") {
+      if (!("Text" in options)) {
+        options["Text"] = ""
       }
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <textarea id="profile-bio-edit-form" className="bio-edit-form" type="text" max-length="500" value={this.state.editProfileModalOptions["Text"]} onChange={this.updateModalOption} />
+            <textarea id={ "profileBioEditForm-" + piece_id.toString() } className="bio-edit-form" type="text" max-length="500" value={options["Text"]} onChange={this.updateModalOption} />
           </div>
           <div className="profile-edit-row">
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
-    } else if (this.state.editProfileModalValue == "ListenSummary") {
+    } else if (value == "ListenSummary") {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
@@ -1708,10 +1749,10 @@ class Profile extends React.Component {
           </div>
         </div>
       )
-    } else if (this.state.editProfileModalValue == "RecentListens") {
+    } else if (value == "RecentListens") {
       // Initialize the default values for the modal options
 
-      if (!("Number" in this.state.editProfileModalOptions)) {
+      if (!("Number" in options)) {
         this.state.editProfileModalOptions["Number"] = "5"
       }
 
@@ -1719,7 +1760,7 @@ class Profile extends React.Component {
         <div className="profile-edit-options">
           <div className="profile-edit-row">
             <h1 className="profile-edit-options-name">Number of listens</h1>
-            <select id="recentListenCount" onChange={this.updateModalOption} value={this.state.editProfileModalOptions["Number"]}>
+            <select id= { "recentListenCount-" + piece_id.toString() } onChange={this.updateModalOption} value={options["Number"]}>
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
@@ -1740,7 +1781,7 @@ class Profile extends React.Component {
             <div className="modal-body profile-edit-modal">
               <div className="profile-edit-row">
                 <h1 className="profile-edit-options-name">Profile Piece</h1>
-                <select id="profile-area" onChange={this.updateEditProfileModal} value={this.state.editProfileModalValue}>
+                <select id={ "profileModalType-" + piece_id.toString() } onChange={this.updateEditProfileModal} value={value}>
                   <option value="SelectComponent">Select a component...</option>
                   <option value="TopTracks">Top Tracks</option>
                   <option value="TopAlbums">Top Albums</option>

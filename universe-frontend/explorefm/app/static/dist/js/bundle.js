@@ -2349,17 +2349,40 @@ function (_React$Component11) {
     _this11 = _possibleConstructorReturn(this, _getPrototypeOf(Profile).call(this, props));
 
     _this11.updateEditProfileModal = function (event) {
-      _this11.state.editProfileModalValue = event.target.value;
-      _this11.state.editProfileModalOptions = {}; // Reset the modal options
+      var id = event.target.id;
+      var split = id.split('-');
+      var piece_id = split[1];
+      var field = split[0];
+
+      if (piece_id == "") {
+        _this11.state.editProfileModalValue = event.target.value;
+        _this11.state.editProfileModalOptions = {}; // Reset the modal options
+      } else {
+        _this11.state.profile_pieces_edits[Number(piece_id)]["PieceType"] = event.target.value;
+        _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"] = {};
+      }
 
       _this11.setState(_this11.state);
     };
 
     _this11.updateModalOption = function (event) {
-      if (event.target.id == "recentListenCount") {
-        _this11.state.editProfileModalOptions["Number"] = event.target.value;
-      } else if (event.target.id == "profile-bio-edit-form") {
-        _this11.state.editProfileModalOptions["Text"] = event.target.value;
+      var id = event.target.id;
+      var split = id.split('-');
+      var piece_id = split[1];
+      var field = split[0];
+
+      if (piece_id == "") {
+        if (field == "recentListenCount") {
+          _this11.state.editProfileModalOptions["Number"] = event.target.value;
+        } else if (field == "profileBioEditForm") {
+          _this11.state.editProfileModalOptions["Text"] = event.target.value;
+        }
+      } else {
+        if (field == "recentListenCount") {
+          _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Number"] = event.target.value;
+        } else if (field == "profileBioEditForm") {
+          _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Text"] = event.target.value;
+        }
       }
 
       _this11.setState(_this11.state);
@@ -2372,7 +2395,7 @@ function (_React$Component11) {
       },
       profile_pieces: {},
       // Profile pieces we already have stored.
-      profile_piece_edits: {},
+      profile_pieces_edits: {},
       editProfileModalValue: "SelectComponent",
       editProfileModalOptions: {},
       pendingUpdateMode: false,
@@ -2418,21 +2441,30 @@ function (_React$Component11) {
     key: "submitProfileEdit",
     value: function submitProfileEdit(piece_id) {
       if (this.state.editProfileModalValue == "Bio") {
-        this.state.editProfileModalOptions["Text"] = document.getElementById("profile-bio-edit-form").value;
+        if (piece_id < 0) {
+          this.state.editProfileModalOptions["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value;
+        } else {
+          this.state.profile_pieces_edits[piece_id]["PieceData"]["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value;
+        }
       } // Submit the new profile piece, it returns an identifier.
 
 
-      var json_piece = {
-        "PieceId": -1,
-        "PieceType": this.state.editProfileModalValue,
-        "PieceData": this.state.editProfileModalOptions // Probably add option validation
+      var json_piece = {};
+      json_piece["PieceId"] = piece_id;
 
-      };
+      if (piece_id < 0) {
+        json_piece["PieceType"] = this.state.editProfileModalValue;
+        json_piece["PieceData"] = this.state.editProfileModalOptions;
+      } else {
+        json_piece["PieceType"] = this.state.profile_pieces_edits[piece_id]["PieceType"];
+        json_piece["PieceData"] = this.state.profile_pieces_edits[piece_id]["PieceData"];
+      }
 
       if (piece_id >= 0) {
         json_piece["PieceId"] = piece_id;
       }
 
+      console.log(json_piece);
       var self = this;
       var request_endpoint = '/update/profile_piece';
       axios.post(request_endpoint, json_piece).then(function (response) {
@@ -2440,7 +2472,7 @@ function (_React$Component11) {
         if (piece_id == -1) {
           self.state.profile_layout["Left"].push(response.data);
         } else if (piece_id == -2) {
-          self.state.profile_layout["Right"].push(repsonse.data);
+          self.state.profile_layout["Right"].push(response.data);
         } // Update state internally once we have the piece_id
 
 
@@ -2453,17 +2485,13 @@ function (_React$Component11) {
       }); // Reset the add component modal.
 
       this.state.editProfileModalValue = "SelectComponent";
-      this.setState(this.state); // Close the modal using jquery. Both columns are hidden as we currently don't track which
-      // column called this function.
+      this.setState(this.state); // Close the modal using jquery.
 
       var self = this;
       $(function () {
         $('#' + self.getModalTag(piece_id)).modal('hide');
       });
     }
-  }, {
-    key: "displayProfileEditModal",
-    value: function displayProfileEditModal() {}
   }, {
     key: "displayModalHelp",
     value: function displayModalHelp() {
@@ -2489,21 +2517,36 @@ function (_React$Component11) {
         "data-toggle": "modal",
         "data-target": "#" + this.getModalTag(piece_id)
       }, "Add Profile Piece"), this.getComponentModal(piece_id));
-    }
+    } // The modal is set based on the profile piece's current options. We modify those directly unless this piece_id 
+    // refers to a piece that doesn't exist (piece_id < 0)
+
   }, {
     key: "getComponentModal",
     value: function getComponentModal(piece_id) {
       var _this12 = this;
 
-      var additionalOptions; // if (!(piece_id in this.state.profile_piece_edits)) {
-      //   if (piece_id in this.state.profile_pieces) {
-      //     this.state.profile_piece_edits[piece_id] = this.state.profile_pieces[piece_id]
-      //   }
-      // }
+      var additionalOptions;
+      var value;
+      var options;
 
-      if (this.state.editProfileModalOptions == "SelectComponent") {
+      if (piece_id >= 0) {
+        // Create a copy in  default values for the piece.
+        if (!(piece_id in this.state.profile_pieces_edits)) {
+          this.state.profile_pieces_edits[piece_id] = {};
+          this.state.profile_pieces_edits[piece_id]["PieceType"] = this.state.profile_pieces[piece_id]["PieceType"];
+          this.state.profile_pieces_edits[piece_id]["PieceData"] = this.state.profile_pieces[piece_id]["PieceData"];
+        }
+
+        value = this.state.profile_pieces_edits[piece_id]["PieceType"];
+        options = this.state.profile_pieces_edits[piece_id]["PieceData"];
+      } else {
+        value = this.state.editProfileModalValue;
+        options = this.state.editProfileModalOptions;
+      }
+
+      if (options == "SelectComponent") {
         additionalOptions = undefined;
-      } else if (this.state.editProfileModalValue == "TopTracks") {
+      } else if (value == "TopTracks") {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2514,7 +2557,7 @@ function (_React$Component11) {
             return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
-      } else if (this.state.editProfileModalValue == "TopAlbums") {
+      } else if (value == "TopAlbums") {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2525,7 +2568,7 @@ function (_React$Component11) {
             return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
-      } else if (this.state.editProfileModalValue == "TopArtists") {
+      } else if (value == "TopArtists") {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2536,9 +2579,9 @@ function (_React$Component11) {
             return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
-      } else if (this.state.editProfileModalValue == "Bio") {
-        if (!("Text" in this.state.editProfileModalOptions)) {
-          this.state.editProfileModalOptions["Text"] = "";
+      } else if (value == "Bio") {
+        if (!("Text" in options)) {
+          options["Text"] = "";
         }
 
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2546,11 +2589,11 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-row"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
-          id: "profile-bio-edit-form",
+          id: "profileBioEditForm-" + piece_id.toString(),
           className: "bio-edit-form",
           type: "text",
           "max-length": "500",
-          value: this.state.editProfileModalOptions["Text"],
+          value: options["Text"],
           onChange: this.updateModalOption
         })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-row"
@@ -2560,7 +2603,7 @@ function (_React$Component11) {
             return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
-      } else if (this.state.editProfileModalValue == "ListenSummary") {
+      } else if (value == "ListenSummary") {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2571,9 +2614,9 @@ function (_React$Component11) {
             return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
-      } else if (this.state.editProfileModalValue == "RecentListens") {
+      } else if (value == "RecentListens") {
         // Initialize the default values for the modal options
-        if (!("Number" in this.state.editProfileModalOptions)) {
+        if (!("Number" in options)) {
           this.state.editProfileModalOptions["Number"] = "5";
         }
 
@@ -2584,9 +2627,9 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
           className: "profile-edit-options-name"
         }, "Number of listens"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
-          id: "recentListenCount",
+          id: "recentListenCount-" + piece_id.toString(),
           onChange: this.updateModalOption,
-          value: this.state.editProfileModalOptions["Number"]
+          value: options["Number"]
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
           value: "5"
         }, "5"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
@@ -2620,9 +2663,9 @@ function (_React$Component11) {
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
         className: "profile-edit-options-name"
       }, "Profile Piece"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
-        id: "profile-area",
+        id: "profileModalType-" + piece_id.toString(),
         onChange: this.updateEditProfileModal,
-        value: this.state.editProfileModalValue
+        value: value
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "SelectComponent"
       }, "Select a component..."), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
