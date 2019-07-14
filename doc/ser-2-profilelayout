@@ -1,5 +1,6 @@
 Serialization of profile layout
 
 {
-	"Format": [List of profile highlight ids]
+	"Left": [List of profile highlight ids]
+	"Right": [List of profile highlight ids]
 }

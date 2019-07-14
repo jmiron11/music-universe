@@ -212,12 +212,13 @@ def user_profile(username):
     profile_data = {
         "ProfilePieces": defaultdict(dict),
         "ProfileLayout": {
-            "Format": []
+            "Left": [],
+            "Right": []
         }
     }
 
     if len(user.profile_layout) > 0:
-        profile_data["ProfileLayout"]["Format"] = eval(user.profile_layout[0].layout)
+        profile_data["ProfileLayout"] = eval(user.profile_layout[0].layout)
     
     for piece in user.profile_pieces:
        piece_data = profile_data["ProfilePieces"][piece.id]
@@ -314,7 +315,7 @@ def update_profile_piece():
 @login_required
 def update_profile_layout():
     profile_layout_json = request.get_json()
-    current_user.update_profile_layout(profile_layout_json["Format"])
+    current_user.update_profile_layout(profile_layout_json)
     return "Some data"
 
 @app.route('/update/is_following/<username>/<boolean>', methods=['GET', 'POST'])

@@ -1592,7 +1592,10 @@ class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = { 
-                  profile_layout: [],
+                  profile_layout: {
+                    "Left": [],
+                    "Right": []
+                  },
                   profile_pieces: {}, // Profile pieces we already have stored.
                   editProfileModalValue: "SelectComponent",
                   editProfileModalOptions: {},
@@ -1604,7 +1607,7 @@ class Profile extends React.Component {
     var self = this
     var request = '/user/' + user + '/profile/'
     axios.get(request).then(function(response) {
-      self.state.profile_layout = response.data["ProfileLayout"]["Format"]
+      self.state.profile_layout = response.data["ProfileLayout"]
       for (var piece_id in response.data["ProfilePieces"]) {
         self.state.profile_pieces[piece_id] = response.data["ProfilePieces"][piece_id]
       } 
@@ -1619,9 +1622,7 @@ class Profile extends React.Component {
   // }
   //
   serializeProfileFromState() {
-    var json_layout = {
-      "Format": this.state.profile_layout
-    }
+    var json_layout = this.state.profile_layout
 
     var request_endpoint = '/update/profile_layout'
     axios.post(request_endpoint, json_layout).then(function(response) {
@@ -1635,7 +1636,8 @@ class Profile extends React.Component {
   }
 
   // On submit, assumes that editProfileModalValue and editProfileModalOptions are appropriately set.
-  submitProfileEdit = (event) => {
+  submitProfileEdit(column_to_place) {
+    console.log(column_to_place)
     // Submit the new profile piece, it returns an identifier.
     var json_piece = {
       "PieceId": -1,
@@ -1647,7 +1649,7 @@ class Profile extends React.Component {
     var request_endpoint = '/update/profile_piece'
     axios.post(request_endpoint, json_piece).then(function(response) {
       // Submit the new serialized profile.
-      self.state.profile_layout.push(response.data)
+      self.state.profile_layout[column_to_place].push(response.data)
       self.state.profile_pieces[response.data] = json_piece
       self.setState(self.state)
       self.serializeProfileFromState()
@@ -1659,7 +1661,8 @@ class Profile extends React.Component {
 
     // Close the modal using jquery.
     $(function () {
-       $('#profileEditModal').modal('toggle');
+       $('#profileEditModal-Left').modal('hide');
+       $('#profileEditModal-Right').modal('hide');
     });
   }
 
@@ -1689,7 +1692,8 @@ class Profile extends React.Component {
     )
   }
 
-  getAddComponent() {
+  getAddComponent(column) {
+    var myColumn = column
     var additionalOptions;
 
     if (this.state.editProfileModalOptions == "SelectComponent") {
@@ -1698,7 +1702,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
           </div>
         </div>
       )
@@ -1706,7 +1710,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
           </div>
         </div>
       )
@@ -1714,7 +1718,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
           </div>
         </div>
       )
@@ -1722,7 +1726,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
           </div>
         </div>
       )
@@ -1730,7 +1734,7 @@ class Profile extends React.Component {
       additionalOptions = (
         <div className="profile-edit-options">
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
           </div>
         </div>
       )
@@ -1753,16 +1757,19 @@ class Profile extends React.Component {
             </select>
           </div>
           <div className="profile-edit-row">
-            <button className="profile-edit-save" onClick={ this.submitProfileEdit }>Save</button>
+            <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
           </div>
         </div>
       )
     }
 
+    var key = "add-component-" + column
+    var id = "profileEditModal-" + column
+    var target = "#" + id
     return (
-      <div className="profile-component">
-        <button className="profile-edit-button" data-toggle="modal" data-target="#profileEditModal">Add Profile Piece</button>
-        <div id="profileEditModal" className="modal fade" role="dialog">
+      <div key={key} className="profile-component">
+        <button className="profile-edit-button" data-toggle="modal" data-target={target}>Add Profile Piece</button>
+        <div id={id} className="modal fade" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-body profile-edit-modal">
@@ -1788,58 +1795,81 @@ class Profile extends React.Component {
     )
   }
 
+  getProfilePieceComponent(piece_id, piece_data) {
+    var key = "profile-piece-" + piece_id.toString()
+    if (piece_data["PieceType"] == "TopTracks") {
+      return (
+        <div key={key} className="profile-component">
+          <TopTracks />
+        </div>
+      )
+    } else if (piece_data["PieceType"] == "TopAlbums") {
+      return (
+        <div key={key} className="profile-component">
+          <TopAlbums />
+        </div>
+      )
+    } else if (piece_data["PieceType"] == "TopArtists") {
+      return (
+        <div key={key} className="profile-component">
+          <TopArtists />
+        </div>
+      )
+    } else if (piece_data["PieceType"] == "Bio") {
+      return (
+        <div key={key} className="profile-component">
+          <Bio />
+        </div>
+      )
+    } else if (piece_data["PieceType"] == "ListenSummary") {
+      return (
+        <div key={key} className="profile-component">
+          <h1>To Implement</h1>
+        </div>
+      )
+    } else if (piece_data["PieceType"] == "RecentListens") {
+      return (
+        <div key={key} className="profile-component">
+          <RecentListens />
+        </div>
+      )
+    }
+  }
+
   render() {
-    // Single file layout, each col-md-6 components.
-    var components = []
-    for(let i = 0; i < this.state.profile_layout.length; ++i) {
-      var piece_id = this.state.profile_layout[i]
-      var key = "profile-piece-" + piece_id.toString()
+    console.log(this.state.profile_layout)
+    // Two column format. Left and right.
+    var components_left = []
+    for(let i = 0; i < this.state.profile_layout["Left"].length; ++i) {
+      var piece_id = this.state.profile_layout["Left"][i]
       if (piece_id in this.state.profile_pieces) {
         var piece_data = this.state.profile_pieces[piece_id]
-        if (piece_data["PieceType"] == "TopTracks") {
-          components.push(
-            <div id={key} className="profile-component">
-              <TopTracks />
-            </div>
-          )
-        } else if (piece_data["PieceType"] == "TopAlbums") {
-          components.push(
-            <div id={key} className="profile-component">
-              <TopAlbums />
-            </div>
-          )
-        } else if (piece_data["PieceType"] == "TopArtists") {
-          components.push(
-            <div id={key} className="profile-component">
-              <TopArtists />
-            </div>
-          )
-        } else if (piece_data["PieceType"] == "Bio") {
-          components.push(
-            <div id={key} className="profile-component">
-              <Bio />
-            </div>
-          )
-        } else if (piece_data["PieceType"] == "ListenSummary") {
-          components.push(
-            <div id={key} className="profile-component">
-              <h1>To Implement</h1>
-            </div>
-          )
-        } else if (piece_data["PieceType"] == "RecentListens") {
-          components.push(
-            <div id={key} className="profile-component">
-              <RecentListens />
-            </div>
-          )
-        }
-      }    }
+        components_left.push(this.getProfilePieceComponent(piece_id, piece_data))
+      }    
+    }
+
+    var components_right = []
+    for(let i = 0; i < this.state.profile_layout["Right"].length; ++i) {
+      var piece_id = this.state.profile_layout["Right"][i]
+      if (piece_id in this.state.profile_pieces) {
+        var piece_data = this.state.profile_pieces[piece_id]
+        components_right.push(this.getProfilePieceComponent(piece_id, piece_data))
+      }    
+    }
 
     return (
       <div key="profile" className="profile-data">
-        { components }
-        { this.getAddComponent() }
-      </div>
+          <div className="row profile-data-row">
+            <div id="col-left" className="col-md-6 col-sm-6 col-xs-12">
+            { components_left }
+            { this.getAddComponent("Left") }
+            </div>
+            <div id="col-right" className="col-md-6 col-sm-6 col-xs-12">
+            { components_right }
+            { this.getAddComponent("Right") }
+            </div>
+          </div>
+        </div>
     )
   }
 }
