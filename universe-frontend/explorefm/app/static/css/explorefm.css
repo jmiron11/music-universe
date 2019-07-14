@@ -268,8 +268,16 @@ a { color: inherit; }
   right 0;
 }
 
+.profile-edit-button-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+}
+
 .profile-edit-save {
-  margin-left: auto;
 }
 
 .profile-edit-modal {

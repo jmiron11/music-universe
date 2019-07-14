@@ -1550,7 +1550,7 @@ class Profile extends React.Component {
 
     var request_endpoint = '/update/profile_layout'
     axios.post(request_endpoint, json_layout).then(function(response) {
-      console.log(response)
+      // console.log(response)
     })
 
   }
@@ -1561,8 +1561,6 @@ class Profile extends React.Component {
 
   // On submit, assumes that editProfileModalValue and editProfileModalOptions are appropriately set.
   submitProfileEdit(piece_id) {
-
-
     if (this.state.editProfileModalValue == "Bio") {
       if (piece_id < 0) {
         this.state.editProfileModalOptions["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value
@@ -1609,6 +1607,44 @@ class Profile extends React.Component {
     // Reset the add component modal.
     this.state.editProfileModalValue = "SelectComponent"
     this.setState(this.state)
+
+    // Close the modal using jquery.
+    var self = this
+    $(function () {
+       $('#' + self.getModalTag(piece_id)).modal('hide');
+    });
+  }
+
+  deleteProfilePiece(piece_id) {
+    var json_piece = {}
+    json_piece["PieceId"] = piece_id
+    json_piece["PieceType"] = "Delete"
+    json_piece["PieceData"] = ""
+
+    var self = this
+    var request_endpoint = '/update/profile_piece'
+    axios.post(request_endpoint, json_piece)
+    
+    // Garbage delete from layout.
+    self.state.profile_pieces[piece_id] = undefined
+    var new_profile_left = []
+    var new_profile_right = []
+    for (let i = 0; i < this.state.profile_layout["Left"].length; ++i) {
+      if (this.state.profile_layout["Left"][i] != piece_id) {
+        new_profile_left.push(this.state.profile_layout["Left"][i])
+      }
+    }
+    for(let i = 0; i < this.state.profile_layout["Right"].length; ++i) {
+      if (this.state.profile_layout["Right"][i] != piece_id) {
+        new_profile_right.push(this.state.profile_layout["Right"][i])
+      }
+    }
+
+    this.state.profile_layout["Left"] = new_profile_left
+    this.state.profile_layout["Right"] = new_profile_right
+    this.setState(this.state)
+      
+    self.serializeProfileFromState()
 
     // Close the modal using jquery.
     var self = this
@@ -1684,10 +1720,10 @@ class Profile extends React.Component {
 
     var value;
     var options;
+    var delete_button_div;
     if(piece_id >= 0) {
 
       // Create a copy in  default values for the piece.
-
       if (!(piece_id in this.state.profile_pieces_edits)) {
         this.state.profile_pieces_edits[piece_id] = {}
         this.state.profile_pieces_edits[piece_id]["PieceType"] = this.state.profile_pieces[piece_id]["PieceType"]
@@ -1696,9 +1732,13 @@ class Profile extends React.Component {
 
       value = this.state.profile_pieces_edits[piece_id]["PieceType"]
       options = this.state.profile_pieces_edits[piece_id]["PieceData"]
+      delete_button_div = (
+        <button className="profile-edit-save" onClick={ () => this.deleteProfilePiece(piece_id)}>Delete</button>
+      )
     } else {
       value = this.state.editProfileModalValue
       options = this.state.editProfileModalOptions
+      delete_button_div = "";
     }
 
     if (options == "SelectComponent") {
@@ -1706,7 +1746,8 @@ class Profile extends React.Component {
     } else if (value == "TopTracks") {
       additionalOptions = (
         <div className="profile-edit-options">
-          <div className="profile-edit-row">
+          <div className="profile-edit-button-row">
+            { delete_button_div }
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
@@ -1714,7 +1755,8 @@ class Profile extends React.Component {
     } else if (value == "TopAlbums") {
       additionalOptions = (
         <div className="profile-edit-options">
-          <div className="profile-edit-row">
+          <div className="profile-edit-button-row">
+            { delete_button_div }
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
@@ -1722,7 +1764,8 @@ class Profile extends React.Component {
     } else if (value == "TopArtists") {
       additionalOptions = (
         <div className="profile-edit-options">
-          <div className="profile-edit-row">
+          <div className="profile-edit-button-row">
+            { delete_button_div }
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
@@ -1733,10 +1776,11 @@ class Profile extends React.Component {
       }
       additionalOptions = (
         <div className="profile-edit-options">
-          <div className="profile-edit-row">
+          <div className="profile-edit-button-row">
             <textarea id={ "profileBioEditForm-" + piece_id.toString() } className="bio-edit-form" type="text" max-length="500" value={options["Text"]} onChange={this.updateModalOption} />
           </div>
-          <div className="profile-edit-row">
+          <div className="profile-edit-button-row">
+            { delete_button_div }
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
@@ -1744,14 +1788,14 @@ class Profile extends React.Component {
     } else if (value == "ListenSummary") {
       additionalOptions = (
         <div className="profile-edit-options">
-          <div className="profile-edit-row">
+          <div className="profile-edit-button-row">
+            { delete_button_div }
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>
       )
     } else if (value == "RecentListens") {
       // Initialize the default values for the modal options
-
       if (!("Number" in options)) {
         this.state.editProfileModalOptions["Number"] = "5"
       }
@@ -1767,7 +1811,8 @@ class Profile extends React.Component {
               <option value="20">20</option>
             </select>
           </div>
-          <div className="profile-edit-row">
+          <div className="profile-edit-button-row">
+            { delete_button_div }
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
           </div>
         </div>

@@ -2429,8 +2429,7 @@ function (_React$Component11) {
     value: function serializeProfileFromState() {
       var json_layout = this.state.profile_layout;
       var request_endpoint = '/update/profile_layout';
-      axios.post(request_endpoint, json_layout).then(function (response) {
-        console.log(response);
+      axios.post(request_endpoint, json_layout).then(function (response) {// console.log(response)
       });
     }
   }, {
@@ -2464,7 +2463,6 @@ function (_React$Component11) {
         json_piece["PieceId"] = piece_id;
       }
 
-      console.log(json_piece);
       var self = this;
       var request_endpoint = '/update/profile_piece';
       axios.post(request_endpoint, json_piece).then(function (response) {
@@ -2486,6 +2484,43 @@ function (_React$Component11) {
 
       this.state.editProfileModalValue = "SelectComponent";
       this.setState(this.state); // Close the modal using jquery.
+
+      var self = this;
+      $(function () {
+        $('#' + self.getModalTag(piece_id)).modal('hide');
+      });
+    }
+  }, {
+    key: "deleteProfilePiece",
+    value: function deleteProfilePiece(piece_id) {
+      var json_piece = {};
+      json_piece["PieceId"] = piece_id;
+      json_piece["PieceType"] = "Delete";
+      json_piece["PieceData"] = "";
+      var self = this;
+      var request_endpoint = '/update/profile_piece';
+      axios.post(request_endpoint, json_piece); // Garbage delete from layout.
+
+      self.state.profile_pieces[piece_id] = undefined;
+      var new_profile_left = [];
+      var new_profile_right = [];
+
+      for (var i = 0; i < this.state.profile_layout["Left"].length; ++i) {
+        if (this.state.profile_layout["Left"][i] != piece_id) {
+          new_profile_left.push(this.state.profile_layout["Left"][i]);
+        }
+      }
+
+      for (var _i = 0; _i < this.state.profile_layout["Right"].length; ++_i) {
+        if (this.state.profile_layout["Right"][_i] != piece_id) {
+          new_profile_right.push(this.state.profile_layout["Right"][_i]);
+        }
+      }
+
+      this.state.profile_layout["Left"] = new_profile_left;
+      this.state.profile_layout["Right"] = new_profile_right;
+      this.setState(this.state);
+      self.serializeProfileFromState(); // Close the modal using jquery.
 
       var self = this;
       $(function () {
@@ -2528,6 +2563,7 @@ function (_React$Component11) {
       var additionalOptions;
       var value;
       var options;
+      var delete_button_div;
 
       if (piece_id >= 0) {
         // Create a copy in  default values for the piece.
@@ -2539,9 +2575,16 @@ function (_React$Component11) {
 
         value = this.state.profile_pieces_edits[piece_id]["PieceType"];
         options = this.state.profile_pieces_edits[piece_id]["PieceData"];
+        delete_button_div = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-edit-save",
+          onClick: function onClick() {
+            return _this12.deleteProfilePiece(piece_id);
+          }
+        }, "Delete");
       } else {
         value = this.state.editProfileModalValue;
         options = this.state.editProfileModalOptions;
+        delete_button_div = "";
       }
 
       if (options == "SelectComponent") {
@@ -2550,8 +2593,8 @@ function (_React$Component11) {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-edit-button-row"
+        }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
             return _this12.submitProfileEdit(piece_id);
@@ -2561,8 +2604,8 @@ function (_React$Component11) {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-edit-button-row"
+        }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
             return _this12.submitProfileEdit(piece_id);
@@ -2572,8 +2615,8 @@ function (_React$Component11) {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-edit-button-row"
+        }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
             return _this12.submitProfileEdit(piece_id);
@@ -2587,7 +2630,7 @@ function (_React$Component11) {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-edit-row"
+          className: "profile-edit-button-row"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
           id: "profileBioEditForm-" + piece_id.toString(),
           className: "bio-edit-form",
@@ -2596,8 +2639,8 @@ function (_React$Component11) {
           value: options["Text"],
           onChange: this.updateModalOption
         })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-edit-button-row"
+        }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
             return _this12.submitProfileEdit(piece_id);
@@ -2607,8 +2650,8 @@ function (_React$Component11) {
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-edit-button-row"
+        }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
             return _this12.submitProfileEdit(piece_id);
@@ -2639,8 +2682,8 @@ function (_React$Component11) {
         }, "15"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
           value: "20"
         }, "20"))), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+          className: "profile-edit-button-row"
+        }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
           onClick: function onClick() {
             return _this12.submitProfileEdit(piece_id);
@@ -2755,8 +2798,8 @@ function (_React$Component11) {
 
       var components_right = [];
 
-      for (var _i = 0; _i < this.state.profile_layout["Right"].length; ++_i) {
-        var piece_id = this.state.profile_layout["Right"][_i];
+      for (var _i2 = 0; _i2 < this.state.profile_layout["Right"].length; ++_i2) {
+        var piece_id = this.state.profile_layout["Right"][_i2];
 
         if (piece_id in this.state.profile_pieces) {
           var piece_data = this.state.profile_pieces[piece_id];

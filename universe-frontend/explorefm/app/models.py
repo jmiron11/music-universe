@@ -547,13 +547,16 @@ class User(UserMixin, db.Model):
                 ProfilePiece.id == piece_id
             )).first()
 
-            entry.piece_type = str(piece_type)
-            if piece_type in ["TopTracks", "TopAlbums", "TopArtists", "ListenSummary", "RecentListens", "MusicHighlight"]:
-                entry.piece_options = str(piece_options)
-            elif piece_type == "Bio":
-                bio = str(piece_options["Text"])
-                piece_options.pop("Text")
-                entry.piece_text = bio
+            if (piece_type == "Delete"):
+                db.session.delete(entry)
+            else:
+                entry.piece_type = str(piece_type)
+                if piece_type in ["TopTracks", "TopAlbums", "TopArtists", "ListenSummary", "RecentListens", "MusicHighlight"]:
+                    entry.piece_options = str(piece_options)
+                elif piece_type == "Bio":
+                    bio = str(piece_options["Text"])
+                    piece_options.pop("Text")
+                    entry.piece_text = bio
 
             db.session.commit()
             return entry.id
