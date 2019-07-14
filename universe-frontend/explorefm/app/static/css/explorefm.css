@@ -250,7 +250,7 @@ a { color: inherit; }
 }
 
 .profile-data {
-  padding: 0 5% 0 5%;
+  padding: 0 13% 0 13%;
 }
 
 .profile-data-row {
@@ -757,10 +757,10 @@ a { color: inherit; }
 }
 
 .album-entry {
-  min-width: 200px;
-  min-height: 200px;
-  max-width: 200px;
-  max-height: 200px;
+  min-width: 180px;
+  min-height: 180px;
+  max-width: 180px;
+  max-height: 180px;
   position:relative;
 }
 
@@ -776,10 +776,10 @@ a { color: inherit; }
 }
 
 .album-entry-art {
-  min-width: 200px;
-  min-height: 200px;
-  max-width: 200px;
-  max-height: 200px;
+  min-width: 180px;
+  min-height: 180px;
+  max-width: 180px;
+  max-height: 180px;
   /*margin: 0px 0 0px 10px;*/
   opacity: 1.0;
 }

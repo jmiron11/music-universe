@@ -525,7 +525,7 @@ class User(UserMixin, db.Model):
             elif piece_type == "Bio":
                 bio = str(piece_options["Text"])
                 piece_options.pop("Text")
-                u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options), text=bio) 
+                u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options), piece_text=bio) 
             elif piece_type == "ListenSummary":
                 pass
             elif piece_type == "RecentListens":
@@ -674,7 +674,7 @@ class ProfilePiece(db.Model):
     refer_track_id = db.Column(db.Integer, db.ForeignKey(Track.id))
     refer_album_id = db.Column(db.Integer, db.ForeignKey(Album.id))
     refer_artist_id = db.Column(db.Integer, db.ForeignKey(Artist.id))
-    pieceText = db.Column(db.String(500))
+    piece_text = db.Column(db.String(500))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
 
 class ProfileLayout(db.Model):

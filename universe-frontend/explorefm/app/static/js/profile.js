@@ -489,102 +489,24 @@ class RecentListens extends React.Component {
   }
 }
 
-
 class Bio extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-                    inEditMode: false,
-                    bio: "..."
+                    bio: this.props.bio_text
                  };
   }
 
-  componentDidMount(){
-    var self = this
-    var request = '/user/' + user + '/bio/'
-    axios.get(request).then(function(response) {
-      self.state.bio = response['data']
-      self.setState(self.state)
-    })
-  }
-
-  renderNoBio(isCurrentUser) {
-    if (isCurrentUser) {
-      return (
-          <div className="bio">
-              <h6>{ "Add a bio to tell people about you and the music you love." }</h6>
-          <button className="bio-edit" onClick={ this.activeEditMode }>Add Bio</button>
-          </div>
-        )
-    } else {
-      return ("")
-    }
-  }
-
-  activeEditMode = (event) => {
-    this.state.inEditMode = true
-    this.setState(this.state)
-  }
-
-  disableEditModeClearBio = (event) => {
-    this.state.inEditMode = false
-    document.getElementById("bio-edit-form").value = ""
-    this.setState(this.state)
-  }
-
-  disableEditModeSaveBio = (event) => {
-    var new_bio = document.getElementById("bio-edit-form").value
-    this.state.inEditMode = false
-    this.state.bio = new_bio
-
-    this.setState(this.state)
-
-    var self = this
-    var request = '/update/bio/?bio=' + new_bio
-    axios.get(request)
-  }
-
-  renderBio(isCurrentUser) {
-    if (isCurrentUser) {
-      return (
-        <div className="bio">
-          <h6>{ this.state.bio }</h6>
-          <button className="bio-edit" onClick={ this.activeEditMode }>Edit Bio</button>
-        </div>
-      )
-    } else {
-      return (
-        <div className="bio">
-          <h6>{ this.state.bio }</h6>
-        </div>
-      )
-    }
-  }
-
-  renderEditMode() {
+  renderBio() {
     return (
-      <div className="bio-edit-area">
-      <textarea id="bio-edit-form" className="bio-edit-form" type="text" max-length="500">{this.state.bio}
-      </textarea>
-      <div className="bio-button-row">
-        <button className="bio-button" onClick={ this.disableEditModeClearBio }>Cancel</button>
-        <button className="bio-button" onClick={ this.disableEditModeSaveBio }>Save</button>
-      </div>
+      <div className="bio">
+        <h6>{ this.state.bio }</h6>
       </div>
     )
   }
 
   render() {
-    var isCurrentUser = (user == current_user)
-    if (this.state.inEditMode) {
-      return this.renderEditMode()
-    } else {
-      if (this.state.bio == "")
-        return this.renderNoBio(isCurrentUser)
-      else {
-        return this.renderBio(isCurrentUser)
-      }
-    }
+    return this.renderBio()
   }
 }
 
@@ -1637,12 +1559,16 @@ class Profile extends React.Component {
 
   // On submit, assumes that editProfileModalValue and editProfileModalOptions are appropriately set.
   submitProfileEdit(column_to_place) {
-    console.log(column_to_place)
+
+    if (this.state.editProfileModalValue == "Bio") {
+      this.state.editProfileModalOptions["Text"] = document.getElementById("profile-bio-edit-form").value
+    }
+
     // Submit the new profile piece, it returns an identifier.
     var json_piece = {
       "PieceId": -1,
       "PieceType": this.state.editProfileModalValue,
-      "PieceOptions": this.state.editProfileModalOptions // Probably add option validation
+      "PieceData": this.state.editProfileModalOptions // Probably add option validation
     }
 
     var self = this
@@ -1650,7 +1576,11 @@ class Profile extends React.Component {
     axios.post(request_endpoint, json_piece).then(function(response) {
       // Submit the new serialized profile.
       self.state.profile_layout[column_to_place].push(response.data)
+
+      // Update state internally once we have the piece_id
+      console.log(json_piece)
       self.state.profile_pieces[response.data] = json_piece
+
       self.setState(self.state)
       self.serializeProfileFromState()
     })
@@ -1659,7 +1589,8 @@ class Profile extends React.Component {
     this.state.editProfileModalValue = "SelectComponent"
     this.setState(this.state)
 
-    // Close the modal using jquery.
+    // Close the modal using jquery. Both columns are hidden as we currently don't track which
+    // column called this function.
     $(function () {
        $('#profileEditModal-Left').modal('hide');
        $('#profileEditModal-Right').modal('hide');
@@ -1675,6 +1606,8 @@ class Profile extends React.Component {
   updateModalOption = (event) => {
     if (event.target.id == "recentListenCount") {
       this.state.editProfileModalOptions["Number"] = event.target.value
+    } else if (event.target.id == "profile-bio-edit-form") {
+      this.state.editProfileModalOptions["Text"] = event.target.value
     }
 
     this.setState(this.state)
@@ -1723,8 +1656,14 @@ class Profile extends React.Component {
         </div>
       )
     } else if (this.state.editProfileModalValue == "Bio") {
+      if (!("Text" in this.state.editProfileModalOptions)) {
+        this.state.editProfileModalOptions["Text"] = ""
+      }
       additionalOptions = (
         <div className="profile-edit-options">
+          <div className="profile-edit-row">
+            <textarea id="profile-bio-edit-form" className="bio-edit-form" type="text" max-length="500" value={this.state.editProfileModalOptions["Text"]} onChange={this.updateModalOption} />
+          </div>
           <div className="profile-edit-row">
             <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(myColumn) }>Save</button>
           </div>
@@ -1797,28 +1736,31 @@ class Profile extends React.Component {
 
   getProfilePieceComponent(piece_id, piece_data) {
     var key = "profile-piece-" + piece_id.toString()
+    var props = {}
     if (piece_data["PieceType"] == "TopTracks") {
       return (
         <div key={key} className="profile-component">
-          <TopTracks />
+          <TopTracks {...props} />
         </div>
       )
     } else if (piece_data["PieceType"] == "TopAlbums") {
       return (
         <div key={key} className="profile-component">
-          <TopAlbums />
+          <TopAlbums {...props}/>
         </div>
       )
     } else if (piece_data["PieceType"] == "TopArtists") {
       return (
         <div key={key} className="profile-component">
-          <TopArtists />
+          <TopArtists {...props}/>
         </div>
       )
     } else if (piece_data["PieceType"] == "Bio") {
+      props["bio_text"] = piece_data["PieceData"]["Text"]
+
       return (
         <div key={key} className="profile-component">
-          <Bio />
+          <Bio {...props} />
         </div>
       )
     } else if (piece_data["PieceType"] == "ListenSummary") {
@@ -1830,14 +1772,13 @@ class Profile extends React.Component {
     } else if (piece_data["PieceType"] == "RecentListens") {
       return (
         <div key={key} className="profile-component">
-          <RecentListens />
+          <RecentListens {...props}/>
         </div>
       )
     }
   }
 
   render() {
-    console.log(this.state.profile_layout)
     // Two column format. Left and right.
     var components_left = []
     for(let i = 0; i < this.state.profile_layout["Left"].length; ++i) {

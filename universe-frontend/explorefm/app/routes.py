@@ -223,7 +223,10 @@ def user_profile(username):
     for piece in user.profile_pieces:
        piece_data = profile_data["ProfilePieces"][piece.id]
        piece_data["PieceType"] = piece.piece_type
-       piece_data["PieceData"] = piece.piece_options
+       piece_data["PieceData"] = eval(piece.piece_options)
+
+       if piece.piece_type == "Bio":
+        piece_data["PieceData"]["Text"] = piece.piece_text
 
     return jsonify(profile_data)
 
@@ -308,7 +311,7 @@ def upload_profile_image():
 @login_required
 def update_profile_piece():
     profile_piece_json = request.get_json()
-    piece_id = current_user.update_profile_piece(profile_piece_json["PieceId"], profile_piece_json["PieceType"], profile_piece_json["PieceOptions"])
+    piece_id = current_user.update_profile_piece(profile_piece_json["PieceId"], profile_piece_json["PieceType"], profile_piece_json["PieceData"])
     return jsonify(piece_id)
 
 @app.route('/update/profile_layout', methods=['POST'])

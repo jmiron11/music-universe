@@ -761,112 +761,23 @@ function (_React$Component6) {
     _classCallCheck(this, Bio);
 
     _this6 = _possibleConstructorReturn(this, _getPrototypeOf(Bio).call(this, props));
-
-    _this6.activeEditMode = function (event) {
-      _this6.state.inEditMode = true;
-
-      _this6.setState(_this6.state);
-    };
-
-    _this6.disableEditModeClearBio = function (event) {
-      _this6.state.inEditMode = false;
-      document.getElementById("bio-edit-form").value = "";
-
-      _this6.setState(_this6.state);
-    };
-
-    _this6.disableEditModeSaveBio = function (event) {
-      var new_bio = document.getElementById("bio-edit-form").value;
-      _this6.state.inEditMode = false;
-      _this6.state.bio = new_bio;
-
-      _this6.setState(_this6.state);
-
-      var self = _assertThisInitialized(_this6);
-
-      var request = '/update/bio/?bio=' + new_bio;
-      axios.get(request);
-    };
-
     _this6.state = {
-      inEditMode: false,
-      bio: "..."
+      bio: _this6.props.bio_text
     };
     return _this6;
   }
 
   _createClass(Bio, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var self = this;
-      var request = '/user/' + user + '/bio/';
-      axios.get(request).then(function (response) {
-        self.state.bio = response['data'];
-        self.setState(self.state);
-      });
-    }
-  }, {
-    key: "renderNoBio",
-    value: function renderNoBio(isCurrentUser) {
-      if (isCurrentUser) {
-        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "bio"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Add a bio to tell people about you and the music you love."), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-          className: "bio-edit",
-          onClick: this.activeEditMode
-        }, "Add Bio"));
-      } else {
-        return "";
-      }
-    }
-  }, {
     key: "renderBio",
-    value: function renderBio(isCurrentUser) {
-      if (isCurrentUser) {
-        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "bio"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, this.state.bio), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-          className: "bio-edit",
-          onClick: this.activeEditMode
-        }, "Edit Bio"));
-      } else {
-        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "bio"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, this.state.bio));
-      }
-    }
-  }, {
-    key: "renderEditMode",
-    value: function renderEditMode() {
+    value: function renderBio() {
       return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "bio-edit-area"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
-        id: "bio-edit-form",
-        className: "bio-edit-form",
-        type: "text",
-        "max-length": "500"
-      }, this.state.bio), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "bio-button-row"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-        className: "bio-button",
-        onClick: this.disableEditModeClearBio
-      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-        className: "bio-button",
-        onClick: this.disableEditModeSaveBio
-      }, "Save")));
+        className: "bio"
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, this.state.bio));
     }
   }, {
     key: "render",
     value: function render() {
-      var isCurrentUser = user == current_user;
-
-      if (this.state.inEditMode) {
-        return this.renderEditMode();
-      } else {
-        if (this.state.bio == "") return this.renderNoBio(isCurrentUser);else {
-          return this.renderBio(isCurrentUser);
-        }
-      }
+      return this.renderBio();
     }
   }]);
 
@@ -2447,6 +2358,8 @@ function (_React$Component11) {
     _this11.updateModalOption = function (event) {
       if (event.target.id == "recentListenCount") {
         _this11.state.editProfileModalOptions["Number"] = event.target.value;
+      } else if (event.target.id == "profile-bio-edit-form") {
+        _this11.state.editProfileModalOptions["Text"] = event.target.value;
       }
 
       _this11.setState(_this11.state);
@@ -2502,26 +2415,32 @@ function (_React$Component11) {
   }, {
     key: "submitProfileEdit",
     value: function submitProfileEdit(column_to_place) {
-      console.log(column_to_place); // Submit the new profile piece, it returns an identifier.
+      if (this.state.editProfileModalValue == "Bio") {
+        this.state.editProfileModalOptions["Text"] = document.getElementById("profile-bio-edit-form").value;
+      } // Submit the new profile piece, it returns an identifier.
+
 
       var json_piece = {
         "PieceId": -1,
         "PieceType": this.state.editProfileModalValue,
-        "PieceOptions": this.state.editProfileModalOptions // Probably add option validation
+        "PieceData": this.state.editProfileModalOptions // Probably add option validation
 
       };
       var self = this;
       var request_endpoint = '/update/profile_piece';
       axios.post(request_endpoint, json_piece).then(function (response) {
         // Submit the new serialized profile.
-        self.state.profile_layout[column_to_place].push(response.data);
+        self.state.profile_layout[column_to_place].push(response.data); // Update state internally once we have the piece_id
+
+        console.log(json_piece);
         self.state.profile_pieces[response.data] = json_piece;
         self.setState(self.state);
         self.serializeProfileFromState();
       }); // Reset the add component modal.
 
       this.state.editProfileModalValue = "SelectComponent";
-      this.setState(this.state); // Close the modal using jquery.
+      this.setState(this.state); // Close the modal using jquery. Both columns are hidden as we currently don't track which
+      // column called this function.
 
       $(function () {
         $('#profileEditModal-Left').modal('hide');
@@ -2584,9 +2503,22 @@ function (_React$Component11) {
           }
         }, "Save")));
       } else if (this.state.editProfileModalValue == "Bio") {
+        if (!("Text" in this.state.editProfileModalOptions)) {
+          this.state.editProfileModalOptions["Text"] = "";
+        }
+
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-options"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "profile-edit-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
+          id: "profile-bio-edit-form",
+          className: "bio-edit-form",
+          type: "text",
+          "max-length": "500",
+          value: this.state.editProfileModalOptions["Text"],
+          onChange: this.updateModalOption
+        })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-edit-row"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
           className: "profile-edit-save",
@@ -2687,27 +2619,29 @@ function (_React$Component11) {
     key: "getProfilePieceComponent",
     value: function getProfilePieceComponent(piece_id, piece_data) {
       var key = "profile-piece-" + piece_id.toString();
+      var props = {};
 
       if (piece_data["PieceType"] == "TopTracks") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, null));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, props));
       } else if (piece_data["PieceType"] == "TopAlbums") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopAlbums, null));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopAlbums, props));
       } else if (piece_data["PieceType"] == "TopArtists") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopArtists, null));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopArtists, props));
       } else if (piece_data["PieceType"] == "Bio") {
+        props["bio_text"] = piece_data["PieceData"]["Text"];
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Bio, null));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Bio, props));
       } else if (piece_data["PieceType"] == "ListenSummary") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
@@ -2717,14 +2651,13 @@ function (_React$Component11) {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key,
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, null));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, props));
       }
     }
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state.profile_layout); // Two column format. Left and right.
-
+      // Two column format. Left and right.
       var components_left = [];
 
       for (var i = 0; i < this.state.profile_layout["Left"].length; ++i) {

@@ -301,7 +301,7 @@ CREATE TABLE `profile_piece` (
   `refer_track_id` INTEGER NULL DEFAULT NULL,
   `refer_artist_id` INTEGER NULL DEFAULT NULL,
   `refer_album_id` INTEGER NULL DEFAULT NULL,
-  `pieceText` VARCHAR(500) NULL DEFAULT NULL,
+  `piece_text` VARCHAR(500) NULL DEFAULT NULL,
   `user_id` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
@@ -412,5 +412,5 @@ ALTER TABLE `profile_piece` ADD FOREIGN KEY (user_id) REFERENCES `user` (`id`);
 -- ('','','','','','');
 -- INSERT INTO `profile_layout` (`id`,`layout`,`user_id`) VALUES
 -- ('','','');
--- INSERT INTO `profile_piece` (`id`,`piece_type`,`piece_options`,`refer_track_id`,`refer_artist_id`,`refer_album_id`,`pieceText`,`user_id`) VALUES
+-- INSERT INTO `profile_piece` (`id`,`piece_type`,`piece_options`,`refer_track_id`,`refer_artist_id`,`refer_album_id`,`piece_text`,`user_id`) VALUES
 -- ('','','','','','','','');
