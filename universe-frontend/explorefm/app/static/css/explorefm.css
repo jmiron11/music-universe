@@ -259,14 +259,24 @@ a { color: inherit; }
 
 .profile-component {
   width: 100%;
-  padding-bottom: 1vh;
+  /*padding-bottom: 1vh;*/
+  position: relative;
+  border-bottom: 1px solid #d8d9db
+}
+
+.profile-settings-button-group {
+  z-index: 80;
+  position: absolute;
 }
 
 .profile-piece-settings-button {
-  position: absolute;
-  top: 0;
-  right 0;
+  color: #9e9e9e;
 }
+
+.profile-piece-settings-button:hover {
+  color: #737373;
+}
+
 
 .profile-edit-button-row {
   display: flex;
@@ -303,8 +313,9 @@ a { color: inherit; }
   width: 100%;
   height: 10vh;
   color: #474546;
+  margin-top: 10px;
   box-shadow: none;
-  margin: auto;
+  /*margin: auto;*/
   font-size: 20px;
   border: 1px solid #dddddd;
 }
@@ -355,8 +366,8 @@ a { color: inherit; }
 }
 
 .profile-section-header-timespan {
-  padding-top: 10px;
-  padding-bottom: 5px;
+  /*padding-top: 10px;*/
+  padding-bottom: 7px;
   padding-left: 7px;
   display: flex;
   align-items: flex-start;
@@ -369,6 +380,10 @@ a { color: inherit; }
   font-family: 'Roboto', sans-serif;
   font-size: 23px;
   margin-bottom: 0;
+}
+
+.profile-section-header-select {
+  margin-top: 10px;
 }
 
 .timespan-form {
@@ -455,7 +470,6 @@ a { color: inherit; }
 }
 
 .top-track {
-  padding-top:10px;
   display: flex;
   align-items: space-between;
   justify-content: space-between;
@@ -548,8 +562,6 @@ a { color: inherit; }
 .bio {
   margin: 0 10% 0 10%;
   padding: 0 0 0 0;
-  border-bottom: 1px solid #b9bbbe;
-  /*background: #d0d2d4;*/
   display: flex;
   align-items: center;
   justify-content: center;
@@ -559,7 +571,7 @@ a { color: inherit; }
 
 .bio h6 {
   font-family: 'Roboto', sans-serif;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 

@@ -201,7 +201,7 @@ class TopTracks extends React.Component {
     	<div className="top-track">
 			<div className = "profile-section-header-timespan">
 		        <h6>Top Tracks</h6>
-		        <select id="ts-form" onChange={this.updateTimespan} value={this.state.timespan}>
+		        <select className="profile-section-header-select" id="ts-form" onChange={this.updateTimespan} value={this.state.timespan}>
 		            <option value="day">Last day</option>
 		            <option value="week">Last week</option>
 		            <option value="month">Last month</option>
@@ -304,7 +304,7 @@ class TopAlbums extends React.Component {
       <div className="top-album">
       <div className = "profile-section-header-timespan">
             <h6>Top Albums</h6>
-            <select id="ts-form" onChange={this.updateTimespan} value={this.state.timespan}>
+            <select className="profile-section-header-select" id="ts-form" onChange={this.updateTimespan} value={this.state.timespan}>
                 <option value="day">Last day</option>
                 <option value="week">Last week</option>
                 <option value="month">Last month</option>
@@ -408,7 +408,7 @@ class TopArtists extends React.Component {
       <div className="top-artist">
       <div className = "profile-section-header-timespan">
             <h6>Top Artists</h6>
-            <select id="ts-form" onChange={this.updateTimespan} value={this.state.timespan}>
+            <select className="profile-section-header-select" id="ts-form" onChange={this.updateTimespan} value={this.state.timespan}>
                 <option value="day">Last day</option>
                 <option value="week">Last week</option>
                 <option value="month">Last month</option>
@@ -1552,7 +1552,6 @@ class Profile extends React.Component {
     axios.post(request_endpoint, json_layout).then(function(response) {
       // console.log(response)
     })
-
   }
 
   deserializeProfileToState(profile_data) {
@@ -1707,6 +1706,7 @@ class Profile extends React.Component {
   getNewComponent(piece_id) {
     return (
       <div key={ "new-profile-piece-group" + piece_id.toString()} className="profile-component">
+
         <button className="profile-edit-button" data-toggle="modal" data-target={ "#" + this.getModalTag(piece_id) }>Add Profile Piece</button>
         { this.getComponentModal(piece_id) }
       </div>
@@ -1845,13 +1845,15 @@ class Profile extends React.Component {
     )
   }
 
-  getSettingsButtonForPiece(piece_id) {
-
+  getSettingsButtonForPiece(piece_id, x_off, y_off) {
+    var settingsStyle = {
+      right: x_off,
+      top: y_off
+    };
     if (this.state.isCurrentUser) {
       return (
-        <div className="profile-settings-button-group">
-          <button className="profile-piece-settings-button" data-toggle="modal" data-target={ "#" + this.getModalTag(piece_id) }>Settings</button>
-          { this.getComponentModal(piece_id) }
+        <div className="profile-settings-button-group" style={settingsStyle}>
+          <i class="fa fa-lg fa-cog profile-piece-settings-button" aria-hidden="true" data-toggle="modal" data-target={ "#" + this.getModalTag(piece_id)}></i>
         </div>
 
       )
@@ -1867,45 +1869,63 @@ class Profile extends React.Component {
     }
     if (piece_data["PieceType"] == "TopTracks") {
       return (
-        <div key={key} className="profile-component">
-          <TopTracks {...props} />
-          { this.getSettingsButtonForPiece(piece_id) }
+        <div key={key}>
+          <div className="profile-component">
+            <TopTracks {...props} />
+            { this.getSettingsButtonForPiece(piece_id, "118px", "14px") }
+          </div>
+        { this.getComponentModal(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "TopAlbums") {
       return (
-        <div key={key} className="profile-component">
-          <TopAlbums {...props}/>
-          { this.getSettingsButtonForPiece(piece_id) }
+        <div key={key}>
+          <div className="profile-component">
+            <TopAlbums {...props}/>
+            { this.getSettingsButtonForPiece(piece_id, "118px", "14px") }
+          </div>
+          { this.getComponentModal(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "TopArtists") {
       return (
-        <div key={key} className="profile-component">
-          <TopArtists {...props}/>
-          { this.getSettingsButtonForPiece(piece_id) }
+        <div key={key}>
+          <div className="profile-component">
+            <TopArtists {...props}/>
+            { this.getSettingsButtonForPiece(piece_id, "118px", "14px") }
+          </div>
+          { this.getComponentModal(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "Bio") {
       props["bio_text"] = piece_data["PieceData"]["Text"]
 
       return (
-        <div key={key} className="profile-component">
-          <Bio {...props} />
-          { this.getSettingsButtonForPiece(piece_id) }
+        <div key={key}>
+          <div className="profile-component">
+            <Bio {...props} />
+            { this.getSettingsButtonForPiece(piece_id, 0, 0) }
+          </div>
+          { this.getComponentModal(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "ListenSummary") {
       return (
-        <div key={key} className="profile-component">
-          <h1>To Implement</h1>
+        <div key={key}>
+          <div className="profile-component">
+            <h1>To Implement</h1>
+          </div>
+          { this.getComponentModal(piece_id) }
         </div>
       )
     } else if (piece_data["PieceType"] == "RecentListens") {
       return (
-        <div key={key} className="profile-component">
-          <RecentListens {...props}/>
-          { this.getSettingsButtonForPiece(piece_id) }
+        <div key={key}>
+          <div className="profile-component">
+            <RecentListens {...props}/>
+            { this.getSettingsButtonForPiece(piece_id, 0, "14px") }
+          </div>
+          { this.getComponentModal(piece_id) }
         </div>
       )
     }

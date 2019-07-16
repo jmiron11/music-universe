@@ -386,6 +386,7 @@ function (_React$Component2) {
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "profile-section-header-timespan"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Top Tracks"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
+        className: "profile-section-header-select",
         id: "ts-form",
         onChange: this.updateTimespan,
         value: this.state.timespan
@@ -516,6 +517,7 @@ function (_React$Component3) {
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "profile-section-header-timespan"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Top Albums"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
+        className: "profile-section-header-select",
         id: "ts-form",
         onChange: this.updateTimespan,
         value: this.state.timespan
@@ -646,6 +648,7 @@ function (_React$Component4) {
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "profile-section-header-timespan"
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Top Artists"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
+        className: "profile-section-header-select",
         id: "ts-form",
         onChange: this.updateTimespan,
         value: this.state.timespan
@@ -2727,15 +2730,22 @@ function (_React$Component11) {
     }
   }, {
     key: "getSettingsButtonForPiece",
-    value: function getSettingsButtonForPiece(piece_id) {
+    value: function getSettingsButtonForPiece(piece_id, x_off, y_off) {
+      var settingsStyle = {
+        right: x_off,
+        top: y_off
+      };
+
       if (this.state.isCurrentUser) {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "profile-settings-button-group"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-          className: "profile-piece-settings-button",
+          className: "profile-settings-button-group",
+          style: settingsStyle
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
+          "class": "fa fa-lg fa-cog profile-piece-settings-button",
+          "aria-hidden": "true",
           "data-toggle": "modal",
           "data-target": "#" + this.getModalTag(piece_id)
-        }, "Settings"), this.getComponentModal(piece_id));
+        }));
       } else {
         return "";
       }
@@ -2750,35 +2760,41 @@ function (_React$Component11) {
 
       if (piece_data["PieceType"] == "TopTracks") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: key,
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, props), this.getSettingsButtonForPiece(piece_id));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopTracks, props), this.getSettingsButtonForPiece(piece_id, "118px", "14px")), this.getComponentModal(piece_id));
       } else if (piece_data["PieceType"] == "TopAlbums") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: key,
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopAlbums, props), this.getSettingsButtonForPiece(piece_id));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopAlbums, props), this.getSettingsButtonForPiece(piece_id, "118px", "14px")), this.getComponentModal(piece_id));
       } else if (piece_data["PieceType"] == "TopArtists") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: key,
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopArtists, props), this.getSettingsButtonForPiece(piece_id));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](TopArtists, props), this.getSettingsButtonForPiece(piece_id, "118px", "14px")), this.getComponentModal(piece_id));
       } else if (piece_data["PieceType"] == "Bio") {
         props["bio_text"] = piece_data["PieceData"]["Text"];
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: key,
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Bio, props), this.getSettingsButtonForPiece(piece_id));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Bio, props), this.getSettingsButtonForPiece(piece_id, 0, 0)), this.getComponentModal(piece_id));
       } else if (piece_data["PieceType"] == "ListenSummary") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: key,
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "To Implement"));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "To Implement")), this.getComponentModal(piece_id));
       } else if (piece_data["PieceType"] == "RecentListens") {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: key,
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-component"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, props), this.getSettingsButtonForPiece(piece_id));
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, props), this.getSettingsButtonForPiece(piece_id, 0, "14px")), this.getComponentModal(piece_id));
       }
     }
   }, {
