@@ -515,6 +515,7 @@ class User(UserMixin, db.Model):
         db.session.commit()
 
     def update_profile_piece(self, piece_id, piece_type, piece_options):
+        print(piece_id, piece_type, piece_options)
         if piece_id < 0:
             if piece_type == "TopTracks":
                 u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
@@ -531,7 +532,18 @@ class User(UserMixin, db.Model):
             elif piece_type == "RecentListens":
                 u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
             elif piece_type == "MusicHighlight":
-                pass
+                if piece_options["Type"] == "Track":
+                    track = Track.query.filter(and_(Track.name==piece_options["Track"], Track.album.name==piece_options["Album"], Track.artist.name==piece_options["Artist"])).first()
+                    track_id = track.id
+                    u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options), refer_track_id=track_id)
+                elif piece_options["Type"] == "Album":
+                    album = Album.query.filter(and_(Album.name==piece_options["Album"], Artist.name==piece_options["Artist"], Artist.id == Album.artist_id)).first()
+                    album_id = album.id
+                    u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options), refer_album_id=album_id)
+                elif piece_options["Type"] == "Artist":
+                    artist = Artist.query.filter(Artist.name==piece_options["Artist"]).first()
+                    artist_id = artist.id
+                    u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options), refer_artist_id=artist_id)
 
             if u_piece: #Remove once all entries create u_piece
                 db.session.add(u_piece)
@@ -551,12 +563,35 @@ class User(UserMixin, db.Model):
                 db.session.delete(entry)
             else:
                 entry.piece_type = str(piece_type)
-                if piece_type in ["TopTracks", "TopAlbums", "TopArtists", "ListenSummary", "RecentListens", "MusicHighlight"]:
+                if piece_type in ["TopTracks", "TopAlbums", "TopArtists", "ListenSummary", "RecentListens"]:
                     entry.piece_options = str(piece_options)
                 elif piece_type == "Bio":
                     bio = str(piece_options["Text"])
                     piece_options.pop("Text")
                     entry.piece_text = bio
+                    entry.piece_options = str(piece_options)
+                elif piece_type == "MusicHighlight":
+                    if piece_options["Type"] == "Track":
+                        track = Track.query.filter(and_(Track.name==piece_options["Track"], Track.album.name==piece_options["Album"], Track.artist.name==piece_options["Artist"])).first()
+                        track_id = track.id
+                        entry.refer_track_id = track_id
+                        entry.refer_album_id = None
+                        entry.refer_artist_id = None
+                    elif piece_options["Type"] == "Album":
+                        album = Album.query.filter(and_(Album.name==piece_options["Album"], Artist.name==piece_options["Artist"], Artist.id == Album.artist_id)).first()
+                        album_id = album.id
+                        entry.refer_track_id = None
+                        entry.refer_album_id = album_id
+                        entry.refer_artist_id = None
+                        print('DID IT')
+                    elif piece_options["Type"] == "Artist":
+                        artist = Artist.query.filter(Artist.name==piece_options["Artist"]).first()
+                        artist_id = artist.id
+                        entry.refer_track_id = None
+                        entry.refer_album_id = None
+                        entry.refer_artist_id = artist_id
+
+                    entry.piece_options = str(piece_options)
 
             db.session.commit()
             return entry.id
@@ -610,7 +645,6 @@ class Album(db.Model):
     spotify_id = db.Column(db.String(30))
 
     artist = db.relationship('Artist', lazy=True)
-
     album_art = db.relationship('AlbumArt', lazy=False)
 
 class Artist(db.Model):

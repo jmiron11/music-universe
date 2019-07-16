@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db, basic_auth
 from app.forms import LoginForm, RegistrationForm
-from app.models import User, Token
+from app.models import User, Token, Track, Artist, Album
 from app.spotify import get_authorize_url, get_access_token
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
@@ -221,12 +221,20 @@ def user_profile(username):
         profile_data["ProfileLayout"] = eval(user.profile_layout[0].layout)
     
     for piece in user.profile_pieces:
-       piece_data = profile_data["ProfilePieces"][piece.id]
-       piece_data["PieceType"] = piece.piece_type
-       piece_data["PieceData"] = eval(piece.piece_options)
+        piece_data = profile_data["ProfilePieces"][piece.id]
+        piece_data["PieceType"] = piece.piece_type
+        piece_data["PieceData"] = eval(piece.piece_options)
 
-       if piece.piece_type == "Bio":
-        piece_data["PieceData"]["Text"] = piece.piece_text
+        if piece.piece_type == "Bio":
+            piece_data["PieceData"]["Text"] = piece.piece_text
+
+        if piece.piece_type == "MusicHighlight":
+            if piece_data["PieceData"]["Type"] == "Artist":
+                piece_data["PieceData"]["Artist_id"] = piece.refer_artist_id
+            elif piece_data["PieceData"]["Type"] == "Album":
+                piece_data["PieceData"]["Album_id"] = piece.refer_album_id
+            elif piece_data["PieceData"]["Type"] == "Track":
+                piece_data["PieceData"]["Track_id"] = piece.refer_track_id
 
     return jsonify(profile_data)
 
@@ -311,6 +319,7 @@ def upload_profile_image():
 @login_required
 def update_profile_piece():
     profile_piece_json = request.get_json()
+    print(profile_piece_json)
     piece_id = current_user.update_profile_piece(profile_piece_json["PieceId"], profile_piece_json["PieceType"], profile_piece_json["PieceData"])
     return jsonify(piece_id)
 
@@ -357,6 +366,38 @@ def spotify_connected():
 @login_required
 def query_is_following(username): 
     return jsonify(current_user.is_following(username))
+
+
+@app.route('/query/music')
+@login_required
+def query_music():
+    music_type = str(request.args.get('type', default=""))
+    music_id = int(request.args.get('id', default=-1))
+
+    music_data = {}
+    if music_type == "Track":
+        track = Track.query.filter(Track.id==music_id).first()
+        if track != None:
+            music_data['track'] = track.name
+            music_data['album'] = track.album.name
+            music_data['artist'] = track.artist.name
+            music_data['img_id'] = track.album.id
+    elif music_type == "Album":
+        album = Album.query.filter(Album.id==music_id).first()
+        if album != None:
+            music_data['album'] = album.name
+            music_data['artist'] = album.artist.name
+            music_data['img_id'] = album.id
+    elif music_type == "Artist":
+        artist = Artist.query.filter(Artist.id==music_id).first()
+        if artist != None:
+            music_data['artist'] = artist.name
+            music_data['img_id'] = artist.id
+
+        print(music_data)
+   
+    return jsonify(music_data) # TODO(justinmiron): This needs to be changed.
+
 
 @app.route('/test/')
 def test():

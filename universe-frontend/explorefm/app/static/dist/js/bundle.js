@@ -683,7 +683,8 @@ function (_React$Component5) {
 
     _this5 = _possibleConstructorReturn(this, _getPrototypeOf(RecentListens).call(this, props));
     _this5.state = {
-      top: []
+      top: [],
+      count: _this5.props.count
     };
     return _this5;
   }
@@ -693,7 +694,7 @@ function (_React$Component5) {
     value: function updateRecentListenData() {
       var newTop = [];
       var self = this;
-      var request = '/user/' + user + '/recent_listens?count=10';
+      var request = '/user/' + user + '/recent_listens?count=' + this.state.count.toString();
       axios.get(request).then(function (response) {
         var l = response['data'];
 
@@ -787,421 +788,20 @@ function (_React$Component6) {
   return Bio;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-var Highlight =
-/*#__PURE__*/
-function (_React$Component7) {
-  _inherits(Highlight, _React$Component7);
-
-  function Highlight(props) {
-    var _this7;
-
-    _classCallCheck(this, Highlight);
-
-    _this7 = _possibleConstructorReturn(this, _getPrototypeOf(Highlight).call(this, props));
-
-    _this7.activeEditMode = function (event) {
-      _this7.state.addNewHighlightMode = true;
-
-      _this7.setState(_this7.state);
-    };
-
-    _this7.disableEditMode = function (event) {
-      _this7.state.addNewHighlightMode = false;
-
-      _this7.setState(_this7.state);
-    };
-
-    _this7.editHighlightEntry = function (event) {
-      var id = event.currentTarget.id;
-      var highlight_idx = Number(id.substring(id.length - 1));
-      _this7.state.editIndex = highlight_idx;
-
-      _this7.setState(_this7.state);
-    };
-
-    _this7.disableEditHighlight = function (event) {
-      _this7.state.editIndex = -1;
-
-      _this7.setState(_this7.state);
-    };
-
-    _this7.deleteEditHighlight = function (event) {
-      var artist = document.getElementById("exist-highlight-edit-artist").value;
-      var album = document.getElementById("exist-highlight-edit-album").value;
-      var track = document.getElementById("exist-highlight-edit-track").value;
-      var id = event.currentTarget.id;
-      var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this7.state.highlights[highlight_idx];
-      var old_track, old_album, old_artist;
-
-      if ('track' in old_highlight) {
-        old_track = "&old_track=" + old_highlight['track'];
-      } else {
-        old_track = "";
-      }
-
-      if ('album' in old_highlight) {
-        old_album = "&old_album=" + old_highlight['album'];
-      } else {
-        old_album = "";
-      }
-
-      if ('artist' in old_highlight) {
-        old_artist = "&old_artist=" + old_highlight['artist'];
-      } else {
-        old_artist = "";
-      }
-
-      var self = _assertThisInitialized(_this7);
-
-      var request = '/update/highlight?' + old_artist + old_album + old_track;
-      axios.get(request).then(function (response) {
-        self.state.highlights = response['data'];
-
-        for (var i = 0; i < self.state.highlights.length; ++i) {
-          if (!('track' in self.state.highlights[i])) {
-            self.state.highlights[i]['track'] = "";
-          }
-
-          if (!('album' in self.state.highlights[i])) {
-            self.state.highlights[i]['album'] = "";
-          }
-
-          if (!('artist' in self.state.highlights[i])) {
-            self.state.highlights[i]['artist'] = "";
-          }
-        }
-
-        self.state.editIndex = -1;
-        self.setState(self.state);
-      });
-    };
-
-    _this7.saveEditHighlight = function (event) {
-      var artist = document.getElementById("exist-highlight-edit-artist").value;
-      var album = document.getElementById("exist-highlight-edit-album").value;
-      var track = document.getElementById("exist-highlight-edit-track").value;
-      var id = event.currentTarget.id;
-      var highlight_idx = Number(id.substring(id.length - 1));
-      var old_highlight = _this7.state.highlights[highlight_idx];
-
-      if (artist != "") {
-        artist = "artist=" + artist;
-      }
-
-      if (album != "") {
-        album = "&album=" + album;
-      } else {
-        album = "";
-      }
-
-      if (track != "") {
-        track = "&track=" + track;
-      } else {
-        track = "";
-      }
-
-      var old_track, old_album, old_artist;
-
-      if ('track' in old_highlight) {
-        old_track = "&old_track=" + old_highlight['track'];
-      } else {
-        old_track = "";
-      }
-
-      if ('album' in old_highlight) {
-        old_album = "&old_album=" + old_highlight['album'];
-      } else {
-        old_album = "";
-      }
-
-      if ('artist' in old_highlight) {
-        old_artist = "&old_artist=" + old_highlight['artist'];
-      } else {
-        old_artist = "";
-      }
-
-      var self = _assertThisInitialized(_this7);
-
-      var request = '/update/highlight?' + artist + album + track + old_artist + old_album + old_track;
-      axios.get(request).then(function (response) {
-        self.state.highlights = response['data'];
-
-        for (var i = 0; i < self.state.highlights.length; ++i) {
-          if (!('track' in self.state.highlights[i])) {
-            self.state.highlights[i]['track'] = "";
-          }
-
-          if (!('album' in self.state.highlights[i])) {
-            self.state.highlights[i]['album'] = "";
-          }
-
-          if (!('artist' in self.state.highlights[i])) {
-            self.state.highlights[i]['artist'] = "";
-          }
-        }
-
-        self.state.editIndex = -1;
-        self.setState(self.state);
-      });
-    };
-
-    _this7.saveHighlight = function (event) {
-      var artist = document.getElementById("highlight-edit-artist").value;
-      var album = document.getElementById("highlight-edit-album").value;
-      var track = document.getElementById("highlight-edit-track").value;
-
-      if (artist != "") {
-        artist = "artist=" + artist;
-      }
-
-      if (album != "") {
-        album = "&album=" + album;
-      } else {
-        album = "";
-      }
-
-      if (track != "") {
-        track = "&track=" + track;
-      } else {
-        track = "";
-      }
-
-      var self = _assertThisInitialized(_this7);
-
-      var request = '/update/highlight?' + artist + album + track;
-      axios.get(request).then(function (response) {
-        self.state.highlights = response['data'];
-
-        for (var i = 0; i < self.state.highlights.length; ++i) {
-          if (!('track' in self.state.highlights[i])) {
-            self.state.highlights[i]['track'] = "";
-          }
-
-          if (!('album' in self.state.highlights[i])) {
-            self.state.highlights[i]['album'] = "";
-          }
-
-          if (!('artist' in self.state.highlights[i])) {
-            self.state.highlights[i]['artist'] = "";
-          }
-        }
-
-        self.state.addNewHighlightMode = false;
-        self.setState(self.state);
-      });
-    };
-
-    _this7.state = {
-      addNewHighlightMode: false,
-      highlights: [],
-      editIndex: -1
-    };
-    return _this7;
-  }
-
-  _createClass(Highlight, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var self = this;
-      var request = '/user/' + user + '/highlight/';
-      axios.get(request).then(function (response) {
-        self.state.highlights = response['data'];
-        self.setState(self.state);
-      });
-    }
-  }, {
-    key: "renderNoHighlights",
-    value: function renderNoHighlights(isCurrentUser) {
-      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "no-highlights"
-      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-        className: "no-highlight-edit",
-        onClick: this.activeEditMode
-      }, "It looks like you have no highlighted tracks... Click here to add your first highlighted track"));
-    }
-  }, {
-    key: "nothing",
-    value: function nothing() {}
-  }, {
-    key: "renderHighlights",
-    value: function renderHighlights(isCurrentUser) {
-      var highlights = this.state.highlights;
-      var self = this;
-      var data = [];
-
-      for (var i = 0; i < highlights.length; ++i) {
-        var k = "highlight-" + i.toString();
-        var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg';
-
-        if (i != this.state.editIndex) {
-          data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            key: k,
-            id: k,
-            className: "highlight-entry-area",
-            onClick: this.editHighlightEntry
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            className: "highlight-entry"
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
-            className: "highlight-img",
-            src: img_path
-          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            className: "highlight-desc"
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            className: "highlight-txt"
-          }, highlights[i]['artist'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Artist:"), " ", highlights[i]['artist']), highlights[i]['album'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['track'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Track:"), " ", highlights[i]['track']))))));
-        } else {
-          var edit_idx = i;
-          var key = "edit-highlight-" + edit_idx;
-          data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            key: key,
-            className: "highlight-edit-entry"
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            className: "highlight-edit-row"
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-artist",
-            className: "highlight-edit-form",
-            type: "text",
-            "max-length": "100"
-          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            className: "highlight-edit-row"
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-album",
-            className: "highlight-edit-form",
-            type: "text",
-            "max-length": "100"
-          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            className: "highlight-edit-row"
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Track"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-track",
-            className: "highlight-edit-form",
-            type: "text",
-            "max-length": "100"
-          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-            className: "bio-button-row"
-          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-            id: key,
-            className: "bio-button",
-            onClick: this.deleteEditHighlight
-          }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-            className: "bio-button",
-            onClick: this.disableEditHighlight
-          }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-            id: key,
-            className: "bio-button",
-            onClick: this.saveEditHighlight
-          }, "Save"))));
-        }
-      }
-
-      if (highlights.length < 6) {
-        data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: "add-highlights",
-          className: "highlight-edit-area"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-          className: "bio-edit",
-          onClick: this.activeEditMode
-        }, "Add highlighted music")));
-      }
-
-      return data;
-    } // Each highlight can be clicked normally. Edit mode is only 
-    // for adding a new highlight. It displays the add a highlight after
-    // the other highlights.
-
-  }, {
-    key: "renderEditMode",
-    value: function renderEditMode() {
-      var highlights = this.state.highlights;
-      var self = this;
-      var data = [];
-
-      for (var i = 0; i < highlights.length; ++i) {
-        var k = "highlight-" + i.toString();
-        var img_path = album_art_endpoint + highlights[i]['img_id'] + '-medium.jpg';
-        data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: k,
-          className: "highlight-entry"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
-          className: "highlight-img",
-          src: img_path
-        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "highlight-desc"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "highlight-txt"
-        }, highlights[i]['track'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Track:"), " ", highlights[i]['track']), highlights[i]['album'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Album:"), " ", highlights[i]['album']), highlights[i]['artist'] && react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("b", null, "Artist:"), " ", highlights[i]['artist'])))));
-      }
-
-      if (highlights.length < 6) {
-        data.push(react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          key: "highlight-edit",
-          className: "highlight-edit-entry"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "highlight-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-          id: "highlight-edit-artist",
-          className: "highlight-edit-form",
-          type: "text",
-          "max-length": "100"
-        })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "highlight-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-          id: "highlight-edit-album",
-          className: "highlight-edit-form",
-          type: "text",
-          "max-length": "100"
-        })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "highlight-edit-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", null, "Track"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-          id: "highlight-edit-track",
-          className: "highlight-edit-form",
-          type: "text",
-          "max-length": "100"
-        })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-          className: "bio-button-row"
-        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-          className: "bio-button",
-          onClick: this.disableEditMode
-        }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
-          className: "bio-button",
-          onClick: this.saveHighlight
-        }, "Save"))));
-      }
-
-      return data;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var isCurrentUser = user == current_user;
-
-      if (this.state.addNewHighlightMode) {
-        return this.renderEditMode();
-      } else {
-        if (this.state.highlights.length == 0) return this.renderNoHighlights(isCurrentUser);else {
-          return this.renderHighlights(isCurrentUser);
-        }
-      }
-    }
-  }]);
-
-  return Highlight;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
 var TimezoneForm =
 /*#__PURE__*/
-function (_React$Component8) {
-  _inherits(TimezoneForm, _React$Component8);
+function (_React$Component7) {
+  _inherits(TimezoneForm, _React$Component7);
 
   function TimezoneForm(props) {
-    var _this8;
+    var _this7;
 
     _classCallCheck(this, TimezoneForm);
 
-    _this8 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
+    _this7 = _possibleConstructorReturn(this, _getPrototypeOf(TimezoneForm).call(this, props));
 
-    _this8.updateTimezone = function (event) {
-      _this8.setState({
+    _this7.updateTimezone = function (event) {
+      _this7.setState({
         timezone: event.target.value
       });
 
@@ -1209,10 +809,10 @@ function (_React$Component8) {
       axios.post(request);
     };
 
-    _this8.state = {
+    _this7.state = {
       timezone: "America/Chicago"
     };
-    return _this8;
+    return _this7;
   }
 
   _createClass(TimezoneForm, [{
@@ -2090,30 +1690,30 @@ function (_React$Component8) {
 
 var FollowButton =
 /*#__PURE__*/
-function (_React$Component9) {
-  _inherits(FollowButton, _React$Component9);
+function (_React$Component8) {
+  _inherits(FollowButton, _React$Component8);
 
   function FollowButton(props) {
-    var _this9;
+    var _this8;
 
     _classCallCheck(this, FollowButton);
 
-    _this9 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
+    _this8 = _possibleConstructorReturn(this, _getPrototypeOf(FollowButton).call(this, props));
 
-    _this9.buttonClicked = function (event) {
-      var self = _assertThisInitialized(_this9);
+    _this8.buttonClicked = function (event) {
+      var self = _assertThisInitialized(_this8);
 
-      var request = '/update/is_following/' + user + '/' + (!_this9.state.isFollowing).toString();
+      var request = '/update/is_following/' + user + '/' + (!_this8.state.isFollowing).toString();
       axios.get(request).then(function (response) {
         self.state.isFollowing = response['data'];
         self.setState(self.state);
       });
     };
 
-    _this9.state = {
+    _this8.state = {
       isFollowing: false
     };
-    return _this9;
+    return _this8;
   }
 
   _createClass(FollowButton, [{
@@ -2160,6 +1760,108 @@ function (_React$Component9) {
   }]);
 
   return FollowButton;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // MusicHighlight {
+//   "Type": <One of "Track", "Album", "Artist">
+//   "Track": <TrackName or omitted>
+//   "Album": <AlbumName or omitted> 
+//   "Artist": <ArtistName or omitted>
+//  }
+
+
+var MusicHighlight =
+/*#__PURE__*/
+function (_React$Component9) {
+  _inherits(MusicHighlight, _React$Component9);
+
+  function MusicHighlight(props) {
+    var _this9;
+
+    _classCallCheck(this, MusicHighlight);
+
+    _this9 = _possibleConstructorReturn(this, _getPrototypeOf(MusicHighlight).call(this, props));
+    _this9.state = {
+      type: _this9.props.type,
+      music_id: _this9.props.music_id,
+      music_data: {}
+    };
+    return _this9;
+  }
+
+  _createClass(MusicHighlight, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var request = "/query/music?type=" + this.state.type;
+      request += "&id=" + this.state.music_id;
+      var self = this;
+      axios.get(request).then(function (response) {
+        self.state.music_data = response.data;
+        self.setState(self.state);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.type == "Artist") {
+        var artist_img = artist_art_endpoint + this.state.music_data['img_id'] + '-medium.jpg';
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+          className: "music-highlight-img",
+          src: artist_img
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-gradient"
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-text-layer-wrapper"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-text-group"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
+          className: "music-highlight-text"
+        }, this.state.music_data['artist']))));
+      } else if (this.state.type == "Album") {
+        var album_img = album_art_endpoint + this.state.music_data['img_id'] + '-medium.jpg';
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+          className: "music-highlight-img",
+          src: album_img
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-gradient"
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-text-layer-wrapper"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-text-group"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
+          className: "music-highlight-text"
+        }, this.state.music_data['album']), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
+          className: "music-highlight-text-small"
+        }, this.state.music_data['artist']))));
+      } else if (this.state.type == "Track") {
+        var album_img = album_art_endpoint + this.state.music_data['img_id'] + '-medium.jpg';
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("img", {
+          className: "music-highlight-img",
+          src: album_img
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-gradient"
+        }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-text-layer-wrapper"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-text-group"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
+          className: "music-highlight-text"
+        }, this.state.music_data['track']), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
+          className: "music-highlight-text-small"
+        }, this.state.music_data['album']), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
+          className: "music-highlight-text-small"
+        }, this.state.music_data['artist']))));
+      } else {
+        return "";
+      }
+    }
+  }]);
+
+  return MusicHighlight;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var ProfileSnapshot =
@@ -2379,12 +2081,16 @@ function (_React$Component11) {
           _this11.state.editProfileModalOptions["Number"] = event.target.value;
         } else if (field == "profileBioEditForm") {
           _this11.state.editProfileModalOptions["Text"] = event.target.value;
+        } else if (field == "selectHighlightType") {
+          _this11.state.editProfileModalOptions["Type"] = event.target.value;
         }
       } else {
         if (field == "recentListenCount") {
           _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Number"] = event.target.value;
         } else if (field == "profileBioEditForm") {
           _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Text"] = event.target.value;
+        } else if (field == "selectHighlightType") {
+          _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Type"] = event.target.value;
         }
       }
 
@@ -2448,6 +2154,30 @@ function (_React$Component11) {
         } else {
           this.state.profile_pieces_edits[piece_id]["PieceData"]["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value;
         }
+      } else if (this.state.editProfileModalValue == "MusicHighlight") {
+        if (piece_id < 0) {
+          if (this.state.editProfileModalOptions["Type"] == "Track") {
+            this.state.editProfileModalOptions["Track"] = document.getElementById("exist-highlight-edit-track-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+          } else if (this.state.editProfileModalOptions["Type"] == "Album") {
+            this.state.editProfileModalOptions["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+          } else if (this.state.editProfileModalOptions["Type"] == "Artist") {
+            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+          }
+        } else {
+          if (this.state.editProfileModalOptions["Type"] == "Track") {
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Track"] = document.getElementById("exist-highlight-edit-track-" + piece_id.toString()).value;
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+          } else if (this.state.editProfileModalOptions["Type"] == "Album") {
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+          } else if (this.state.editProfileModalOptions["Type"] == "Artist") {
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+          }
+        }
       } // Submit the new profile piece, it returns an identifier.
 
 
@@ -2460,6 +2190,13 @@ function (_React$Component11) {
       } else {
         json_piece["PieceType"] = this.state.profile_pieces_edits[piece_id]["PieceType"];
         json_piece["PieceData"] = this.state.profile_pieces_edits[piece_id]["PieceData"];
+      } // Pop all Id's from the piece data if the type is musichighlight
+
+
+      if (json_piece["PieceType"] == "MusicHighlight") {
+        delete json_piece["PieceData"].Artist_id;
+        delete json_piece["PieceData"].Album_id;
+        delete json_piece["PieceData"].Track_id;
       }
 
       if (piece_id >= 0) {
@@ -2663,7 +2400,7 @@ function (_React$Component11) {
       } else if (value == "RecentListens") {
         // Initialize the default values for the modal options
         if (!("Number" in options)) {
-          this.state.editProfileModalOptions["Number"] = "5";
+          options["Number"] = "5";
         }
 
         additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2692,6 +2429,123 @@ function (_React$Component11) {
             return _this12.submitProfileEdit(piece_id);
           }
         }, "Save")));
+      } else if (value == "MusicHighlight") {
+        if (!("Type" in options)) {
+          options["Type"] = "SelectType";
+        }
+
+        var highlightFields;
+
+        if (options["Type"] == "SelectType") {
+          highlightFields = "";
+        } else if (options["Type"] == "Track") {
+          highlightFields = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "music-highlight-group"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
+            id: "exist-highlight-edit-artist-" + piece_id.toString(),
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
+            id: "exist-highlight-edit-album-" + piece_id.toString(),
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Track"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
+            id: "exist-highlight-edit-track-" + piece_id.toString(),
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-button-row"
+          }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+            className: "profile-edit-save",
+            onClick: function onClick() {
+              return _this12.submitProfileEdit(piece_id);
+            }
+          }, "Save")));
+        } else if (options["Type"] == "Album") {
+          highlightFields = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "music-highlight-group"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
+            id: "exist-highlight-edit-artist-" + piece_id.toString(),
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
+            id: "exist-highlight-edit-album-" + piece_id.toString(),
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-button-row"
+          }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+            className: "profile-edit-save",
+            onClick: function onClick() {
+              return _this12.submitProfileEdit(piece_id);
+            }
+          }, "Save")));
+        } else if (options["Type"] == "Artist") {
+          highlightFields = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "music-highlight-group"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
+            id: "exist-highlight-edit-artist-" + piece_id.toString(),
+            className: "highlight-edit-form",
+            type: "text",
+            "max-length": "100"
+          })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-button-row"
+          }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
+            className: "profile-edit-save",
+            onClick: function onClick() {
+              return _this12.submitProfileEdit(piece_id);
+            }
+          }, "Save")));
+        }
+
+        additionalOptions = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "profile-edit-options"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "profile-edit-row"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+          className: "profile-edit-options-name"
+        }, "Highlight Type"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
+          id: "selectHighlightType-" + piece_id.toString(),
+          onChange: this.updateModalOption,
+          value: options["Type"]
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
+          value: "SelectType"
+        }, "Select a highlight type..."), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
+          value: "Track"
+        }, "Track"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
+          value: "Album"
+        }, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
+          value: "Artist"
+        }, "Artist"))), highlightFields);
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -2726,7 +2580,9 @@ function (_React$Component11) {
         value: "ListenSummary"
       }, "Listen Summary"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
         value: "RecentListens"
-      }, "Recent Listens"))), additionalOptions, this.displayModalHelp()))));
+      }, "Recent Listens"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("option", {
+        value: "MusicHighlight"
+      }, "Music Highlight"))), additionalOptions, this.displayModalHelp()))));
     }
   }, {
     key: "getSettingsButtonForPiece",
@@ -2741,7 +2597,7 @@ function (_React$Component11) {
           className: "profile-settings-button-group",
           style: settingsStyle
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
-          "class": "fa fa-lg fa-cog profile-piece-settings-button",
+          className: "fa fa-lg fa-cog profile-piece-settings-button",
           "aria-hidden": "true",
           "data-toggle": "modal",
           "data-target": "#" + this.getModalTag(piece_id)
@@ -2790,11 +2646,28 @@ function (_React$Component11) {
           className: "profile-component"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", null, "To Implement")), this.getComponentModal(piece_id));
       } else if (piece_data["PieceType"] == "RecentListens") {
+        props["count"] = piece_data["PieceData"]["Number"];
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           key: key
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
           className: "profile-component"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, props), this.getSettingsButtonForPiece(piece_id, 0, "14px")), this.getComponentModal(piece_id));
+      } else if (piece_data["PieceType"] == "MusicHighlight") {
+        props["type"] = piece_data["PieceData"]["Type"];
+
+        if (piece_data["PieceData"]["Type"] == "Artist") {
+          props["music_id"] = piece_data["PieceData"]["Artist_id"];
+        } else if (piece_data["PieceData"]["Type"] == "Album") {
+          props["music_id"] = piece_data["PieceData"]["Album_id"];
+        } else if (piece_data["PieceData"]["Type"] == "Album") {
+          props["music_id"] = piece_data["PieceData"]["Track_id"];
+        }
+
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "profile-component"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](MusicHighlight, props), this.getSettingsButtonForPiece(piece_id, "10px", "10px")), this.getComponentModal(piece_id));
       }
     }
   }, {

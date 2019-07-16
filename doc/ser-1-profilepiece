@@ -30,9 +30,14 @@ Bio {
 	"Text": <String>
 }
 
+// Ids only returned by server.
 MusicHighlight {
 	"Type": <One of "Track", "Album", "Artist">
 	"Track": <TrackName or omitted>
+	"Track_id": <Track Id>
 	"Album": <AlbumName or omitted>	
+	"Album_id": <Album Id>
 	"Artist": <ArtistName or omitted>
+	"Artist_id": <Artist_Id>
 }
+
