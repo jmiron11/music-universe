@@ -2083,6 +2083,8 @@ function (_React$Component11) {
           _this11.state.editProfileModalOptions["Text"] = event.target.value;
         } else if (field == "selectHighlightType") {
           _this11.state.editProfileModalOptions["Type"] = event.target.value;
+        } else if (field == "musicHighlightNote") {
+          _this11.state.editProfileModalOptions["Note"] = event.target.value;
         }
       } else {
         if (field == "recentListenCount") {
@@ -2091,6 +2093,8 @@ function (_React$Component11) {
           _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Text"] = event.target.value;
         } else if (field == "selectHighlightType") {
           _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Type"] = event.target.value;
+        } else if (field == "musicHighlightNote") {
+          _this11.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Note"] = event.target.value;
         }
       }
 
@@ -2199,6 +2203,10 @@ function (_React$Component11) {
         delete json_piece["PieceData"].Artist_id;
         delete json_piece["PieceData"].Album_id;
         delete json_piece["PieceData"].Track_id;
+
+        if (!("Note" in json_piece["PieceData"])) {
+          json_piece["PieceData"]["Note"] = "";
+        }
       }
 
       if (piece_id >= 0) {
@@ -2208,15 +2216,25 @@ function (_React$Component11) {
       var self = this;
       var request_endpoint = '/update/profile_piece';
       axios.post(request_endpoint, json_piece).then(function (response) {
-        // Submit the new serialized profile.
+        console.log(response); // Submit the new serialized profile.
+
         if (piece_id == -1) {
-          self.state.profile_layout["Left"].push(response.data);
+          self.state.profile_layout["Left"].push(response.data['piece_id']);
         } else if (piece_id == -2) {
-          self.state.profile_layout["Right"].push(response.data);
+          self.state.profile_layout["Right"].push(response.data['piece_id']);
+        } // Some objects have extra returned information
+
+
+        if (json_piece["PieceType"] == "MusicHighlight") {
+          if (json_piece["PieceData"]["Type"] == "Track") json_piece["PieceData"]["Track_id"] = response.data['music_id'];else if (json_piece["PieceData"]["Type"] == "Album") {
+            json_piece["PieceData"]["Album_id"] = response.data['music_id'];
+          } else if (json_piece["PieceData"]["Type"] == "Artist") {
+            json_piece["PieceData"]["Artist_id"] = response.data['music_id'];
+          }
         } // Update state internally once we have the piece_id
 
 
-        self.state.profile_pieces[response.data] = json_piece;
+        self.state.profile_pieces[response.data['piece_id']] = json_piece;
         self.setState(self.state); // A new piece has been added.
 
         if (piece_id < 0) {
@@ -2471,6 +2489,17 @@ function (_React$Component11) {
             type: "text",
             "max-length": "100"
           })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Note"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
+            id: "musicHighlightNote-" + piece_id.toString(),
+            className: "bio-edit-form",
+            type: "text",
+            "max-length": "500",
+            value: options["Note"],
+            onChange: this.updateModalOption
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "profile-edit-button-row"
           }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
             className: "profile-edit-save",
@@ -2500,6 +2529,17 @@ function (_React$Component11) {
             type: "text",
             "max-length": "100"
           })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Note"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
+            id: "musicHighlightNote-" + piece_id.toString(),
+            className: "bio-edit-form",
+            type: "text",
+            "max-length": "500",
+            value: options["Note"],
+            onChange: this.updateModalOption
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "profile-edit-button-row"
           }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
             className: "profile-edit-save",
@@ -2520,6 +2560,17 @@ function (_React$Component11) {
             type: "text",
             "max-length": "100"
           })), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+            className: "profile-edit-row"
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
+            className: "profile-edit-options-name"
+          }, "Note"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("textarea", {
+            id: "musicHighlightNote-" + piece_id.toString(),
+            className: "bio-edit-form",
+            type: "text",
+            "max-length": "500",
+            value: options["Note"],
+            onChange: this.updateModalOption
+          }), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
             className: "profile-edit-button-row"
           }, delete_button_div, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", {
             className: "profile-edit-save",

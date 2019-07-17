@@ -235,6 +235,7 @@ def user_profile(username):
                 piece_data["PieceData"]["Album_id"] = piece.refer_album_id
             elif piece_data["PieceData"]["Type"] == "Track":
                 piece_data["PieceData"]["Track_id"] = piece.refer_track_id
+            piece_data["PieceData"]["Note"] = piece.piece_text
 
     return jsonify(profile_data)
 
@@ -319,9 +320,9 @@ def upload_profile_image():
 @login_required
 def update_profile_piece():
     profile_piece_json = request.get_json()
-    print(profile_piece_json)
-    piece_id = current_user.update_profile_piece(profile_piece_json["PieceId"], profile_piece_json["PieceType"], profile_piece_json["PieceData"])
-    return jsonify(piece_id)
+    returned_obj = current_user.update_profile_piece(profile_piece_json["PieceId"], profile_piece_json["PieceType"], profile_piece_json["PieceData"])
+
+    return jsonify(returned_obj)
 
 @app.route('/update/profile_layout', methods=['POST'])
 @login_required
@@ -394,8 +395,6 @@ def query_music():
             music_data['artist'] = artist.name
             music_data['img_id'] = artist.id
 
-        print(music_data)
-   
     return jsonify(music_data) # TODO(justinmiron): This needs to be changed.
 
 

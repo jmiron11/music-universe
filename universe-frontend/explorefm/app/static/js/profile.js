@@ -1356,6 +1356,9 @@ class Profile extends React.Component {
       delete json_piece["PieceData"].Artist_id
       delete json_piece["PieceData"].Album_id
       delete json_piece["PieceData"].Track_id
+      if (!("Note" in json_piece["PieceData"])) {
+        json_piece["PieceData"]["Note"] = ""
+      }
     }
 
     if (piece_id >= 0) {
@@ -1364,16 +1367,29 @@ class Profile extends React.Component {
     var self = this
     var request_endpoint = '/update/profile_piece'
     axios.post(request_endpoint, json_piece).then(function(response) {
+      console.log(response)
       // Submit the new serialized profile.
 
       if (piece_id == -1) {
-        self.state.profile_layout["Left"].push(response.data)
+        self.state.profile_layout["Left"].push(response.data['piece_id'])
       } else if (piece_id == -2) {
-        self.state.profile_layout["Right"].push(response.data)
+        self.state.profile_layout["Right"].push(response.data['piece_id'])
+      }
+
+      // Some objects have extra returned information
+      if (json_piece["PieceType"] == "MusicHighlight") {
+        if (json_piece["PieceData"]["Type"] == "Track")
+          json_piece["PieceData"]["Track_id"] = response.data['music_id']
+        else if (json_piece["PieceData"]["Type"] == "Album") {
+          json_piece["PieceData"]["Album_id"] = response.data['music_id']
+        } else if (json_piece["PieceData"]["Type"] == "Artist") {
+          json_piece["PieceData"]["Artist_id"] = response.data['music_id']
+        }
       }
 
       // Update state internally once we have the piece_id
-      self.state.profile_pieces[response.data] = json_piece
+      self.state.profile_pieces[response.data['piece_id']] = json_piece
+
       self.setState(self.state)
 
       // A new piece has been added.
@@ -1460,6 +1476,8 @@ class Profile extends React.Component {
         this.state.editProfileModalOptions["Text"] = event.target.value
       } else if (field == "selectHighlightType") {
         this.state.editProfileModalOptions["Type"] = event.target.value
+      } else if (field == "musicHighlightNote") {
+        this.state.editProfileModalOptions["Note"] = event.target.value
       }
     } else {
       if (field == "recentListenCount") {
@@ -1468,6 +1486,8 @@ class Profile extends React.Component {
         this.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Text"] = event.target.value
       } else if (field == "selectHighlightType") {
         this.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Type"] = event.target.value
+      } else if (field == "musicHighlightNote") {
+        this.state.profile_pieces_edits[Number(piece_id)]["PieceData"]["Note"] = event.target.value
       }
     }
 
@@ -1622,6 +1642,9 @@ class Profile extends React.Component {
               <h1 className="profile-edit-options-name">Track</h1>
               <input id={"exist-highlight-edit-track-track-" + piece_id.toString()} className="highlight-edit-form" type="text" max-length="100"/>
             </div>
+            <div className="profile-edit-row"></div>
+            <h1 className="profile-edit-options-name">Note</h1>
+            <textarea id={ "musicHighlightNote-" + piece_id.toString() } className="bio-edit-form" type="text" max-length="500" value={options["Note"]} onChange={this.updateModalOption} />
             <div className="profile-edit-button-row">
               { delete_button_div }
               <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
@@ -1639,6 +1662,9 @@ class Profile extends React.Component {
               <h1 className="profile-edit-options-name">Album</h1>
               <input id={"exist-highlight-edit-album-album-" + piece_id.toString()} className="highlight-edit-form" type="text" max-length="100"/>
             </div>
+            <div className="profile-edit-row"></div>
+            <h1 className="profile-edit-options-name">Note</h1>
+            <textarea id={ "musicHighlightNote-" + piece_id.toString() } className="bio-edit-form" type="text" max-length="500" value={options["Note"]} onChange={this.updateModalOption} />
             <div className="profile-edit-button-row">
               { delete_button_div }
               <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
@@ -1652,6 +1678,9 @@ class Profile extends React.Component {
               <h1 className="profile-edit-options-name">Artist</h1>
               <input id={"exist-highlight-edit-artist-artist-" + piece_id.toString()} className="highlight-edit-form" type="text" max-length="100"/>
             </div>
+            <div className="profile-edit-row"></div>
+            <h1 className="profile-edit-options-name">Note</h1>
+            <textarea id={ "musicHighlightNote-" + piece_id.toString() } className="bio-edit-form" type="text" max-length="500" value={options["Note"]} onChange={this.updateModalOption} />
             <div className="profile-edit-button-row">
               { delete_button_div }
               <button className="profile-edit-save" onClick={ () => this.submitProfileEdit(piece_id) }>Save</button>
