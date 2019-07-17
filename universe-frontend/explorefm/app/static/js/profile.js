@@ -1035,6 +1035,7 @@ class MusicHighlight extends React.Component {
     this.state = { 
                     type: this.props.type,
                     music_id: this.props.music_id,
+                    note: this.props.note,
                     music_data: {}
                  };
   }
@@ -1051,6 +1052,15 @@ class MusicHighlight extends React.Component {
   }
 
   render() {
+
+    var note_div = "";
+    if (this.state.note != "") {
+      note_div = (
+        <div className="music-highlight-note">
+          <h6 className="music-highlight-note-text">{ this.state.note }</h6>
+        </div>
+      )
+    }
     if(this.state.type == "Artist") {
       var artist_img = artist_art_endpoint + this.state.music_data['img_id'] + '-medium.jpg'
       return (
@@ -1062,6 +1072,7 @@ class MusicHighlight extends React.Component {
               <h6 className="music-highlight-text">{ this.state.music_data['artist'] }</h6>
             </div>
           </div>
+          { note_div }
         </div>
       )
     } else if (this.state.type == "Album") {
@@ -1076,6 +1087,7 @@ class MusicHighlight extends React.Component {
               <h6 className="music-highlight-text-small">{ this.state.music_data['artist'] }</h6>
             </div>
           </div>
+          { note_div }
         </div>
       )
     } else if (this.state.type == "Track") {
@@ -1090,6 +1102,7 @@ class MusicHighlight extends React.Component {
               <h6 className="music-highlight-text-small">{ this.state.music_data['album'] }</h6>
               <h6 className="music-highlight-text-small">{ this.state.music_data['artist'] }</h6>
             </div>
+            { note_div }
           </div>
         </div>
       )
@@ -1818,6 +1831,7 @@ class Profile extends React.Component {
       )
     } else if (piece_data["PieceType"] == "MusicHighlight") {
       props["type"] = piece_data["PieceData"]["Type"]
+      props["note"] = piece_data["PieceData"]["Note"]
       if (piece_data["PieceData"]["Type"] == "Artist") {
         props["music_id"] = piece_data["PieceData"]["Artist_id"]
       } else if (piece_data["PieceData"]["Type"] == "Album") {

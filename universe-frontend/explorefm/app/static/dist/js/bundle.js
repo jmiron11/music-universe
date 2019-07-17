@@ -1782,6 +1782,7 @@ function (_React$Component9) {
     _this9.state = {
       type: _this9.props.type,
       music_id: _this9.props.music_id,
+      note: _this9.props.note,
       music_data: {}
     };
     return _this9;
@@ -1801,6 +1802,16 @@ function (_React$Component9) {
   }, {
     key: "render",
     value: function render() {
+      var note_div = "";
+
+      if (this.state.note != "") {
+        note_div = react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+          className: "music-highlight-note"
+        }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
+          className: "music-highlight-note-text"
+        }, this.state.note));
+      }
+
       if (this.state.type == "Artist") {
         var artist_img = artist_art_endpoint + this.state.music_data['img_id'] + '-medium.jpg';
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -1816,7 +1827,7 @@ function (_React$Component9) {
           className: "music-highlight-text-group"
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
           className: "music-highlight-text"
-        }, this.state.music_data['artist']))));
+        }, this.state.music_data['artist']))), note_div);
       } else if (this.state.type == "Album") {
         var album_img = album_art_endpoint + this.state.music_data['img_id'] + '-medium.jpg';
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -1834,7 +1845,7 @@ function (_React$Component9) {
           className: "music-highlight-text"
         }, this.state.music_data['album']), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
           className: "music-highlight-text-small"
-        }, this.state.music_data['artist']))));
+        }, this.state.music_data['artist']))), note_div);
       } else if (this.state.type == "Track") {
         var album_img = album_art_endpoint + this.state.music_data['img_id'] + '-medium.jpg';
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
@@ -1854,7 +1865,7 @@ function (_React$Component9) {
           className: "music-highlight-text-small"
         }, this.state.music_data['album']), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h6", {
           className: "music-highlight-text-small"
-        }, this.state.music_data['artist']))));
+        }, this.state.music_data['artist'])), note_div));
       } else {
         return "";
       }
@@ -2707,6 +2718,7 @@ function (_React$Component11) {
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](RecentListens, props), this.getSettingsButtonForPiece(piece_id, 0, "14px")), this.getComponentModal(piece_id));
       } else if (piece_data["PieceType"] == "MusicHighlight") {
         props["type"] = piece_data["PieceData"]["Type"];
+        props["note"] = piece_data["PieceData"]["Note"];
 
         if (piece_data["PieceData"]["Type"] == "Artist") {
           props["music_id"] = piece_data["PieceData"]["Artist_id"];
