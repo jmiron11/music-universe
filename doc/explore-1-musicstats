@@ -28,3 +28,6 @@ React component:  Use Chart.js
 React component: 
 	Dynamic aggregation chart. Plots the number of times an event occurs at each aggregation time.
 
+	Ex. For each <hour, day, month, year>, how many (Both normalized and not) listens do I have.
+
+For time periods: Total listening time, Average listens per day, Number of listens.
