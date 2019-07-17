@@ -2148,34 +2148,36 @@ function (_React$Component11) {
   }, {
     key: "submitProfileEdit",
     value: function submitProfileEdit(piece_id) {
-      if (this.state.editProfileModalValue == "Bio") {
+      console.log(piece_id);
+
+      if (piece_id < 0 && this.state.editProfileModalValue == "Bio" || piece_id > 0 && this.state.profile_pieces_edits[piece_id]["PieceType"] == "Bio") {
         if (piece_id < 0) {
           this.state.editProfileModalOptions["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value;
         } else {
           this.state.profile_pieces_edits[piece_id]["PieceData"]["Text"] = document.getElementById("profileBioEditForm-" + piece_id.toString()).value;
         }
-      } else if (this.state.editProfileModalValue == "MusicHighlight") {
+      } else if (piece_id < 0 && this.state.editProfileModalValue == "MusicHighlight" || piece_id > 0 && this.state.profile_pieces_edits[piece_id]["PieceType"] == "MusicHighlight") {
         if (piece_id < 0) {
           if (this.state.editProfileModalOptions["Type"] == "Track") {
-            this.state.editProfileModalOptions["Track"] = document.getElementById("exist-highlight-edit-track-" + piece_id.toString()).value;
-            this.state.editProfileModalOptions["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
-            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Track"] = document.getElementById("exist-highlight-edit-track-track-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Album"] = document.getElementById("exist-highlight-edit-album-track-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-track-" + piece_id.toString()).value;
           } else if (this.state.editProfileModalOptions["Type"] == "Album") {
-            this.state.editProfileModalOptions["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
-            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Album"] = document.getElementById("exist-highlight-edit-album-album-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-album-" + piece_id.toString()).value;
           } else if (this.state.editProfileModalOptions["Type"] == "Artist") {
-            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+            this.state.editProfileModalOptions["Artist"] = document.getElementById("exist-highlight-edit-artist-artist-" + piece_id.toString()).value;
           }
         } else {
-          if (this.state.editProfileModalOptions["Type"] == "Track") {
-            this.state.profile_pieces_edits[piece_id]["PieceData"]["Track"] = document.getElementById("exist-highlight-edit-track-" + piece_id.toString()).value;
-            this.state.profile_pieces_edits[piece_id]["PieceData"]["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
-            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
-          } else if (this.state.editProfileModalOptions["Type"] == "Album") {
-            this.state.profile_pieces_edits[piece_id]["PieceData"]["Album"] = document.getElementById("exist-highlight-edit-album-" + piece_id.toString()).value;
-            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
-          } else if (this.state.editProfileModalOptions["Type"] == "Artist") {
-            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-" + piece_id.toString()).value;
+          if (this.state.profile_pieces_edits[piece_id]["PieceData"]["Type"] == "Track") {
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Track"] = document.getElementById("exist-highlight-edit-track-track-" + piece_id.toString()).value;
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Album"] = document.getElementById("exist-highlight-edit-album-track-" + piece_id.toString()).value;
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-track-" + piece_id.toString()).value;
+          } else if (this.state.profile_pieces_edits[piece_id]["PieceData"]["Type"] == "Album") {
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Album"] = document.getElementById("exist-highlight-edit-album-album-" + piece_id.toString()).value;
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-album-" + piece_id.toString()).value;
+          } else if (this.state.profile_pieces_edits[piece_id]["PieceData"]["Type"] == "Artist") {
+            this.state.profile_pieces_edits[piece_id]["PieceData"]["Artist"] = document.getElementById("exist-highlight-edit-artist-artist-" + piece_id.toString()).value;
           }
         }
       } // Submit the new profile piece, it returns an identifier.
@@ -2446,7 +2448,7 @@ function (_React$Component11) {
           }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
             className: "profile-edit-options-name"
           }, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-artist-" + piece_id.toString(),
+            id: "exist-highlight-edit-artist-track-" + piece_id.toString(),
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
@@ -2455,7 +2457,7 @@ function (_React$Component11) {
           }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
             className: "profile-edit-options-name"
           }, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-album-" + piece_id.toString(),
+            id: "exist-highlight-edit-album-track-" + piece_id.toString(),
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
@@ -2464,7 +2466,7 @@ function (_React$Component11) {
           }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
             className: "profile-edit-options-name"
           }, "Track"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-track-" + piece_id.toString(),
+            id: "exist-highlight-edit-track-track-" + piece_id.toString(),
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
@@ -2484,7 +2486,7 @@ function (_React$Component11) {
           }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
             className: "profile-edit-options-name"
           }, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-artist-" + piece_id.toString(),
+            id: "exist-highlight-edit-artist-album-" + piece_id.toString(),
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
@@ -2493,7 +2495,7 @@ function (_React$Component11) {
           }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
             className: "profile-edit-options-name"
           }, "Album"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-album-" + piece_id.toString(),
+            id: "exist-highlight-edit-album-album-" + piece_id.toString(),
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
@@ -2513,7 +2515,7 @@ function (_React$Component11) {
           }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("h1", {
             className: "profile-edit-options-name"
           }, "Artist"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
-            id: "exist-highlight-edit-artist-" + piece_id.toString(),
+            id: "exist-highlight-edit-artist-artist-" + piece_id.toString(),
             className: "highlight-edit-form",
             type: "text",
             "max-length": "100"
@@ -2659,7 +2661,7 @@ function (_React$Component11) {
           props["music_id"] = piece_data["PieceData"]["Artist_id"];
         } else if (piece_data["PieceData"]["Type"] == "Album") {
           props["music_id"] = piece_data["PieceData"]["Album_id"];
-        } else if (piece_data["PieceData"]["Type"] == "Album") {
+        } else if (piece_data["PieceData"]["Type"] == "Track") {
           props["music_id"] = piece_data["PieceData"]["Track_id"];
         }
 

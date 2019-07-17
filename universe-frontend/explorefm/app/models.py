@@ -533,7 +533,7 @@ class User(UserMixin, db.Model):
                 u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options))
             elif piece_type == "MusicHighlight":
                 if piece_options["Type"] == "Track":
-                    track = Track.query.filter(and_(Track.name==piece_options["Track"], Track.album.name==piece_options["Album"], Track.artist.name==piece_options["Artist"])).first()
+                    track = Track.query.filter(and_(Track.name==piece_options["Track"], Album.name==piece_options["Album"], Album.id==Track.album_id, Artist.name==piece_options["Artist"], Artist.id==Track.artist_id)).first()
                     track_id = track.id
                     u_piece = ProfilePiece(user_id = self.id, piece_type=str(piece_type), piece_options=str(piece_options), refer_track_id=track_id)
                 elif piece_options["Type"] == "Album":
@@ -572,7 +572,7 @@ class User(UserMixin, db.Model):
                     entry.piece_options = str(piece_options)
                 elif piece_type == "MusicHighlight":
                     if piece_options["Type"] == "Track":
-                        track = Track.query.filter(and_(Track.name==piece_options["Track"], Track.album.name==piece_options["Album"], Track.artist.name==piece_options["Artist"])).first()
+                        track = Track.query.filter(and_(Track.name==piece_options["Track"], Album.name==piece_options["Album"], Album.id==Track.album_id, Artist.name==piece_options["Artist"], Artist.id==Track.artist_id)).first()
                         track_id = track.id
                         entry.refer_track_id = track_id
                         entry.refer_album_id = None
