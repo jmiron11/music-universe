@@ -2649,8 +2649,28 @@ function (_React$Component11) {
       }, "Music Highlight"))), additionalOptions, this.displayModalHelp()))));
     }
   }, {
+    key: "onSettingsButtonClick",
+    value: function onSettingsButtonClick(piece_id) {
+      if (piece_id > 0) {
+        var type = this.state.profile_pieces_edits[piece_id]["PieceData"]["Type"];
+
+        if (type == "Track") {
+          document.getElementById("exist-highlight-edit-track-track-" + piece_id.toString()).value = this.state.profile_pieces[piece_id]["PieceData"]["Track"];
+          document.getElementById("exist-highlight-edit-album-track-" + piece_id.toString()).value = this.state.profile_pieces[piece_id]["PieceData"]["Album"];
+          document.getElementById("exist-highlight-edit-artist-track-" + piece_id.toString()).value = this.state.profile_pieces[piece_id]["PieceData"]["Artist"];
+        } else if (type == "Album") {
+          document.getElementById("exist-highlight-edit-album-album-" + piece_id.toString()).value = this.state.profile_pieces[piece_id]["PieceData"]["Album"];
+          document.getElementById("exist-highlight-edit-artist-album-" + piece_id.toString()).value = this.state.profile_pieces[piece_id]["PieceData"]["Artist"];
+        } else if (type == "Artist") {
+          document.getElementById("exist-highlight-edit-artist-artist-" + piece_id.toString()).value = this.state.profile_pieces[piece_id]["PieceData"]["Artist"];
+        }
+      }
+    }
+  }, {
     key: "getSettingsButtonForPiece",
     value: function getSettingsButtonForPiece(piece_id, x_off, y_off) {
+      var _this13 = this;
+
       var settingsStyle = {
         right: x_off,
         top: y_off
@@ -2662,6 +2682,9 @@ function (_React$Component11) {
           style: settingsStyle
         }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("i", {
           className: "fa fa-lg fa-cog profile-piece-settings-button",
+          onClick: function onClick() {
+            return _this13.onSettingsButtonClick(piece_id);
+          },
           "aria-hidden": "true",
           "data-toggle": "modal",
           "data-target": "#" + this.getModalTag(piece_id)
