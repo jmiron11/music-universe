@@ -353,6 +353,29 @@ def update_unloved(music_type, music_id):
     current_user.unlove_music(music_type, music_id)
     return ""
 
+@app.route('/import/lastfmcsv', methods=['POST'])
+@login_required
+def import_lastfmcsv():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and file.filename.rsplit('.', 1)[1].lower() == 'csv':
+            extension = file.filename[file.filename.rfind('.') + 1:]
+            prefix = str(current_user.id)
+            filename = secure_filename(prefix + '.' + extension)
+            full_path = os.path.join(app.config['TEMP_DIR'], filename)
+            file.save(os.path.join(app.config['TEMP_DIR'], filename))
+            current_user.import_from_lastfm(full_path)
+    return redirect(url_for('settings'))
+
 # User query endpoints
 @app.route('/query/user/me')
 def who_am_i():

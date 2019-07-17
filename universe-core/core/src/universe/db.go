@@ -139,7 +139,7 @@ func WriteNewListen(db *sql.DB, listen *Listen) {
 }
 
 func GetAlbumsWithNoArt(db *sql.DB, limit int) []Album {
-	results, err := db.Query("SELECT Al.id, Al.spotify_id FROM album Al LEFT OUTER JOIN album_art Aa on Aa.album_id = Al.id WHERE Aa.album_id is null LIMIT ?", limit)
+	results, err := db.Query("SELECT Al.id, IFNULL(Al.spotify_id,''), Al.name FROM album Al LEFT OUTER JOIN album_art Aa on Aa.album_id = Al.id WHERE Aa.album_id is null LIMIT ?", limit)
 
 	defer results.Close()
 	if err != nil {
@@ -150,7 +150,7 @@ func GetAlbumsWithNoArt(db *sql.DB, limit int) []Album {
 	i := 0
 	for results.Next() {
 		albums = append(albums, Album{})
-		err = results.Scan(&albums[i].Id, &albums[i].Spotify_id)
+		err = results.Scan(&albums[i].Id, &albums[i].Spotify_id, &albums[i].Name)
 		if err != nil {
 			panic(err.Error()) // proper error handling instead of panic in your app
 		}
@@ -161,7 +161,7 @@ func GetAlbumsWithNoArt(db *sql.DB, limit int) []Album {
 }
 
 func GetArtistsWithNoArt(db *sql.DB, limit int) []Artist {
-	results, err := db.Query("SELECT Al.id, Al.spotify_id FROM artist Al LEFT OUTER JOIN artist_art Aa on Aa.artist_id = Al.id WHERE Aa.artist_id is null LIMIT ?", limit)
+	results, err := db.Query("SELECT Al.id, IFNULL(Al.spotify_id,''), Al.name FROM artist Al LEFT OUTER JOIN artist_art Aa on Aa.artist_id = Al.id WHERE Aa.artist_id is null LIMIT ?", limit)
 
 	defer results.Close()
 	if err != nil {
@@ -172,7 +172,7 @@ func GetArtistsWithNoArt(db *sql.DB, limit int) []Artist {
 	i := 0
 	for results.Next() {
 		artists = append(artists, Artist{})
-		err = results.Scan(&artists[i].Id, &artists[i].Spotify_id)
+		err = results.Scan(&artists[i].Id, &artists[i].Spotify_id, &artists[i].Name)
 		if err != nil {
 			panic(err.Error()) // proper error handling instead of panic in your app
 		}

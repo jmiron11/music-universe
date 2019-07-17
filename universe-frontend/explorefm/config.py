@@ -25,4 +25,6 @@ class Config(object):
     ARTIST_ART_DIR = "artist_art/"
     PROFILE_PIC_DIR = "profile_pic/"
 
+    TEMP_DIR = "/home/justinm/git/music-universe/temp/"
+
     PROFILE_PIC_EXTENSIONS = set(['jpg', 'jpeg'])

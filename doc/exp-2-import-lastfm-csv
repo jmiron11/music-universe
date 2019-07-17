@@ -1,0 +1,16 @@
+Import from LastFM
+Status: Draft
+
+
+<Artist>,<Album>,<Track>,<Datetime or nothing>
+ex. Mansions,Dig Up The Dead,You Got Cool,17 Jul 2019 03:20
+
+
+
+Site changes ----------------------------------
+1. Settings: Add button to import from csv. Opens modal that has upload file.
+
+
+Backend ------------------------
+1. Add endpoint for lastfm file to be updated.
+2. Endpoint iterates over the data and adds it to the db. TODO(justinmiron): Change.

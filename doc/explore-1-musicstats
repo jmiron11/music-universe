@@ -1,0 +1,30 @@
+Exploring music listens and behavior.
+
+Requires md - Metadata on the music is required to perform this analysis.
+
+TYPE -----
+Listen Behavior
+	1. How does the number of listens change over hour, day, month, year.
+		- Plots aggregated by timespan.
+	2. How does the type of music change over hour, day, month, year (requires md)
+	3. When have I listened to the song, album, artist: X?
+		- Display on timeline.
+		- Aggregated by timespan.
+
+
+Impl -----
+React component:  Use Chart.js
+	Dynamic timeline chart. Plots the time that events happen, each event represented by a dot
+
+	By default: All tracks
+	Button in top-left for Search for...
+	Button in the top-right for different aggregation times.
+
+	Y-axis number of listens
+	X-axis time
+
+	First-cut: Times that a track is listened to, with varying aggregation periods.
+
+React component: 
+	Dynamic aggregation chart. Plots the number of times an event occurs at each aggregation time.
+

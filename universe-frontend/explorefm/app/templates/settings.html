@@ -31,6 +31,31 @@
 			</div>
 		</div>
 
+		<h1 class="settings-header">Import Listen Data</h1>
+		<div class="settings-row">
+			<div class="settings-fields">
+				<a style="display:block" data-toggle="modal" data-target="#importLastFmModal">
+				<div class="last-fm-button">
+					<h2>LastFM csv</h2>
+					<i class="fa fa-3x fa-lastfm" aria-hidden="true"></i>
+				</div>
+				</a>
+			</div>
+		</div>
+		<div id="importLastFmModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		    	<div class="modal-body">
+				<h1>Choose a new profile picture</h1>
+				<form action="/import/lastfmcsv" method=post enctype=multipart/form-data>
+				  <input type=file name=file>
+				  <input type=submit value=Upload>
+				</form>
+		    	</div>
+		    </div>
+		  </div>
+		</div>
+
 		<h1 class="settings-header">Time</h1>
 		<div class="settings-row">
 			<h2>Timezone</h2>

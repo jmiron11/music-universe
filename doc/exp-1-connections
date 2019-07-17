@@ -1,6 +1,6 @@
 # Connections between users
 
-STATUS: Draft
+STATUS: Implemented
 
 Table Follow {
 	id 				INTEGER	PRIMARY KEY

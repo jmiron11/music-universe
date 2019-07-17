@@ -136,8 +136,6 @@ func GetArtistArtOfArtist(client *spotify.Client, artist *Artist, image_path str
 		return false, "", ""
 	}
 
-	fmt.Printf("%s\n", spotify_artist.Name)
-
 	var path_small, path_medium string
 	for _, im := range spotify_artist.Images {
 		var path_name string
@@ -169,4 +167,30 @@ func GetClientCredentials(config *clientcredentials.Config) spotify.Client {
 
 	client := spotify.Authenticator{}.NewClient(token)
 	return client
+}
+
+func GetClosestAlbum(client *spotify.Client, album *Album) string {
+	result, err := client.Search("album:"+album.Name, spotify.SearchTypeAlbum)
+	if err != nil {
+		log.Fatalf("failed to find album: %v", err)
+	}
+	if result.Albums == nil || len(result.Albums.Albums) == 0 {
+		return ""
+	} else {
+
+		return string(result.Albums.Albums[0].ID)
+	}
+}
+
+func GetClosestArtist(client *spotify.Client, artist *Artist) string {
+	result, err := client.Search("artist:"+artist.Name, spotify.SearchTypeArtist)
+	if err != nil {
+		log.Fatalf("failed to find artist: %v", err)
+	}
+	if result.Artists == nil || len(result.Artists.Artists) == 0 {
+		return ""
+	} else {
+
+		return string(result.Artists.Artists[0].ID)
+	}
 }

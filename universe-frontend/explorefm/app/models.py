@@ -622,6 +622,57 @@ class User(UserMixin, db.Model):
             db.session.add(u_profile_layout)
         db.session.commit()
 
+    def get_truncated(self, string, max_chars):
+        if len(string) > max_chars:
+            return string[:max_chars-3] + '...'
+        else:
+            return string
+
+    def import_from_lastfm(self, path):
+        with open(path, 'r') as f:
+            for l in f:
+                artist_name, album_name, track_name, dt = l.strip().split(',')
+
+                artist_name = self.get_truncated(artist_name, 100)
+                album_name = self.get_truncated(album_name, 100)
+                track_name = self.get_truncated(track_name, 100)
+
+                if dt == '':
+                    continue
+
+                dt = datetime.strptime(dt,'%d %b %Y %H:%M')
+
+                # Find the artist, if not add it to the db.
+                artist = Artist.query.filter(Artist.name==artist_name).first()
+                if artist is None:
+                   artist = Artist(name=artist_name)
+                   db.session.add(artist)
+                   db.session.commit()
+                   db.session.flush()
+
+
+                # Find the album, if not add it to the db.
+                album = Album.query.filter(and_(Album.artist_id==artist.id, Album.name==album_name)).first()
+                if album is None:
+                    album = Album(name=album_name, artist_id=artist.id)
+                    db.session.add(album)
+                    db.session.commit()
+                    db.session.flush()
+
+                # Find the track, if not add it to the db.
+                track = Track.query.filter(and_(Track.artist_id==artist.id, Track.album_id==album.id, Track.name==track_name)).first()
+                if track is None:
+                    track = Track(name=track_name, artist_id=artist.id, album_id=album.id)
+                    db.session.add(track)
+                    db.session.commit()
+                    db.session.flush()
+
+                listen = Listen.query.filter(and_(Listen.track_id==track.id, Listen.time==dt, Listen.user_id==self.id)).first()
+                if listen is None:
+                    listen = Listen(track_id=track.id, time=dt, user_id=self.id)
+                    db.session.add(listen)
+                    db.session.commit()
+
 
 class ProfileBio(db.Model):
     __tablename__ = 'profile_bio'

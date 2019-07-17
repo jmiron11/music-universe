@@ -522,6 +522,35 @@ a { color: inherit; }
   background: #191414;
 }
 
+.last-fm-button {
+  /*margin-left: 2vw;*/
+  color: inherit;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  border: 1px solid #b9bbbe;
+  border-radius: 10px;
+  background: #191414;
+  color: #fff;
+}
+
+.last-fm-button:hover {
+  
+}
+
+.last-fm-button h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  margin: 0;
+  padding-right: 10px;
+  color: #ffffff;
+}
+
+
+
 .spotify-icon {
   color: #1ED760;
 }
@@ -807,7 +836,6 @@ a { color: inherit; }
   min-height: 180px;
   max-width: 180px;
   max-height: 180px;
-  /*margin: 0px 0 0px 10px;*/
   opacity: 1.0;
 }
 

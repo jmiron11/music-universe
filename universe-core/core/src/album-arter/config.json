@@ -4,6 +4,6 @@
 
     "ALBUM_ART_BASE_PATH": "/home/justinm/git/music-universe/images/album_art/",
     "ARTIST_ART_BASE_PATH": "/home/justinm/git/music-universe/images/artist_art/",
-    "TRACK_INTERVAL_SECONDS": 2,
-    "CONCURRENT_ALBUMS": 10
+    "TRACK_INTERVAL_SECONDS": 120,
+    "CONCURRENT_ALBUMS": 20
 }
