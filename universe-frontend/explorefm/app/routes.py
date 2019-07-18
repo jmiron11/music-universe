@@ -71,10 +71,10 @@ def user_library(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('library.html', user=user)
 
-@app.route('/user/<username>/loved/')
+@app.route('/user/<username>/listen_explorer/')
 def user_loved(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('loved.html', user=user)
+    return render_template('listen_explorer.html', user=user)
 
 @app.route('/user/<username>/followers/')
 def user_followers(username):
