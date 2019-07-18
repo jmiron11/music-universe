@@ -1,0 +1,21 @@
+Expand the site to support fluidly sharing music between friends.
+
+Existing music recommendation methods:
+   - Share over social media / messaging
+
+Suppose I want to recomend or talk about a song with a friend:
+   1. Who has listened to this track before? (Listen tracking)
+   2. Who hasn't listened to this track but might love the song? (Music profile)
+   3. Have I recommended this music to the person before? (Sharing history)
+
+Features:
+1. Support recommending music to a user / a group
+   
+2. Each user has an interactive recommendation feed: A place that tracks all of the received recommendations.
+   - Recommendations can be marked, as listened to, can be replied to (with recommendations as well).
+      + On mouseover: Buttons Icons - Like, Message, Archive
+   - Recommendations map back to a chat message as well.
+   
+   
+3. Social hub
+   - One stop place where you can view your recommendation feed, message threads, neighbors, etc.
