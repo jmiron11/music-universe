@@ -4,35 +4,77 @@ import axios from 'axios';
 
 import { Line } from 'react-chartjs-2'
 
+
+/* 
+	Endpoints required:
+		- Need to be able to retrieve aggregate number of listens with filter based on track, album, artist.
+		- 
+
+*/
 export default class ListenChart extends React.Component {
+	constructor(props) {
+	    super(props);
+
+	    var t_end_default = this.getSecondsSinceEpoch()
+	    var t_start_default = this.getTimeOffsetByT(t_end_default, 2*7*24*60*60);
+	    this.state = { 
+	                    t_start: t_start_default,
+	                    t_end: t_end_default,
+	                   	timespan: 'day',
+	                   	data: {
+	                   		labels: [],
+	                   		lineTension: 0,
+	                   		datasets: [{
+								// fillColor: "rgba(220,220,220,0.2)",
+								strokeColor: "rgba(220,220,220,1)",
+								pointColor: "rgba(220,220,220,1)",
+								pointStrokeColor: "#fff",
+								pointHighlightFill: "#fff",
+								pointHighlightStroke: "rgba(220,220,220,1)",
+	                   			data: []
+	                   		}]
+	                   	}
+	                 };
+  	}
+
+    getSecondsSinceEpoch() {
+	    var d = new Date();
+	    return Math.floor(d.getTime() / 1000)
+  	}
+
+    getTimeOffsetByT(t, offset) {
+    	return t - offset
+  	}
+
+
+
+  	updateChartBasedOnCurrentParams() {
+		var request = '/user/' + user + '/searchable_listens'
+    	request += '?t_start=' + this.state.t_start.toString()
+    	request += '&t_end=' + this.state.t_end.toString()
+    	request += '&timespan=' + this.state.timespan
+
+    	var self = this
+    	var labels = []
+    	var data = []
+    	axios.get(request).then(function(response) { 
+    		var resp = response['data']
+    		for(let i = 0; i < resp.length; ++i) {
+    			labels.push(resp[i]['t'])
+    			data.push(resp[i]['count'])
+    		}
+
+    		self.state.data.labels = labels
+    		self.state.data.datasets[0].data = data
+    		self.setState(self.state)
+    	})
+  	}
+
+    componentDidMount(){
+   		this.updateChartBasedOnCurrentParams()
+  	}
 	
 	render() {
-		var data = {
-				labels: ["January", "February", "March", "April", "May", "June", "July"],
-				datasets: [
-					{
-						label: "My First dataset",
-						fillColor: "rgba(220,220,220,0.2)",
-						strokeColor: "rgba(220,220,220,1)",
-						pointColor: "rgba(220,220,220,1)",
-						pointStrokeColor: "#fff",
-						pointHighlightFill: "#fff",
-						pointHighlightStroke: "rgba(220,220,220,1)",
-						data: [65, 59, 80, 81, 56, 55, 40]
-					},
-					{
-						label: "My Second dataset",
-						fillColor: "rgba(151,187,205,0.2)",
-						strokeColor: "rgba(151,187,205,1)",
-						pointColor: "rgba(151,187,205,1)",
-						pointStrokeColor: "#fff",
-						pointHighlightFill: "#fff",
-						pointHighlightStroke: "rgba(151,187,205,1)",
-						data: [28, 48, 40, 19, 86, 27, 90]
-					}
-				]
-			};
-
 		var options = {
 			///Boolean - Whether grid lines are shown across the chart
 			scaleShowGridLines : true,
@@ -50,7 +92,7 @@ export default class ListenChart extends React.Component {
 			scaleShowVerticalLines: true,
 
 			//Boolean - Whether the line is curved between points
-			bezierCurve : true,
+			bezierCurve : false,
 
 			//Number - Tension of the bezier curve between points
 			bezierCurveTension : 0.4,
@@ -77,11 +119,30 @@ export default class ListenChart extends React.Component {
 			datasetFill : true,
 
 			//Boolean - Whether to horizontally center the label and point dot inside the grid
-			offsetGridLines : false
+			offsetGridLines : false,
+
+			legend: {
+            	display: false
+         	},
+
+			scales: {
+			    yAxes: [{
+			      	scaleLabel: {
+			        	display: true,
+			        	labelString: 'Time'
+			     	}
+			    }],
+			    xAxes: [{
+			      	scaleLabel: {
+			        	display: true,
+			        	labelString: 'Number of Listens'
+			     	}
+			    }]
+			}  
 		};
 
 		return (
-			<Line data={data} options={options}/>
+			<Line data={this.state.data} options={options}/>
 		)
 	}
 }

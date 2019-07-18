@@ -148,9 +148,10 @@ def authcallback():
 def user_tracks(username):
     t_start = int(request.args.get('t_start', default=time.time()))
     t_end = int(request.args.get('t_end', default=time.time() - 24*60*60))
+    aggregate = bool(request.args.get('aggregate', default=True))
     user = User.query.filter_by(username=username).first_or_404()
 
-    return jsonify(user.get_tracks(t_start, t_end, aggregate=True))
+    return jsonify(user.get_tracks(t_start, t_end, aggregate=aggregate))
 
 @app.route('/user/<username>/bio/', methods=['GET'])
 def bio(username):
@@ -191,6 +192,19 @@ def user_recent_listens(username):
     count = int(request.args.get('count', default=10))
     user = User.query.filter_by(username=username).first_or_404()
     return jsonify(user.get_recent_listens(count))
+
+@app.route('/user/<username>/searchable_listens/')
+def user_searchable_listens(username):
+    t_start = int(request.args.get('t_start', default=0))
+    t_end = int(request.args.get('t_end', default=time.time()))
+    timespan = str(request.args.get('timespan', default='day'))
+    track = str(request.args.get('track', default=None))
+    album = str(request.args.get('album', default=None)) 
+    artist = str(request.args.get('artist', default=None))
+    aggregate = bool(request.args.get('aggregate', default=True))
+    user = User.query.filter_by(username=username).first_or_404()
+
+    return jsonify(user.get_searchable_listens(t_start, t_end, timespan, track, artist, album, aggregate))
 
 @app.route('/user/<username>/profile_snapshot/')
 def user_profile_snapshot(username):
@@ -423,4 +437,12 @@ def query_music():
 
 @app.route('/test/')
 def test():
-    return jsonify(current_user.get_following())
+    t_default = time.time()
+    t_start = int(request.args.get('t_start', default=t_default-30*24*60*60))
+    t_end = int(request.args.get('t_end', default=t_default))
+    timespan = str(request.args.get('timespan', default='day'))
+    track = str(request.args.get('track', default=None))
+    album = str(request.args.get('album', default=None)) 
+    artist = str(request.args.get('artist', default=None))
+    aggregate = bool(request.args.get('aggregate', default=True))
+    return jsonify(current_user.get_searchable_listens(t_start, t_end, timespan, track, album, artist, aggregate))

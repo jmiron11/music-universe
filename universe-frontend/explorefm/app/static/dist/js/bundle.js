@@ -136,7 +136,9 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "explorer-area"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Test"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_listen_chart_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Test"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "explorer-chart"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_listen_chart_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
     }
   }]);
 
@@ -296,43 +298,92 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+/* 
+	Endpoints required:
+		- Need to be able to retrieve aggregate number of listens with filter based on track, album, artist.
+		- 
+
+*/
 
 var ListenChart =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(ListenChart, _React$Component);
 
-  function ListenChart() {
+  function ListenChart(props) {
+    var _this;
+
     _classCallCheck(this, ListenChart);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ListenChart).apply(this, arguments));
-  }
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ListenChart).call(this, props));
 
-  _createClass(ListenChart, [{
-    key: "render",
-    value: function render() {
-      var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+    var t_end_default = _this.getSecondsSinceEpoch();
+
+    var t_start_default = _this.getTimeOffsetByT(t_end_default, 2 * 7 * 24 * 60 * 60);
+
+    _this.state = {
+      t_start: t_start_default,
+      t_end: t_end_default,
+      timespan: 'day',
+      data: {
+        labels: [],
+        lineTension: 0,
         datasets: [{
-          label: "My First dataset",
-          fillColor: "rgba(220,220,220,0.2)",
+          // fillColor: "rgba(220,220,220,0.2)",
           strokeColor: "rgba(220,220,220,1)",
           pointColor: "rgba(220,220,220,1)",
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [65, 59, 80, 81, 56, 55, 40]
-        }, {
-          label: "My Second dataset",
-          fillColor: "rgba(151,187,205,0.2)",
-          strokeColor: "rgba(151,187,205,1)",
-          pointColor: "rgba(151,187,205,1)",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(151,187,205,1)",
-          data: [28, 48, 40, 19, 86, 27, 90]
+          data: []
         }]
-      };
+      }
+    };
+    return _this;
+  }
+
+  _createClass(ListenChart, [{
+    key: "getSecondsSinceEpoch",
+    value: function getSecondsSinceEpoch() {
+      var d = new Date();
+      return Math.floor(d.getTime() / 1000);
+    }
+  }, {
+    key: "getTimeOffsetByT",
+    value: function getTimeOffsetByT(t, offset) {
+      return t - offset;
+    }
+  }, {
+    key: "updateChartBasedOnCurrentParams",
+    value: function updateChartBasedOnCurrentParams() {
+      var request = '/user/' + user + '/searchable_listens';
+      request += '?t_start=' + this.state.t_start.toString();
+      request += '&t_end=' + this.state.t_end.toString();
+      request += '&timespan=' + this.state.timespan;
+      var self = this;
+      var labels = [];
+      var data = [];
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(request).then(function (response) {
+        var resp = response['data'];
+
+        for (var i = 0; i < resp.length; ++i) {
+          labels.push(resp[i]['t']);
+          data.push(resp[i]['count']);
+        }
+
+        self.state.data.labels = labels;
+        self.state.data.datasets[0].data = data;
+        self.setState(self.state);
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updateChartBasedOnCurrentParams();
+    }
+  }, {
+    key: "render",
+    value: function render() {
       var options = {
         ///Boolean - Whether grid lines are shown across the chart
         scaleShowGridLines: true,
@@ -345,7 +396,7 @@ function (_React$Component) {
         //Boolean - Whether to show vertical lines (except Y axis)
         scaleShowVerticalLines: true,
         //Boolean - Whether the line is curved between points
-        bezierCurve: true,
+        bezierCurve: false,
         //Number - Tension of the bezier curve between points
         bezierCurveTension: 0.4,
         //Boolean - Whether to show a dot for each point
@@ -363,10 +414,27 @@ function (_React$Component) {
         //Boolean - Whether to fill the dataset with a colour
         datasetFill: true,
         //Boolean - Whether to horizontally center the label and point dot inside the grid
-        offsetGridLines: false
+        offsetGridLines: false,
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Time'
+            }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Number of Listens'
+            }
+          }]
+        }
       };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__["Line"], {
-        data: data,
+        data: this.state.data,
         options: options
       });
     }

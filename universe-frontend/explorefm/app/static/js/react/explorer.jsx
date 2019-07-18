@@ -7,7 +7,9 @@ export default class Explorer extends React.Component {
     return (
     	<div className="explorer-area">
     		<h1>Test</h1>
-    		<ListenChart />
+    		<div className="explorer-chart">
+	    		<ListenChart />
+	    	</div>
     	</div>
     )
   }

@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func, desc, and_
 from sqlalchemy.orm import joinedload
-from datetime import datetime, tzinfo
+from datetime import datetime, tzinfo, date
 import pytz
 import time
 
@@ -182,6 +182,39 @@ class User(UserMixin, db.Model):
             tracks.append(track_data)
 
         return tracks
+
+    def get_searchable_listens(self, t_start, t_end, timespan, track, artist, album, aggregate):
+        print(datetime.utcfromtimestamp(t_start))
+        print(datetime.utcfromtimestamp(t_end))
+        if timespan == "day":
+            d = db.session.query(
+                func.year(Listen.time).label('year'),
+                func.month(Listen.time).label('month'),
+                func.day(Listen.time).label('day'), 
+                func.count(Listen.id).label('count')
+            ).filter(and_(
+                Listen.user_id == self.id,
+                Listen.time > datetime.utcfromtimestamp(t_start),
+                Listen.time < datetime.utcfromtimestamp(t_end))
+            ).group_by(
+                func.year(Listen.time),
+                func.month(Listen.time),
+                func.day(Listen.time)
+            ).order_by(
+                func.year(Listen.time),
+                func.month(Listen.time),
+                func.day(Listen.time)
+            ).all()
+
+        data = []
+        for entry in d:
+            dt = date(entry.year, entry.month, entry.day)
+            data.append({
+                't': dt.strftime("%-d-%m-%y"),
+                'count': entry.count
+            })
+
+        return data
 
     def is_spotified(self):
         if len(self.token) > 0 and self.token[0].refresh_token is not None:
