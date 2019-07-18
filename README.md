@@ -3,7 +3,7 @@
 ## An open-source music community infrastructure.
 This project seeks to build upon the work of last.fm and libre.fm. It expands upon the social aspect and the music tracking aspects. The goal is to create a service that allows us to share and communicate about music with friends and strangers, and to understand our own music tastes. 
 
-I'm also baking a Web API into the project that allows users to access ALL of their internal music data.
+I'm also baking a Web API into the project that allows users to access all of their internal music data.
 
 The project is currently broken into parts:
 * Universe-frontend: The front-end website served backed by flask with a few react.js components.

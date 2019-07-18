@@ -42,22 +42,14 @@ func main() {
 				// Albums
 				albums := universe.GetAlbumsWithNoArt(album_db, cfg.CONCURRENT_ALBUMS)
 
-				for _, al := range albums {
-					if al.Spotify_id == "" {
-						al.Spotify_id = universe.GetClosestAlbum(&client, &al)
-					}
-				}
-
 				var found bool
 				var path_small, path_medium string
 				var album_art universe.AlbumArt
 				for _, al := range albums {
-					for _, al := range albums {
+					if al.Spotify_id == "" {
+						al.Spotify_id = universe.GetClosestAlbum(&client, &al)
 						if al.Spotify_id == "" {
-							al.Spotify_id = universe.GetClosestAlbum(&client, &al)
-							if al.Spotify_id == "" {
-								continue
-							}
+							continue
 						}
 					}
 					found, path_small, path_medium = universe.GetAlbumArtOfAlbum(&client, &al, cfg.ALBUM_ART_BASE_PATH)

@@ -173,6 +173,7 @@ func GetClosestAlbum(client *spotify.Client, album *Album) string {
 	result, err := client.Search("album:"+album.Name, spotify.SearchTypeAlbum)
 	if err != nil {
 		log.Fatalf("failed to find album: %v", err)
+		return ""
 	}
 	if result.Albums == nil || len(result.Albums.Albums) == 0 {
 		return ""
@@ -186,6 +187,7 @@ func GetClosestArtist(client *spotify.Client, artist *Artist) string {
 	result, err := client.Search("artist:"+artist.Name, spotify.SearchTypeArtist)
 	if err != nil {
 		log.Fatalf("failed to find artist: %v", err)
+		return ""
 	}
 	if result.Artists == nil || len(result.Artists.Artists) == 0 {
 		return ""
