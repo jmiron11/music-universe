@@ -125,14 +125,18 @@ export default class ListenChart extends React.Component {
             	display: false
          	},
 
+         	responsive: true,
+
+    		maintainAspectRatio: false,
+
 			scales: {
-			    yAxes: [{
+			    xAxes: [{
 			      	scaleLabel: {
 			        	display: true,
 			        	labelString: 'Time'
 			     	}
 			    }],
-			    xAxes: [{
+			    yAxes: [{
 			      	scaleLabel: {
 			        	display: true,
 			        	labelString: 'Number of Listens'

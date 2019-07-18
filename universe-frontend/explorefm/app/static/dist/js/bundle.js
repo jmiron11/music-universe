@@ -136,7 +136,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "explorer-area"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Test"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "The one and only chart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "explorer-chart"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_listen_chart_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
     }
@@ -418,14 +418,16 @@ function (_React$Component) {
         legend: {
           display: false
         },
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          yAxes: [{
+          xAxes: [{
             scaleLabel: {
               display: true,
               labelString: 'Time'
             }
           }],
-          xAxes: [{
+          yAxes: [{
             scaleLabel: {
               display: true,
               labelString: 'Number of Listens'
