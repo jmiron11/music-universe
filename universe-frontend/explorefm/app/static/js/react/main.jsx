@@ -12,6 +12,7 @@ import TimezoneForm from './timezone_form.jsx'
 import Profile from './profile.jsx'
 import FollowButton from './follow_button.jsx'
 import ProfileSnapshot from './profile_snapshot.jsx'
+import Explorer from './explorer.jsx'
 
 // Render all the things
 var domContainer = document.getElementById("profile")
@@ -32,4 +33,9 @@ if (domContainer != null) {
 domContainer = document.getElementById("profile-snapshot")
 if (domContainer != null) {
   ReactDOM.render(<ProfileSnapshot />, domContainer);
+}
+
+domContainer = document.getElementById("explorer")
+if (domContainer != null) {
+  ReactDOM.render(<Explorer />, domContainer);
 }

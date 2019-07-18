@@ -31,3 +31,7 @@ React component:
 	Ex. For each <hour, day, month, year>, how many (Both normalized and not) listens do I have.
 
 For time periods: Total listening time, Average listens per day, Number of listens.
+
+
+React component: Geo chart of listen locations
+Geo chart - Google Charts
